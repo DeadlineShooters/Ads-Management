@@ -1,5 +1,55 @@
 <%- include('../partials/header') %>
 
-<h1>Đây là trang chủ của Dân và cũng là trang chủ của các Cán Bộ</h1>
-<div>Đây là cái bản đồ</div>
+    <link rel="stylesheet" href="../../public/dan/assets/style.css">
+    <link
+        rel="stylesheet"
+        data-purpose="Layout StyleSheet"
+        title="Web Awesome"
+        href="/css/app-wa-02670e9412103b5852dcbe140d278c49.css?vsn=d"
+    >
+    <link
+        rel="stylesheet"
+        href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css"
+    >
+    <link
+        rel="stylesheet"
+        href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-solid.css"
+    >
+    <link
+        rel="stylesheet"
+        href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-regular.css"
+    >
+    <link
+        rel="stylesheet"
+        href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-light.css"
+    >
+    <script src="../../public/dan/assets/script.js"></script>
+</head>
+<body>
+
+<div id="map"></div>
+
+<div class="row">
+    <div class="col-xl-8 search-bar">
+        <i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
+        <input class="search-bar__input" type="text" placeholder="Tìm kiếm theo địa chỉ">
+    </div>
+</div>
+
+<div class="ads-point">
+    <span class="ads-point__name">QC</span>
+    <div class="ads-point__info">
+        <div class="info__form">Cổ động chính trị</div>
+        <div class="info__type">Đất công/Công viên/Hành lang an toàn giao thông</div>
+        <div class="info__address">Đồng Khởi - Nguyễn Du (Sở văn hóa và thể thao), Phường Bến Nghé, Quận 1</div>
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/015/936/418/small_2x/square-blank-billboard-city-street-free-photo.jpg" alt="" class="info__img">
+        <div class="info__planning-stt">ĐÃ QUY HOẠCH</div>    
+    </div>
+</div>
+
+<script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAjltMlLYD7tUK1A1SmxGP81aL8gnQo6k&callback=initMap&v=weekly"
+    defer
+></script>
+
 <%- include('../partials/footer') %>

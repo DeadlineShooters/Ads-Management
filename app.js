@@ -18,7 +18,7 @@ console.log(__dirname);
 
 
 danApp.use('/', danRoutes);
-
+danApp.use('/public', express.static('public'));
 
 canBoApp.get('/', (req, res) => {
     res.render('dan/index.ejs'); // trang chủ của dân xài chung cho bên cán bộ
