@@ -5,6 +5,7 @@ import danRoutes from './routes/dan.js';
 import phuongRoutes from './routes/phuong.js';
 import quanRoutes from './routes/quan.js';
 import soRoutes from './routes/so.js';
+import ejsMate from 'ejs-mate'
 
 const danApp = express();
 const canBoApp = express();
@@ -12,6 +13,7 @@ const canBoApp = express();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+canBoApp.engine('ejs', ejsMate);
 canBoApp.set('view engine', 'ejs');
 canBoApp.set('views', path.join(__dirname, 'views'));
 console.log(__dirname);
