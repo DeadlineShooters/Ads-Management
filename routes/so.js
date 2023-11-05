@@ -2,8 +2,8 @@ import express from "express";
 const router = express.Router();
 
 
-router.get('/quan', (req, res) => {
-    res.render('so/qlqp/dsQuan.ejs');
+router.get('/qlquan', (req, res) => {
+    res.render('so/qlqp/qlQuan.ejs');
 })
 
 
