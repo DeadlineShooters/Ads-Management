@@ -1,10 +1,51 @@
 <% layout('layouts/canbo') %>
-<section>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </section>
-</select>
-
+<div class="container m-2 p-3 bg-light rounded overflow-auto">
+  <section class="d-flex">
+    <div >
+        <select class="form-select" aria-label="Default select example">
+          <option selected>Quản lý danh sách Quận</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+    </div>
+  </section>
+  <section class="border rounded mt-2">
+    <table class="table table-light table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td colspan="2">Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>
+        <% for (let i = 4; i<18; i++) { %>
+        <tr>
+          <th scope="row"><%= i %></th>
+          <td colspan="2">Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </section>
+</div>
