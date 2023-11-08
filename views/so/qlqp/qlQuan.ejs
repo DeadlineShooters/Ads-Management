@@ -9,8 +9,8 @@
         </select>
     </div>
 </section>
-<div class="d-flex flex-column justify-content-between flex-grow-1">
-    <section class="border rounded my-2">
+<section class="overflow-auto my-3 border rounded">
+    <div class=" ">
         <table class="table table-light table-striped">
             <thead>
                 <tr>
@@ -22,28 +22,33 @@
                 </tr>
             </thead>
             <tbody>
-                <% for (let i = 1; i<15; i++) { %>
+                <% for (let i = 1; i<4; i++) { %>
                 <tr>
                     <th scope="row"><%= i %></th>
                     <td>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     </td>
                     <td>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Modi quidem id architecto molestiae, vel molestias
-                        odit quaerat voluptatem qui quibusdam impedit
-                        accusantium, in quae! A!
+                        Lorem ipsum dolor, sit amet consectetur adipisicing
+                        elit.
                     </td>
                     <td>
                         Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Iure, labore.
+                        elit.
                     </td>
-                    <td></td>
+                    <td>
+                        <div class="d-flex">
+                            <i class="bi bi-pencil-fill me-2"></i>
+                            <i class="bi bi-info-circle"></i>
+                        </div>
+                    </td>
                 </tr>
                 <% } %>
             </tbody>
         </table>
-    </section>
+    </div>
+</section>
+<section class="d-flex justify-content-center mt-auto">
     <nav aria-label="...">
         <ul class="pagination m-0 justify-content-end">
             <li class="page-item disabled">
@@ -59,4 +64,4 @@
             </li>
         </ul>
     </nav>
-</div>
+</section>
