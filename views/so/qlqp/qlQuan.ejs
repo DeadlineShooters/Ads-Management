@@ -1,14 +1,5 @@
 <% layout('layouts/canbo') %>
-<section class="d-flex">
-    <div>
-        <select class="form-select" aria-label="Default select example">
-            <option selected>Quản lý danh sách Quận</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-    </div>
-</section>
+<%- include('../../partials/so/quanLyTopSection') %>
 <section class="overflow-auto my-3 border rounded">
     <div class=" ">
         <table class="table table-light table-striped">
@@ -22,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                <% for (let i = 1; i<4; i++) { %>
+                <% for (let i = 1; i<14; i++) { %>
                 <tr>
                     <th scope="row"><%= i %></th>
                     <td>
@@ -38,8 +29,9 @@
                     </td>
                     <td>
                         <div class="d-flex">
-                            <i class="bi bi-pencil-fill me-2"></i>
-                            <i class="bi bi-info-circle"></i>
+                            <a href="/so/qlquan/21127089/qlphuong"><i class="bi bi-info-circle"></i></a>
+                            <a href="/so/qlquan/21127089/edit"><i class="bi bi-pencil-fill ms-2"></i></a>
+                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
                         </div>
                     </td>
                 </tr>
