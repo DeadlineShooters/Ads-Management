@@ -1,10 +1,22 @@
-
 <div>
-    <select class="form-select" aria-label="Default select example">
-        <option selected><a href="">Quản lý danh sách Quận, Phường</a></option>
-        <option value="1"><a href="">Quản lý loại hình quảng cáo</a></option>
-        <option value="2"><a href="">Quản lý loại hình thức báo cáo</a></option>
-        <option value="3"><a href="">Quản lý các điểm đặt quảng cáo</a></option>
-        <option value="3"><a href="">Quản lý các bảng quảng cáo</a></option>
+    <select class="form-select" aria-label="Default select example" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+        <option value="/so/qlquan">Quản lý danh sách Quận, Phường</option>
+        <option value="/so/qlloaihinhqc" selected>Quản lý loại hình quảng cáo</option>
+        <option value="/so/qlloaihinhthucbc">Quản lý loại hình thức báo cáo</option>
+        <option value="/so/qlcacdiemdatqc">Quản lý các điểm đặt quảng cáo</option>
+        <option value="/so/qlcacbangqc">Quản lý các bảng quảng cáo</option>
     </select>
 </div>
+
+<!-- <div class="dropdown">
+    <button id="qldropdowns" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Dropdown button
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item active" href="/so/qlquan">Quản lý danh sách Quận, Phường</a></li>
+      <li><a class="dropdown-item" href="/so/qlloaihinhqc">Quản lý loại hình quảng cáo</a></li>
+      <li><a class="dropdown-item" href="#">Quản lý loại hình thức báo cáo</a></li>
+      <li><a class="dropdown-item" href="#">Quản lý các điểm đặt quảng cáo</a></li>
+      <li><a class="dropdown-item" href="#">Quản lý các bảng quảng cáo</a></li>
+    </ul>
+</div> -->
