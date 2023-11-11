@@ -23,7 +23,7 @@ danApp.use('/', danRoutes);
 danApp.use('/public', express.static('public'));
 
 canBoApp.get('/', (req, res) => {
-    res.render('dan/index.ejs'); // trang chủ của dân xài chung cho bên cán bộ
+    res.render('dan/home/index.ejs'); // trang chủ của dân xài chung cho bên cán bộ
 })
 
 canBoApp.use('/phuong', phuongRoutes);
