@@ -1,5 +1,5 @@
 import express from "express";
-import path from "path";
+import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
 import danRoutes from "./routes/dan.js";
 import phuongRoutes from "./routes/phuong.js";
@@ -46,7 +46,8 @@ danApp.use("/public", express.static("public"));
 
 // Apply the isAuthenticated middleware to the root route
 canBoApp.get("/", (req, res) => {
-  console.log(`user: ${req.user.role}`);
+  // console.log(`user: ${req.user.role}`);
+  console.log("user:", req.user);
 
   if (req.user) {
     return res.render("index.ejs");
