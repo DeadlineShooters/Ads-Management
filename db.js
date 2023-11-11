@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema({
   hashed_password: { type: String, required: true },
   salt: { type: String, required: true },
   role: { type: String, required: true },
+  ward: { type: Number },
+  district: { type: Number },
+  phoneNumber: { type: String },
+  birthDate: { type: Date },
 });
 
 const User = mongoose.model("User", userSchema);
@@ -22,6 +26,7 @@ const update = {
   email: "alice@gmail.com",
   hashed_password: hashedPassword,
   role: "phuong",
+
   salt: salt,
 };
 //  If no document is found, it can create a new document based on the update criteria.
