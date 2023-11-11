@@ -232,3 +232,64 @@ input:checked + .toggle-slider:before {
 .violate-icon {
     color: #fff;
 }
+
+.click-marker__info {
+    font-size: 1.4rem;
+    width: 357px;
+}
+
+.click-marker__info .info__item {
+    display: flex;
+    gap: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 16px;
+}
+
+.click-marker__info .info__item + .info__item {
+    margin-top: 8px;
+}
+
+.click-marker__info .item__icon {
+    font-size: 1.8rem;
+    padding-top: 8px;
+}
+
+.click-marker__info .info__ads {
+    color: #024463;
+    background-color: #E5F6FD;
+}
+
+.click-marker__info .info__location {
+    color: #1E4620;
+    background: #EDF7ED;
+}
+
+.click-marker__info .location__name {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.click-marker__info .item__title {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.click-marker__info .location__report-btn {
+    color: #D32E2E;
+    border: 1px solid #E99E9E;
+    border-radius: 4px;
+    padding: 6px 12px;
+    float: right;
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.click-marker__info .location__report-btn .item__icon {
+    padding: 0 8px 0 0;
+}
+
+.click-marker__info .location__report-btn span {
+    font-weight: 600;
+}
