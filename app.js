@@ -21,9 +21,9 @@ canBoApp.use(express.static("public"));
 danApp.use("/", danRoutes);
 danApp.use("/public", express.static("public"));
 
-canBoApp.get("/", (req, res) => {
-  res.render("dan/index.ejs"); // trang chủ của dân xài chung cho bên cán bộ
-});
+canBoApp.get('/', (req, res) => {
+    res.render('dan/home/index.ejs'); // trang chủ của dân xài chung cho bên cán bộ
+})
 
 canBoApp.use("/phuong", phuongRoutes);
 canBoApp.use("/quan", quanRoutes);
