@@ -7,35 +7,41 @@ import LocalStrategy from "passport-local";
 import bcrypt from "bcrypt";
 
 passport.use(
-  new LocalStrategy(async function (email, password, cb) {
-    console.log("Inside verify function");
-    try {
-      const user = await User.findOne({ email });
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async function (email, password, cb) {
+      console.log("Inside verify function");
+      try {
+        const user = await User.findOne({ email });
 
-      if (!user) {
-        console.log("No such user with that email found.");
-        return cb(null, false, {
-          message: "No such user with that email found.",
-        });
+        if (!user) {
+          console.log("No such user with that email found.");
+          return cb(null, false, {
+            message: "No such user with that email found.",
+          });
+        }
+
+        const passwordMatch = await bcrypt.compare(
+          password,
+          user.hashed_password
+        );
+
+        if (!passwordMatch) {
+          console.log("Incorrect email or password.");
+          return cb(null, false, { message: "Incorrect email or password." });
+        }
+
+        console.log("Validation passed");
+        return cb(null, user);
+      } catch (err) {
+        console.error(err);
+        return cb(err);
       }
-
-      const passwordMatch = await bcrypt.compare(
-        password,
-        user.hashed_password
-      );
-
-      if (!passwordMatch) {
-        console.log("Incorrect email or password.");
-        return cb(null, false, { message: "Incorrect email or password." });
-      }
-
-      console.log("Validation passed");
-      return cb(null, user);
-    } catch (err) {
-      console.error(err);
-      return cb(err);
     }
-  })
+  )
 );
 
 var router = express.Router();

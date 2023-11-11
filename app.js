@@ -20,7 +20,10 @@ canBoApp.engine("ejs", ejsMate);
 canBoApp.set("view engine", "ejs");
 canBoApp.set("views", path.join(__dirname, "/views"));
 console.log(__dirname);
-canBoApp.use(passport.initialize());
+
+canBoApp.use(express.json());
+canBoApp.use(express.urlencoded({ extended: false }));
+// canBoApp.use(passport.initialize());
 
 canBoApp.use(express.static("public"));
 canBoApp.use(
