@@ -1,0 +1,75 @@
+<% layout('layouts/canbo') %>
+
+<style>
+    p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-weight: bold;
+    }
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    a:hover {
+        color: #0d6efd;   
+    }
+</style>
+
+<div class="container m-2 p-3 bg-light rounded overflow-auto">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="bi bi-house-fill"></i></a></li>
+            <li class="breadcrumb-item"><a href="/so/canbo/tai-khoan-cb">Danh sách tài khoản cán bộ phường quận</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa tài khoản cán bộ</li>
+        </ol>
+    </nav>
+    <div class="container col-lg-8 mt-4">
+        <div class="card">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <p class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sửa tài khoản cán bộ</p>
+                <div class="col-10 mt-3 ps-3">
+                    <label class="fw-bold">Họ tên</label>
+                    <input type="text" name="" placeholder="Nhập họ tên cán bộ" class="form-control">
+                </div>
+                <div class="col-5 mt-3 ps-3">
+                    <label class="fw-bold">Ngày sinh</label>
+                    <input type="date" name="" placeholder="Chọn ngày, tháng, năm sinh" class="form-control">
+                </div>
+                <div class="col-5 mt-3 ps-3">
+                    <label class="fw-bold">Số điện thoại</label>
+                    <input type="text" name="" placeholder="Nhập số điện thoại" class="form-control">
+                </div>
+                <div class="col-10 mt-3 ps-3">
+                    <label class="fw-bold">Email</label>
+                    <input type="text" name="" placeholder="Nhập địa chỉ email" class="form-control">
+                </div>
+                
+                <div class="col-5 mt-3 ps-3">
+                    <label class="fw-bold">Quận quản lý</label>
+                    <select class="form-select" name="" id="">
+                        <option selected>Chọn quận</option>
+                        <option value="">Tân Bình</option>
+                        <option value="">Quận 6</option>
+                    </select>
+                </div>
+                <div class="col-5 mt-3 ps-3">
+                    <label class="fw-bold">Phường quản lý</label>
+                    <select class="form-select" name="" id="">
+                        <option selected>Chọn phường</option>
+                        <option value="">Phường 13</option>
+                        <option value="">Phường 14</option>
+                        <option value="">Phường 15</option>
+                    </select>
+                </div>
+                <div class="col-10 mt-3 ps-3">
+                    <label class="fw-bold">Mật khẩu đăng nhập</label>
+                    <input type="password" name="" placeholder="Nhập mật khẩu ban đầu cho cán bộ (thay đổi sau)" class="form-control">
+                </div>
+                <div class="col-4 mt-5 mb-5 mx-1 mx-md-4 ps-3">
+                    <button class="form-control fs-6 fw-bold" style="background-color: #468b4a;"><p class="text-white">Tạo tài khoản</p></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
