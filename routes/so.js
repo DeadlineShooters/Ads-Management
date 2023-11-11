@@ -41,4 +41,14 @@ router.get("/qlloaihinhqc/new", (req, res) => {
   res.render("so/qlLoaiHinhqc/new");
 });
 
+router.get("/qlloaihinhthucbc", (req, res) => {
+  res.render("so/qlLoaiHinhthucbc/ql");
+});
+router.get("/qlloaihinhthucbc/21127089/edit", (req, res) => {
+  res.render("so/qlLoaiHinhthucbc/edit");
+});
+router.get("/qlloaihinhthucbc/new", (req, res) => {
+  res.render("so/qlLoaiHinhthucbc/new");
+});
+
 export default router;
