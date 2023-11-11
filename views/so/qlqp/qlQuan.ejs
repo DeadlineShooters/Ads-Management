@@ -1,15 +1,15 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
-    <%#- include('../../partials/so/quanLyDropdown') %>
-    <div>
-        <select class="form-select" aria-label="Default select example" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+    <%- include('../../partials/so/quanLyDropdown') %>
+    <!-- <div>
+        <select class="form-select" aria-label="Default select example" onchange="location = this.value">
             <option value="/so/qlquan" selected>Quản lý danh sách Quận, Phường</option>
             <option value="/so/qlloaihinhqc">Quản lý loại hình quảng cáo</option>
             <option value="/so/qlloaihinhthucbc">Quản lý loại hình thức báo cáo</option>
-            <option value="/so/qlcacdiemdatqc">Quản lý các điểm đặt quảng cáo</option>
-            <option value="/so/qlcacbangqc">Quản lý các bảng quảng cáo</option>
+            <option value="/so/qldiemdatqc">Quản lý các điểm đặt quảng cáo</option>
+            <option value="/so/qlbangqc">Quản lý các bảng quảng cáo</option>
         </select>
-    </div>
+    </div> -->
     <div>
         <a class="btn btn-primary rounded-pill" href="/so/qlquan/new" role="button">Thêm <i class="bi bi-plus"></i></a>
     </div>

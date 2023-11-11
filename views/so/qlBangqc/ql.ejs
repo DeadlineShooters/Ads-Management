@@ -11,7 +11,7 @@
         </select>
     </div> -->
     <div>
-        <a class="btn btn-primary rounded-pill" href="/so/qldiemdatqc/new" role="button">Thêm <i class="bi bi-plus"></i></a>
+        <a class="btn btn-primary rounded-pill" href="/so/qlbangqc/new" role="button">Thêm <i class="bi bi-plus"></i></a>
     </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
@@ -22,14 +22,15 @@
                     <th scope="col">No.</th>
                     <th scope="col">Địa chỉ</th>
                     <th scope="col">Khu vực</th>
-                    <th scope="col">Phân loại</th>
-                    <th scope="col">Hình thức</th>
+                    <th scope="col">Loại bảng</th>
+                    <th scope="col">Kích thước</th>
+                    <th scope="col">Số lượng</th>
                     <th scope="col">Tình trạng</th>
                 </tr>
             </thead>
             <tbody>
                 <% for (let i = 1; i<4; i++) { %>
-                <tr class='clickable' onclick= "window.location='/so/qldiemdatqc/details'">
+                <tr class='clickable' onclick= "window.location='/so/qlbangqc/details'">
                     <th scope="row"><%= i %></th>
                     <td>
                         157 Nguyễn Đình Chính
@@ -38,13 +39,16 @@
                         Phường 11, Quận Phú Nhuận
                     </td>
                     <td>
-                        Đất công/Công viên/Hành lang an toàn giao thông
+                        Trụ màn hình điện tử LED
                     </td>
                     <td>
-                        Hành lang quảng cáo thương mại
+                        2.5m x 10m
                     </td>
                     <td>
-                        Chưa quy hoạch
+                        2 trụ/bảng
+                    </td>
+                    <td>
+                        Chưa duyệt
                     </td>
                 </tr>
                 <% } %>

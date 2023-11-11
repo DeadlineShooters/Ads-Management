@@ -51,4 +51,17 @@ router.get("/qlloaihinhthucbc/new", (req, res) => {
   res.render("so/qlLoaiHinhthucbc/new");
 });
 
+router.get("/qldiemdatqc", (req, res) => {
+  res.render("so/qlDiemDatqc/ql");
+});
+router.get("/qldiemdatqc/21127089", (req, res) => {
+  res.render("so/qlDiemDatqc/details");
+});
+router.get("/qldiemdatqc/21127089/edit", (req, res) => {
+  res.render("so/qlDiemDatqc/edit");
+});
+router.get("/qldiemdatqc/new", (req, res) => {
+  res.render("so/qlDiemDatqc/new");
+});
+
 export default router;
