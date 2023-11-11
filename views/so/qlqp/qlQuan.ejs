@@ -1,0 +1,73 @@
+<% layout('layouts/canbo') %>
+<section class="d-flex justify-content-between">
+    <%- include('../../partials/so/quanLyDropdown') %>
+    <!-- <div>
+        <select class="form-select" aria-label="Default select example" onchange="location = this.value">
+            <option value="/so/qlquan" selected>Quản lý danh sách Quận, Phường</option>
+            <option value="/so/qlloaihinhqc">Quản lý loại hình quảng cáo</option>
+            <option value="/so/qlloaihinhthucbc">Quản lý loại hình thức báo cáo</option>
+            <option value="/so/qldiemdatqc">Quản lý các điểm đặt quảng cáo</option>
+            <option value="/so/qlbangqc">Quản lý các bảng quảng cáo</option>
+        </select>
+    </div> -->
+    <div>
+        <a class="btn btn-primary rounded-pill" href="/so/qlquan/new" role="button">Thêm <i class="bi bi-plus"></i></a>
+    </div>
+</section>
+<section class="overflow-auto my-3 border rounded">
+    <div class=" ">
+        <table class="table table-light table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Tên Quận</th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col">Chú thích</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let i = 1; i<14; i++) { %>
+                <tr id="myElement">
+                    <th scope="row"><%= i %></th>
+                    <td>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing
+                        elit.
+                    </td>
+                    <td>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit.
+                    </td>
+                    <td>
+                        <div class="d-flex">
+                            <a href="/so/qlquan/21127089/qlphuong"><i class="bi bi-info-circle"></i></a>
+                            <a href="/so/qlquan/21127089/edit"><i class="bi bi-pencil-fill ms-2"></i></a>
+                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</section>
+<section class="d-flex justify-content-center mt-auto">
+    <nav aria-label="...">
+        <ul class="pagination m-0 justify-content-end">
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+</section>
