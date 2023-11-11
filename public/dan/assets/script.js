@@ -13,7 +13,7 @@ async function initMap() {
 	const map = new Map(document.getElementById("map"), {
 	 	zoom: 17,
 	  	center: myLatLng,
-		mapId: "d0bfe1c8a852a975",
+		mapId: "4da86483d3585bb",
 		mapTypeControl: false,
 	});
   
@@ -23,13 +23,13 @@ async function initMap() {
 	  	title: "Hello World!",
 	});
 
-	const marker = new AdvancedMarkerElement({
+	const adsPointMarker = new AdvancedMarkerElement({
 		map,
 		position: { lat: 10.76122515287606, lng: 106.68615638913559 },
 		content: adsPoint,
 	});
 	
-	marker.addListener('click', () => {});
+	adsPointMarker.addListener('click', () => {});
 }
   
 initMap();
