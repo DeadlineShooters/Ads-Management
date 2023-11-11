@@ -12,6 +12,11 @@
     <!-- Link icon bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <title>Ads Management</title>
     <!-- General css file -->
     <link rel="stylesheet" href="/style.css" />
     <!-- css file riêng -->
@@ -23,8 +28,12 @@
   <body>
     <!-- <%- include('../partials/header') %> -->
     <main class="d-flex vh-100">
+      <!-- here check whether role is so or phuong/quan to use the right sidebar  -->
       <%- include('../partials/so_sidebar') %>
-      <div class="container m-2 p-3 rounded overflow-auto" id="outer-rectangle">
+      <div
+        class="m-2 p-3 flex-grow-1 rounded d-flex flex-column"
+        id="outer-rectangle"
+      >
         <%- body %>
       </div>
     </main>
@@ -41,5 +50,6 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <script src="/so/javascripts/function.js"></script>
   </body>
 </html>
