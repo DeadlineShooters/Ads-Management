@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="<%-cssfile%>" />
     <%}%>
   </head>
-  <body class="container-fluid">
+  <body>
     <!-- <%- include('../partials/header') %> -->
-    <main class="vh-100 row">
+    <main class="vh-100 d-flex">
       <%- include('../partials/so_sidebar') %>
-      <div class="m-2 p-3 rounded d-flex flex-column col h-100" id="outer-rectangle">
+      <div class="m-2 p-3 flex-grow-1 rounded d-flex flex-column "id="outer-rectangle">
         <%- body %>
       </div>
     </main>
@@ -39,5 +39,6 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <script src="/so/javascripts/deleteListItem.js"></script>
   </body>
 </html>

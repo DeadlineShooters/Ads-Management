@@ -1,5 +1,10 @@
 <% layout('layouts/canbo') %>
-<%- include('../../partials/so/quanLyTopSection') %>
+<section class="d-flex justify-content-between">
+    <%- include('../../partials/so/quanLyDropdown') %>
+    <div>
+        <a class="btn btn-primary rounded-pill" href="/so/qlquan/new" role="button">Thêm <i class="bi bi-plus"></i></a>
+    </div>
+</section>
 <section class="overflow-auto my-3 border rounded">
     <div class=" ">
         <table class="table table-light table-striped">

@@ -1,5 +1,10 @@
 <% layout('layouts/canbo') %>
-<%- include('../../partials/so/quanLyTopSection') %>
+<section class="d-flex justify-content-between">
+    <%- include('../../partials/so/quanLyDropdown') %>
+    <div>
+        <a class="btn btn-primary rounded-pill" href="/so/qlquan/21127089/qlphuong/new" role="button">Thêm <i class="bi bi-plus"></i></a>
+    </div>
+</section>
 <section class="overflow-auto my-3 border rounded">
     <div class=" ">
         <table class="table table-light table-striped">
@@ -29,8 +34,7 @@
                     </td>
                     <td>
                         <div class="d-flex">
-                            <a href="./qlPhuong.ejs"><i class="bi bi-info-circle"></i></a>
-                            <a href=""><i class="bi bi-pencil-fill ms-2"></i></a>
+                            <a href="/so/qlquan/21127089/qlphuong/21127119/edit"><i class="bi bi-pencil-fill ms-2"></i></a>
                             <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
                         </div>
                     </td>
