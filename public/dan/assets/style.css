@@ -60,18 +60,14 @@ html {
 
 .ads-point {
     font-size: 1.4rem;
-    position: absolute;
-    top: 450px;
-    right: 300px;
-}
-
-.ads-point__name {
-    background-color: #6fa0ff;
+    background-color: #4285F4;
     padding: 4px;
     border-radius: 50%;
 }
 
 .ads-point__info {
+    font-size: 1.5rem;
+    font-family: Nunito;
     position: absolute;
     bottom: calc(100% + 24px);
     left: 50%;
@@ -81,7 +77,7 @@ html {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-shadow: 0 0 4px #ccc;
+    box-shadow: 0 0 2px #ccc;
     display: none;
 }
 
@@ -91,6 +87,7 @@ html {
 }
 
 .ads-point .info__form {
+    font-size: 1.6rem;
     font-weight: 600;
 }
 
@@ -98,14 +95,14 @@ html {
     margin-bottom: 8px;
 }
 
-.ads-point .info__img {
+.info__img {
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .ads-point .info__planning-stt {
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .ads-point__info::after {
