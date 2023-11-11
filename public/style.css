@@ -1,0 +1,9 @@
+#outer-rectangle {
+  background-color: #f8f8fd;
+  display: flex;
+  align-items: center;
+}
+
+main {
+  background-color: #cad9fb;
+}
