@@ -214,3 +214,21 @@ input:checked + .toggle-slider:before {
     font-family: Nunito;
     margin-left: 8px;
 }
+.ads-point.violate {
+    border: 2px solid #d32e2e;
+}
+
+.violate-point {
+    width: 21px;
+    height: 21px;
+    text-align: center;
+    background-color: #d32e2e;
+    line-height: 21px;
+    font-size: 1.6rem;
+    padding: 4px;
+    border-radius: 50%;
+}
+
+.violate-icon {
+    color: #fff;
+}
