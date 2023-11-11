@@ -13,7 +13,6 @@ passport.use(
       passwordField: "password",
     },
     async function (email, password, cb) {
-      console.log("Inside verify function");
       try {
         const user = await User.findOne({ email });
 
@@ -56,7 +55,7 @@ Note: cb(error, user, message) - message describes why authentication failed.
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, { id: user.id, email: user.email });
+    cb(null, { id: user.id, email: user.email, role: user.role });
   });
 });
 

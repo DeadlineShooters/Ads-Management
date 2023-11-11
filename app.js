@@ -46,7 +46,11 @@ danApp.use("/public", express.static("public"));
 
 // Apply the isAuthenticated middleware to the root route
 canBoApp.get("/", (req, res) => {
-  res.render("dan/index.ejs");
+  console.log(`user: ${req.user.role}`);
+
+  if (req.user) {
+    return res.render("index.ejs");
+  } else return res.redirect("/login");
 });
 
 canBoApp.use("/phuong", phuongRoutes);
