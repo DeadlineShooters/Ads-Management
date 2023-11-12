@@ -36,6 +36,7 @@ canBoApp.use(
     }),
   })
 );
+
 canBoApp.use(passport.authenticate("session"));
 
 // Initialize Passport
