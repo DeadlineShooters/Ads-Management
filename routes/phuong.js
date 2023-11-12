@@ -1,10 +1,6 @@
 import express from "express";
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  // trang chủ
-});
-
 router.get("/chi_tiet_diem_quang_cao", (req, res) => {
   // res.render("phuong/diemQC-details.ejs", { cssfile: "/phuong/style.css" });
   const diemQC = {

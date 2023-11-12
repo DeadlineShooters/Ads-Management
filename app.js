@@ -44,13 +44,12 @@ canBoApp.use(passport.authenticate("session"));
 danApp.use("/", danRoutes);
 danApp.use("/public", express.static("public"));
 
-// Apply the isAuthenticated middleware to the root route
 canBoApp.get("/", (req, res) => {
   // console.log(`user: ${req.user.role}`);
   console.log("user:", req.user);
 
   if (req.user) {
-    return res.render("index.ejs");
+    return res.render("index.ejs", { userRole: req.user.role });
   } else return res.redirect("/login");
 });
 
