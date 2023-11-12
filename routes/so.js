@@ -64,4 +64,17 @@ router.get("/qldiemdatqc/new", (req, res) => {
   res.render("so/qlDiemDatqc/new");
 });
 
+router.get("/qlbangqc", (req, res) => {
+  res.render("so/qlBangqc/ql");
+});
+router.get("/qlbangqc/21127089", (req, res) => {
+  res.render("so/qlBangqc/details");
+});
+router.get("/qlbangqc/21127089/edit", (req, res) => {
+  res.render("so/qlBangqc/edit");
+});
+router.get("/qlbangqc/new", (req, res) => {
+  res.render("so/qlBangqc/new");
+});
+
 export default router;
