@@ -39,9 +39,6 @@ canBoApp.use(
 
 canBoApp.use(passport.authenticate("session"));
 
-// Initialize Passport
-
-// routes
 danApp.use("/", danRoutes);
 danApp.use("/public", express.static("public"));
 
@@ -53,7 +50,7 @@ canBoApp.get("/", (req, res) => {
   } else return res.redirect("/login");
 });
 
-canBoApp.use("/phuong", phuongRoutes);
+canBoApp.use("/", phuongRoutes);
 canBoApp.use("/quan", quanRoutes);
 canBoApp.use("/so", soRoutes);
 canBoApp.use("/", authRouter);

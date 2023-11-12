@@ -15,6 +15,7 @@ router.get("/chi_tiet_diem_quang_cao", (req, res) => {
   res.render("phuong/QC-details.ejs", {
     details: diemQC,
     cssfile: "/style.css",
+    user: req.user,
   });
 });
 
@@ -32,7 +33,10 @@ router.get("/chi_tiet_bang_quang_cao", (req, res) => {
     b1text: "Xem yêu cầu cấp phép",
     b2text: "Chỉnh sửa",
   };
-  res.render("phuong/QC-details.ejs", { details: diemQC });
+  res.render("phuong/QC-details.ejs", { details: diemQC, user: req.user });
 });
 
+router.get("/quang-cao", (req, res) => {
+  res.render("phuong/diemDatList", { user: req.user });
+});
 export default router;
