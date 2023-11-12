@@ -48,7 +48,7 @@ canBoApp.get("/", (req, res) => {
   console.log("user:", req.user);
 
   if (req.user) {
-    return res.render("index.ejs", { userRole: req.user.role });
+    return res.render("index.ejs", { user: req.user });
   } else return res.redirect("/login");
 });
 

@@ -25,7 +25,7 @@
     <!-- <%- include('../partials/header') %> -->
     <main class="d-flex vh-100">
       <!-- here check whether role is so or phuong/quan to use the right sidebar  -->
-      <% if (userRole == "so") { %> <%- include('../partials/so_sidebar') %> <%
+      <% if (user.role == "so") { %> <%- include('../partials/so_sidebar') %> <%
       } else { %> <%- include('../partials//pq_sidebar') %> <% } %>
       <div
         class="m-2 p-3 flex-grow-1 rounded d-flex flex-column"
