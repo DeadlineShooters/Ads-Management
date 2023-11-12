@@ -46,7 +46,10 @@ canBoApp.get("/", (req, res) => {
   console.log("user:", req.user);
 
   if (req.user) {
-    return res.render("index.ejs", { user: req.user });
+    return res.render("index.ejs", {
+      user: req.user,
+      cssfile: "/canbo-home-style.css",
+    });
   } else return res.redirect("/login");
 });
 
