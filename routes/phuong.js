@@ -52,6 +52,11 @@ router.get("/bao-cao", (req, res) => {
   res.render("phuong/reportList", { user: req.user });
 });
 
+router.get("/chi-tiet-bao-cao", (req, res) => {
+  console.log(req.user);
+  res.render("phuong/reportDetails", { user: req.user });
+});
+
 /*------------ Quan ------------- */
 
 export default router;
