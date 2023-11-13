@@ -64,4 +64,29 @@ router.get("/qldiemdatqc/new", (req, res) => {
   res.render("so/qlDiemDatqc/new");
 });
 
+router.get("/qlbangqc", (req, res) => {
+  res.render("so/qlBangqc/ql");
+});
+router.get("/qlbangqc/21127089", (req, res) => {
+  const diemQC = {
+    title: "bảng",
+    boardType: "Trụ màn hình điện tử LED",
+    addr: "157 Nguyễn Đình Chính, Phường 11, Quận Phú Nhuận",
+    adType: "Quảng cáo thương mại",
+    locationType: "Đất công / Công viên / Hành lang an toàn giao thông",
+    size: { w: 2.5, h: 10 },
+    quantity: 2,
+    expireDate: { d: 15, m: 5, y: 24 },
+    b1text: "Xem yêu cầu cấp phép",
+    b2text: "Chỉnh sửa",
+  };
+  res.render("phuong/QC-details.ejs", { details: diemQC });
+});
+router.get("/qlbangqc/21127089/edit", (req, res) => {
+  res.render("so/qlBangqc/edit");
+});
+router.get("/qlbangqc/new", (req, res) => {
+  res.render("so/qlBangqc/new");
+});
+
 export default router;

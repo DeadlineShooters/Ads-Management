@@ -9,6 +9,16 @@ import authRouter from "./routes/auth.js";
 import passport from "passport";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import mongoose from "mongoose";
+
+const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/";
+
+try {
+  await mongoose.connect(mongoURI);
+  console.log("Connected to the database");
+} catch (error) {
+  console.log("Could not connect to the database", error);
+}
 
 const danApp = express();
 const canBoApp = express();
@@ -18,11 +28,11 @@ const __dirname = path.dirname(__filename);
 canBoApp.engine("ejs", ejsMate);
 canBoApp.set("view engine", "ejs");
 canBoApp.set("views", path.join(__dirname, "/views"));
-console.log(__dirname);
+// console.log(__dirname);
 
 canBoApp.use(express.json());
 canBoApp.use(express.urlencoded({ extended: false }));
-// canBoApp.use(passport.initialize());
+canBoApp.use(passport.initialize());
 
 canBoApp.use(express.static("public"));
 canBoApp.use(
@@ -31,13 +41,21 @@ canBoApp.use(
     saveUninitialized: false, // don't create session until something stored
     resave: false, //don't save session if unmodified
     store: MongoStore.create({
-      mongoUrl: "mongodb://127.0.0.1:27017/adsManagement",
+      mongoUrl: mongoURI,
     }),
   })
 );
 
 canBoApp.use(passport.authenticate("session"));
 
+canBoApp.use((req, res, next) => {
+  res.locals.user = req.user;
+  // res.locals.ayo = asfkdjsdfk;
+  next();
+});
+// Initialize Passport
+
+// routes
 danApp.use("/", danRoutes);
 danApp.use("/public", express.static("public"));
 
