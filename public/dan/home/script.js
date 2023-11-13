@@ -8,7 +8,7 @@ async function initMap() {
   map = new Map(document.getElementById("map"), {
     zoom: 17,
     center: { lat: 10.762860099114166, lng: 106.68247164106691 },
-    mapId: "7396b5295dcb3c2",
+    mapId: "e559c2114b59021b",
     mapTypeControl: false,
   });
   const geocoder = new google.maps.Geocoder();
@@ -31,7 +31,7 @@ async function initMap() {
   });
 
   // Đảm bảo sự kiện hoạt động
-  adsPointMarker.addEventListener("click", () => {});
+  adsPointMarker.addListener("click", () => {});
 
   // Điểm qc có báo cáo
   let adsPointViolate = document.createElement("div");
