@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     // res.send('Đây là dân');
-    res.render('dan/index.ejs')
+    res.render('dan/home/index.ejs')
 })
 
 export default router;

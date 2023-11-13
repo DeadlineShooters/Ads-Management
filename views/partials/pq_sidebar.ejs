@@ -1,0 +1,67 @@
+<div
+  class="bg-dark flex-shrink-1 h-100 d-flex flex-column justify-content-between"
+>
+  <div class="bg-dark p-2">
+    <a
+      href=""
+      class="d-flex text-decoration-none mt-1 align-items-center text-white"
+    >
+      <span class="fs-4 d-none d-xl-inline">Ads Management</span>
+    </a>
+    <ul class="nav nav-pills flex-column mt-4">
+      <li class="nav-item text-xl-start text-center">
+        <a
+          href="/"
+          class="nav-link text-white sidebar-nav"
+          aria-current="page"
+          id="nav1"
+        >
+          <i class="bi bi-house-fill fs-5"></i
+          ><span class="fs-5 ms-3 d-none d-xl-inline">Trang chủ</span>
+        </a>
+      </li>
+      <li class="nav-item text-xl-start text-center">
+        <a
+          href="/quang-cao"
+          class="nav-link text-white sidebar-nav"
+          aria-current="page"
+          id="nav2"
+        >
+          <i class="bi bi-folder-fill fs-5"></i
+          ><span class="fs-5 ms-3 d-none d-xl-inline">Quảng cáo</span>
+        </a>
+      </li>
+      <li class="nav-item text-xl-start text-center">
+        <a
+          href="/bao-cao"
+          class="nav-link text-white sidebar-nav"
+          aria-current="page"
+          id="nav3"
+        >
+          <i class="bi bi-exclamation-octagon-fill fs-5"></i>
+          <span class="fs-5 ms-3 d-none d-xl-inline">Báo cáo</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="dropdown open">
+    <button
+      class="btn border-none dropdown-toggle text-white"
+      type="button"
+      id="triggerId"
+      data-bs-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <i class="bi bi-person-circle fs-2"></i
+      ><span class="ms-2 d-none d-xl-inline">Nguyễn Tuấn Kiệt</span>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="triggerId">
+      <button class="dropdown-item" href="#">Cập nhật thông tin</button>
+      <form action="/logout" method="post">
+        <button class="logout dropdown-item" type="submit">Đăng xuất</button>
+      </form>
+    </div>
+  </div>
+</div>
