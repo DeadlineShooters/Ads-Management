@@ -2,8 +2,7 @@ import express from "express";
 import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
 import danRoutes from "./routes/dan.js";
-import phuongRoutes from "./routes/phuong.js";
-import quanRoutes from "./routes/quan.js";
+import phuongQuanRoutes from "./routes/phuong.js";
 import soRoutes from "./routes/so.js";
 import ejsMate from "ejs-mate";
 import authRouter from "./routes/auth.js";
@@ -53,10 +52,9 @@ canBoApp.get("/", (req, res) => {
   } else return res.redirect("/login");
 });
 
-canBoApp.use("/", phuongRoutes);
-canBoApp.use("/quan", quanRoutes);
-canBoApp.use("/so", soRoutes);
 canBoApp.use("/", authRouter);
+canBoApp.use("/", phuongQuanRoutes);
+canBoApp.use("/so", soRoutes);
 
 danApp.listen(3000, () => {
   console.log("Serving on port 3000");

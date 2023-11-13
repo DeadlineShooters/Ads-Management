@@ -1,7 +1,7 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
   <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
-  <%- include('../partials/quan/diem-ward-dropdown') %> <%}%>
+  <%- include('../partials/quan/bang-ward-dropdown') %> <%}%>
 </section>
 <section class="overflow-auto my-3 border rounded">
   <div class=" ">
@@ -10,8 +10,10 @@
         <tr>
           <th scope="col">Địa chỉ</th>
           <th scope="col">Khu vực</th>
-          <th scope="col">Phân loại</th>
-          <th scope="col">Hình thức</th>
+          <th scope="col">Loại bảng</th>
+          <th scope="col">Kích thước</th>
+          <th scope="col">Số lượng</th>
+          <th scope="col">Tình trạng</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -20,8 +22,16 @@
         <tr class="myElement">
           <td><%=150 + i %> Nguyễn Đình Chính</td>
           <td class="khuVucField">Phường 1, Quận <%=user.district%></td>
-          <td>Đất công/Công viên/Hành lang an toàn giao thông</td>
-          <td>Quảng cáo thương mại</td>
+          <td>Trụ màn hình điện tử LED</td>
+          <td>2.5m x 10m</td>
+          <td>2 trụ/bảng</td>
+          <%if (i == 1) { %>
+          <td><span class="badge text-bg-secondary">Chưa duyệt</span></td>
+          <%} else if (i == 2) {%>
+          <td><span class="badge text-bg-danger">Bị từ chối</span></td>
+          <% }else { %>
+          <td><span class="badge text-bg-success">Đã duyệt</span></td>
+          <%}%>
           <td>
             <div class="d-flex">
               <a href="/so/qlquan/21127089/qlphuong"

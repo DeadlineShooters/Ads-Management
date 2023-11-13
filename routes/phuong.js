@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-router.get("/chi_tiet_diem_quang_cao", (req, res) => {
+router.get("/chi_tiet_diem", (req, res) => {
   // res.render("phuong/diemQC-details.ejs", { cssfile: "/phuong/style.css" });
   const diemQC = {
     title: "điểm đặt",
@@ -19,7 +19,7 @@ router.get("/chi_tiet_diem_quang_cao", (req, res) => {
   });
 });
 
-router.get("/chi_tiet_bang_quang_cao", (req, res) => {
+router.get("/chi_tiet_bang", (req, res) => {
   // res.render("phuong/diemQC-details.ejs", { cssfile: "/phuong/style.css" });
   const diemQC = {
     title: "bảng",
@@ -36,7 +36,17 @@ router.get("/chi_tiet_bang_quang_cao", (req, res) => {
   res.render("phuong/QC-details.ejs", { details: diemQC, user: req.user });
 });
 
-router.get("/quang-cao", (req, res) => {
+router.get("/diem-dat-quang-cao", (req, res) => {
+  console.log(req.user);
+
   res.render("phuong/diemDatList", { user: req.user });
 });
+
+router.get("/bang-quang-cao", (req, res) => {
+  console.log(req.user);
+  res.render("phuong/bangList", { user: req.user });
+});
+
+/*------------ Quan ------------- */
+
 export default router;

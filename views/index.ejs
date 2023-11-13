@@ -46,8 +46,8 @@
 
   <body>
     <main class="d-flex vh-100">
-      <% if (user.role == "so") { %> <%- include('../partials/so_sidebar') %> <%
-      } else { %> <%- include('partials/pq_sidebar') %> <% } %>
+      <% if (user.role == "so") { %> <%- include('partials/so_sidebar') %> <% }
+      else { %> <%- include('partials/pq_sidebar') %> <% } %>
       <div class="container-fluid content-wrapper">
         <div class="row">
           <div class="col col-lg-8 search-bar">
