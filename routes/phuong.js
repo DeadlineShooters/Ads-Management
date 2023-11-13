@@ -37,24 +37,26 @@ router.get("/chi_tiet_bang", (req, res) => {
 });
 
 router.get("/diem-dat-quang-cao", (req, res) => {
-  console.log(req.user);
-
   res.render("phuong/diemDatList", { user: req.user });
 });
 
 router.get("/bang-quang-cao", (req, res) => {
-  console.log(req.user);
   res.render("phuong/bangList", { user: req.user });
 });
 
 router.get("/bao-cao", (req, res) => {
-  console.log(req.user);
   res.render("phuong/reportList", { user: req.user });
 });
 
 router.get("/chi-tiet-bao-cao", (req, res) => {
-  console.log(req.user);
   res.render("phuong/reportDetails", { user: req.user });
+});
+
+router.post("/update-report-status", (req, res) => {
+  const status = req.body.status;
+  const method = req.body.method;
+  console.log(`Status: ${status}, Method: ${method}`);
+  res.redirect("/chi-tiet-bao-cao");
 });
 
 /*------------ Quan ------------- */

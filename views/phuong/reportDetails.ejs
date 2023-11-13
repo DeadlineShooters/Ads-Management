@@ -1,14 +1,177 @@
 <% layout('layouts/canbo') %>
 
-<div class="card">
+<div class="card" style="background: #f8f8fd">
   <h5 class="card-header bg-primary-subtle">Chi tiết báo cáo</h5>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">
-      With supporting text below as a natural lead-in to additional content.
-    </p>
-    <a href="#" class="btn btn-secondary"
-      >Cập nhật tình trạng và cách thức xử lý</a
-    >
+  <div class="card-body container">
+    <div class="row mb-3">
+      <div class="col-md-5">
+        <div class="input-group">
+          <span class="input-group-text bg-body-secondary fw-semibold"
+            >Thời điểm gửi</span
+          >
+          <span class="form-control" aria-label="Thời điểm gửi"
+            >25/10/2023 15h30</span
+          >
+        </div>
+      </div>
+
+      <div class="col-md-7">
+        <div class="input-group">
+          <span class="input-group-text bg-body-secondary fw-semibold"
+            >Địa điểm bị báo cáo</span
+          >
+          <span class="form-control" aria-label="Địa điểm bị báo cáo"
+            >446 Hoàng Văn Thụ, Phường 4, Tân Bình, Thành phố Hồ Chí Minh
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-text bg-body-secondary fw-semibold"
+            >Họ tên người gửi</span
+          >
+          <span class="form-control" aria-label="Họ tên người gửi"
+            >Phạm Văn A</span
+          >
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-text bg-body-secondary fw-semibold"
+            >Email</span
+          >
+          <span class="form-control" aria-label="Email">123@example.com </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-text bg-body-secondary fw-semibold"
+            >Điện thoại liên lạc</span
+          >
+          <span class="form-control" aria-label="Điện thoại liên lạc"
+            >0123456789</span
+          >
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-text bg-body-secondary fw-semibold"
+            >Hình thức báo cáo</span
+          >
+          <span class="form-control" aria-label="Hình thức báo cáo"
+            >Tố giác sai phạm
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <div class="input-group">
+          <span class="input-group-text bg-body-secondary fw-semibold"
+            >Hình minh họa</span
+          >
+          <span class="form-control" aria-label="Hình minh họa">
+            <img
+              src="/phuong/images/sample.png"
+              class="img-thumbnail"
+              alt="hinh-minh-hoa"
+            />
+            <img
+              src="/phuong/images/sample.png"
+              class="img-thumbnail"
+              alt="hinh-minh-hoa"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <button
+        type="button"
+        class="btn btn-secondary w-auto m-auto"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        Cập nhật tình trạng và cách thức xử lý
+      </button>
+    </div>
   </div>
 </div>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <form
+      class="modal-content"
+      action="/update-report-status"
+      method="post"
+      id="updateReport"
+    >
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Cập nhật tình trạng và cách thức xử lý
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <span class="input-group-text bg-body-secondary fw-semibold"
+            >Tình trạng xử lý</span
+          >
+          <select
+            class="form-select"
+            aria-label="Tình trạng xử lý"
+            name="status"
+          >
+            <option value="1">Đang xử lý</option>
+            <option value="2">Đã xử lý xong</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text bg-body-secondary fw-semibold"
+            >Cách thức xử lý</span
+          >
+          <textarea
+            name="method"
+            class="form-control"
+            aria-label="Cách thức xử lý"
+            rows="5"
+            placeholder="Quảng cáo thức uống của công ty Wakeup 247. Phong cách thiết kế 3D kết hợp Die-cut làm cho các  chi tiết trên bảng Wake Up 247 - Nước tăng lực vị cà phê trở nên nổi bật. Không những vậy, việc sáng tạo bằng cách cho tia sét phát ra từ hạt cà phê, “truyền” vào chai Wakeup 247 đã thể hiện rất sống động thông điệp của nhãn hàng."
+          ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          onclick=""
+        >
+          Cập nhật
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  function updateReport() {}
+</script>
