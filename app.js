@@ -42,9 +42,10 @@ danApp.use("/", danRoutes);
 danApp.use("/public", express.static("public"));
 
 canBoApp.get("/", (req, res) => {
-  console.log("user:", req.user);
+  // console.log("user:", req.user);
 
   if (req.user) {
+    console.log("rendering");
     return res.render("index.ejs", {
       user: req.user,
       cssfile: "/canbo-home-style.css",
