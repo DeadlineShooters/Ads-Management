@@ -29,7 +29,7 @@
       <% if (user.role == "so") { %> <%- include('../partials/so_sidebar') %> <%
       } else { %> <%- include('../partials/pq_sidebar') %> <% } %>
       <div
-        class="m-2 p-3 flex-grow-1 rounded d-flex flex-column"
+        class="m-2 p-3 flex-grow-1 rounded d-flex flex-column overflow-auto"
         id="outer-rectangle"
       >
         <%- body %>
