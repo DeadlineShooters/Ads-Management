@@ -31,7 +31,7 @@ async function initMap() {
   });
 
   // Đảm bảo sự kiện hoạt động
-  adsPointMarker.addEventListener("click", () => {});
+  adsPointMarker.addListener("click", () => {});
 
   // Điểm qc có báo cáo
   let adsPointViolate = document.createElement("div");
