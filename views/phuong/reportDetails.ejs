@@ -138,9 +138,11 @@
             class="form-select"
             aria-label="Tình trạng xử lý"
             name="status"
+            required
           >
-            <option value="1">Đang xử lý</option>
-            <option value="2">Đã xử lý xong</option>
+            <option value="" disabled selected>Chọn tình trạng xử lý</option>
+            <option value="Đang xử lý">Đang xử lý</option>
+            <option value="Đã xử lý xong">Đã xử lý xong</option>
           </select>
         </div>
         <div class="input-group mb-3">
@@ -152,7 +154,6 @@
             class="form-control"
             aria-label="Cách thức xử lý"
             rows="5"
-            placeholder="Quảng cáo thức uống của công ty Wakeup 247. Phong cách thiết kế 3D kết hợp Die-cut làm cho các  chi tiết trên bảng Wake Up 247 - Nước tăng lực vị cà phê trở nên nổi bật. Không những vậy, việc sáng tạo bằng cách cho tia sét phát ra từ hạt cà phê, “truyền” vào chai Wakeup 247 đã thể hiện rất sống động thông điệp của nhãn hàng."
           ></textarea>
         </div>
       </div>
@@ -164,7 +165,7 @@
           type="submit"
           class="btn btn-primary"
           data-bs-dismiss="modal"
-          onclick=""
+          onclick="updateReport()"
         >
           Cập nhật
         </button>
@@ -173,5 +174,37 @@
   </div>
 </div>
 <script>
-  function updateReport() {}
+  const statusDropdown = document.querySelector("select");
+  const methodTextarea = document.querySelector(
+    'textarea[aria-label="Cách thức xử lý"]'
+  );
+
+  // update report status and method on "Cập nhật"
+  function updateReport() {
+    const status = statusDropdown.value;
+    const method = methodTextarea.value;
+
+    console.log(method);
+    localStorage.setItem("lastReportStatus", status);
+    localStorage.setItem("lastReportMethod", method);
+  }
+
+  // Get previous status and method on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    const lastReportStatus = localStorage.getItem("lastReportStatus");
+    const lastReportMethod = localStorage.getItem("lastReportMethod");
+
+    if (lastReportStatus) {
+      document.querySelector(
+        `option[value="${lastReportStatus}"]`
+      ).selected = true;
+    }
+
+    console.log(lastReportMethod);
+
+    if (lastReportMethod) {
+      methodTextarea.value = lastReportMethod;
+      console.log("should work");
+    }
+  });
 </script>
