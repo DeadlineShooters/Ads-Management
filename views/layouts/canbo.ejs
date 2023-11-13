@@ -17,6 +17,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
     <title>Ads Management</title>
+
     <!-- General css file -->
     <link rel="stylesheet" href="/style.css" />
     <!-- css file riêng -->
@@ -29,9 +30,10 @@
     <!-- <%- include('../partials/header') %> -->
     <main class="d-flex vh-100">
       <!-- here check whether role is so or phuong/quan to use the right sidebar  -->
-      <%- include('../partials/so_sidebar') %>
+      <% if (user.role == "so") { %> <%- include('../partials/so_sidebar') %> <%
+      } else { %> <%- include('../partials/pq_sidebar') %> <% } %>
       <div
-        class="m-2 p-3 flex-grow-1 rounded d-flex flex-column"
+        class="m-2 p-3 flex-grow-1 rounded d-flex flex-column overflow-auto"
         id="outer-rectangle"
       >
         <%- body %>

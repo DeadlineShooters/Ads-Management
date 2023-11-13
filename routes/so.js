@@ -5,7 +5,7 @@ router.get("/qlquan", (req, res) => {
   // Tìm lấy tất cả quận trong db
   // const dsQuan = await Quan.find({})
   const dsQuan = null;
-  res.render("so/qlqp/qlQuan", {dsQuan});
+  res.render("so/qlqp/qlQuan", { dsQuan, user: req.user });
 });
 
 router.get("/qlquan/new", (req, res) => {
@@ -32,7 +32,7 @@ router.get("/qlquan/:quanId/qlphuong/:phuongID/edit", (req, res) => {
 });
 
 router.get("/qlloaihinhqc", (req, res) => {
-  res.render("so/qlLoaiHinhqc/ql");
+  res.render("so/qlLoaiHinhqc/ql", { user: req.user });
 });
 router.get("/qlloaihinhqc/21127089/edit", (req, res) => {
   res.render("so/qlLoaiHinhqc/edit");
@@ -98,5 +98,31 @@ router.get('/canbo/dang-ky-tai-khoan-cb', (req, res) => {
 router.get('/canbo/chinh-sua-tai-khoan-cb', (req, res) => {
     res.render('so/canbo/chinhSuaTaiKhoan.ejs');
 })
+
+router.get("/qlbangqc", (req, res) => {
+  res.render("so/qlBangqc/ql");
+});
+
+router.get("/qlbangqc/21127089", (req, res) => {
+  const diemQC = {
+    title: "bảng",
+    boardType: "Trụ màn hình điện tử LED",
+    addr: "157 Nguyễn Đình Chính, Phường 11, Quận Phú Nhuận",
+    adType: "Quảng cáo thương mại",
+    locationType: "Đất công / Công viên / Hành lang an toàn giao thông",
+    size: { w: 2.5, h: 10 },
+    quantity: 2,
+    expireDate: { d: 15, m: 5, y: 24 },
+    b1text: "Xem yêu cầu cấp phép",
+    b2text: "Chỉnh sửa",
+  };
+  res.render("phuong/QC-details.ejs", { details: diemQC });
+});
+router.get("/qlbangqc/21127089/edit", (req, res) => {
+  res.render("so/qlBangqc/edit");
+});
+router.get("/qlbangqc/new", (req, res) => {
+  res.render("so/qlBangqc/new");
+});
 
 export default router;
