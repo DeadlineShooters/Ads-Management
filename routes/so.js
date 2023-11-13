@@ -5,7 +5,7 @@ router.get("/qlquan", (req, res) => {
   // Tìm lấy tất cả quận trong db
   // const dsQuan = await Quan.find({})
   const dsQuan = null;
-  res.render("so/qlqp/qlQuan", {dsQuan});
+  res.render("so/qlqp/qlQuan", { dsQuan, user: req.user });
 });
 
 router.get("/qlquan/new", (req, res) => {
@@ -32,7 +32,7 @@ router.get("/qlquan/:quanId/qlphuong/:phuongID/edit", (req, res) => {
 });
 
 router.get("/qlloaihinhqc", (req, res) => {
-  res.render("so/qlLoaiHinhqc/ql");
+  res.render("so/qlLoaiHinhqc/ql", { user: req.user });
 });
 router.get("/qlloaihinhqc/21127089/edit", (req, res) => {
   res.render("so/qlLoaiHinhqc/edit");
