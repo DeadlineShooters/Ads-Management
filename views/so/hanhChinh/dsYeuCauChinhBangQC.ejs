@@ -18,7 +18,19 @@
     padding: 0;
     text-align: center;
   }
+  tr:hover td {
+    background-color: #d9d9d9;
+    cursor: pointer;
+  }
 </style>
+
+<script>
+  jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+  });
+</script>
 
 <div class="container m-2 p-3 bg-light rounded overflow-auto">
   <section class="d-flex justify-content-between">
@@ -27,7 +39,7 @@
           <option selected>Danh sách yêu cầu chỉnh bảng quảng cáo</option>
           <option value="cap-phep-qc">Danh sách yêu cầu cấp phép quảng cáo</option>
           <option value="chinh-diem-qc">Danh sách yêu cầu chỉnh điểm quảng cáo</option>
-          <option value="chinh-bang-qc">Thống kê báo cáo & cách thức xử lý</option>
+          <option value="thong-ke-qc">Thống kê báo cáo & cách thức xử lý</option>
         </select>
     </div>
     <div class="d-flex flex-row align-items-center">
@@ -64,7 +76,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr class="clickable-row" data-href='chinh-bang-qc/chi-tiet-yeu-cau'>
           <th scope="row">1</th>
           <td>157 Nguyễn Đình Chính</td>
           <td>Phường 11, Quận Phú Nhuận</td>

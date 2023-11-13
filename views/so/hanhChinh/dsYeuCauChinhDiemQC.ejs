@@ -1,7 +1,7 @@
 <% layout('layouts/canbo') %>
 
 <style>
-  .status{
+ .status{
     border-radius: 1rem;
   }
   .status.notAccept{
@@ -18,7 +18,19 @@
     padding: 0;
     text-align: center;
   }
+  tr:hover td {
+    background-color: #d9d9d9;
+    cursor: pointer;
+  }
 </style>
+
+<script>
+  jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+  });
+</script>
 
 <div class="container m-2 p-3 bg-light rounded overflow-auto">
   <section class="d-flex justify-content-between">
@@ -64,7 +76,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr class="clickable-row" data-href='chinh-diem-qc/chi-tiet-yeu-cau'>
           <th scope="row">1</th>
           <td>157 Nguyễn Đình Chính</td>
           <td>Phường 11, Quận Phú Nhuận</td>

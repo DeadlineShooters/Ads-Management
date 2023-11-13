@@ -75,12 +75,20 @@ router.get('/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau', (req, res) => {
     res.render('so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs');
 })
 
+router.get('/hanhchinh/chinh-diem-qc/chi-tiet-yeu-cau', (req, res) => {
+  res.render('so/hanhChinh/chiTiet/ndChinhDiemQC.ejs');
+})
+
+router.get('/hanhchinh/chinh-bang-qc/chi-tiet-yeu-cau', (req, res) => {
+  res.render('so/hanhChinh/chiTiet/ndChinhBangQC.ejs');
+})
+
 router.get('/hanhchinh/chinh-diem-qc', (req, res) => {
     res.render('so/hanhChinh/dsYeuCauChinhDiemQC.ejs');
 })
 
 router.get('/hanhchinh/chinh-bang-qc', (req, res) => {
-    res.render('so/hanhChinh/dsYeuCauChinhDiemQC.ejs');
+    res.render('so/hanhChinh/dsYeuCauChinhBangQC.ejs');
 })
 
 router.get('/hanhchinh/thong-ke-qc', (req, res) => {
