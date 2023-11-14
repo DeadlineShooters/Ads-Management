@@ -17,21 +17,23 @@
 </style>
 
 <script>
-    function showPasswords(checked){
-        if (checked)
-        {
-            document.querySelector('#password').type = 'text';
-            document.querySelector('#confirmPassword').type = 'text';
-        }
-        else
-        {
-            document.querySelector('#password').type = 'password';
-            document.querySelector('#confirmPassword').type = 'password';
-        }
-    }
+    $(document).ready(function() {
+        $("#btnSubmit").click(function(){
+            var passInput=$("#password");
+            var passClass=$("#btnSubmit");
+            if(passInput.attr('type')==='password')
+            {
+                passInput.attr('type','text');
+                $("i", this).toggleClass("bi bi-eye bi bi-eye-slash");
+            } else {
+                passInput.attr('type','password');
+                $("i", this).toggleClass("bi bi-eye-slash bi bi-eye");
+            }
+        }); 
+    });
 </script>
 
-<div class="container m-2 p-3 bg-light rounded overflow-auto">
+<div class="container m-2 p-3 bg-light rounded overflow-hidden">
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="bi bi-house-fill"></i></a></li>
@@ -79,7 +81,14 @@
                 </div>
                 <div class="col-md-10 mt-3 ps-3">
                     <label class="fw-bold">Mật khẩu đăng nhập</label>
-                    <input type="password" name="" placeholder="Nhập mật khẩu ban đầu cho cán bộ (thay đổi sau)" class="form-control">
+                    <div class="input-group">
+                        <input type="password" name="password" id="password" placeholder="Nhập mật khẩu ban đầu cho cán bộ (thay đổi sau)" class="form-control">
+                        <span class="bg-white border-left-0">
+                            <button class="input-group-text bg-transparent" id="btnSubmit">
+                                <i class="bi bi-eye-slash"></i>
+                            </button>
+                        </span>
+                    </div>
                 </div>
                 <div class="col-md-4 mt-5 mb-5 mx-1 mx-md-4 ps-3">
                     <button class="form-control fs-6 fw-bold" style="background-color: #468b4a;"><p class="text-white">Tạo tài khoản</p></button>
