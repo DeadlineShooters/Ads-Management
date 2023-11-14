@@ -1,0 +1,125 @@
+<% layout('layouts/canbo') %>
+
+<style>
+  .status{
+    border-radius: 1rem;
+  }
+  .status.notAccept{
+    background-color: #F6808e;
+  }
+  .status.Accept{
+    background-color: #80f6b0;
+  }
+  .status.notHandle{
+    background-color: #9780f6;
+  }
+  p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  .nopadding {
+   padding: 0 !important;
+  }
+  #edit:hover {
+    color: #f6db80;
+  }
+  #del:hover {
+    color: #F6808e;
+  }
+</style>
+
+<script>
+  function showMessage() {
+      alert('Đang xử lý');
+  }
+</script>
+
+<div class="container m-2 p-3 bg-light rounded overflow-auto">
+  <section class="d-flex justify-content-between">
+    <div class="fs-6 nopadding">
+        <input type="text" readonly class="form-control-plaintext fw-bold" id="" value="Danh sách tài khoản cán bộ">
+    </div>
+    <div class="d-flex flex-row align-items-center">
+      <div class="md-col-2 me-2">
+        <a class="btn btn-warning btn-sm btn-responsive" href="dang-ky-tai-khoan-cb" role="button"><span class="bi bi-person-plus-fill"</span>Thêm cán bộ</a>
+      </div>
+      <div class="md-col-2 me-2">
+        <button type="button" class="btn btn-primary btn-sm btn-responsive"><span class="bi bi-filter"></span>Lọc</button>
+      </div>
+      <div class="md-col-3">
+        <div class="input-group">
+          <input class="form-control border-right-0" placeholder="Tìm cán bộ">
+            <span class="input-group-append bg-white border-left-0">
+              <button class="input-group-text bg-transparent">
+                <i class="bi bi-search"></i>
+              </button>
+            </span>
+        </div>
+      </div>
+  </div>
+  </section>
+  <section class="border rounded mt-2">
+    <table class="table table-light table-striped">
+      <thead>
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Họ tên</th>
+          <th scope="col">Ngày sinh</th>
+          <th scope="col">Email</th>
+          <th scope="col">Điện thoại</th>
+          <th scope="col">Quận quản lý</th>
+          <th scope="col">Phường quản lý</th>
+          <th scope="col" class="text-center">Quản lý</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="align-items-center">
+          <th scope="row">1</th>
+          <td>Lê Minh A</td>
+          <td>01/01/1970</td>
+          <td>leminha@gmail.com</td>
+          <td>09093636363</td>
+          <td>Tân Bình</td>
+          <td>Phường 13</td>
+          <td class="text-center">
+            <div>
+              <a name="edituser" id="edit" class="btn nopadding mx-1" href="chinh-sua-tai-khoan-cb" role="button"><i class="bi bi-pencil-fill"></i></a>
+              <button class="btn nopadding mx-1" id="del" onclick="showMessage()"><i class="bi bi-trash-fill"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Nguyễn Thị B</td>
+          <td>31/12/1978</td>
+          <td>nguyenthib@gmail.com</td>
+          <td>09223177309</td>
+          <td>Quận 6</td>
+          <td>Phường 14</td>
+          <td class="text-center">
+            <div>
+              <a name="edituser" id="edit" class="btn nopadding mx-1" href="#" role="button"><i class="bi bi-pencil-fill"></i></a>
+              <a name="deluser" id="del" class="btn nopadding mx-1" href="#" role="button"><i class="bi bi-trash-fill"></i></a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Trịnh Văn C</td>
+          <td>15/01/1979</td>
+          <td>trinhvanc@gmail.com</td>
+          <td>01734534523</td>
+          <td>Tân Bình</td>
+          <td>Phường 15</td>
+          <td class="text-center">
+            <div>
+              <a name="edituser" id="edit" class="btn nopadding mx-1" href="#" role="button"><i class="bi bi-pencil-fill"></i></a>
+              <a name="deluser" id="del" class="btn nopadding mx-1" href="#" role="button"><i class="bi bi-trash-fill"></i></a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

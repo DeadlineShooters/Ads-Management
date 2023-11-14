@@ -1,0 +1,23 @@
+<% layout('layouts/canbo') %>
+<h1 class="text-center">Thêm <%= props.name %></h1>
+<div class="row mt-3">
+    <div class="col-6 offset-3">
+        <form action="">
+            <div class="mb-3">
+                <label for="tenQuan" class="form-label">Tên <%= props.name %></label>
+                <input type="text" class="form-control" id="tenQuan" placeholder="Tên <%= props.name %>">
+              </div>
+              <div class="mb-3">
+                <label for="moTa" class="form-label">Mô tả</label>
+                <textarea class="form-control" id="moTa" rows="3" placeholder="Vd: <%= props.name %> này rất to..."></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="moTa" class="form-label">Chú thích</label>
+                <textarea class="form-control" id="moTa" rows="3" placeholder="Vd: <%= props.name %> này có số lượng bảng quảng cáo trung bình..."></textarea>
+              </div>
+              <div class="mb-3 text-center">
+                <button class="btn btn-info">Tạo <%= props.name %></button>
+            </div>
+        </form>
+    </div>
+</div>
