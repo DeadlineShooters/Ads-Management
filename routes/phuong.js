@@ -52,6 +52,17 @@ router.get("/chi-tiet-bao-cao", (req, res) => {
   res.render("phuong/reportDetails", { user: req.user });
 });
 
+router.get("/tao-yeu-cau-cap-phep", (req, res) => {
+  const fullAddr = req.query.addr;
+  const parts = fullAddr.split(",");
+  res.render("phuong/taoYeuCauCapPhep", {
+    addr: parts[0],
+    ward: parts[1],
+    district: parts[2],
+    cssfile: "/phuong/css/taoYeuCauCapPhep-style.css",
+  });
+});
+
 router.post("/update-report-status", (req, res) => {
   const status = req.body.status;
   const method = req.body.method;
