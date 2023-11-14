@@ -3,7 +3,9 @@ import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
 import danRoutes from "./routes/dan.js";
 import phuongQuanRoutes from "./routes/phuong.js";
-import soRoutes from "./routes/so.js";
+import soQuanLyRoutes from "./routes/so/quanLy.js";
+import soHanhChinhRoutes from "./routes/so/hanhChinh.js";
+import soCanBoRoutes from "./routes/so/canbo.js";
 import ejsMate from "ejs-mate";
 import authRouter from "./routes/auth.js";
 import passport from "passport";
@@ -73,7 +75,9 @@ canBoApp.get("/", (req, res) => {
 
 canBoApp.use("/", authRouter);
 canBoApp.use("/", phuongQuanRoutes);
-canBoApp.use("/so", soRoutes);
+canBoApp.use("/so/quanly", soQuanLyRoutes);
+canBoApp.use("/so/hanhchinh", soHanhChinhRoutes);
+canBoApp.use("/so/canbo", soCanBoRoutes);
 
 danApp.listen(3000, () => {
   console.log("Serving on port 3000");

@@ -1,0 +1,50 @@
+<% layout('layouts/canbo') %>
+<div class="d-flex justify-content-center overflow-auto">
+    <div class="card m-auto" style="width: 30rem">
+        <!-- refer to routes/phuong.js to see data example -->
+        <img src="/phuong/images/sample.png" class="card-img-top" alt="" />
+    
+        <div class="card-body py-1">
+            <h5 class="card-title">Chi tiết <%=details.title%> quảng cáo</h5>
+            <p class="card-text"><%=details.addr%></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <%if (details.boardType) {%>
+            <li class="list-group-item">
+                Loại bảng: <b><%=details.boardType%></b>
+            </li>
+            <%}%>
+    
+            <li class="list-group-item">Hình thức: <b><%=details.adType%></b></li>
+            <li class="list-group-item">
+                Phân loại: <b><%=details.locationType%></b>
+            </li>
+            <%if (details.status) {%>
+            <li class="list-group-item"><b><%=details.status%></b></li>
+            <%}%> <%if (details.size) {%>
+            <li class="list-group-item">
+                Kích thước: <%=details.size.w%>m x <%=details.size.h%>m
+            </li>
+            <%}%> <%if (details.quantity){%>
+            <li class="list-group-item">
+                Số lượng: <b><%=details.quantity%> trụ/bảng</b>
+            </li>
+            <%}%> <%if (details.expireDate) {%>
+            <li class="list-group-item">
+                Ngày hết hạn:
+                <b
+                    ><%=details.expireDate.d%>/<%=details.expireDate.m%>/<%=details.expireDate.y%></b
+                >
+            </li>
+            <%}%>
+        </ul>
+        <div class="card-body d-flex flex-row" id="buttons">
+            <button type="button" class="btn btn-secondary me-3">
+                <%=details.b1text%>
+            </button>
+            <button type="button" class="btn btn-success">
+                <%=details.b2text%>
+            </button>
+        </div>
+    </div>
+</div>
