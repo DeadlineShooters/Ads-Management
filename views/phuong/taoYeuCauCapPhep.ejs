@@ -3,7 +3,7 @@
 <div class="card" style="background: #f8f8fd">
   <h5 class="card-header bg-primary-subtle">Tạo yêu cầu cấp phép</h5>
   <div class="card-body container">
-    <form action="" class="row g-3 mb-3 p-3">
+    <form action="/tao-yeu-cau-cap-phep" method="post" class="row g-3 mb-3 p-3">
       <div class="col-md-5">
         <label for="address" class="form-label fw-semibold">Địa chỉ</label>
         <input
@@ -14,6 +14,7 @@
           aria-label="Disabled input example"
           disabled
           readonly
+          name="address"
         />
       </div>
       <div class="col-sm-3">
@@ -26,6 +27,7 @@
           aria-label="Disabled input example"
           disabled
           readonly
+          name="ward"
         />
       </div>
       <div class="col-sm-4">
@@ -38,6 +40,7 @@
           aria-label="Disabled input example"
           disabled
           readonly
+          name="district"
         />
       </div>
       <div class="col-md-3">
@@ -49,6 +52,7 @@
             id="amount"
             style="max-width: 20%"
             required
+            name="amount"
           />
           <span class="input-group-text">trụ/bảng</span>
         </div>
@@ -62,6 +66,7 @@
             id="size"
             style="max-width: 20%"
             required
+            name="width"
           />
           <span class="input-group-text">m x</span>
           <input
@@ -70,8 +75,9 @@
             id="size"
             style="max-width: 20%"
             required
+            name="height"
           />
-          <span class="input-group-text">m</span>
+          <span class="input-group-text">m (d x r)</span>
         </div>
       </div>
       <div class="col-md-5">
@@ -88,20 +94,77 @@
           class="form-control"
           id="exampleFormControlTextarea1"
           rows="3"
+          name="ad-content"
         ></textarea>
       </div>
 
       <div class="col-md-5">
         <label for="formFile" class="form-label">Hình ảnh minh họa</label>
-        <input class="form-control" type="file" id="formFile" required />
+        <input
+          class="form-control"
+          type="file"
+          id="formFile"
+          required
+          name="image"
+        />
       </div>
       <div class="col-md-5">
         <label for="companyName" class="form-label">Tên công ty</label>
-        <input type="text" class="form-control" id="companyName" required />
+        <input
+          type="text"
+          class="form-control"
+          id="companyName"
+          required
+          name="company-name"
+        />
       </div>
-      <div class="col-md-5">
+      <div class="col-md-12 container">
         <label for="contactInfo" class="form-label">Thông tin liên lạc</label>
-        <input type="text" class="form-control" id="companyName" required />
+        <div class="input-group mb-3 row">
+          <div class="input-group col">
+            <span class="input-group-text" id="mail"
+              ><i class="bi bi-envelope-fill"></i
+            ></span>
+            <input
+              type="mail"
+              class="form-control me-3"
+              placeholder="name@example.com"
+              aria-label="mail"
+              aria-describedby="mail"
+              required
+              name="email"
+            />
+          </div>
+          <div class="input-group col">
+            <span class="input-group-text" id="phoneNumber"
+              ><i class="bi bi-telephone-fill"></i
+            ></span>
+            <input
+              type="tel"
+              class="form-control"
+              aria-label="phone"
+              aria-describedby="phoneNumber"
+              required
+              name="phone-number"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col input-group">
+            <span class="input-group-text" id="location"
+              ><i class="bi bi-geo-alt-fill"></i
+            ></span>
+            <input
+              type="text"
+              class="form-control"
+              aria-label="location"
+              aria-describedby="location"
+              style="max-width: 50%"
+              required
+              name="company-location"
+            />
+          </div>
+        </div>
       </div>
       <div class="col-md-12">
         <label for="contactInfo" class="form-label">Hợp đồng</label>
@@ -113,6 +176,7 @@
             aria-label="Start date"
             class="form-control"
             required
+            name="start-date"
           />
           <span class="validity"></span>
           <label for="end" class="input-group-text">Ngày kết thúc</label>
@@ -122,21 +186,53 @@
             aria-label="End date"
             class="form-control"
             required
+            name="end-date"
           />
           <span class="validity"></span>
         </div>
       </div>
-    </form>
-
-    <div class="row">
       <button
-        type="button"
-        class="btn btn-secondary w-auto m-auto"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        type="submit"
+        class="btn btn-primary w-auto m-auto mt-3"
+        onclick=""
       >
-        Cập nhật tình trạng và cách thức xử lý
+        Gửi yêu cầu
       </button>
-    </div>
+    </form>
   </div>
 </div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div
+    id="liveToast"
+    class="toast"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="..." />
+      <strong class="me-auto">Thông báo</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">Yêu cầu cấp phép của bạn được tạo thành công</div>
+  </div>
+</div>
+
+<script>
+  const toastTrigger = document.querySelector("button");
+  const toastLiveExample = document.getElementById("liveToast");
+
+  if (toastTrigger) {
+    const toastBootstrap =
+      bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastTrigger.addEventListener("click", () => {
+      toastBootstrap.show();
+    });
+  }
+</script>
