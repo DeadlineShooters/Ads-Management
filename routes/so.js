@@ -1,6 +1,9 @@
 import express from "express";
 const router = express.Router();
 
+import * as canBo from "../controllers/so/canBoControllers.js";
+import * as hanhChinh from "../controllers/so/hanhChinhControllers.js";
+
 router.get("/qlquan", (req, res) => {
   // Tìm lấy tất cả quận trong db
   // const dsQuan = await Quan.find({})
@@ -67,10 +70,6 @@ router.get('/qlQuan', (req, res) => {
     res.render('so/qlqp/qlQuan.ejs');
 })
 
-router.get('/hanhchinh/cap-phep-qc', (req, res) => {
-    res.render('so/hanhChinh/dsYeuCauCapPhepQC.ejs');
-})
-
 router.get('/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau', (req, res) => {
     res.render('so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs');
 })
@@ -83,29 +82,15 @@ router.get('/hanhchinh/chinh-bang-qc/chi-tiet-yeu-cau', (req, res) => {
   res.render('so/hanhChinh/chiTiet/ndChinhBangQC.ejs');
 })
 
-router.get('/hanhchinh/chinh-diem-qc', (req, res) => {
-    res.render('so/hanhChinh/dsYeuCauChinhDiemQC.ejs');
-})
+router.get('/hanhchinh/cap-phep-qc', hanhChinh.dsCapPhepQC);
+router.get('/hanhchinh/chinh-diem-qc', hanhChinh.dsChinhDiemQC);
+router.get('/hanhchinh/chinh-bang-qc', hanhChinh.dsChinhBangQC);
+router.get('/hanhchinh/thong-ke-qc', hanhChinh.tkBaoCaoXuLy);
 
-router.get('/hanhchinh/chinh-bang-qc', (req, res) => {
-    res.render('so/hanhChinh/dsYeuCauChinhBangQC.ejs');
-})
-
-router.get('/hanhchinh/thong-ke-qc', (req, res) => {
-    res.render('so/hanhChinh/dsThongKeBaoCao.ejs');
-})
-
-router.get('/canbo/tai-khoan-cb', (req, res) => {
-    res.render('so/canbo/dsTaiKhoanCanBo.ejs');
-})
-
-router.get('/canbo/dang-ky-tai-khoan-cb', (req, res) => {
-    res.render('so/canbo/dkTaiKhoanCanBo.ejs');
-})
-
-router.get('/canbo/chinh-sua-tai-khoan-cb', (req, res) => {
-    res.render('so/canbo/chinhSuaTaiKhoan.ejs');
-})
+router.get('/canbo/tai-khoan-cb', canBo.danhSachCanBo);
+router.get('/canbo/dang-ky-tai-khoan-cb', canBo.dkTaiKhoanCanBo);
+router.post('/canbo/dang-ky-tai-khoan-cb', canBo.guiInfoTaiKhoanCanBo);
+router.get('/canbo/chinh-sua-tai-khoan-cb', canBo.suaTaiKhoanCanBo);
 
 router.get("/qlbangqc", (req, res) => {
   res.render("so/qlBangqc/ql");
@@ -126,9 +111,11 @@ router.get("/qlbangqc/21127089", (req, res) => {
   };
   res.render("phuong/QC-details.ejs", { details: diemQC });
 });
+
 router.get("/qlbangqc/21127089/edit", (req, res) => {
   res.render("so/qlBangqc/edit");
 });
+
 router.get("/qlbangqc/new", (req, res) => {
   res.render("so/qlBangqc/new");
 });
