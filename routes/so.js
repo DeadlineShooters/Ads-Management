@@ -55,7 +55,16 @@ router.get("/qldiemdatqc", (req, res) => {
   res.render("so/qlDiemDatqc/ql");
 });
 router.get("/qldiemdatqc/21127089", (req, res) => {
-  res.render("so/qlDiemDatqc/details");
+  const bangqc = {
+    title: "điểm đặt",
+    addr: "157 Nguyễn Đình Chính, Phường 11, Quận Phú Nhuận",
+    adType: "Quảng cáo thương mại",
+    locationType: "Đất công / Công viên / Hành lang an toàn giao thông",
+    status: "ĐÃ QUY HOẠCH",
+    b1text: "Tạo yêu cầu cấp phép",
+    b2text: "Chỉnh sửa",
+  };
+  res.render("so/qlDiemDatqc/details", { details: bangqc });
 });
 router.get("/qldiemdatqc/21127089/edit", (req, res) => {
   res.render("so/qlDiemDatqc/edit");
@@ -80,7 +89,7 @@ router.get("/qlbangqc/21127089", (req, res) => {
     b1text: "Xem yêu cầu cấp phép",
     b2text: "Chỉnh sửa",
   };
-  res.render("phuong/QC-details.ejs", { details: diemQC });
+  res.render("so/qlBangqc/details", { details: diemQC });
 });
 router.get("/qlbangqc/21127089/edit", (req, res) => {
   res.render("so/qlBangqc/edit");
