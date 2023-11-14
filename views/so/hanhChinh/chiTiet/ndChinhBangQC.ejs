@@ -1,0 +1,110 @@
+<% layout('layouts/canbo') %>
+
+<style>
+    .table.header {
+        color: white;
+    }
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    a:hover {
+        color: #0d6efd;   
+    }
+    .col.header {
+        max-width: 200px;
+        border-radius: 0.5rem; 
+        background-color: rgb(217, 219, 228);
+    }
+</style>
+
+<div class="container m-2 p-3 bg-light rounded overflow-hidden">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="bi bi-house-fill"></i></a></li>
+            <li class="breadcrumb-item"><a href="/so/hanhchinh/chinh-bang-qc">Danh sách yêu cầu chỉnh bảng quảng cáo</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chi tiết yêu cầu</li>
+        </ol>
+    </nav>
+    <div class="d-flex justify-content-between flex-wrap nowrap align-items-center pb-2 mb-3 border-bottom">
+        <div class="col">
+            <div class="row">
+                <div class="col text-end fw-lighter">
+                    <i class="bi bi-person-fill"></i><b>Văn A</b>&nbsp&nbsp
+                    <i class="bi bi-clock-fill"></i><b>13/10/2023 17:01</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item" style="background-color: #7981d0">
+            <div class="row">
+                <div class="col" style="max-width: 200px;"><b class="table header">Thông tin yêu cầu</b></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Lý do chỉnh sửa</b></div>
+                <div class="col" style="max-width: 100%;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum facilis laborum quisquam accusantium voluptas, dolore sequi porro aspernatur quod velit quo quae, vel quia aperiam, ratione deleniti ad modi impedit consequatur. Earum vero at excepturi libero aliquam doloremque. Illo maiores ipsam debitis iste laborum consequatur accusamus incidunt. Quo, id placeat.</div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Hình minh họa</b></div>
+                <div class="col" style="max-width: 100%;">Không</div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Điểm đặt</b></div>
+                <div class="col" style="max-width: 100%;">446 Hoàng Văn Thụ, Phường 4, Tân Bình, Thành phố Hồ Chí Minh</div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Khu vực</b></div>
+                <div class="col" style="max-width: 30%;"><b>Quận:</b> Tân Bình</div>
+                <div class="col" style="max-width: 25%;"><b>Phường:</b> 15</div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Phân loại</b></div>
+                <div class="col" style="max-width: 30%;"><b>Loại bảng:</b> Trụ màn hình điện tử LED</div>
+                <div class="col" style="max-width: 25%;"><b>Số lượng:</b> 01</div>
+                <div class="col" style="max-width: 25%;"><b>Kích thước:</b> 2.5 x 10</div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Hợp đồng</b></div>
+                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu:</b> 01/10/2023</div>
+                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc:</b> 31/10/2023</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="list-group mt-5">
+        <li class="list-group-item" style="background-color: #7981d0">
+            <div class="row">
+                <div class="col" style="max-width: 200px"><b class="table header">Xử lý yêu cầu</b></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Thực hiện</b></div>
+                    <div class="col">
+                        <input type="radio" class="btn-check" style="width: 100%;" name="options-outlined" id="success-outlined" autocomplete="off" checked>
+                        <label class="btn btn-outline-success" style="width: 100%;" for="success-outlined">Phê duyệt</label>
+                    </div>
+                    <div class="col">
+                        <input type="radio" class="btn-check" style="width: 100%;" name="options-outlined" id="danger-outlined" autocomplete="off">
+                        <label class="btn btn-outline-danger" style="width: 100%;" for="danger-outlined">Không phê duyệt</label>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn"style="background-color: #D9DBE4; width: 100%;"><i class="bi bi-send-fill"></i>Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,112 @@
+<% layout('layouts/canbo') %>
+
+<style>
+  .status{
+    border-radius: 1rem;
+  }
+  .status.notAccept{
+    background-color: #F6808e;
+  }
+  .status.Accept{
+    background-color: #80f6b0;
+  }
+  .status.notHandle{
+    background-color: #9780f6;
+  }
+  p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  tr:hover td {
+    background-color: #d9d9d9;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+  });
+</script>
+
+<div class="container m-2 p-3 bg-light rounded overflow-auto">
+  <section class="d-flex justify-content-between">
+    <div>
+        <select class="form-select" aria-label="Default select example" onchange="location = this.value;">
+          <option selected>Danh sách yêu cầu cấp phép quảng cáo</option>
+          <option value="chinh-diem-qc">Danh sách yêu cầu chỉnh điểm quảng cáo</option>
+          <option value="chinh-bang-qc">Danh sách yêu cầu chỉnh bảng quảng cáo</option>
+          <option value="thong-ke-qc">Thống kê báo cáo & cách thức xử lý</option>
+        </select>
+    </div>
+    <div class="d-flex flex-row align-items-center">
+      <div class="md-col-2 me-2">
+        <button type="button" class="btn btn-warning btn-sm btn-responsive"><span class="bi bi-arrows-vertical"></span>Sắp xếp</button>
+      </div>
+      <div class="md-col-2 me-2">
+        <button type="button" class="btn btn-primary btn-sm btn-responsive"><span class="bi bi-filter"></span>Lọc</button>
+      </div>
+      <div class="md-col-3">
+        <div class="input-group">
+          <input class="form-control border-right-0" placeholder="Tìm yêu cầu">
+            <span class="input-group-append bg-white border-left-0">
+              <button class="input-group-text bg-transparent">
+                <i class="bi bi-search"></i>
+              </button>
+            </span>
+        </div>
+      </div>
+  </div>
+  </section>
+  <section class="border rounded mt-2">
+    <table class="table table-light table-hover">
+      <thead>
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Địa chỉ</th>
+          <th scope="col">Khu vực</th>
+          <th scope="col">Loại bảng</th>
+          <th scope="col">Kích thước</th>
+          <th scope="col">Số lượng</th>
+          <th scope="col">Thời gian gửi</th>
+          <th scope="col">Tình trạng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="clickable-row" data-href='cap-phep-qc/chi-tiet-yeu-cau'>
+          <td scope="row">1</td>
+          <td>157 Nguyễn Đình Chính</td>
+          <td>Phường 11, Quận Phú Nhuận</td>
+          <td>Trụ màn hình điện tử LED</td>
+          <td>2.5m x 10m</td>
+          <td>2 trụ/bảng</td>
+          <td>13/10/2023</td>
+          <td><p class="status notAccept">Không duyệt</p></td>
+        </tr>
+        <tr>
+          <td scope="row">2</td>
+          <td>157 Nguyễn Đình Chính</td>
+          <td>Phường 11, Quận Phú Nhuận</td>
+          <td>Trụ màn hình điện tử LED</td>
+          <td>2.5m x 10m</td>
+          <td>2 trụ/bảng</td>
+          <td>15/10/2023</td>
+          <td><p class="status Accept">Đã duyệt</p></td>
+        </tr>
+        <tr>
+          <td scope="row">3</td>
+          <td>157 Nguyễn Đình Chính</td>
+          <td>Phường 11, Quận Phú Nhuận</td>
+          <td>Trụ màn hình điện tử LED</td>
+          <td>2.5m x 10m</td>
+          <td>2 trụ/bảng</td>
+          <td>17/10/2023</td>
+          <td><p class="status notHandle">Chưa duyệt</p></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
