@@ -1,6 +1,7 @@
 import express from "express";
 // import * as quan_phuong from '@controllers/so/quanLy/quan-phuong.js';
 import * as quan_phuong from '../../controllers/so/quanLy/quan-phuong.js';
+import * as lhqc_htbc from '../../controllers/so/quanLy/lhqc-htbc.js';
 const router = express.Router();
 
 
@@ -14,9 +15,7 @@ router.get("/quan/:quanId/phuong/:phuongID/edit", quan_phuong.renderPhuongEditFo
 
 
 // Quản lý loại hình quảng cáo
-router.get("/loaihinhqc", (req, res) => {
-  res.render("so/qlLoaiHinhqc/ql", { user: req.user });
-});
+router.get("/loaihinhqc", lhqc_htbc.index);
 router.get("/loaihinhqc/21127089/edit", (req, res) => {
   res.render("so/qlLoaiHinhqc/edit");
 });
