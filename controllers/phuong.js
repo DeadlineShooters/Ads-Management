@@ -10,10 +10,14 @@ function chiTietDiem(req, res) {
     b1text: "Tạo yêu cầu cấp phép",
     b2text: "Chỉnh sửa",
   };
+
+  const { diemId } = req.params;
+  console.log(diemId);
   res.render("phuong/QC-details.ejs", {
     details: diemQC,
     cssfile: "/style.css",
     user: req.user,
+    diemId,
   });
 }
 
@@ -30,7 +34,14 @@ function chiTietBang(req, res) {
     b1text: "Xem yêu cầu cấp phép",
     b2text: "Chỉnh sửa",
   };
-  res.render("phuong/QC-details.ejs", { details: diemQC, user: req.user });
+
+  const { bangId } = req.params;
+
+  res.render("phuong/QC-details.ejs", {
+    details: diemQC,
+    user: req.user,
+    bangId,
+  });
 }
 
 function diemDatQuangCao(req, res) {
@@ -46,7 +57,11 @@ function baoCao(req, res) {
 }
 
 function chiTietBaoCao(req, res) {
-  res.render("phuong/reportDetails", { user: req.user });
+  const { baoCaoId } = req.params;
+  const props = {
+    baoCaoId,
+  };
+  res.render("phuong/reportDetails", props);
 }
 
 function taoYeuCauCapPhep(req, res) {
@@ -74,14 +89,15 @@ function errorPage(req, res) {
 function updateReportStatus(req, res) {
   const status = req.body.status;
   const method = req.body.method;
+  const { baoCaoId } = req.params;
   console.log(`Status: ${status}, Method: ${method}`);
-  res.redirect("/chi-tiet-bao-cao");
+  res.redirect(`/cac-bao-cao/${baoCaoId}`);
 }
 
 function taoYeuCauCapPhepPost(req, res) {
   const data = req.body;
   console.log(data);
-  res.redirect("/bang-quang-cao");
+  res.redirect("/cac-bang-quang-cao");
 }
 
 export {

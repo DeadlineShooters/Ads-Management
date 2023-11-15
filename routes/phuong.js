@@ -13,23 +13,21 @@ import {
 
 const router = express.Router();
 
-router.get("/chi_tiet_diem", chiTietDiem);
+router.get("/cac-diem-dat-quang-cao", diemDatQuangCao);
+router.get("/cac-diem-dat-quang-cao/:diemId", chiTietDiem);
 
-router.get("/chi_tiet_bang", chiTietBang);
+router.get("/cac-bang-quang-cao", bangQuangCao);
+router.get("/cac-bang-quang-cao/:bangId", chiTietBang);
 
-router.get("/diem-dat-quang-cao", diemDatQuangCao);
+router.get("/cac-bao-cao", baoCao);
 
-router.get("/bang-quang-cao", bangQuangCao);
-
-router.get("/bao-cao", baoCao);
-
-router.get("/chi-tiet-bao-cao", chiTietBaoCao);
+router.get("/cac-bao-cao/:baoCaoId", chiTietBaoCao);
 
 router.get("/tao-yeu-cau-cap-phep", taoYeuCauCapPhep);
 
 router.get("/error", errorPage);
 
-router.post("/update-report-status", updateReportStatus);
+router.post("/update-report-status/:baoCaoId", updateReportStatus);
 
 router.post("/tao-yeu-cau-cap-phep", taoYeuCauCapPhep);
 
