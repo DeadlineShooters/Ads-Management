@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
 document.querySelectorAll(".sidebar-nav").forEach((item) => {
   item.onclick = () => {
     // Store the clicked link in localStorage
-    console.log("clicked");
     localStorage.setItem("lastClickedLink", "#" + item.id);
   };
 });
@@ -65,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Set the 'active' class based on the stored state
   if (lastSelectedOption) {
     const selectedElement = document.querySelector(lastSelectedOption);
+    console.log(selectedElement);
     // Check if the element exists before setting 'selected'
     if (selectedElement) {
       selectedElement.selected = true;
