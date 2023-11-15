@@ -1,6 +1,7 @@
 import { registeredAddresses } from "../models/advertisingModels.js";
 
 function chiTietDiem(req, res) {
+  const { diemId } = req.params;
   const diemQC = {
     title: "điểm đặt",
     addr: "157 Nguyễn Đình Chính, Phường 11, Quận Phú Nhuận",
@@ -9,9 +10,9 @@ function chiTietDiem(req, res) {
     status: "ĐÃ QUY HOẠCH",
     b1text: "Tạo yêu cầu cấp phép",
     b2text: "Chỉnh sửa",
+    b1Url: `/cac-diem-dat-quang-cao/${diemId}/tao-yeu-cau`,
   };
 
-  const { diemId } = req.params;
   console.log(diemId);
   res.render("phuong/QC-details.ejs", {
     details: diemQC,
@@ -22,6 +23,8 @@ function chiTietDiem(req, res) {
 }
 
 function chiTietBang(req, res) {
+  const { bangId } = req.params;
+
   const diemQC = {
     title: "bảng",
     boardType: "Trụ màn hình điện tử LED",
@@ -33,9 +36,8 @@ function chiTietBang(req, res) {
     expireDate: { d: 15, m: 5, y: 24 },
     b1text: "Xem yêu cầu cấp phép",
     b2text: "Chỉnh sửa",
+    b1Url: `/cac-bang-quang-cao/${bangId}/xem-yeu-cau`,
   };
-
-  const { bangId } = req.params;
 
   res.render("phuong/QC-details.ejs", {
     details: diemQC,
@@ -65,20 +67,11 @@ function chiTietBaoCao(req, res) {
 }
 
 function taoYeuCauCapPhep(req, res) {
-  const fullAddr = req.query.addr;
+  const { diemId } = req.params;
 
-  const foundAddr = registeredAddresses.find((address) => address === fullAddr);
-
-  if (!foundAddr) {
-    res.render("error", { error: "404 Not Found" });
-    return;
-  }
-  const parts = foundAddr.split(",");
   res.render("phuong/taoYeuCauCapPhep", {
-    addr: parts[0],
-    ward: parts[1],
-    district: parts[2],
     cssfile: "/phuong/css/taoYeuCauCapPhep-style.css",
+    diemId,
   });
 }
 
@@ -100,7 +93,12 @@ function taoYeuCauCapPhepPost(req, res) {
   res.redirect("/cac-bang-quang-cao");
 }
 
+function xemYeuCauCapPhep(req, res) {
+  res.render("so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs");
+}
+
 export {
+  xemYeuCauCapPhep,
   chiTietDiem,
   chiTietBang,
   diemDatQuangCao,
