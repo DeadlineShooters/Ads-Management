@@ -33,12 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log(lastClickedLink);
 
   // Set the 'active' class based on the stored state
+
   if (lastClickedLink) {
     document.querySelector(lastClickedLink).classList.add("active");
   } else {
     // If no last clicked link, try to highlight based on the current route
     const currentPath = window.location.pathname;
-    console.log(currentPath);
+    console.log("currentPath", currentPath);
     const matchingLink = document.querySelector(`[href="${currentPath}"]`);
 
     if (matchingLink) {
@@ -50,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.querySelectorAll(".sidebar-nav").forEach((item) => {
   item.onclick = () => {
     // Store the clicked link in localStorage
+    console.log("clicked");
     localStorage.setItem("lastClickedLink", "#" + item.id);
   };
 });
