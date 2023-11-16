@@ -15,13 +15,13 @@ export const index = async (req, res) => {
         },
     ];
     const props = {
-        name: 'Quận',
+        type: 'Quận',
     }
-    res.render('so/quanLy/quan-phuong/index', { objects: quans, props })
+    res.render('so/quanLy/quan-phuong/index', { items: quans, props })
 };
 export const renderAddForm = (req, res) => {
     const props = {
-        name: 'Quận',
+        type: 'Quận',
     }
     res.render('so/quanLy/quan-phuong/add', {props});
 };
@@ -33,9 +33,9 @@ export const renderEditForm = (req, res) => {
         note: "Đây là chú thích"
     };
     const props = {
-        name: 'Quận',
+        type: 'Quận',
     }
-    res.render('so/quanLy/quan-phuong/edit', {object: quan, props});
+    res.render('so/quanLy/quan-phuong/edit', {item: quan, props});
 }
 export const phuongIndex = async (req, res) => {
     const phuongs = [
@@ -53,14 +53,14 @@ export const phuongIndex = async (req, res) => {
         },
     ];
     const props = {
-        name: 'Phường',
+        type: 'Phường',
         quanId: req.params.quanId,
     }
-    res.render('so/quanLy/quan-phuong/index', { objects: phuongs, props })
+    res.render('so/quanLy/quan-phuong/index', { items: phuongs, props })
 }
 export const renderPhuongAddForm = (req, res) => {
     const props = {
-        name: 'Phường',
+        type: 'Phường',
     }
     res.render('so/quanLy/quan-phuong/add', {props});
 };
@@ -72,7 +72,7 @@ export const renderPhuongEditForm = (req, res) => {
         note: "Đây là chú thích"
     };
     const props = {
-        name: 'Phường',
+        type: 'Phường',
     }
-    res.render('so/quanLy/quan-phuong/edit', {object: phuong, props});
+    res.render('so/quanLy/quan-phuong/edit', {item: phuong, props});
 }

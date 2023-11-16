@@ -1,7 +1,11 @@
 import express from "express";
 // import * as quan_phuong from '@controllers/so/quanLy/quan-phuong.js';
 import * as quan_phuong from '../../controllers/so/quanLy/quan-phuong.js';
-import * as lhqc_htbc from '../../controllers/so/quanLy/lhqc-htbc.js';
+import * as loaiHinhqc from '../../controllers/so/quanLy/loaiHinhqc.js';
+import * as loaiBangqc from '../../controllers/so/quanLy/loaiBangqc.js';
+import * as hinhThucbc from '../../controllers/so/quanLy/hinhThucbc.js';
+import * as diemDatqc from '../../controllers/so/quanLy/diemDatqc.js';
+import * as bangqc from '../../controllers/so/quanLy/bangqc.js';
 const router = express.Router();
 
 
@@ -15,72 +19,30 @@ router.get("/quan/:quanId/phuong/:phuongID/edit", quan_phuong.renderPhuongEditFo
 
 
 // Quản lý loại hình quảng cáo
-router.get("/loaihinhqc", lhqc_htbc.index);
-router.get("/loaihinhqc/21127089/edit", (req, res) => {
-  res.render("so/qlLoaiHinhqc/edit");
-});
-router.get("/loaihinhqc/new", (req, res) => {
-  res.render("so/qlLoaiHinhqc/new");
-});
+router.get("/loai-hinh-quang-cao", loaiHinhqc.index);
+router.get("/loai-hinh-quang-cao/:id/edit", loaiHinhqc.renderEditForm);
+router.get("/loai-hinh-quang-cao/add", loaiHinhqc.renderAddForm);
+
+// Quản lý loại bảng quảng cáo
+router.get("/loai-bang-quang-cao", loaiBangqc.index);
+router.get("/loai-bang-quang-cao/:id/edit", loaiBangqc.renderEditForm);
+router.get("/loai-bang-quang-cao/add", loaiBangqc.renderAddForm);
 
 // Quản lý hình thức báo cáo
-router.get("/hinhthucbc", (req, res) => {
-  res.render("so/qlHinhthucbc/ql");
-});
-router.get("/hinhthucbc/21127089/edit", (req, res) => {
-  res.render("so/qlHinhthucbc/edit");
-});
-router.get("/hinhthucbc/new", (req, res) => {
-  res.render("so/qlHinhthucbc/new");
-});
+router.get("/hinh-thuc-bao-cao", hinhThucbc.index);
+router.get("/hinh-thuc-bao-cao/:id/edit", hinhThucbc.renderEditForm);
+router.get("/hinh-thuc-bao-cao/add", hinhThucbc.renderAddForm);
 
 // Quản lý điểm đặt
-router.get("/diemdatqc", (req, res) => {
-  res.render("so/qlDiemDatqc/ql");
-});
-router.get("/diemdatqc/21127089", (req, res) => {
-  const bangqc = {
-    title: "điểm đặt",
-    addr: "157 Nguyễn Đình Chính, Phường 11, Quận Phú Nhuận",
-    adType: "Quảng cáo thương mại",
-    locationType: "Đất công / Công viên / Hành lang an toàn giao thông",
-    status: "ĐÃ QUY HOẠCH",
-    b1text: "Tạo yêu cầu cấp phép",
-    b2text: "Chỉnh sửa",
-  };
-  res.render("so/qlDiemDatqc/details", { details: bangqc });
-});
-router.get("/diemdatqc/21127089/edit", (req, res) => {
-  res.render("so/qlDiemDatqc/edit");
-});
-router.get("/diemdatqc/new", (req, res) => {
-  res.render("so/qlDiemDatqc/new");
-});
+router.get("/diem-dat-quang-cao", diemDatqc.index);
+router.get("/diem-dat-quang-cao/add", diemDatqc.renderAddForm);
+router.get("/diem-dat-quang-cao/:id", diemDatqc.showDetails);
+router.get("/diem-dat-quang-cao/:id/edit", diemDatqc.renderEditForm);
 
 // Quản lý bảng quảng cáo
-router.get("/bangqc", (req, res) => {
-  res.render("so/qlBangqc/ql");
-});
-router.get("/bangqc/21127089", (req, res) => {
-  const diemQC = {
-    title: "bảng",
-    boardType: "Trụ màn hình điện tử LED",
-    addr: "157 Nguyễn Đình Chính, Phường 11, Quận Phú Nhuận",
-    adType: "Quảng cáo thương mại",
-    locationType: "Đất công / Công viên / Hành lang an toàn giao thông",
-    size: { w: 2.5, h: 10 },
-    quantity: 2,
-    expireDate: { d: 15, m: 5, y: 24 },
-    b1text: "Xem yêu cầu cấp phép",
-    b2text: "Chỉnh sửa",
-  };
-  res.render("so/qlBangqc/details", { details: diemQC });
-});
-router.get("/bangqc/21127089/edit", (req, res) => {
-  res.render("so/qlBangqc/edit");
-});
-router.get("/bangqc/new", (req, res) => {
-  res.render("so/qlBangqc/new");
-});
+router.get("/bang-quang-cao", bangqc.index);
+router.get("/bang-quang-cao/add", bangqc.renderAddForm);
+router.get("/bang-quang-cao/:id", bangqc.showDetails);
+router.get("/bang-quang-cao/:id/edit", bangqc.renderEditForm);
 
 export default router;
