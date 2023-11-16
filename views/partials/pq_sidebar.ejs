@@ -12,7 +12,7 @@
       <li class="nav-item text-xl-start text-center">
         <a
           href="/"
-          class="nav-link text-white sidebar-nav"
+          class="nav-link text-white sidebar-nav <% if (typeof currentPage !== "undefined") {  if (currentPage == "trang-chu") {%>active <%} }%>"
           aria-current="page"
           id="nav1"
         >
@@ -23,18 +23,20 @@
       <li class="nav-item text-xl-start text-center">
         <a
           href="/cac-diem-dat-quang-cao"
-          class="nav-link text-white sidebar-nav"
+          class="nav-link text-white sidebar-nav  <% if ((typeof currentPage !== "undefined" && currentPage == "quang-cao")){%>active <%} %>"
           aria-current="page"
           id="nav2"
+         
+
         >
           <i class="bi bi-folder-fill fs-5"></i
-          ><span class="fs-5 ms-3 d-none d-xl-inline">Quảng cáo</span>
+          ><span class="fs-5 ms-3 d-none d-xl-inline">Quảng cáo </span>
         </a>
       </li>
       <li class="nav-item text-xl-start text-center">
         <a
           href="/cac-bao-cao"
-          class="nav-link text-white sidebar-nav"
+          class="nav-link text-white sidebar-nav <% if ((typeof currentPage !== "undefined" && currentPage == "bao-cao")) {   %>active <% }%>"
           aria-current="page"
           id="nav3"
         >

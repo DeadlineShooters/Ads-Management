@@ -52,17 +52,20 @@ canBoApp.use(passport.authenticate("session"));
 
 canBoApp.use((req, res, next) => {
   res.locals.user = req.user;
+  res.locals.currentPage = req.currentPage;
+
   // res.locals.ayo = asfkdjsdfk;
   next();
 });
-// Initialize Passport
 
 // routes
+
 danApp.use("/", danRoutes);
 danApp.use("/public", express.static("public"));
 
 canBoApp.get("/", (req, res) => {
   // console.log("user:", req.user);
+  res.locals.currentPage = "trang-chu";
 
   if (req.user) {
     return res.render("index.ejs", {

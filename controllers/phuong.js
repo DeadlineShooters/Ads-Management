@@ -18,7 +18,7 @@ function chiTietDiem(req, res) {
     b1Url: `/cac-diem-dat-quang-cao/${diemId}/tao-yeu-cau`,
   };
 
-  console.log(diemId);
+  // console.log(diemId);
   res.render("phuong/QC-details.ejs", {
     details: diemQC,
     cssfile: "/style.css",
@@ -100,6 +100,8 @@ function chiTietBaoCao(req, res) {
 }
 
 function taoYeuCauCapPhep(req, res) {
+  res.locals.currentPage = "quang-cao";
+
   const { diemId } = req.params;
   const breadcrumbs = [
     { name: "Home", link: "/" },
@@ -118,6 +120,8 @@ function errorPage(req, res) {
 }
 
 function updateReportStatus(req, res) {
+  res.locals.currentPage = "bao-cao";
+
   const status = req.body.status;
   const method = req.body.method;
   const { baoCaoId } = req.params;
@@ -127,11 +131,13 @@ function updateReportStatus(req, res) {
 
 function taoYeuCauCapPhepPost(req, res) {
   const data = req.body;
-  console.log(data);
+  // console.log(data);
   res.redirect("/cac-bang-quang-cao");
 }
 
 function xemYeuCauCapPhep(req, res) {
+  res.locals.currentPage = "bao-cao";
+
   const { bangId } = req.params;
   const breadcrumbs = [
     { name: "Home", link: "/" },

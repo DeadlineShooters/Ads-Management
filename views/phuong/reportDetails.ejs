@@ -1,4 +1,4 @@
-<% layout('layouts/canbo') %> <%-include("../partials/breadcrumb.ejs")%>
+<% layout('layouts/canbo') %>
 
 <div class="card" style="background: #f8f8fd">
   <h5 class="card-header bg-primary-subtle">Chi tiết báo cáo</h5>
@@ -209,8 +209,6 @@
         `option[value="${lastReportStatus}"]`
       ).selected = true;
     }
-
-    console.log(lastReportMethod);
 
     if (lastReportMethod) {
       methodTextarea.value = lastReportMethod;
