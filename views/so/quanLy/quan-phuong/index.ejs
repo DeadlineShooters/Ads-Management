@@ -1,0 +1,70 @@
+<% layout('layouts/canbo') %>
+<section class="d-flex justify-content-between">
+    <%- include('../../../partials/so/quanLyDropdown') %>
+    <div>
+        <% if (props.name === 'Quận') { %>
+        <a class="btn btn-primary rounded-pill" href="/so/quanly/quan/add" role="button">Thêm <i class="bi bi-plus"></i></a>
+        <% } else { %>
+        <a class="btn btn-primary rounded-pill" href="/so/quanly/quan/<%= props.quanId %>/phuong/add" role="button">Thêm <i class="bi bi-plus"></i></a>
+        <% } %>
+    </div>
+</section>
+<section class="overflow-auto my-3 border rounded">
+    <div class=" ">
+        <table class="table table-light table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Tên <%= props.name %></th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col">Chú thích</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let i = 0; i<objects.length; i++) { %>
+                <tr class="myElement">
+                    <th scope="row"><%= i %></th>
+                    <td>
+                        <%= objects[i].name %>
+                    </td>
+                    <td>
+                        <%= objects[i].description %>
+                    </td>
+                    <td>
+                        <%= objects[i].note %>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-end">
+                            <% if (props.name === 'Quận') { %>
+                            <a href="/so/quanly/quan/<%= objects[i].id %>/phuong"><i class="bi bi-info-circle"></i></a>
+                            <a href="/so/quanly/quan/<%= objects[i].id %>/edit"><i class="bi bi-pencil-fill ms-2"></i></a>
+                            <% } else { %>
+                            <a href="/so/quanly/quan/<%= props.quanId %>/phuong/<%= objects[i].id %>/edit"><i class="bi bi-pencil-fill ms-2"></i></a>
+                            <% } %>
+                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</section>
+<section class="d-flex justify-content-center mt-auto">
+    <nav aria-label="...">
+        <ul class="pagination m-0 justify-content-end">
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+</section>

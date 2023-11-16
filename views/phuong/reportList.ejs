@@ -1,0 +1,80 @@
+<% layout('layouts/canbo') %>
+<section class="d-flex justify-content-end">
+  <%if (user.role == "quan") {%> <%-
+  include('../partials/quan/diem-ward-dropdown') %> <%}%>
+</section>
+<section class="overflow-auto my-3 border rounded">
+  <div class=" ">
+    <table class="table table-hover table-light table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Thời điểm gửi</th>
+          <th scope="col">Người gửi</th>
+          <th scope="col">Địa chỉ</th>
+          <th scope="col">Khu vực</th>
+          <th scope="col">Hình thức báo cáo</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 1; i<14; i++) { %>
+        <!-- replace with real id -->
+
+        <tr class="clickable-row" data-href="/cac-bao-cao/<%=i%>">
+          <td>25/10/2023 15h30</td>
+          <td>Phạm Văn A</td>
+          <td><%=150 + i %> Nguyễn Đình Chính</td>
+          <td class="khuVucField">Phường 1, Quận <%=user.district%></td>
+          <td>Tố giác sai phạm</td>
+          <td>
+            <div class="d-flex"></div>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="d-flex justify-content-center mt-auto">
+  <nav aria-label="...">
+    <ul class="pagination m-0 justify-content-end">
+      <li class="page-item disabled">
+        <a class="page-link">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="#">2</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
+</section>
+<script>
+  let district = "<%= user.district %>";
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get the select element
+    const selectPhuong = document.querySelector("#phuong-dropdown");
+
+    // Add an event listener for the change event
+    selectPhuong.addEventListener("change", function () {
+      // Get the selected value
+      const selectedValue = selectPhuong.value;
+      const phuongValue = selectedValue.split("phuong-")[1];
+
+      // Update the Khu vực field dynamically
+      document.querySelectorAll(".khuVucField").forEach((item) => {
+        item.textContent = `Phường ${phuongValue}, Quận ${district}`;
+      });
+    });
+
+    // handle on click for each item on the list
+    jQuery(document).ready(function ($) {
+      $(".clickable-row").click(function () {
+        window.location = $(this).data("href");
+      });
+    });
+  });
+</script>

@@ -55,7 +55,15 @@ Note: cb(error, user, message) - message describes why authentication failed.
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, { id: user.id, email: user.email, role: user.role });
+    cb(null, {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      ward: user.ward,
+      district: user.district,
+      phoneNumber: user.phoneNumber,
+      birthDate: user.birthDate,
+    });
   });
 });
 
