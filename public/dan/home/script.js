@@ -94,7 +94,7 @@ async function initMap() {
                     <div class="location__name">Quân Chủng Hải Quân - Trung Tâm Văn Phòng Thương Mại Hải Quân</div>
                     <div class="location__addr">15, Đường Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh</div>
                 </div>
-                <a href="../report/index.html" class="location__report-btn">
+                <a href="/report" class="location__report-btn">
                     <i class="fa-solid fa-hexagon-exclamation item__icon"></i>
                     <span>BÁO CÁO VI PHẠM</span>
                 </a>
@@ -196,7 +196,7 @@ function addMarker(position) {
                     <div class="location__name">Quân Chủng Hải Quân - Trung Tâm Văn Phòng Thương Mại Hải Quân</div>
                     <div class="location__addr">15, Đường Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh</div>
                 </div>
-                <a href="../report/index.html" class="location__report-btn">
+                <a href="/report" class="location__report-btn">
 					<i class="fa-solid fa-hexagon-exclamation item__icon"></i>
                     <span>BÁO CÁO VI PHẠM</span>
                 </a>
