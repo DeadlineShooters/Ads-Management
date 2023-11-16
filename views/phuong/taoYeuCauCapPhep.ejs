@@ -1,0 +1,279 @@
+<% layout('layouts/canbo') %> <%-include("../partials/breadcrumb.ejs")%>
+
+<div class="card" style="background: #f8f8fd">
+  <h5 class="card-header bg-primary-subtle">Tạo yêu cầu cấp phép</h5>
+  <div class="card-body container p-0">
+    <form
+      action="/cac-diem-dat-quang-cao/<%=diemId%>/tao-yeu-cau"
+      method="post"
+      class="row g-3 mb-3"
+      id="create-request-form"
+    >
+      <div class="col-md-5">
+        <label for="address" class="form-label fw-semibold">Địa chỉ</label>
+        <input
+          id="address"
+          class="form-control w-auto"
+          type="text"
+          value="157 Nguyễn Đình Chính"
+          aria-label="Disabled input example"
+          disabled
+          readonly
+          name="address"
+        />
+      </div>
+      <div class="col-sm-3">
+        <label for="ward" class="form-label fw-semibold">Phường</label>
+        <input
+          id="ward"
+          class="form-control w-auto"
+          type="text"
+          value="11"
+          aria-label="Disabled input example"
+          disabled
+          readonly
+          name="ward"
+        />
+      </div>
+      <div class="col-sm-4">
+        <label for="district" class="form-label fw-semibold">Quận</label>
+        <input
+          id="district"
+          class="form-control w-auto"
+          type="text"
+          value="Phú Nhuận"
+          aria-label="Disabled input example"
+          disabled
+          readonly
+          name="district"
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="amount" class="form-label fw-semibold">Số lượng</label>
+        <div class="input-group">
+          <input
+            type="number"
+            class="form-control"
+            id="amount"
+            style="max-width: 20%"
+            required
+            name="amount"
+          />
+          <span class="input-group-text">trụ/bảng</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="size" class="form-label fw-semibold">Kích thước</label>
+        <div class="input-group">
+          <input
+            type="number"
+            class="form-control"
+            id="size"
+            style="max-width: 20%"
+            required
+            name="width"
+          />
+          <span class="input-group-text">m x</span>
+          <input
+            type="number"
+            class="form-control"
+            id="size"
+            style="max-width: 20%"
+            required
+            name="height"
+          />
+          <span class="input-group-text">m (d x r)</span>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <label for="adType" class="form-label fw-semibold"
+          >Loại bảng quảng cáo</label
+        >
+        <%-include("../partials/phuong/selectLocationType")%>
+      </div>
+      <div class="col-md-10">
+        <label for="exampleFormControlTextarea1" class="form-label"
+          >Nội dung quảng cáo</label
+        >
+        <textarea
+          class="form-control"
+          id="formTextarea"
+          rows="3"
+          name="ad-content"
+          required
+        ></textarea>
+      </div>
+
+      <div class="col-md-5">
+        <label for="formFile" class="form-label">Hình ảnh minh họa</label>
+        <input
+          class="form-control"
+          type="file"
+          id="formFile"
+          required
+          name="image"
+        />
+      </div>
+      <div class="col-md-5">
+        <label for="companyName" class="form-label">Tên công ty</label>
+        <input
+          type="text"
+          class="form-control"
+          id="companyName"
+          required
+          name="company-name"
+        />
+      </div>
+      <div class="col-md-12 container">
+        <label for="contactInfo" class="form-label">Thông tin liên lạc</label>
+        <div class="input-group mb-3 row">
+          <div class="input-group col">
+            <span class="input-group-text" id="mail"
+              ><i class="bi bi-envelope-fill"></i
+            ></span>
+            <input
+              type="mail"
+              class="form-control me-3"
+              placeholder="name@example.com"
+              aria-label="mail"
+              aria-describedby="mail"
+              required
+              name="email"
+            />
+          </div>
+          <div class="input-group col">
+            <span class="input-group-text" id="phoneNumber"
+              ><i class="bi bi-telephone-fill"></i
+            ></span>
+            <input
+              type="tel"
+              class="form-control"
+              aria-label="phone"
+              aria-describedby="phoneNumber"
+              required
+              name="phone-number"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col input-group">
+            <span class="input-group-text" id="location"
+              ><i class="bi bi-geo-alt-fill"></i
+            ></span>
+            <input
+              type="text"
+              class="form-control"
+              aria-label="location"
+              aria-describedby="location"
+              style="max-width: 50%"
+              required
+              name="company-location"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label for="contactInfo" class="form-label">Hợp đồng</label>
+        <div class="input-group d-flex align-items-center">
+          <label for="start" class="input-group-text">Ngày bắt đầu</label>
+          <input
+            type="date"
+            id="start"
+            aria-label="Start date"
+            class="form-control"
+            required
+            name="start-date"
+          />
+          <span class="validity"></span>
+          <label for="end" class="input-group-text">Ngày kết thúc</label>
+          <input
+            type="date"
+            id="end"
+            aria-label="End date"
+            class="form-control"
+            required
+            name="end-date"
+          />
+          <span class="validity"></span>
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary w-auto m-auto mt-3"
+        id="gui-yeu-cau"
+        onclick="showToast()"
+      >
+        Gửi yêu cầu
+      </button>
+      <div class="toast position-absolute z-1 bottom-0 end-0">
+        <div class="toast-header d-flex justify-content-between">
+          <div>
+            <i class="bi bi-check-circle-fill text-success"></i>
+            <strong class="mr-auto">Thành công</strong>
+          </div>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body">Yêu cầu cấp phép của bạn đã được tạo</div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module">
+  const toastTrigger = document.getElementById("gui-yeu-cau");
+  const toastLiveExample = document.getElementById("liveToast");
+
+  toastTrigger.onclick = function () {
+    // check whether all fields are filled to trigger toast
+
+    let allFilled = 1;
+    let requiredFields = "";
+    $("#create-request-form input").each(function () {
+      if ($(this).val() == "") {
+        allFilled = 0;
+      }
+    });
+
+    let textareaEmpty = document.getElementById("formTextarea").value === "";
+    // toasting!
+    // note that select tag is always selected so no need to check
+    if (allFilled && !textareaEmpty) {
+      var toastElList = [].slice.call(document.querySelectorAll(".toast"));
+      var toastList = toastElList.map(function (toastEl) {
+        // Creates an array of toasts (it only initializes them)
+        return new bootstrap.Toast(toastEl); // No need for options; use the default options
+      });
+      toastList.forEach((toast) => toast.show()); // This show them
+
+      console.log(toastList); // Testing to see if it works
+    }
+
+    // delay form submission so user can have more time to look at toast
+    $("#create-request-form")
+      .eq(0)
+      .on("submit", function (e) {
+        var $form = $(this);
+
+        if ($form.data("blocked") !== true) {
+          // mark the form as blocked
+          $form.data("blocked", true);
+          console.log("Scheduling form submit...");
+
+          window.setTimeout(function () {
+            console.log("Submitting!");
+            $form.submit();
+            $form.data("blocked", false);
+          }, 3000);
+
+          // disallow submit
+          return false;
+        }
+      });
+  };
+</script>

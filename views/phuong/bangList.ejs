@@ -1,11 +1,14 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
-  <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
-  <%- include('../partials/quan/bang-ward-dropdown') %> <%}%>
+  <%-include("../partials/breadcrumb.ejs")%>
+  <div class="d-flex flex-row">
+    <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
+    <%- include('../partials/quan/bang-ward-dropdown') %> <%}%>
+  </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
   <div class=" ">
-    <table class="table table-light table-striped">
+    <table class="table table-hover table-light table-striped">
       <thead>
         <tr>
           <th scope="col">Địa chỉ</th>
@@ -19,7 +22,8 @@
       </thead>
       <tbody>
         <% for (let i = 1; i<14; i++) { %>
-        <tr class="myElement">
+        <!-- replace with real id -->
+        <tr class="clickable-row" data-href="/cac-bang-quang-cao/<%=i%>">
           <td><%=150 + i %> Nguyễn Đình Chính</td>
           <td class="khuVucField">Phường 1, Quận <%=user.district%></td>
           <td>Trụ màn hình điện tử LED</td>
@@ -33,9 +37,7 @@
           <td><span class="badge text-bg-success">Đã duyệt</span></td>
           <%}%>
           <td>
-            <div class="d-flex">
-              <a href="/chi_tiet_bang"><i class="bi bi-info-circle"></i></a>
-            </div>
+            <div class="d-flex"></div>
           </td>
         </tr>
         <% } %>
@@ -76,6 +78,13 @@
       document.querySelectorAll(".khuVucField").forEach((item) => {
         item.textContent = `Phường ${phuongValue}, Quận ${district}`;
       });
+    });
+  });
+
+  // handle on click for each item on the list
+  jQuery(document).ready(function ($) {
+    $(".clickable-row").click(function () {
+      window.location = $(this).data("href");
     });
   });
 </script>

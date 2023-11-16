@@ -1,11 +1,12 @@
 <% layout('layouts/canbo') %>
-<section class="d-flex justify-content-end">
-  <%if (user.role == "quan") {%> <%-
+
+<section class="d-flex justify-content-between">
+  <%-include("../partials/breadcrumb.ejs")%> <%if (user.role == "quan") {%> <%-
   include('../partials/quan/diem-ward-dropdown') %> <%}%>
 </section>
 <section class="overflow-auto my-3 border rounded">
   <div class=" ">
-    <table class="table table-light table-striped">
+    <table class="table table-hover table-light table-striped">
       <thead>
         <tr>
           <th scope="col">Thời điểm gửi</th>
@@ -18,16 +19,16 @@
       </thead>
       <tbody>
         <% for (let i = 1; i<14; i++) { %>
-        <tr class="myElement">
+        <!-- replace with real id -->
+
+        <tr class="clickable-row" data-href="/cac-bao-cao/<%=i%>">
           <td>25/10/2023 15h30</td>
           <td>Phạm Văn A</td>
           <td><%=150 + i %> Nguyễn Đình Chính</td>
           <td class="khuVucField">Phường 1, Quận <%=user.district%></td>
           <td>Tố giác sai phạm</td>
           <td>
-            <div class="d-flex">
-              <a href="/chi-tiet-bao-cao"><i class="bi bi-info-circle"></i></a>
-            </div>
+            <div class="d-flex"></div>
           </td>
         </tr>
         <% } %>
@@ -67,6 +68,13 @@
       // Update the Khu vực field dynamically
       document.querySelectorAll(".khuVucField").forEach((item) => {
         item.textContent = `Phường ${phuongValue}, Quận ${district}`;
+      });
+    });
+
+    // handle on click for each item on the list
+    jQuery(document).ready(function ($) {
+      $(".clickable-row").click(function () {
+        window.location = $(this).data("href");
       });
     });
   });

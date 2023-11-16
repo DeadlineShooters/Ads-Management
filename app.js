@@ -65,7 +65,6 @@ canBoApp.get("/", (req, res) => {
   // console.log("user:", req.user);
 
   if (req.user) {
-    console.log("rendering");
     return res.render("index.ejs", {
       user: req.user,
       cssfile: "/canbo-home-style.css",
@@ -85,3 +84,4 @@ danApp.listen(3000, () => {
 canBoApp.listen(9000, () => {
   console.log("Serving on port 9000");
 });
+// testing revert
