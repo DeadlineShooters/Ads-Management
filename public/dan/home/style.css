@@ -284,6 +284,7 @@ input:checked + .toggle-slider:before {
 
 .click-marker__info .location__report-btn {
     color: #d32e2e;
+    text-decoration: none;
     border: 1px solid #e99e9e;
     border-radius: 4px;
     padding: 6px 12px;
@@ -412,6 +413,7 @@ input:checked + .toggle-slider:before {
 
 .list-panel .ads-item .manipulate__report {
     color: #d32e2e;
+    text-decoration: none;
     border: 1px solid #e99e9e;
     border-radius: 4px;
     padding: 6px 12px;
