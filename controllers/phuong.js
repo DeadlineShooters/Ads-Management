@@ -2,6 +2,11 @@ import { registeredAddresses } from "../models/advertisingModels.js";
 
 function chiTietDiem(req, res) {
   const { diemId } = req.params;
+  const breadcrumbs = [
+    { name: "Home", link: "/" },
+    { name: "Các điểm đặt quảng cáo", link: "/cac-diem-dat-quang-cao" },
+    { name: "Chi tiết điểm đặt quảng cáo", link: "" },
+  ];
   const diemQC = {
     title: "điểm đặt",
     addr: "157 Nguyễn Đình Chính, Phường 11, Quận Phú Nhuận",
@@ -19,11 +24,17 @@ function chiTietDiem(req, res) {
     cssfile: "/style.css",
     user: req.user,
     diemId,
+    breadcrumbs,
   });
 }
 
 function chiTietBang(req, res) {
   const { bangId } = req.params;
+  const breadcrumbs = [
+    { name: "Home", link: "/" },
+    { name: "Các bảng quảng cáo", link: "/cac-bang-quang-cao" },
+    { name: "Chi tiết bảng quảng cáo", link: "" },
+  ];
 
   const diemQC = {
     title: "bảng",
@@ -43,35 +54,62 @@ function chiTietBang(req, res) {
     details: diemQC,
     user: req.user,
     bangId,
+    breadcrumbs,
   });
 }
 
 function diemDatQuangCao(req, res) {
-  res.render("phuong/diemDatList", { user: req.user });
+  const breadcrumbs = [
+    { name: "Home", link: "/" },
+    { name: "Các điểm đặt quảng cáo", link: "" },
+  ];
+
+  res.render("phuong/diemDatList", { breadcrumbs });
 }
 
 function bangQuangCao(req, res) {
-  res.render("phuong/bangList", { user: req.user });
+  const breadcrumbs = [
+    { name: "Home", link: "/" },
+    { name: "Các bảng quảng cáo", link: "" },
+  ];
+  res.render("phuong/bangList", { breadcrumbs });
 }
 
 function baoCao(req, res) {
-  res.render("phuong/reportList", { user: req.user });
+  const breadcrumbs = [
+    { name: "Home", link: "/" },
+    { name: "Các báo cáo", link: "" },
+  ];
+
+  res.render("phuong/reportList", { breadcrumbs });
 }
 
 function chiTietBaoCao(req, res) {
   const { baoCaoId } = req.params;
+  const breadcrumbs = [
+    { name: "Home", link: "/" },
+    { name: "Danh sách báo cáo", link: "/cac-bao-cao" },
+    { name: "Chi tiết báo cáo", link: "" },
+  ];
   const props = {
     baoCaoId,
+    breadcrumbs,
   };
+
   res.render("phuong/reportDetails", props);
 }
 
 function taoYeuCauCapPhep(req, res) {
   const { diemId } = req.params;
-
+  const breadcrumbs = [
+    { name: "Home", link: "/" },
+    { name: "Các điểm đặt quảng cáo", link: "/cac-diem-dat-quang-cao" },
+    { name: "Tạo yêu cầu cấp phép", link: "" },
+  ];
   res.render("phuong/taoYeuCauCapPhep", {
     cssfile: "/phuong/css/taoYeuCauCapPhep-style.css",
     diemId,
+    breadcrumbs,
   });
 }
 
@@ -94,7 +132,14 @@ function taoYeuCauCapPhepPost(req, res) {
 }
 
 function xemYeuCauCapPhep(req, res) {
-  res.render("so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs");
+  const { bangId } = req.params;
+  const breadcrumbs = [
+    { name: "Home", link: "/" },
+    { name: "Các bảng quảng cáo", link: "/cac-bang-quang-cao" },
+    { name: "Chi tiết bảng quảng cáo", link: `/cac-bang-quang-cao/${bangId}` },
+    { name: "Xem yêu cầu cấp phép", link: "" },
+  ];
+  res.render("so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs", { breadcrumbs });
 }
 
 export {

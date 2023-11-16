@@ -1,4 +1,4 @@
-<% layout('layouts/canbo') %>
+<% layout('layouts/canbo') %> <%-include("../partials/breadcrumb.ejs")%>
 
 <div class="card" style="background: #f8f8fd">
   <h5 class="card-header bg-primary-subtle">Tạo yêu cầu cấp phép</h5>
@@ -243,7 +243,6 @@
     let textareaEmpty = document.getElementById("formTextarea").value === "";
     // toasting!
     // note that select tag is always selected so no need to check
-    alert(textareaEmpty + " " + allFilled);
     if (allFilled && !textareaEmpty) {
       var toastElList = [].slice.call(document.querySelectorAll(".toast"));
       var toastList = toastElList.map(function (toastEl) {
