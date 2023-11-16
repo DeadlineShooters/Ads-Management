@@ -1,7 +1,10 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
-  <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
-  <%- include('../partials/quan/bang-ward-dropdown') %> <%}%>
+  <%-include("../partials/breadcrumb.ejs")%>
+  <div class="d-flex flex-row">
+    <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
+    <%- include('../partials/quan/bang-ward-dropdown') %> <%}%>
+  </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
   <div class=" ">
