@@ -34,6 +34,11 @@ export const index = async (req, res) => {
     res.render("so/quanly/bangqc/index", {adBoards});
 };
 export const showDetails = async (req, res) => {
+
+    const breadcrumbs = [
+        { name: 'Các bảng quảng cáo', link: '/so/quanly/bang-quang-cao'},
+        { name: "Chi tiết bảng quảng cáo", link: '' },
+    ]
     
     const props = {
         title: "bảng",
@@ -44,12 +49,20 @@ export const showDetails = async (req, res) => {
         b1color: 'secondary',
         b2color: 'danger',
     }
-    res.render("phuong/QC-details", { details: adBoard, props });
+    res.render("phuong/QC-details", { details: adBoard, props, breadcrumbs });
 };
 export const renderEditForm = (req, res) => {
-    
-    res.render('so/quanly/bangqc/edit', {adBoard, boardTypes})
+    const breadcrumbs = [
+        { name: 'Các bảng quảng cáo', link: '/so/quanly/bang-quang-cao'},
+        { name: "Chi tiết bảng quảng cáo", link: `/so/quanly/bang-quang-cao/${req.params.id}` },
+        { name: "Chỉnh sửa bảng quảng cáo", link: '' },
+    ]
+    res.render('so/quanly/bangqc/edit', {adBoard, boardTypes, breadcrumbs})
 };
 export const renderAddForm = (req, res) => {
-    res.render('so/quanly/bangqc/add', {adBoard, boardTypes})
+    const breadcrumbs = [
+        { name: 'Các bảng quảng cáo', link: '/so/quanly/bang-quang-cao'},
+        { name: "Thêm bảng quảng cáo", link: '' },
+    ]
+    res.render('so/quanly/bangqc/add', {adBoard, boardTypes, breadcrumbs})
 };

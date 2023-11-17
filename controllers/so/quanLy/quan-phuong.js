@@ -23,7 +23,12 @@ export const renderAddForm = (req, res) => {
     const props = {
         type: 'Quận',
     }
-    res.render('so/quanLy/quan-phuong/add', {props});
+    const breadcrumbs = [
+        { name: 'Danh sách Quận', link: '/so/quanly/quan'},
+        { name: "Thêm Quận", link: '' },
+    ]
+        
+    res.render('so/quanLy/quan-phuong/add', {props, breadcrumbs});
 };
 export const renderEditForm = (req, res) => {
     const quan = {
@@ -35,7 +40,12 @@ export const renderEditForm = (req, res) => {
     const props = {
         type: 'Quận',
     }
-    res.render('so/quanLy/quan-phuong/edit', {item: quan, props});
+    const breadcrumbs = [
+        { name: 'Danh sách Quận', link: '/so/quanly/quan'},
+        { name: "Thêm Quận", link: '' },
+    ]
+
+    res.render('so/quanLy/quan-phuong/edit', {item: quan, props, breadcrumbs});
 }
 export const phuongIndex = async (req, res) => {
     const phuongs = [
@@ -62,7 +72,12 @@ export const renderPhuongAddForm = (req, res) => {
     const props = {
         type: 'Phường',
     }
-    res.render('so/quanLy/quan-phuong/add', {props});
+    const breadcrumbs = [
+        { name: 'Danh sách Quận', link: '/so/quanly/quan'},
+        { name: "Danh sách Phường", link: `/so/quanly/quan/${req.params.id}/phuong/` },
+        { name: 'Thêm Phường', link: ''},
+    ]
+    res.render('so/quanLy/quan-phuong/add', {props, breadcrumbs});
 };
 export const renderPhuongEditForm = (req, res) => {
     const phuong = {
@@ -74,5 +89,10 @@ export const renderPhuongEditForm = (req, res) => {
     const props = {
         type: 'Phường',
     }
-    res.render('so/quanLy/quan-phuong/edit', {item: phuong, props});
+    const breadcrumbs = [
+        { name: 'Danh sách Quận', link: '/so/quanly/quan'},
+        { name: "Danh sách Phường", link: `/so/quanly/quan/${req.params.id}/phuong/` },
+        { name: 'Chỉnh sửa Phường', link: ''},
+    ]
+    res.render('so/quanLy/quan-phuong/edit', {item: phuong, props, breadcrumbs});
 }

@@ -16,6 +16,10 @@ export const index = async (req, res) => {
   res.render("so/quanly/diemDatqc/index", {adLocations});
 };
 export const showDetails = async (req, res) => {
+  const breadcrumbs = [
+    { name: 'Các điểm đặt quảng cáo', link: '/so/quanly/diem-dat-quang-cao'},
+    { name: "Chi tiết điểm đặt quảng cáo", link: '' },
+  ]
   const props = {
     title: "điểm đặt",
     b1text: "Chỉnh sửa",
@@ -25,19 +29,29 @@ export const showDetails = async (req, res) => {
     b1color: 'secondary',
     b2color: 'danger',
 }
-  res.render("phuong/QC-details", { details: adLocation, props });
+  res.render("phuong/QC-details", { details: adLocation, props, breadcrumbs });
 };
 export const renderEditForm = (req, res) => {
+  const breadcrumbs = [
+    { name: 'Các điểm đặt quảng cáo', link: '/so/quanly/diem-dat-quang-cao'},
+    { name: "Chi tiết điểm đặt quảng cáo", link: `/so/quanly/diem-dat-quang-cao/${req.params.id}` },
+    { name: "Chỉnh sửa điểm đặt quảng cáo", link: '' },
+  ]
   const locationTypes = [
     { name: 'Đất công/Công viên/Hành lang an toàn giao thông' }, { name: 'Đất tư nhân/Nhà ở riêng lẻ' }, { name: 'Trung tâm thương mại' }, { name: 'Chợ' }, { name: 'Cây xăng' }, { name: 'Nhà chờ xe buýt' }]
   const adTypes = [
     { name: 'Cổ động chính trị' }, { name: 'Quảng cáo thương mại' }, { name: 'Xã hội hoá' }]
-  res.render('so/quanly/diemDatqc/edit', {adLocation, locationTypes, adTypes})
+  
+  res.render('so/quanly/diemDatqc/edit', {adLocation, locationTypes, adTypes, breadcrumbs})
 };
 export const renderAddForm = (req, res) => {
+  const breadcrumbs = [
+    { name: 'Các điểm đặt quảng cáo', link: '/so/quanly/diem-dat-quang-cao'},
+    { name: "Thêm điểm đặt quảng cáo", link: '' },
+  ]
   const locationTypes = [
     { name: 'Đất công/Công viên/Hành lang an toàn giao thông' }, { name: 'Đất tư nhân/Nhà ở riêng lẻ' }, { name: 'Trung tâm thương mại' }, { name: 'Chợ' }, { name: 'Cây xăng' }, { name: 'Nhà chờ xe buýt' }]
   const adTypes = [
     { name: 'Cổ động chính trị' }, { name: 'Quảng cáo thương mại' }, { name: 'Xã hội hoá' }]
-  res.render('so/quanly/diemDatqc/add', {adLocation, locationTypes, adTypes})
+  res.render('so/quanly/diemDatqc/add', {adLocation, locationTypes, adTypes, breadcrumbs})
 };

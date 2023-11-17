@@ -21,15 +21,23 @@ export const index = async (req, res) => {
 };
 export const renderAddForm = (req, res) => {
     // dành cho place holders
+    const breadcrumbs = [
+        { name: 'Loại hình quảng cáo', link: '/so/quanly/loai-hinh-quang-cao'},
+        { name: "Thêm loại hình quảng cáo", link: '' },
+    ]
     const props = {
         type: 'loại hình quảng cáo',
         name: 'Cổ động chính trị...',
         description: 'loại hình này có mục tiêu cổ động các mục tiêu chính trị...',
         note: 'loại hình này được ưu tiên...'
     }
-    res.render('so/quanLy/lhqc-htbc/add', { props })
+    res.render('so/quanLy/lhqc-htbc/add', { props, breadcrumbs })
 };
 export const renderEditForm = (req, res) => {
+    const breadcrumbs = [
+        { name: 'Loại hình quảng cáo', link: '/so/quanly/loai-hinh-quang-cao'},
+        { name: "Chỉnh sửa loại hình quảng cáo", link: '' },
+    ]
     const loaihinhqc = {
         id: '001',
         name: 'Cổ động chính trị',
@@ -39,5 +47,5 @@ export const renderEditForm = (req, res) => {
     const props = {
         type: 'loại hình quảng cáo',
     }
-    res.render('so/quanLy/lhqc-htbc/edit', { item: loaihinhqc, props })
+    res.render('so/quanLy/lhqc-htbc/edit', { item: loaihinhqc, props, breadcrumbs })
 };

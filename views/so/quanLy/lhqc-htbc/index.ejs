@@ -4,7 +4,7 @@
     <div>
         <% if (props.type === 'loại hình quảng cáo') { %>
         <a class="btn btn-primary rounded-pill" href="/so/quanly/loai-hinh-quang-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
-        <% } else if (props.type === 'hình thức quảng cáo') { %>
+        <% } else if (props.type === 'hình thức báo cáo') { %>
         <a class="btn btn-primary rounded-pill" href="/so/quanly/hinh-thuc-bao-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
         <% } else if (props.type === 'loại bảng quảng cáo') { %>
         <a class="btn btn-primary rounded-pill" href="/so/quanly/loai-bang-quang-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
@@ -36,8 +36,11 @@
                             <% if (props.type === 'loại hình quảng cáo') { %>
                             <a href="/so/quanly/loai-hinh-quang-cao/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
                             <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
-                            <% } else { %>
+                            <% } else if (props.type === 'hình thức báo cáo') { %>
                             <a href="/so/quanly/hinh-thuc-bao-cao/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
+                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
+                            <% } else if (props.type === 'loại bảng quảng cáo') { %>
+                            <a href="/so/quanly/loai-bang-quang-cao/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
                             <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
                             <% } %>
                         </div>

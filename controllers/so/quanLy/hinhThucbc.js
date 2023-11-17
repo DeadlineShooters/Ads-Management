@@ -21,6 +21,10 @@ export const index = async (req, res) => {
     res.render('so/quanLy/lhqc-htbc/index', {items: hinhThucbcs, props})
 };
 export const renderAddForm = (req, res) => {
+    const breadcrumbs = [
+        { name: 'Các hình thức báo cáo', link: '/so/quanly/hinh-thuc-bao-cao'},
+        { name: "Thêm hình thức báo cáo", link: '' },
+    ]
     // dành cho place holders
     const props = {
         type: 'hình thức báo cáo',
@@ -28,9 +32,13 @@ export const renderAddForm = (req, res) => {
         description: 'Cho phép mọi người dân đóng góp ý kiến của mình...',
         note: 'Hình thức này...'
     }
-    res.render('so/quanLy/lhqc-htbc/add', { props })
+    res.render('so/quanLy/lhqc-htbc/add', { props, breadcrumbs })
 };
 export const renderEditForm = (req, res) => {
+    const breadcrumbs = [
+        { name: 'Các hình thức báo cáo', link: '/so/quanly/hinh-thuc-bao-cao'},
+        { name: "Chỉnh sửa hình thức báo cáo", link: '' },
+    ]
     const hinhthucbc = {
         id: '001',
         name: 'Cổ động chính trị',
@@ -40,5 +48,5 @@ export const renderEditForm = (req, res) => {
     const props = {
         type: 'hình thức báo cáo',
     }
-    res.render('so/quanLy/lhqc-htbc/edit', { item: hinhthucbc, props })
+    res.render('so/quanLy/lhqc-htbc/edit', { item: hinhthucbc, props, breadcrumbs })
 };
