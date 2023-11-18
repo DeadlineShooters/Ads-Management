@@ -62,10 +62,12 @@ canBoApp.use((req, res, next) => {
   next();
 });
 
-// routes
+danApp.engine("ejs", ejsMate);
+danApp.set("view engine", "ejs");
+danApp.set("views", path.join(__dirname, "/views"));
 
+danApp.use(express.static("public"));
 danApp.use("/", danRoutes);
-danApp.use("/public", express.static("public"));
 
 canBoApp.get("/", (req, res) => {
   // console.log("user:", req.user);

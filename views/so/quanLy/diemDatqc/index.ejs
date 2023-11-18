@@ -27,7 +27,7 @@
                     <td>Quận <%= adLocation.district %>, Phường <%= adLocation.ward %></td>
                     <td><%= adLocation.type %></td>
                     <td><%= adLocation.adType %></td>
-                    <td><%= adLocation.status %></td>
+                    <td><div class="rounded-pill text-center text-light <%= (adLocation.status == 'Đã quy hoạch')? 'bg-success' : 'bg-danger'  %>"><%= adLocation.status %></div></td>
                 </tr>
                 <% } %>
             </tbody>
