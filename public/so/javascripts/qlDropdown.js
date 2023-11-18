@@ -46,11 +46,12 @@ document.addEventListener("DOMContentLoaded", function () {
   if (lastSelectedOption) {
     const selectedElement = document.querySelector(lastSelectedOption);
     // Check if the element exists before setting 'selected'
-    if (selectedElement) {
-      selectedElement.selected = true;
-    } else {
-      console.warn("Element not found:", lastSelectedOption);
-    }
+    selectedElement.selected = true;
+    localStorage.setItem("lastSelectedOption",null);
+
+  } else {
+    const selectedElement = document.querySelector('option[value="/so/quanly/quan"]');
+    selectedElement.selected = true;
   }
 });
 // Attach click event listeners to all links
