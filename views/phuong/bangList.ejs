@@ -2,7 +2,7 @@
 <section class="d-flex justify-content-between">
   <div class="d-flex flex-row">
     <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
-    <%- include('../partials/quan/bang-ward-dropdown') %> <%}%>
+    <%- include('../partials/quan/phuong-dropdown') %> <%}%>
   </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
@@ -67,22 +67,25 @@
     // Get the select element
     const selectPhuong = document.querySelector("#phuong-dropdown");
 
-    // Add an event listener for the change event
-    selectPhuong.addEventListener("change", function () {
-      // Get the selected value
-      const selectedValue = selectPhuong.value;
-      const phuongValue = selectedValue.split("phuong-")[1];
+    if (selectPhuong) {
+      // Add an event listener for the change event
+      selectPhuong.addEventListener("change", function () {
+        // Get the selected value
+        const selectedValue = selectPhuong.value;
+        const phuongValue = selectedValue.split("phuong-")[1];
 
-      // Update the Khu vực field dynamically
-      document.querySelectorAll(".khuVucField").forEach((item) => {
-        item.textContent = `Phường ${phuongValue}, Quận ${district}`;
+        // Update the Khu vực field dynamically
+        document.querySelectorAll(".khuVucField").forEach((item) => {
+          item.textContent = `Phường ${phuongValue}, Quận ${district}`;
+        });
       });
-    });
+    }
   });
 
   // handle on click for each item on the list
   jQuery(document).ready(function ($) {
     $(".clickable-row").click(function () {
+      console.log($(this).data("href"));
       window.location = $(this).data("href");
     });
   });

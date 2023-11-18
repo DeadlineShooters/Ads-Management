@@ -2,7 +2,6 @@ const controller = {};
 
 controller.show = (req, res) => {
   const breadcrumbs = [
-    { name: "Home", link: "/" },
     { name: "Các báo cáo", link: "" },
   ];
 
@@ -12,7 +11,6 @@ controller.show = (req, res) => {
 controller.showDetail = (req, res) => {
   const { baoCaoId } = req.params;
   const breadcrumbs = [
-    { name: "Home", link: "/" },
     { name: "Danh sách báo cáo", link: "/cac-bao-cao" },
     { name: "Chi tiết báo cáo", link: "" },
   ];
