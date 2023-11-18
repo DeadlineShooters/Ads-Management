@@ -1,6 +1,5 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
-  <%-include("../partials/breadcrumb.ejs")%>
   <div class="d-flex flex-row">
     <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
     <%- include('../partials/quan/bang-ward-dropdown') %> <%}%>

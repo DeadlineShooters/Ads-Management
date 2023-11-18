@@ -2,7 +2,11 @@ import express from "express";
 import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
 import danRoutes from "./routes/dan.js";
-import phuongQuanRoutes from "./routes/phuong.js";
+// phuong
+import diemDatQCPhuong from "./routes/phuong/diemDatQC-route.js";
+import bangQCPhuong from "./routes/phuong/bangQC-route.js";
+import baoCaoPhuong from "./routes/phuong/baoCao-route.js";
+
 import soQuanLyRoutes from "./routes/so/quanLy.js";
 import soHanhChinhRoutes from "./routes/so/hanhChinh.js";
 import soCanBoRoutes from "./routes/so/canbo.js";
@@ -52,17 +56,22 @@ canBoApp.use(passport.authenticate("session"));
 
 canBoApp.use((req, res, next) => {
   res.locals.user = req.user;
+  res.locals.currentPage = req.currentPage;
+
   // res.locals.ayo = asfkdjsdfk;
   next();
 });
-// Initialize Passport
 
-// routes
+danApp.engine("ejs", ejsMate);
+danApp.set("view engine", "ejs");
+danApp.set("views", path.join(__dirname, "/views"));
+
+danApp.use(express.static("public"));
 danApp.use("/", danRoutes);
-danApp.use("/public", express.static("public"));
 
 canBoApp.get("/", (req, res) => {
   // console.log("user:", req.user);
+  res.locals.currentPage = "trang-chu";
 
   if (req.user) {
     return res.render("index.ejs", {
@@ -73,7 +82,9 @@ canBoApp.get("/", (req, res) => {
 });
 
 canBoApp.use("/", authRouter);
-canBoApp.use("/", phuongQuanRoutes);
+canBoApp.use("/cac-diem-dat-quang-cao/", diemDatQCPhuong);
+canBoApp.use("/cac-bang-quang-cao/", bangQCPhuong);
+canBoApp.use("/cac-bao-cao/", baoCaoPhuong);
 canBoApp.use("/so/quanly", soQuanLyRoutes);
 canBoApp.use("/so/hanhchinh", soHanhChinhRoutes);
 canBoApp.use("/so/canbo", soCanBoRoutes);
