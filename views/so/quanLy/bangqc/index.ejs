@@ -29,7 +29,13 @@
                     <td><%= adBoard.boardType %></td>
                     <td><%= adBoard.size.h %>m x <%= adBoard.size.w %>m</td>
                     <td><%= adBoard.quantity %> trụ/bảng</td>
-                    <td><%= adBoard.status %></td>
+                    <%if (adBoard.status == 'Chưa duyệt') { %>
+                        <td><div class="rounded-pill text-center text-light bg-secondary"><%= adBoard.status %></div></td>
+                        <%} else if (adBoard.status == 'Bị từ chối') {%>
+                        <td><div class="rounded-pill text-center text-light bg-danger"><%= adBoard.status %></div></td>
+                        <% }else { %>
+                        <td><div class="rounded-pill text-center text-light bg-success"><%= adBoard.status %></div></td>
+                    <%}%>
                 </tr>
                 <% } %>
             </tbody>
