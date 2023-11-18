@@ -31,7 +31,8 @@ export const index = async (req, res) => {
     const adBoards = [
         adBoard,
     ]
-    res.render("so/quanly/bangqc/index", {adBoards});
+    const breadcrumbs = [];
+    res.render("so/quanly/bangqc/index", {adBoards, breadcrumbs});
 };
 export const showDetails = async (req, res) => {
 

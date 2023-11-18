@@ -19,7 +19,8 @@ export const index = async (req, res) => {
     const props = {
         type: 'loại bảng quảng cáo',
     }
-    res.render('so/quanLy/lhqc-htbc/index', {items: loaibangqcs, props})
+    const breadcrumbs = [];
+    res.render('so/quanLy/lhqc-htbc/index', {items: loaibangqcs, props, breadcrumbs})
 };
 export const renderAddForm = (req, res) => {
     const breadcrumbs = [
