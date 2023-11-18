@@ -13,7 +13,6 @@ const adLocation = {
 
 controller.show = (req, res) => {
   const breadcrumbs = [
-    { name: "Các bảng quảng cáo", link: "" },
   ];
   res.render("phuong/bangList", { breadcrumbs });
 };

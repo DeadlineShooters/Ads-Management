@@ -1,9 +1,7 @@
 const controller = {};
 
 controller.show = (req, res) => {
-  const breadcrumbs = [
-    { name: "Các báo cáo", link: "" },
-  ];
+  const breadcrumbs = [];
 
   res.render("phuong/reportList", { breadcrumbs });
 };
