@@ -53,5 +53,5 @@ export const renderAddForm = (req, res) => {
     { name: 'Đất công/Công viên/Hành lang an toàn giao thông' }, { name: 'Đất tư nhân/Nhà ở riêng lẻ' }, { name: 'Trung tâm thương mại' }, { name: 'Chợ' }, { name: 'Cây xăng' }, { name: 'Nhà chờ xe buýt' }]
   const adTypes = [
     { name: 'Cổ động chính trị' }, { name: 'Quảng cáo thương mại' }, { name: 'Xã hội hoá' }]
-  res.render('so/quanly/diemDatqc/add', {adLocation, locationTypes, adTypes, breadcrumbs})
+  res.render('so/quanly/diemDatqc/add', {locationTypes, adTypes, breadcrumbs})
 };
