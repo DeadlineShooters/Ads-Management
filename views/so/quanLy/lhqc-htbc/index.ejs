@@ -2,10 +2,12 @@
 <section class="d-flex justify-content-between">
     <%- include('../../../partials/so/quanLyDropdown') %>
     <div>
-        <% if (props.type === 'Quận') { %>
-        <a class="btn btn-primary rounded-pill" href="/so/quanly/quan/add" role="button">Thêm <i class="bi bi-plus"></i></a>
-        <% } else { %>
-        <a class="btn btn-primary rounded-pill" href="/so/quanly/quan/<%= props.quanId %>/phuong/add" role="button">Thêm <i class="bi bi-plus"></i></a>
+        <% if (props.type === 'loại hình quảng cáo') { %>
+        <a class="btn btn-primary rounded-pill" href="/so/quanly/loai-hinh-quang-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
+        <% } else if (props.type === 'hình thức báo cáo') { %>
+        <a class="btn btn-primary rounded-pill" href="/so/quanly/hinh-thuc-bao-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
+        <% } else if (props.type === 'loại bảng quảng cáo') { %>
+        <a class="btn btn-primary rounded-pill" href="/so/quanly/loai-bang-quang-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
         <% } %>
     </div>
 </section>
@@ -15,14 +17,14 @@
             <thead>
                 <tr>
                     <th scope="col">No.</th>
-                    <th scope="col">Tên <%= props.type %></th>
+                    <th scope="col">Tên <%= props.name %></th>
                     <th scope="col">Mô tả</th>
                     <th scope="col">Chú thích</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <% let i = 1; %>
+                <% let i = 1 %>
                 <% for (let item of items) { %>
                 <tr class="myElement">
                     <th scope="row"><%= i++ %></th>
@@ -31,13 +33,16 @@
                     <td><%= item.note %></td>
                     <td>
                         <div class="d-flex justify-content-center">
-                            <% if (props.type === 'Quận') { %>
-                            <a href="/so/quanly/quan/<%= item.id %>/phuong"><i class="bi bi-info-circle"></i></a>
-                            <a href="/so/quanly/quan/<%= item.id %>/edit"><i class="bi bi-pencil-fill ms-2"></i></a>
-                            <% } else { %>
-                            <a href="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>/edit"><i class="bi bi-pencil-fill ms-2"></i></a>
-                            <% } %>
+                            <% if (props.type === 'loại hình quảng cáo') { %>
+                            <a href="/so/quanly/loai-hinh-quang-cao/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
                             <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
+                            <% } else if (props.type === 'hình thức báo cáo') { %>
+                            <a href="/so/quanly/hinh-thuc-bao-cao/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
+                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
+                            <% } else if (props.type === 'loại bảng quảng cáo') { %>
+                            <a href="/so/quanly/loai-bang-quang-cao/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
+                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
+                            <% } %>
                         </div>
                     </td>
                 </tr>

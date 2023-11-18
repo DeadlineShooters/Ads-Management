@@ -4,19 +4,19 @@
     <div class="col-6 offset-3">
         <form action="">
             <div class="mb-3">
-                <label for="tenQuan" class="form-label">Tên <%= props.name %></label>
-                <input type="text" class="form-control" id="tenQuan" placeholder="Tên <%= props.name %>">
+                <label for="tenQuan" class="form-label">Tên <%= props.type %></label>
+                <input type="text" class="form-control" id="tenQuan" placeholder="Vd: <%= props.name %>">
               </div>
               <div class="mb-3">
                 <label for="moTa" class="form-label">Mô tả</label>
-                <textarea class="form-control" id="moTa" rows="3" placeholder="Vd: <%= props.name %> này rất to..."></textarea>
+                <textarea class="form-control" id="moTa" rows="3" placeholder="Vd: <%= props.description %>"></textarea>
               </div>
               <div class="mb-3">
                 <label for="moTa" class="form-label">Chú thích</label>
-                <textarea class="form-control" id="moTa" rows="3" placeholder="Vd: <%= props.name %> này có số lượng bảng quảng cáo trung bình..."></textarea>
+                <textarea class="form-control" id="moTa" rows="3" placeholder="Vd: <%= props.note %>"></textarea>
               </div>
               <div class="mb-3 text-center">
-                <button class="btn btn-info">Tạo <%= props.name %></button>
+                <button class="btn btn-info">Thêm</button>
             </div>
         </form>
     </div>
