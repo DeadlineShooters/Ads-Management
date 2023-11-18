@@ -18,189 +18,113 @@
   }
 </style>
 
-<div class="container m-2 p-3 bg-light rounded overflow-auto">
-  <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a href="/"><i class="bi bi-house-fill"></i></a>
-      </li>
-      <li class="breadcrumb-item">
-        <a href="/so/hanhchinh/cap-phep-qc"
-          >Danh sách yêu cầu cấp phép quảng cáo</a
-        >
-      </li>
-      <li class="breadcrumb-item active" aria-current="page">
-        Chi tiết yêu cầu
-      </li>
-    </ol>
-  </nav>
-  <div
-    class="d-flex justify-content-between flex-wrap nowrap align-items-center pb-2 mb-3 border-bottom"
-  >
-    <div class="col">
-      <div class="row">
-        <div class="col text-end fw-lighter">
-          <i class="bi bi-person-fill"></i><b>Văn A</b>&nbsp&nbsp
-          <i class="bi bi-clock-fill"></i><b>13/10/2023 17:01</b>
+<div class="container p-3 bg-light rounded overflow-hidden">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="bi bi-house-fill"></i></a></li>
+            <li class="breadcrumb-item"><a href="/so/hanhchinh/cap-phep-qc">Danh sách yêu cầu cấp phép quảng cáo</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chi tiết yêu cầu</li>
+        </ol>
+    </nav>
+    <div class="d-flex justify-content-between flex-wrap nowrap align-items-center pb-2 mb-3 border-bottom flex-end">
+        <div class="col">
+            <div class="row">
+                <div class="col text-end fw-lighter">
+                    <i class="bi bi-person-fill"></i><b> <%= object[0].nguoiGui %></b>&nbsp&nbsp
+                    <i class="bi bi-clock-fill"></i><b> <%= object[0].thoiDiemGui %></b>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <ul class="list-group">
-    <li class="list-group-item" style="background-color: #7981d0">
-      <div class="row">
-        <div class="col" style="max-width: 200px">
-          <b class="table header">Thông tin yêu cầu</b>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Nội dung quảng cáo</b></div>
-        <div class="col" style="max-width: 100%">
-          Quảng cáo thức uống Wakeup 247 của công ty VinCafé . Phong cách thiết
-          kế 3D kết hợp Die-cut làm cho các chi tiết trên bảng Wake Up 247 -
-          Nước tăng lực vị cà phê trở nên nổi bật. Không những vậy, việc sáng
-          tạo bằng cách cho tia sét phát ra từ hạt cà phê, “truyền” vào chai
-          Wakeup 247 đã thể hiện rất sống động thông điệp của nhãn hàng.
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Hình minh họa</b></div>
-        <div class="col" style="max-width: 100%">
-          <img
-            src="/phuong/images/sample.png"
-            class="card-img-top w-25"
-            alt=""
-          />
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Điểm đặt</b></div>
-        <div class="col" style="max-width: 100%">
-          446 Hoàng Văn Thụ, Phường 4, Tân Bình, Thành phố Hồ Chí Minh
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Khu vực</b></div>
-        <div class="col" style="max-width: 30%"><b>Quận:</b> Tân Bình</div>
-        <div class="col" style="max-width: 25%"><b>Phường:</b> 13</div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Phân loại</b></div>
-        <div class="col" style="max-width: 30%">
-          <b>Loại bảng:</b> Trụ màn hình điện tử LED
-        </div>
-        <div class="col" style="max-width: 25%"><b>Số lượng:</b> 01</div>
-        <div class="col" style="max-width: 25%">
-          <b>Kích thước:</b> 2.5 x 10
-        </div>
-      </div>
-    </li>
-  </ul>
-  <ul class="list-group mt-3">
-    <li class="list-group-item" style="background-color: #7981d0">
-      <div class="row">
-        <div class="col" style="max-width: 200px">
-          <b class="table header">Thông tin công ty</b>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Tên công ty</b></div>
-        <div class="col" style="max-width: 100%">
-          Công ty cổ phần Vincafé Biên Hòa
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Thông tin liên lạc</b></div>
-        <div class="col" style="max-width: 55%">
-          <b>Mail:</b> ads.argency.vincafecompany@gmail.com
-        </div>
-        <div class="col" style="max-width: 25%">
-          <b>Điện thoại:</b> 03672727272
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Hợp đồng</b></div>
-        <div class="col" style="max-width: 30%">
-          <b>Ngày bắt đầu:</b> 01/10/2023
-        </div>
-        <div class="col" style="max-width: 25%">
-          <b>Ngày kết thúc:</b> 31/10/2023
-        </div>
-      </div>
-    </li>
-  </ul>
-  <%if (user.role == "so") {%>
-  <ul class="list-group mt-3">
-    <li class="list-group-item" style="background-color: #7981d0">
-      <div class="row">
-        <div class="col" style="max-width: 200px">
-          <b class="table header">Xử lý yêu cầu</b>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Thực hiện</b></div>
-        <div class="col">
-          <input
-            type="radio"
-            class="btn-check"
-            style="width: 100%"
-            name="options-outlined"
-            id="success-outlined"
-            autocomplete="off"
-            checked
-          />
-          <label
-            class="btn btn-outline-success"
-            style="width: 100%"
-            for="success-outlined"
-            >Phê duyệt</label
-          >
-        </div>
-        <div class="col">
-          <input
-            type="radio"
-            class="btn-check"
-            style="width: 100%"
-            name="options-outlined"
-            id="danger-outlined"
-            autocomplete="off"
-          />
-          <label
-            class="btn btn-outline-danger"
-            style="width: 100%"
-            for="danger-outlined"
-            >Không phê duyệt</label
-          >
-        </div>
-        <div class="col">
-          <button
-            type="submit"
-            class="btn"
-            style="background-color: #d9dbe4; width: 100%"
-          >
-            <i class="bi bi-send-fill"></i>Gửi
-          </button>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <%} %>
+    <ul class="list-group">
+        <li class="list-group-item" style="background-color: #7981d0">
+            <div class="row">
+                <div class="col" style="max-width: 200px;"><b class="table header">Thông tin yêu cầu</b></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Nội dung quảng cáo</b></div>
+                <div class="col" style="max-width: 100%;"><%= object[0].noiDung %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Hình minh họa</b></div>
+                <div class="col" style="max-width: 100%;"><%= object[0].hinhMinhHoa %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Điểm đặt</b></div>
+                <div class="col" style="max-width: 100%;"><%= object[0].diemDat %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Khu vực</b></div>
+                <div class="col" style="max-width: 30%;"><b>Quận:</b> <%= object[0].khuVuc.q %></div>
+                <div class="col" style="max-width: 25%;"><b>Phường:</b> <%= object[0].khuVuc.p %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Phân loại</b></div>
+                <div class="col" style="max-width: 30%;"><b>Loại bảng:</b> <%= object[0].phanLoai.loaiBang %></div>
+                <div class="col" style="max-width: 25%;"><b>Số lượng:</b> <%= object[0].phanLoai.soLuong %></div>
+                <div class="col" style="max-width: 25%;"><b>Kích thước:</b> <%= object[0].phanLoai.kichThuoc %></div>
+            </div>
+        </li>
+    </ul>
+    <ul class="list-group mt-3">
+        <li class="list-group-item" style="background-color: #7981d0">
+            <div class="row">
+                <div class="col" style="max-width: 200px;"><b class="table header">Thông tin công ty</b></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Tên công ty</b></div>
+                <div class="col" style="max-width: 100%;"><%= object[0].tenCongTy %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Thông tin liên lạc</b></div>
+                <div class="col" style="max-width: 55%;"><b>Mail:</b> <%= object[0].lienLac.mail %></div>
+                <div class="col" style="max-width: 25%;"><b>Điện thoại:</b> <%= object[0].lienLac.dienThoai %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Hợp đồng</b></div>
+                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu:</b> <%= object[0].hopDong.ngayBatDau %></div>
+                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc:</b> <%= object[0].hopDong.ngayKetThuc %></div>
+            </div>
+        </li>
+    </ul>
+    <ul class="list-group mt-3">
+        <li class="list-group-item" style="background-color: #7981d0">
+            <div class="row">
+                <div class="col" style="max-width: 200px"><b class="table header">Xử lý yêu cầu</b></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Thực hiện</b></div>
+                    <div class="col">
+                        <input type="radio" class="btn-check" style="width: 100%;" name="options-outlined" id="success-outlined" autocomplete="off" checked>
+                        <label class="btn btn-outline-success" style="width: 100%;" for="success-outlined">Phê duyệt</label>
+                    </div>
+                    <div class="col">
+                        <input type="radio" class="btn-check" style="width: 100%;" name="options-outlined" id="danger-outlined" autocomplete="off">
+                        <label class="btn btn-outline-danger" style="width: 100%;" for="danger-outlined">Không phê duyệt</label>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn"style="background-color: #D9DBE4; width: 100%;"><i class="bi bi-send-fill"></i>Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
