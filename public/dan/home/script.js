@@ -10,7 +10,7 @@ async function initMap() {
 	map = new Map(document.getElementById("map"), {
 		zoom: 17,
 		center: { lat: 10.762860099114166, lng: 106.68247164106691 },
-		mapId: "e559c2114b59021b",
+		mapId: "fcb0e7197754ed12",
 		mapTypeControl: false,
 	});
 
@@ -94,10 +94,10 @@ async function initMap() {
                     <div class="location__name">Quân Chủng Hải Quân - Trung Tâm Văn Phòng Thương Mại Hải Quân</div>
                     <div class="location__addr">15, Đường Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh</div>
                 </div>
-                <div class="location__report-btn">
+                <a href="/report" class="location__report-btn">
                     <i class="fa-solid fa-hexagon-exclamation item__icon"></i>
                     <span>BÁO CÁO VI PHẠM</span>
-                </div>
+                </a>
             </div>
         </div>
     </div>`;
@@ -124,12 +124,23 @@ async function initMap() {
 
 	violatePointMarker.addListener('click', () => { })
 
+	let isClick = false;
+	violatePointMarker.content.addEventListener('click', () => {
+		infoWindow.open(map, violatePointMarker);
+		isClick = true;
+	})
+
 	violatePointMarker.content.addEventListener('mouseover', () => {
+		if (isClick && (infoWindow.getMap() == null || typeof infoWindow.getMap() == "undefined")) {
+			isClick = false;
+		}
 		infoWindow.open(map, violatePointMarker);
 	})
 
 	violatePointMarker.content.addEventListener('mouseout', () => {
-		infoWindow.close();
+		if (!isClick) {
+			infoWindow.close();
+ 		}
 	})
 
 
@@ -185,10 +196,10 @@ function addMarker(position) {
                     <div class="location__name">Quân Chủng Hải Quân - Trung Tâm Văn Phòng Thương Mại Hải Quân</div>
                     <div class="location__addr">15, Đường Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh</div>
                 </div>
-                <div class="location__report-btn">
-                    <i class="fa-solid fa-hexagon-exclamation item__icon"></i>
+                <a href="/report" class="location__report-btn">
+					<i class="fa-solid fa-hexagon-exclamation item__icon"></i>
                     <span>BÁO CÁO VI PHẠM</span>
-                </div>
+                </a>
             </div>
         </div>
     </div>`;
