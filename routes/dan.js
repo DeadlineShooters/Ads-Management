@@ -1,9 +1,9 @@
 import express from "express";
+import controller from "../controllers/dan.js";
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    // res.send('Đây là dân');
-    res.render('dan/home/index.ejs')
-})
+router.get('/', controller.home);
+
+router.get('/report', controller.report);
 
 export default router;

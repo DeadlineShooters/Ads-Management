@@ -1,17 +1,8 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
-    <%- include('../../partials/so/quanLyDropdown') %>
-    <!-- <div>
-        <select class="form-select" aria-label="Default select example" onchange="location = this.value">
-            <option value="/so/qlquan">Quản lý danh sách Quận, Phường</option>
-            <option value="/so/qlloaihinhqc">Quản lý loại hình quảng cáo</option>
-            <option value="/so/qlloaihinhthucbc">Quản lý loại hình thức báo cáo</option>
-            <option value="/so/qldiemdatqc" selected>Quản lý các điểm đặt quảng cáo</option>
-            <option value="/so/qlbangqc">Quản lý các bảng quảng cáo</option>
-        </select>
-    </div> -->
+    <%- include('../../../partials/so/quanLyDropdown') %>
     <div>
-        <a class="btn btn-primary rounded-pill" href="/so/qlbangqc/new" role="button">Thêm <i class="bi bi-plus"></i></a>
+        <a class="btn btn-primary rounded-pill" href="/so/quanly/bang-quang-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
     </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
@@ -29,27 +20,22 @@
                 </tr>
             </thead>
             <tbody>
-                <% for (let i = 1; i<4; i++) { %>
-                <tr class='clickable' onclick= "window.location='/so/qlbangqc/21127089'">
-                    <th scope="row"><%= i %></th>
-                    <td>
-                        157 Nguyễn Đình Chính
-                    </td>
-                    <td>
-                        Phường 11, Quận Phú Nhuận
-                    </td>
-                    <td>
-                        Trụ màn hình điện tử LED
-                    </td>
-                    <td>
-                        2.5m x 10m
-                    </td>
-                    <td>
-                        2 trụ/bảng
-                    </td>
-                    <td>
-                        Chưa duyệt
-                    </td>
+                <% let i = 1; %>
+                <% for (let adBoard of adBoards) { %>
+                <tr class='clickable' onclick= "window.location='/so/quanly/bang-quang-cao/<%= adBoard.id %>'">
+                    <th scope="row"><%= i++ %></th>
+                    <td><%= adBoard.adLocation.address %></td>
+                    <td>Quận <%= adBoard.adLocation.district %>, Phường <%= adBoard.adLocation.ward %></td>
+                    <td><%= adBoard.boardType %></td>
+                    <td><%= adBoard.size.h %>m x <%= adBoard.size.w %>m</td>
+                    <td><%= adBoard.quantity %> trụ/bảng</td>
+                    <%if (adBoard.status == 'Chưa duyệt') { %>
+                        <td><div class="rounded-pill text-center text-light bg-secondary"><%= adBoard.status %></div></td>
+                        <%} else if (adBoard.status == 'Bị từ chối') {%>
+                        <td><div class="rounded-pill text-center text-light bg-danger"><%= adBoard.status %></div></td>
+                        <% }else { %>
+                        <td><div class="rounded-pill text-center text-light bg-success"><%= adBoard.status %></div></td>
+                    <%}%>
                 </tr>
                 <% } %>
             </tbody>

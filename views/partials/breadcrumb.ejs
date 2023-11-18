@@ -1,0 +1,17 @@
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <!-- <li class="breadcrumb-item"><a href="#"><i class="bi bi-house-fill"></i></a></li> -->
+    <% breadcrumbs.forEach((breadcrumb, index) => { if (index ===
+    breadcrumbs.length - 1) { %>
+    <li class="breadcrumb-item active" aria-current="page">
+      <%=breadcrumb.name%>
+    </li>
+    <% } else { %>
+    <li class="breadcrumb-item">
+      <a href="<%=breadcrumb.link%>"> <%=breadcrumb.name%> </a>
+    </li>
+    <% }}) %>
+  </ol>
+</nav>
+
+<script></script>

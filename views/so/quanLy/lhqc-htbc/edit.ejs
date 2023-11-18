@@ -1,0 +1,23 @@
+<% layout('layouts/canbo') %> <%-include("../../../partials/breadcrumb.ejs")%>
+<h1 class="text-center mb-4">Chỉnh sửa <%= props.type %></h1>
+<div class="row">
+    <div class="col-6 offset-3">
+        <form action="">
+            <div class="mb-3">
+                <label for="tenQuan" class="form-label">Tên <%= props.type %></label>
+                <input type="text" class="form-control" id="tenQuan" placeholder="" value="<%= item.name %>">
+              </div>
+              <div class="mb-3">
+                <label for="moTa" class="form-label">Mô tả</label>
+                <textarea class="form-control" id="moTa" rows="3"><%= item.description %></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="moTa" class="form-label">Chú thích</label>
+                <textarea class="form-control" id="moTa" rows="3"><%= item.note %></textarea>
+              </div>
+              <div class="mb-3 text-center">
+                <button class="btn btn-info">Chỉnh sửa</button>
+            </div>
+        </form>
+    </div>
+</div>
