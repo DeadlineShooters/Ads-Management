@@ -1,19 +1,19 @@
 <% layout('layouts/canbo') %>
-<h1 class="text-center">Chỉnh sửa Phường -Phường nào?-</h1>
+<h1 class="text-center">Chỉnh sửa <%= props.name %></h1>
 <div class="row mt-3">
     <div class="col-6 offset-3">
         <form action="">
             <div class="mb-3">
-                <label for="tenQuan" class="form-label">Tên Phường</label>
-                <input type="text" class="form-control" id="tenQuan" placeholder="" value="Phường Bình Trị Đông">
+                <label for="tenQuan" class="form-label">Tên <%= props.name %></label>
+                <input type="text" class="form-control" id="tenQuan" placeholder="" value="<%= object.name %>">
               </div>
               <div class="mb-3">
                 <label for="moTa" class="form-label">Mô tả</label>
-                <textarea class="form-control" id="moTa" rows="3">Phường này nằm ở TPHCM</textarea>
+                <textarea class="form-control" id="moTa" rows="3"><%= object.description %></textarea>
               </div>
               <div class="mb-3">
                 <label for="moTa" class="form-label">Chú thích</label>
-                <textarea class="form-control" id="moTa" rows="3">Phường này có số lượng bảng quảng cáo trung bình</textarea>
+                <textarea class="form-control" id="moTa" rows="3"><%= object.note %></textarea>
               </div>
               <div class="mb-3 text-center">
                 <button class="btn btn-info">Chỉnh sửa</button>

@@ -32,7 +32,7 @@
   });
 </script>
 
-<div class="container m-2 p-3 bg-light rounded overflow-auto">
+<div class="container p-3 bg-light rounded overflow-auto">
   <section class="d-flex justify-content-between">
     <div>
       <%- include('../../partials/so/hanhChinhDropdown') %>
@@ -67,41 +67,46 @@
           <th scope="col">Kích thước</th>
           <th scope="col">Số lượng</th>
           <th scope="col">Thời gian gửi</th>
-          <th scope="col">Tình trạng</th>
+          <th class="text-center" scope="col">Tình trạng</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="clickable-row" data-href='chinh-diem-qc/chi-tiet-yeu-cau'>
-          <th scope="row">1</th>
-          <td>157 Nguyễn Đình Chính</td>
-          <td>Phường 11, Quận Phú Nhuận</td>
-          <td>Trụ màn hình điện tử LED</td>
-          <td>2.5m x 10m</td>
-          <td>2 trụ/bảng</td>
-          <td>13/10/2023</td>
-          <td><p class="status notAccept">Không duyệt</p></td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>157 Nguyễn Đình Chính</td>
-          <td>Phường 11, Quận Phú Nhuận</td>
-          <td>Trụ màn hình điện tử LED</td>
-          <td>2.5m x 10m</td>
-          <td>2 trụ/bảng</td>
-          <td>15/10/2023</td>
-          <td><p class="status Accept">Đã duyệt</p></td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>157 Nguyễn Đình Chính</td>
-          <td>Phường 11, Quận Phú Nhuận</td>
-          <td>Trụ màn hình điện tử LED</td>
-          <td>2.5m x 10m</td>
-          <td>2 trụ/bảng</td>
-          <td>17/10/2023</td>
-          <td><p class="status notHandle">Chưa duyệt</p></td>
-        </tr>
+        <% for (let i = 0; i<objects.length; i++) { %>
+          <tr class="clickable-row" data-href='chinh-diem-qc/chi-tiet-yeu-cau'>
+            <td scope="row"><%=i + 1%></td>
+            <td><%= objects[i].diaChi %></td>
+            <td><%= objects[i].khuVuc %></td>
+            <td><%= objects[i].loaiBang %></td>
+            <td><%= objects[i].kichThuoc %></td>
+            <td><%= objects[i].soLuong %></td>
+            <td><%= objects[i].thoiGianGui %></td>
+            <% if (objects[i].tinhTrang === 'khongDuyet') { %>
+              <td><p class="status notAccept">Không duyệt</p></td>
+            <% } else if (objects[i].tinhTrang === 'Duyet') { %>
+              <td><p class="status Accept">Đã duyệt</p></td>
+            <% } else { %>
+              <td><p class="status notHandle">Chưa duyệt</p></td>
+            <% } %>
+          </tr>
+        <% } %>
       </tbody>
     </table>
   </section>
 </div>
+<section class="d-flex justify-content-center mt-auto">
+  <nav aria-label="...">
+      <ul class="pagination m-0 justify-content-end">
+          <li class="page-item disabled">
+              <a class="page-link">Trang trước</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item active" aria-current="page">
+              <a class="page-link" href="#">2</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+              <a class="page-link" href="#">Trang sau</a>
+          </li>
+      </ul>
+  </nav>
+</section>

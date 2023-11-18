@@ -3,13 +3,18 @@ import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
 import danRoutes from "./routes/dan.js";
 import phuongQuanRoutes from "./routes/phuong.js";
-import soRoutes from "./routes/so.js";
+import soQuanLyRoutes from "./routes/so/quanLy.js";
+import soHanhChinhRoutes from "./routes/so/hanhChinh.js";
+import soCanBoRoutes from "./routes/so/canbo.js";
 import ejsMate from "ejs-mate";
 import authRouter from "./routes/auth.js";
 import passport from "passport";
+import flash from "connect-flash";
+import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
+import methodOverride from "method-override";
 
 const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/";
 
@@ -33,17 +38,22 @@ canBoApp.set("views", path.join(__dirname, "/views"));
 canBoApp.use(express.json());
 canBoApp.use(express.urlencoded({ extended: false }));
 canBoApp.use(passport.initialize());
-
+canBoApp.use(methodOverride('_method'));
 canBoApp.use(express.static("public"));
 canBoApp.use(
   session({
     secret: "keyboard cat",
-    saveUninitialized: false, // don't create session until something stored
     resave: false, //don't save session if unmodified
+    saveUninitialized: true, // don't create session until something stored
     store: MongoStore.create({
       mongoUrl: mongoURI,
     }),
-  })
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+  }),
+  cookieParser('keyboard cat'),
+  flash()
 );
 
 canBoApp.use(passport.authenticate("session"));
@@ -73,7 +83,9 @@ canBoApp.get("/", (req, res) => {
 
 canBoApp.use("/", authRouter);
 canBoApp.use("/", phuongQuanRoutes);
-canBoApp.use("/so", soRoutes);
+canBoApp.use("/so/quanly", soQuanLyRoutes);
+canBoApp.use("/so/hanhchinh", soHanhChinhRoutes);
+canBoApp.use("/so/canbo", soCanBoRoutes);
 
 danApp.listen(3000, () => {
   console.log("Serving on port 3000");
@@ -81,3 +93,4 @@ danApp.listen(3000, () => {
 canBoApp.listen(9000, () => {
   console.log("Serving on port 9000");
 });
+// testing revert

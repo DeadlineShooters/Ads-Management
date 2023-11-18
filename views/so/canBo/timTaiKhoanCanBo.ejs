@@ -45,7 +45,7 @@
   <div class="container p-3 bg-light rounded overflow-auto">
     <section class="d-flex justify-content-between">
       <div class="fs-6 nopadding">
-        <input type="text" readonly class="form-control-plaintext fw-bold" id="" value="Danh sách tài khoản cán bộ">
+        <input type="text" readonly class="form-control-plaintext fw-bold" id="" value="Tìm kiếm tài khoản cán bộ">
       </div>
       <div class="d-flex flex-row align-items-center">
         <div class="md-col-2 me-2">
@@ -57,16 +57,14 @@
               class="bi bi-filter"></span>Lọc</button>
         </div>
         <div class="md-col-3">
-          <form action="tim-kiem-can-bo" role="search" method="POST">
-            <div class="input-group">
-              <input type="search" name="searchItem" class="form-control border-right-0" placeholder="Tìm cán bộ">
-              <span class="input-group-append bg-white border-left-0">
-                <button class="input-group-text bg-transparent">
-                  <i class="bi bi-search"></i>
-                </button>
-              </span>
-            </div>
-          </form>
+          <div class="input-group">
+            <input class="form-control border-right-0" placeholder="Tìm cán bộ">
+            <span class="input-group-append bg-white border-left-0">
+              <button class="input-group-text bg-transparent">
+                <i class="bi bi-search"></i>
+              </button>
+            </span>
+          </div>
         </div>
       </div>
     </section>
@@ -85,8 +83,8 @@
           </tr>
         </thead>
         <tbody>
-          <% for (let i=0; i<canBo.length; i++) { %>
-            <% if (canBo[i].role == "quan" ) { %>
+          <% if (canBo !="" ) { %>
+            <% for (let i=0; i<canBo.length; i++) { %>
               <tr class="align-items-center">
                 <th scope="row">
                   <%= i + 1 %>
@@ -115,78 +113,27 @@
                       href="chinh-sua-tai-khoan-cb/<%=canBo[i]._id%>" role="button"><i
                         class="bi bi-pencil-fill"></i></a>
                     <form action="chinh-sua-tai-khoan-cb/<%=canBo[i]._id%>?_method=DELETE" method="POST">
-                      <button class="btn nopadding mx-1 del" id="deleteButton" type="button" data-bs-toggle="modal" 
-                      data-bs-target="#deleteModal"><i class="bi bi-trash-fill"></i></button>
+                      <button class="btn nopadding mx-1 del" id="deleteButton" type="button" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal"><i class="bi bi-trash-fill"></i></button>
                     </form>
                   </div>
                 </td>
               </tr>
-              <% } %>
             <% } %>
+          <% } %>
         </tbody>
       </table>
     </section>
+    <% if (canBo.length=="" ) { %>
+      <section class="d-flex justify-content-center mt-auto">
+        <div class="alert alert-danger alert-dismissible fade show">
+          <strong>Thông báo:</strong> Không có tài khoản cán bộ nào thỏa yêu cầu!
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      </section>
+      <% } %>
   </div>
-  <% messageAdd.forEach(element=> { %>
-    <section class="d-flex justify-content-center mt-auto">
-      <div class="alert alert-success alert-dismissible fade show">
-        <strong>Thông báo:</strong>
-        <%= message %>.
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      </div>
-    </section>
-  <% }) %>
-  <% messageEdit.forEach(element=> { %>
-    <section class="d-flex justify-content-center mt-auto">
-      <div class="alert alert-warning alert-dismissible fade show">
-        <strong>Thông báo:</strong>
-        <%= messageEdit %>.
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      </div>
-    </section>
-  <% }) %>
-  <% messageDel.forEach(element=> { %>
-    <section class="d-flex justify-content-center mt-auto">
-      <div class="alert alert-danger alert-dismissible fade show">
-        <strong>Thông báo:</strong>
-        <%= messageDel %>.
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      </div>
-    </section>
-  <% }) %>
-  <% if (canBo.length> 0) { %>
-    <section class="d-flex justify-content-center mt-auto">
-      <nav aria-label="Dashboard Pagination">
-        <ul class="pagination m-0 justify-content-end">
-          <% if (current == 1) { %>
-            <li class="page-item disabled "><a class="page-link" href="#">Trang trước</a></li>
-          <% } else { %>
-            <li class="page-item "><a class="page-link" href="/?page=1">Trang trước</a></li>
-          <% } %>
 
-          <% var i = (Number(current)> 5 ? Number(current) - 4 : 1) %>
-          <% if (i!==1) { %>
-            <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-          <% } %>
-          <% for(; i <=(Number(current) + 4) && i <=pages; i++) { %>
-            <% if (i==current) { %>
-              <li class="page-item disabled"><a class="page-link" href="#"><%= i %></a></li>
-            <% } else { %>
-              <li class="page-item"><a class="page-link" href="?page=<%= i %>"><%= i %></a></li>
-            <% } %>
-            <% if (i==Number(current) + 4 && i < pages) { %>
-              <li class="page-item"><a class="page-link" href="?page=<%= i %>">...</a></li>
-            <% } %>
-          <% } %>
-          <% if (current==pages) { %>
-            <li class="page-item disabled"><a class="page-link" href="#">Trang sau</a></li>
-          <% } else { %>
-            <li class="page-item"><a class="page-link" href="?page=<%= pages %>">Trang sau</a></li>
-          <% } %>
-        </ul>
-      </nav>
-    </section>
-  <% } %>
   <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -196,15 +143,16 @@
         </div>
         <div class="modal-body">
           <p>
-            Hành động này sẽ xóa <strong>vĩnh viễn</strong> tài khoản cán bộ. 
+            Hành động này sẽ xóa <strong>vĩnh viễn</strong> tài khoản cán bộ.
             <br> Bạn có chắc không?
           </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <form action="chinh-sua-tai-khoan-cb/$(this).attr('data-id')?_method=DELETE" method="POST" class="position-relative">
+          <form action="chinh-sua-tai-khoan-cb/$(this).attr('data-id')?_method=DELETE" method="POST"
+            class="position-relative">
             <button type="submit" class="btn btn-primary">
-                Đồng ý
+              Đồng ý
             </button>
           </form>
         </div>

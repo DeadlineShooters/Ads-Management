@@ -33,67 +33,107 @@
     });
 </script>
 
-<div class="container m-2 p-3 bg-light rounded overflow-auto">
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="bi bi-house-fill"></i></a></li>
-            <li class="breadcrumb-item"><a href="/so/canbo/tai-khoan-cb">Danh sách tài khoản cán bộ phường quận</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa tài khoản cán bộ</li>
-        </ol>
-    </nav>
-    <div class="container col-lg-8 mt-4">
-        <div class="card">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <p class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sửa tài khoản cán bộ</p>
-                <div class="col-md-10 mt-3 ps-3">
-                    <label class="fw-bold">Họ tên</label>
-                    <input type="text" name="" placeholder="Nhập họ tên cán bộ" value="Nguyễn Văn A" class="form-control">
-                </div>
-                <div class="col-md-5 mt-3 ps-3">
-                    <label class="fw-bold">Ngày sinh</label>
-                    <input type="date" name="" placeholder="Chọn ngày, tháng, năm sinh" value="01/01/2001" class="form-control">
-                </div>
-                <div class="col-md-5 mt-3 ps-3">
-                    <label class="fw-bold">Số điện thoại</label>
-                    <input type="text" name="" placeholder="Nhập số điện thoại" value="123456789" class="form-control">
-                </div>
-                <div class="col-md-10 mt-3 ps-3">
-                    <label class="fw-bold">Email</label>
-                    <input type="text" name="" placeholder="Nhập địa chỉ email" value="nguyenvana@gmail.com" class="form-control">
-                </div>
-                
-                <div class="col-md-5 mt-3 ps-3">
-                    <label class="fw-bold">Quận quản lý</label>
-                    <select class="form-select" name="" id="">
-                        <option selected>Chọn quận</option>
-                        <option value="">Tân Bình</option>
-                        <option value="">Quận 6</option>
-                    </select>
-                </div>
-                <div class="col-md-5 mt-3 ps-3">
-                    <label class="fw-bold">Phường quản lý</label>
-                    <select class="form-select" name="" id="">
-                        <option selected>Chọn phường</option>
-                        <option value="">Phường 13</option>
-                        <option value="">Phường 14</option>
-                        <option value="">Phường 15</option>
-                    </select>
-                </div>
-                <div class="col-md-10 mt-3 ps-3">
-                    <label class="fw-bold">Mật khẩu đăng nhập</label>
-                    <div class="input-group">
-                        <input type="password" name="password" id="password" placeholder="Nhập mật khẩu ban đầu cho cán bộ (thay đổi sau)" class="form-control">
-                        <span class="bg-white border-left-0">
-                            <button class="input-group-text bg-transparent" id="btnSubmit">
-                                <i class="bi bi-eye-slash"></i>
-                            </button>
-                        </span>
+<form action="/so/canbo/chinh-sua-tai-khoan-cb/<%= canBo._id %>?_method=PUT" method="POST" enctype="application/x-www-form-urlencoded">
+    <div class="container p-3 bg-light rounded overflow-auto">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#"><i class="bi bi-house-fill"></i></a></li>
+                <li class="breadcrumb-item"><a href="/so/canbo/tai-khoan-cb">Danh sách tài khoản cán bộ phường quận</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa tài khoản cán bộ</li>
+            </ol>
+        </nav>
+        <div class="container col-lg-8 mt-4">
+            <div class="card">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <p class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">Cập nhật tài khoản cán bộ</p>
+                    <div class="col-md-10 mt-3 ps-3">
+                        <label class="fw-bold">Họ tên</label>
+                        <input type="text" name="username" placeholder="Nhập họ tên cán bộ" value="<%= canBo.username %>" class="form-control">
                     </div>
-                </div>
-                <div class="col-md-4 mt-5 mb-5 mx-1 mx-md-4 ps-3">
-                    <button class="form-control fs-6 fw-bold" style="background-color: #468b4a;"><p class="text-white">Cập nhật tài khoản</p></button>
+                    <div class="col-md-5 mt-3 ps-3">
+                        <label class="fw-bold">Ngày sinh</label>
+                        <input type="date" name="birthday" placeholder="Chọn ngày, tháng, năm sinh" value="<%= new Date(canBo.birthday).toLocaleDateString('en-ZA') %>" class="form-control">
+                    </div>
+                    <div class="col-md-5 mt-3 ps-3">
+                        <label class="fw-bold">Số điện thoại</label>
+                        <input type="text" name="phone" placeholder="Nhập số điện thoại" value="<%= canBo.phone %>" class="form-control">
+                    </div>
+                    <div class="col-md-10 mt-3 ps-3">
+                        <label class="fw-bold">Email</label>
+                        <input type="text" name="email" placeholder="Nhập địa chỉ email" value="<%= canBo.email %>" class="form-control">
+                    </div>
+                    
+                    <div class="col-md-5 mt-3 ps-3">
+                        <label class="fw-bold">Quận quản lý</label>
+                        <select class="form-select" name="ward" id="">
+                            <option selected><%= canBo.ward %></option>
+                            <% if (canBo.ward == "Tân Bình") { %>
+                                <option value="Quận 6">Quận 6</option>
+                            <% } else { %>
+                                <option value="Tân Bình">Tân Bình</option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-md-5 mt-3 ps-3">
+                        <label class="fw-bold">Phường quản lý</label>
+                        <select class="form-select" name="district" id="">
+                            <option selected><%= canBo.district %></option>
+                            <% if (canBo.district == "Phường 13") { %>
+                                <option value="Phường 14">Phường 14</option>
+                                <option value="Phường 15">Phường 15</option>
+                            <% } else if (canBo.district == "Phường 14") { %>
+                                <option value="Phường 13">Phường 13</option>
+                                <option value="Phường 15">Phường 15</option>
+                            <% } else { %>
+                                <option value="Phường 13">Phường 13</option>
+                                <option value="Phường 14">Phường 14</option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-md-10 mt-3 ps-3">
+                        <label class="fw-bold">Mật khẩu đăng nhập</label>
+                        <div class="input-group">
+                            <input type="password" name="password" id="password" placeholder="Nhập mật khẩu ban đầu cho cán bộ (thay đổi sau)" class="form-control">
+                            <span class="bg-white border-left-0">
+                                <button class="input-group-text bg-transparent" id="btnSubmit">
+                                    <i class="bi bi-eye-slash"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-5 mb-5 mx-1 mx-md-4 ps-3">
+                        <button class="form-control fs-6 fw-bold" style="background-color: #468b4a;" type="submit"><p class="text-white">Chỉnh sửa tài khoản</p></button>
+                    </div>
+                    <div class="col-md-4 mt-5 mb-5 mx-1 mx-md-4 ps-3">
+                        <button class="form-control fs-6 fw-bold" style="background-color: #dc4b23;" id="deleteButton" type="button" data-bs-toggle="modal" 
+                        data-bs-target="#deleteModal"><p class="text-white">Xóa tài khoản</p></button>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</form>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">Thông báo xác nhận xóa tài khoản cán bộ</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Hành động này sẽ xóa <strong>vĩnh viễn</strong> tài khoản cán bộ.<br> Bạn có chắc không?
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <form action="<%= canBo._id %>?_method=DELETE" method="POST" class="position-relative">
+            <button type="submit" class="btn btn-primary">
+                Đồng ý
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
 </div>
