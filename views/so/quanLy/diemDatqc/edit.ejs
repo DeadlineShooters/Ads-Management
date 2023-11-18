@@ -1,20 +1,34 @@
 <% layout('layouts/canbo') %> <%-include("../../../partials/breadcrumb.ejs")%>
-<div class="row mt-3">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+<!-- Load the `mapbox-gl-geocoder` plugin. -->
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
+<div class="row mt-3 position-relative">
     <div class="col-6 offset-3">
         <h1 class="text-center mb-4">Chỉnh sửa điểm đặt quảng cáo</h1>
         <form action="#">
+            <div class="mb-3">
+                <label for="coord" class="form-label"><b>Toạ độ</b></label>
+                <div class="input-group">
+                    <input id="coord" type="text" class="form-control" value="<%= adLocation.longLat %>" aria-label="Recipient's username" aria-describedby="basic-addon2" disabled readonly>
+                    <span class="input-group-text globe-icon" id="basic-addon2"><i class="bi bi-globe" ></i></span>
+                </div>
+                </div>
+            <div class="mb-3">
+                <label for="address" class="form-label"><b>Địa chỉ </b></label>
+                <input type="text" class="form-control" id="address" value="<%= adLocation.address %>" disabled readonly>
+            </div>
             <div class="row">
                 <div class="mb-3 col-6">
-                    <label for="address" class="form-label"><b>Địa chỉ </b></label>
-                    <input type="text" class="form-control" id="address" placeholder="" value="<%= adLocation.address %>" disabled readonly>
-                </div>
-                <div class="mb-3 col-3">
                     <label for="district" class="form-label"><b>Quận</b></label>
-                    <input type="text" class="form-control" id="district" placeholder="" value="<%= adLocation.district %>" disabled readonly>
+                    <input type="text" class="form-control" id="district"  value="<%= adLocation.district %>" disabled readonly>
                 </div>
-                <div class="mb-3 col-3">
+                <div class="mb-3 col-6">
                     <label for="ward" class="form-label"><b>Phường</b></label>
-                    <input type="text" class="form-control" id="ward" placeholder="" value="<%= adLocation.ward %>" disabled readonly>
+                    <input type="text" class="form-control" id="ward"  value="<%= adLocation.ward %>" disabled readonly>
                 </div>
             </div>
             <div class="mb-3">
@@ -67,10 +81,15 @@
             </div>
         </form>
     </div>
+    <div class="d-none position-absolute col-8 offset-2 rounded border border-2 border-primary map-window bg-light p-0 d-flex flex-column"
+    style="height: 500px;" id="map-window">
+        <div class="d-flex justify-content-between bg-primary">
+            <div class="btn bg-success rounded-0 text-light" id="save">Save</div>
+            <div class="btn bg-danger rounded-0 text-light" id="cancel">Cancel</div>
+        </div>
+        <div id="map" class="flex-grow-1"></div>
+    </div>
 </div>
 
-<script>
-    function resizeInput(input) {
-        input.style.width = input.value.length + 'ch';
-    }
-</script>
+
+<script src="/so/javascripts/add_edit_diemdat.js"></script>
