@@ -1,17 +1,12 @@
 import express from "express";
 const router = express.Router();
+import * as canBo from "../../controllers/so/canBo/canBoControllers.js";
 
-
-router.get('/tai-khoan-cb', (req, res) => {
-    res.render('so/canbo/dsTaiKhoanCanBo.ejs');
-})
-
-router.get('/dang-ky-tai-khoan-cb', (req, res) => {
-    res.render('so/canbo/dkTaiKhoanCanBo.ejs');
-})
-
-router.get('/chinh-sua-tai-khoan-cb', (req, res) => {
-    res.render('so/canbo/chinhSuaTaiKhoan.ejs');
-})
-
+router.get('/tai-khoan-cb', canBo.danhSachCanBo);
+router.get('/dang-ky-tai-khoan-cb', canBo.dkTaiKhoanCanBo);
+router.post('/dang-ky-tai-khoan-cb', canBo.guiInfoTaiKhoanCanBo);
+router.get('/chinh-sua-tai-khoan-cb/:id', canBo.suaTaiKhoanCanBo);
+router.put('/chinh-sua-tai-khoan-cb/:id', canBo.capNhatTaiKhoanCanBo);
+router.delete('/chinh-sua-tai-khoan-cb/:id', canBo.xoaTaiKhoanCanBo);
+router.post('/tim-kiem-can-bo', canBo.timTaiKhoanCanBo);
 export default router;
