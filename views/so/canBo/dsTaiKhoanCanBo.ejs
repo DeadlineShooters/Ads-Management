@@ -42,91 +42,90 @@
     }
   </script>
 
-  <div class="container p-3 bg-light rounded overflow-auto">
-    <section class="d-flex justify-content-between">
-      <div class="fs-6 nopadding">
-        <input type="text" readonly class="form-control-plaintext fw-bold" id="" value="Danh sách tài khoản cán bộ">
+  <section class="d-flex justify-content-between">
+    <div class="fs-6 nopadding">
+      <input type="text" readonly class="form-control-plaintext fw-bold" id="" value="Danh sách tài khoản cán bộ">
+    </div>
+    <div class="d-flex flex-row align-items-center">
+      <div class="md-col-2 me-2">
+        <a class="btn btn-warning btn-sm btn-responsive" href="dang-ky-tai-khoan-cb" role="button"><span
+            class="bi bi-person-plus-fill" </span>Thêm cán bộ</a>
       </div>
-      <div class="d-flex flex-row align-items-center">
-        <div class="md-col-2 me-2">
-          <a class="btn btn-warning btn-sm btn-responsive" href="dang-ky-tai-khoan-cb" role="button"><span
-              class="bi bi-person-plus-fill" </span>Thêm cán bộ</a>
-        </div>
-        <div class="md-col-2 me-2">
-          <button type="button" class="btn btn-primary btn-sm btn-responsive"><span
-              class="bi bi-filter"></span>Lọc</button>
-        </div>
-        <div class="md-col-3">
-          <form action="tim-kiem-can-bo" role="search" method="POST">
-            <div class="input-group">
-              <input type="search" name="searchItem" class="form-control border-right-0" placeholder="Tìm cán bộ">
-              <span class="input-group-append bg-white border-left-0">
-                <button class="input-group-text bg-transparent">
-                  <i class="bi bi-search"></i>
-                </button>
-              </span>
-            </div>
-          </form>
-        </div>
+      <div class="md-col-2 me-2">
+        <button type="button" class="btn btn-primary btn-sm btn-responsive"><span
+            class="bi bi-filter"></span>Lọc</button>
       </div>
-    </section>
-    <section class="border rounded mt-2">
-      <table class="table table-light table-striped">
-        <thead>
-          <tr>
-            <th scope="col">STT</th>
-            <th scope="col">Họ tên</th>
-            <th scope="col">Ngày sinh</th>
-            <th scope="col">Email</th>
-            <th scope="col">Điện thoại</th>
-            <th scope="col">Quận quản lý</th>
-            <th scope="col">Phường quản lý</th>
-            <th scope="col">Quản lý</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i=0; i<canBo.length; i++) { %>
-            <% if (canBo[i].role == "quan" ) { %>
-              <tr class="align-items-center">
-                <th scope="row">
-                  <%= i + 1 %>
-                </th>
-                <td>
-                  <%= canBo[i].username %>
-                </td>
-                <td>
-                  <%= new Date(canBo[i].birthday).toLocaleDateString() %>
-                </td>
-                <td>
-                  <%= canBo[i].email %>
-                </td>
-                <td>
-                  <%= canBo[i].phone %>
-                </td>
-                <td>
-                  <%= canBo[i].ward %>
-                </td>
-                <td>
-                  <%= canBo[i].district %>
-                </td>
-                <td class="text-center">
-                  <div class="d-flex flex-row align-items-center">
-                    <a name="edituser" id="edit" class="btn nopadding mx-1"
-                      href="chinh-sua-tai-khoan-cb/<%=canBo[i]._id%>" role="button"><i
-                        class="bi bi-pencil-fill"></i></a>
-                    <form action="chinh-sua-tai-khoan-cb/<%=canBo[i]._id%>?_method=DELETE" method="POST">
-                      <button class="btn nopadding mx-1 del" id="deleteButton" type="button" data-bs-toggle="modal" 
-                      data-bs-target="#deleteModal"><i class="bi bi-trash-fill"></i></button>
-                    </form>
-                  </div>
-                </td>
-              </tr>
-              <% } %>
+      <div class="md-col-3">
+        <form action="tim-kiem-can-bo" role="search" method="POST">
+          <div class="input-group">
+            <input type="search" name="searchItem" class="form-control border-right-0" placeholder="Tìm cán bộ">
+            <span class="input-group-append bg-white border-left-0">
+              <button class="input-group-text bg-transparent">
+                <i class="bi bi-search"></i>
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <section class="border rounded mt-2">
+    <table class="table table-light table-striped">
+      <thead>
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Họ tên</th>
+          <th scope="col">Ngày sinh</th>
+          <th scope="col">Email</th>
+          <th scope="col">Điện thoại</th>
+          <th scope="col">Quận quản lý</th>
+          <th scope="col">Phường quản lý</th>
+          <th scope="col">Quản lý</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i=0; i<canBo.length; i++) { %>
+          <% if (canBo[i].role == "quan" ) { %>
+            <tr class="align-items-center">
+              <th scope="row">
+                <%= i + 1 %>
+              </th>
+              <td>
+                <%= canBo[i].username %>
+              </td>
+              <td>
+                <%= new Date(canBo[i].birthday).toLocaleDateString() %>
+              </td>
+              <td>
+                <%= canBo[i].email %>
+              </td>
+              <td>
+                <%= canBo[i].phone %>
+              </td>
+              <td>
+                <%= canBo[i].ward %>
+              </td>
+              <td>
+                <%= canBo[i].district %>
+              </td>
+              <td class="text-center">
+                <div class="d-flex flex-row align-items-center">
+                  <a name="edituser" id="edit" class="btn nopadding mx-1"
+                    href="chinh-sua-tai-khoan-cb/<%=canBo[i]._id%>" role="button"><i
+                      class="bi bi-pencil-fill"></i></a>
+                  <form action="chinh-sua-tai-khoan-cb/<%=canBo[i]._id%>?_method=DELETE" method="POST">
+                    <button class="btn nopadding mx-1 del" id="deleteButton" type="button" data-bs-toggle="modal" 
+                    data-bs-target="#deleteModal"><i class="bi bi-trash-fill"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
             <% } %>
-        </tbody>
-      </table>
-    </section>
-  </div>
+          <% } %>
+      </tbody>
+    </table>
+  </section>
+
   <% messageAdd.forEach(element=> { %>
     <section class="d-flex justify-content-center mt-auto">
       <div class="alert alert-success alert-dismissible fade show">

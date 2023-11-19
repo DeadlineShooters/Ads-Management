@@ -104,10 +104,10 @@ canBoApp.use("/so/quanly", soQuanLyRoutes);
 canBoApp.use("/so/hanhchinh", soHanhChinhRoutes);
 canBoApp.use("/so/canbo", soCanBoRoutes);
 
-danApp.listen(3000, () => {
-  console.log("Serving on port 3000");
-});
-// canBoApp.listen(9000, () => {
-//   console.log("Serving on port 9000");
+// danApp.listen(3000, () => {
+//   console.log("Serving on port 3000");
 // });
+canBoApp.listen(9000, () => {
+  console.log("Serving on port 9000");
+});
 // testing revert
