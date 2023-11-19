@@ -1,4 +1,4 @@
-<% layout('layouts/canbo') %> <%-include("../../../partials/breadcrumb.ejs")%>
+<% layout('layouts/canbo') %>
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
 
@@ -8,32 +8,32 @@
 
 
 <div class="row mt-3 position-relative">
-    <div class="col-6 offset-3">
+    <div class="container rounded border shadow col-8" style="padding: 1rem 7rem;">
         <h1 class="text-center mb-4">Thêm điểm đặt quảng cáo</h1>
         <form action="#">
             <div class="mb-3">
-                <label for="coord" class="form-label"><b>Toạ độ</b></label>
+                <label for="coord" class="form-label">Toạ độ</label>
                 <div class="input-group">
                     <input id="coord" type="text" class="form-control" placeholder="Nhấn vào icon để chọn địa điểm..." aria-label="Recipient's username" aria-describedby="basic-addon2" disabled readonly>
                     <span class="input-group-text globe-icon" id="basic-addon2"><i class="bi bi-globe2"></i></span>
                 </div>
                 </div>
             <div class="mb-3">
-                <label for="address" class="form-label"><b>Địa chỉ </b></label>
+                <label for="address" class="form-label">Địa chỉ </label>
                 <input type="text" class="form-control" id="address" placeholder="" disabled readonly>
             </div>
             <div class="row">
                 <div class="mb-3 col-6">
-                    <label for="district" class="form-label"><b>Quận</b></label>
+                    <label for="district" class="form-label">Quận</label>
                     <input type="text" class="form-control" id="district" placeholder="" disabled readonly>
                 </div>
                 <div class="mb-3 col-6">
-                    <label for="ward" class="form-label"><b>Phường</b></label>
+                    <label for="ward" class="form-label">Phường</label>
                     <input type="text" class="form-control" id="ward" placeholder="" disabled readonly>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="boardType" class="form-label"><b>Loại vị trí</b></label>
+                <label for="boardType" class="form-label">Loại vị trí</label>
                 <select class="form-select" aria-label="Default select example" id="boardType">
                     <% for (let locationType of locationTypes) { %>
                         <option value="<%= locationType.name %>"><%= locationType.name %></option>
@@ -41,7 +41,7 @@
                   </select>
             </div>
             <div class="mb-3">
-                <label for="boardType" class="form-label"><b>Hình thức</b></label>
+                <label for="boardType" class="form-label">Hình thức</label>
                 <select class="form-select" aria-label="Default select example" id="boardType">
                     <% for (let adType of adTypes) { %>
                         <option value="<%= adType.name %>"><%= adType.name %></option>
@@ -49,7 +49,7 @@
                   </select>
             </div>
             <div class="mb-3">
-                <p><b>Quy hoạch</b></p>
+                <p>Quy hoạch</p>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Đã quy hoạch">
                     <label class="form-check-label" for="inlineRadio1">Đã quy hoạch</label>
@@ -60,12 +60,12 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="formFile" class="form-label"><b>Chọn ảnh mới</b></label>
+                <label for="formFile" class="form-label">Chọn ảnh mới</label>
                 <input class="form-control" type="file" id="formFile">
             </div>
             <% if (user.role !== 'so') { %>
             <div class="mb-3">
-                <label for="moTa" class="form-label"><b>Lý do chỉnh sửa</b></label>
+                <label for="moTa" class="form-label">Lý do chỉnh sửa</label>
                 <textarea class="form-control" id="moTa" rows="3"></textarea>
             </div>
             <% } %>
@@ -74,14 +74,13 @@
             </div>
         </form>
     </div>
-    <div class="d-none position-absolute col-8 offset-2 rounded border border-2 border-primary map-window bg-light p-0 d-flex flex-column"
-    style="height: 500px;" id="map-window">
-        <div class="d-flex justify-content-between bg-primary">
-            <div class="btn bg-success rounded-0 text-light" id="save">Save</div>
-            <div class="btn bg-danger rounded-0 text-light" id="cancel">Cancel</div>
-        </div>
-        <div id="map" class="flex-grow-1"></div>
-    </div>
+    <%-include("../../../partials/so/popUpMap.ejs")%>
 </div>
+
+<style>
+    label {
+        font-weight: bold;
+    }
+</style>
 
 <script src="/so/javascripts/add_edit_diemdat.js"></script>

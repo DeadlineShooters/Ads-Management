@@ -17,7 +17,8 @@ export const index = async (req, res) => {
     const props = {
         type: 'loại hình quảng cáo',
     }
-    res.render('so/quanLy/lhqc-htbc/index', {items: loaihinhqcs, props})
+    const breadcrumbs = [];
+    res.render('so/quanLy/lhqc-htbc/index', {items: loaihinhqcs, props, breadcrumbs})
 };
 export const renderAddForm = (req, res) => {
     // dành cho place holders

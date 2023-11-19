@@ -37,7 +37,9 @@
       } else { %> <%- include('../partials/pq_sidebar') %> <% } %>
       <div
         class="m-2 p-3 flex-grow-1 rounded d-flex flex-column overflow-auto"
-        id="outer-rectangle">
+        id="outer-rectangle"
+      >
+        <%- include('../partials/breadcrumb') %>
         <%- body %>
       </div>
     </main>
@@ -53,7 +55,7 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
-    <script src="/so/javascripts/qlDropdown.js"></script>
+    <script src="/so/javascripts/deleteListItem.js"></script>
     <script></script>
   </body>
 </html>

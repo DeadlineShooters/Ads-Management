@@ -13,7 +13,8 @@ export const index = async (req, res) => {
   const adLocations = [
     adLocation,
   ]
-  res.render("so/quanly/diemDatqc/index", {adLocations});
+  const breadcrumbs = [];
+  res.render("so/quanly/diemDatqc/index", {adLocations, breadcrumbs});
 };
 export const showDetails = async (req, res) => {
   const breadcrumbs = [

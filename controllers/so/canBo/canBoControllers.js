@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 export const danhSachCanBo =  async (req, res) => {
     let perPage = 12; //moi trang co 10 tai khoan can bo
     let page = req.query.page || 1;
+    const breadcrumbs = [];
     try {
         const canBo = await User.aggregate([ {$sort: {daycreated: -1}}])
             .skip(perPage*page - perPage)
@@ -16,7 +17,8 @@ export const danhSachCanBo =  async (req, res) => {
             messageDel: req.flash('del'),
             canBo,
             current: page,
-            pages: Math.ceil(count / perPage)
+            pages: Math.ceil(count / perPage),
+            breadcrumbs,
         });
     } catch (error) {
         console.log(error);
@@ -29,7 +31,8 @@ export const dkTaiKhoanCanBo = async (req, res) => {
         title: 'add new account',
         description: 'this function creates new account'
     }
-    res.render('so/canBo/dkTaiKhoanCanBo.ejs', locals);
+    const breadcrumbs = [];
+    res.render('so/canBo/dkTaiKhoanCanBo.ejs', {locals, breadcrumbs});
 }
 
 //POST can bo
@@ -52,7 +55,8 @@ export const guiInfoTaiKhoanCanBo = async (req, res) => {
     try {
         await User.create(newCanBo);
         await req.flash('info', 'Tạo tài khoản cán bộ thành công')
-        res.redirect('/so/canbo/tai-khoan-cb');
+        const breadcrumbs = [];
+        res.redirect('/so/canbo/tai-khoan-cb', {breadcrumbs});
     } catch(error) {
         console.log(error);
     }
@@ -60,8 +64,9 @@ export const guiInfoTaiKhoanCanBo = async (req, res) => {
 /* EDIT tai khoan can bo*/
 export const suaTaiKhoanCanBo = async (req, res) => {
     try {
-        const canBo = await User.findOne({_id: req.params.id});
-        res.render('so/canBo/chinhSuaTaiKhoan.ejs', {canBo});
+        const canBo = await User.findOne({ _id: req.params.id });
+        const breadcrumbs = [];
+        res.render('so/canBo/chinhSuaTaiKhoan.ejs', {canBo, breadcrumbs});
     } catch (error) {
         console.log(error);
     }
@@ -84,7 +89,8 @@ export const capNhatTaiKhoanCanBo = async (req, res) => {
             hashed_password: hashedPassword,
         });
         await req.flash('edit', 'Cập nhật tài khoản cán bộ thành công')
-        res.redirect('/so/canbo/tai-khoan-cb');
+        const breadcrumbs = [];
+        res.redirect('/so/canbo/tai-khoan-cb', {breadcrumbs});
     } catch (error) {
         console.log(error);
     }
@@ -94,7 +100,8 @@ export const xoaTaiKhoanCanBo = async (req, res) => {
     try {
         await User.deleteOne({_id: req.params.id});
         await req.flash('del', 'Xóa tài khoản cán bộ thành công')
-        res.redirect('/so/canbo/tai-khoan-cb');
+        const breadcrumbs = [];
+        res.redirect('/so/canbo/tai-khoan-cb', {breadcrumbs});
     } catch (error) {
         console.log(error);
     }
@@ -112,7 +119,8 @@ export const timTaiKhoanCanBo = async (req, res) => {
                 { email: {$regex: new RegExp(searchNoSpecialChar, "i")} },
             ]
         })
-        res.render('so/canBo/timTaiKhoanCanBo.ejs', {canBo});
+        const breadcrumbs = [];
+        res.render('so/canBo/timTaiKhoanCanBo.ejs', {canBo, breadcrumbs});
     } catch (error) {
         console.log(error);
     }

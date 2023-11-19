@@ -18,7 +18,8 @@ export const index = async (req, res) => {
     const props = {
         type: 'hình thức báo cáo',
     }
-    res.render('so/quanLy/lhqc-htbc/index', {items: hinhThucbcs, props})
+    const breadcrumbs = [];
+    res.render('so/quanLy/lhqc-htbc/index', {items: hinhThucbcs, props, breadcrumbs})
 };
 export const renderAddForm = (req, res) => {
     const breadcrumbs = [

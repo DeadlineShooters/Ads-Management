@@ -1,10 +1,3 @@
-// Xoá 1 dòng của danh sách
-document.querySelectorAll(".bi-trash3-fill").forEach((item) => {
-  item.addEventListener("click", (event) => {
-    event.preventDefault();
-    item.parentElement.parentElement.parentElement.parentElement.remove();
-  });
-});
 
 // // Tô màu cho button dc chọn ở sidebar
 // document.addEventListener("DOMContentLoaded", function () {
@@ -67,3 +60,15 @@ if (select) {
     window.location = select.value;
   };
 }
+<!-- <div class="dropdown">
+    <button id="qldropdowns" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Dropdown button
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item active" href="/so/qlquan">Quản lý danh sách Quận, Phường</a></li>
+      <li><a class="dropdown-item" href="/so/qlloaihinhqc">Quản lý loại hình quảng cáo</a></li>
+      <li><a class="dropdown-item" href="#">Quản lý loại hình thức báo cáo</a></li>
+      <li><a class="dropdown-item" href="#">Quản lý các điểm đặt quảng cáo</a></li>
+      <li><a class="dropdown-item" href="#">Quản lý các bảng quảng cáo</a></li>
+    </ul>
+</div> -->

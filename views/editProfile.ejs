@@ -1,0 +1,59 @@
+<% layout('layouts/canbo') %>
+
+<style>
+    p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-weight: bold;
+    }
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    a:hover {
+        color: #0d6efd;   
+    }
+</style>
+
+<div class="container rounded border shadow col-8 my-auto" style="padding: 1rem 7rem;">
+    <h1 class="text-center my-4">Chỉnh sửa tài khoản</h1>
+    <form action="#">
+        <div class="mb-3">
+            <label class="fw-bold">Họ tên</label>
+            <input type="text" name="" placeholder="Nhập họ tên cán bộ" value="Nguyễn Văn A" class="form-control">
+        </div>
+        <div class="row">
+            <div class="mb-3 col-6">
+                <label class="fw-bold">Ngày sinh</label>
+                <input type="date" name="" placeholder="Chọn ngày, tháng, năm sinh" value="2018-01-01" class="form-control">
+            </div>
+            <div class="mb-3 col-6">
+                <label class="fw-bold">Số điện thoại</label>
+                <input type="text" name="" placeholder="Nhập số điện thoại" value="123456789" class="form-control">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="fw-bold">Email</label>
+            <input type="text" name="" placeholder="Nhập địa chỉ email" value="nguyenvana@gmail.com" class="form-control">
+        </div>
+        
+        <div class="row">
+            <div class="mb-3 col-6">
+                <label class="fw-bold">Quận quản lý</label>
+                <input type="text" value="Bình Tân" class="form-control" disabled>
+            </div>  
+            <div class="mb-3 col-6">
+                <label class="fw-bold">Phường quản lý</label>
+                <input type="text" value="Bình Trị Đông" class="form-control" disabled>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="fw-bold">Mật khẩu đăng nhập</label>
+            <input type="password" name="" placeholder="" value="123" class="form-control">
+        </div>
+        <div class="my-4 text-center">
+            <button class="btn btn-info">Xác nhận</button>
+        </div>
+    </form>
+</div>

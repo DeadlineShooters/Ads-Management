@@ -90,6 +90,11 @@ canBoApp.get("/", (req, res) => {
   } else return res.redirect("/login");
 });
 
+canBoApp.get("/edit-profile", (req, res) => {
+  const breadcrumbs = [];
+  res.render('editProfile', {breadcrumbs});
+})
+
 canBoApp.use("/", authRouter);
 canBoApp.use("/cac-diem-dat-quang-cao/", diemDatQCPhuong);
 canBoApp.use("/cac-bang-quang-cao/", bangQCPhuong);

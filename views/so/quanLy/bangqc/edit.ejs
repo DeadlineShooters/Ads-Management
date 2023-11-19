@@ -1,79 +1,80 @@
 <% layout('layouts/canbo') %>
-<div class="row mt-3">
-  <div class="col-6 offset-3">
+<div class="container rounded border shadow col-8" style="padding: 1rem 7rem;">
     <h1 class="text-center mb-4">Chỉnh sửa bảng quảng cáo</h1>
     <form action="">
-      <div class="row">
-        <div class="mb-3 col-6">
-          <label for="address" class="form-label"><b>Địa chỉ </b></label>
-          <input type="text" class="form-control" id="address" placeholder="" value="<%= adBoard.adLocation.address %>" disabled readonly />
+        <div class="row">
+            <div class="mb-3 col-6">
+                <label for="address" class="form-label">Địa chỉ </label>
+                <input type="text" class="form-control" id="address" placeholder="" value="<%= adBoard.adLocation.address %>" disabled readonly>
+            </div>
+            <div class="mb-3 col-3">
+                <label for="district" class="form-label">Quận</label>
+                <input type="text" class="form-control" id="district" placeholder="" value="<%= adBoard.adLocation.district %>" disabled readonly>
+            </div>
+            <div class="mb-3 col-3">
+                <label for="ward" class="form-label">Phường</label>
+                <input type="text" class="form-control" id="ward" placeholder="" value="<%= adBoard.adLocation.ward %>" disabled readonly>
+            </div>
         </div>
-        <div class="mb-3 col-3">
-          <label for="district" class="form-label"><b>Quận</b></label>
-          <input type="text" class="form-control" id="district" placeholder="" value="<%= adBoard.adLocation.district %>" disabled readonly />
-        </div>
-        <div class="mb-3 col-3">
-          <label for="ward" class="form-label"><b>Phường</b></label>
-          <input type="text" class="form-control" id="ward" placeholder="" value="<%= adBoard.adLocation.ward %>" disabled readonly />
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="boardType" class="form-label"><b>Loại bảng quảng cáo</b></label>
-        <%-include("../../../partials/selectAdType")%>
-      </div>
-      <div class="d-flex">
         <div class="mb-3">
-          <label for="moTa" class="form-label d-block"><b>Số lượng</b></label>
-          <input type="text" class="form-control d-inline" id="ward" placeholder="" value="<%= adBoard.quantity %>" oninput="resizeInput(this)" style="width: 1ch; box-sizing: content-box" /> trụ/bảng
+            <label for="boardType" class="form-label">Loại bảng quảng cáo</label>
+            <select class="form-select" aria-label="Default select example" id="boardType">
+                <% for (let boardType of boardTypes) { %>
+                    <% if (boardType.name === adBoard.boardType) { %>
+                    <option value="" selected><%= boardType.name %></option>
+                    <% } else { %>
+                    <option value="<%= boardType.name %>"><%= boardType.name %></option>
+                    <% } %>
+                <% } %>
+                </select>
         </div>
-        <fieldset class="mb-3 ms-4">
-          <label for="moTa" class="form-label d-block"><b>Kích thước</b></label>
-          <input type="text" class="form-control d-inline" id="ward" placeholder="" value="<%= adBoard.size.h %>" oninput="resizeInput(this)" style="width: 3ch; box-sizing: content-box" /> m x
-          <input type="text" class="form-control d-inline" id="ward" placeholder="" value="<%= adBoard.size.w %>" oninput="resizeInput(this)" style="width: 3ch; box-sizing: content-box" /> m
-        </fieldset>
-      </div>
-      <div class="row">
-        <div class="mb-3 col-4">
-          <label for="start" class="form-label"><b>Ngày bắt đầu hợp đồng</b></label>
-          <input
-            class="form-control"
-            type="date"
-            id="start"
-            name="trip-start"
-            value="<%= adBoard.startDate.y %>-<%= adBoard.startDate.m %>-<%= adBoard.startDate.d %>"
-            min="2018-01-01"
-            max="2030-12-31"
-          />
+        <div class="d-flex">
+            <div class="mb-3">
+                <label for="moTa" class="form-label d-block">Số lượng</label>
+                <input type="text" class="form-control d-inline" id="ward" placeholder="" value="<%= adBoard.quantity %>"
+                    oninput="resizeInput(this)" style="width: 1ch; box-sizing: content-box;"> trụ/bảng
+            </div>
+            <fieldset class="mb-3 ms-4">
+                <label for="moTa" class="form-label d-block">Kích thước</label>
+                <input type="text" class="form-control d-inline" id="ward" placeholder="" value="<%= adBoard.size.h %>"
+                    oninput="resizeInput(this)" style="width: 3ch; box-sizing: content-box;"> m x 
+                <input type="text" class="form-control d-inline" id="ward" placeholder="" value="<%= adBoard.size.w %>"
+                    oninput="resizeInput(this)" style="width: 3ch; box-sizing: content-box;"> m
+            </fieldset>
+
         </div>
-        <div class="mb-3 col-4">
-          <label for="start" class="form-label"><b>Ngày kết thúc hợp đồng</b></label>
-          <input
-            class="form-control"
-            type="date"
-            id="start"
-            name="trip-start"
-            value="<%= adBoard.expireDate.y %>-<%= adBoard.expireDate.m %>-<%= adBoard.expireDate.d %>"
-            min="2018-01-01"
-            max="2030-12-31"
-          />
+        <div class="row">
+            <div class="mb-3 col-4">
+                <label for="start"class="form-label">Ngày bắt đầu hợp đồng</label>
+                <input class="form-control" type="date" id="start" name="trip-start" value="<%= adBoard.startDate.y %>-<%= adBoard.startDate.m %>-<%= adBoard.startDate.d %>" min="2018-01-01" max="2030-12-31" />
+            </div>
+            <div class="mb-3 col-4">
+                <label for="start"class="form-label">Ngày kết thúc hợp đồng</label>
+                <input class="form-control" type="date" id="start" name="trip-start" value="<%= adBoard.expireDate.y %>-<%= adBoard.expireDate.m %>-<%= adBoard.expireDate.d %>" min="2018-01-01" max="2030-12-31" />
+            </div>
         </div>
-      </div>
-      <div class="mb-3">
-        <label for="formFile" class="form-label"><b>Chọn ảnh mới</b></label>
-        <input class="form-control" type="file" id="formFile" />
-      </div>
-      <% if (user.role !== 'so') { %>
-      <div class="mb-3">
-        <label for="moTa" class="form-label"><b>Lý do chỉnh sửa</b></label>
-        <textarea class="form-control" id="moTa" rows="3"></textarea>
-      </div>
-      <% } %>
-      <div class="mb-3 text-center">
-        <button class="btn btn-info">Chỉnh sửa</button>
-      </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Chọn ảnh mới</label>
+            <input class="form-control" type="file" id="formFile">
+        </div>
+        <% if (user.role !== 'so') { %>
+        <div class="mb-3">
+            <label for="moTa" class="form-label">Lý do chỉnh sửa</label>
+            <textarea class="form-control" id="moTa" rows="3"></textarea>
+        </div>
+        <% } %>
+        <div class="mb-3 text-center">
+            <button class="btn btn-info">Chỉnh sửa</button>
+        </div>
     </form>
-  </div>
 </div>
+
+<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
 
 <script>
   function resizeInput(input) {
