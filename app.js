@@ -21,7 +21,7 @@ import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
 
-const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/";
+const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/?directConnection=true";
 
 try {
   await mongoose.connect(mongoURI);
@@ -43,7 +43,7 @@ canBoApp.set("views", path.join(__dirname, "/views"));
 canBoApp.use(express.json());
 canBoApp.use(express.urlencoded({ extended: false }));
 canBoApp.use(passport.initialize());
-canBoApp.use(methodOverride('_method'));
+canBoApp.use(methodOverride("_method"));
 canBoApp.use(express.static("public"));
 canBoApp.use(
   session({
@@ -54,10 +54,10 @@ canBoApp.use(
       mongoUrl: mongoURI,
     }),
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7
-    }
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
   }),
-  cookieParser('keyboard cat'),
+  cookieParser("keyboard cat"),
   flash()
 );
 
