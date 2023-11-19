@@ -21,7 +21,7 @@ import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
 
-const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?directConnection=true";
+const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
 try {
   await mongoose.connect(mongoURI);
