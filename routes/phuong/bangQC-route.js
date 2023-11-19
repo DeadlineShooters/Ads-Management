@@ -11,5 +11,6 @@ router.get("/:bangId?", (req, res) => {
 });
 
 router.get("/:bangId/xem-yeu-cau", controller.showYeuCauCapPhep);
+router.get("/:bangId/chinh-sua", controller.showEdit);
 
 export default router;
