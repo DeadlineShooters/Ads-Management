@@ -32,7 +32,7 @@ export const index = async (req, res) => {
         adBoard,
     ]
     const breadcrumbs = [];
-    res.render("so/quanly/bangqc/index", {adBoards, breadcrumbs});
+    res.render("so/quanLy/bangqc/index", {adBoards, breadcrumbs});
 };
 export const showDetails = async (req, res) => {
 
@@ -58,12 +58,12 @@ export const renderEditForm = (req, res) => {
         { name: "Chi tiết bảng quảng cáo", link: `/so/quanly/bang-quang-cao/${req.params.id}` },
         { name: "Chỉnh sửa bảng quảng cáo", link: '' },
     ]
-    res.render('so/quanly/bangqc/edit', {adBoard, boardTypes, breadcrumbs})
+    res.render('so/quanLy/bangqc/edit', {adBoard, boardTypes, breadcrumbs})
 };
 export const renderAddForm = (req, res) => {
     const breadcrumbs = [
         { name: 'Các bảng quảng cáo', link: '/so/quanly/bang-quang-cao'},
         { name: "Thêm bảng quảng cáo", link: '' },
     ]
-    res.render('so/quanly/bangqc/add', {adBoard, boardTypes, breadcrumbs})
+    res.render('so/quanLy/bangqc/add', {adBoard, boardTypes, breadcrumbs})
 };
