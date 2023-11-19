@@ -10,6 +10,7 @@ router.get("/:diemId?", (req, res) => {
     : controller.show(req, res);
 });
 
+router.get("/:diemId/chinh-sua", controller.showEdit);
 router
   .route("/:diemId/tao-yeu-cau")
   .get(controller.showCreateRequest)

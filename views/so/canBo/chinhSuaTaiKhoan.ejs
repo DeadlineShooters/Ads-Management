@@ -1,19 +1,19 @@
 <% layout('layouts/canbo') %>
 
 <style>
-    p {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        font-weight: bold;
-    }
-    a {
-        color: black;
-        text-decoration: none;
-    }
-    a:hover {
-        color: #0d6efd;   
-    }
+  p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+  }
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #0d6efd;
+  }
 </style>
 
 <script>
@@ -110,6 +110,73 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-5 mt-3 ps-3">
+          <label class="fw-bold">Ngày sinh</label>
+          <input
+            type="date"
+            name=""
+            placeholder="Chọn ngày, tháng, năm sinh"
+            value="01/01/2001"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-5 mt-3 ps-3">
+          <label class="fw-bold">Số điện thoại</label>
+          <input
+            type="text"
+            name=""
+            placeholder="Nhập số điện thoại"
+            value="123456789"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-10 mt-3 ps-3">
+          <label class="fw-bold">Email</label>
+          <input
+            type="text"
+            name=""
+            placeholder="Nhập địa chỉ email"
+            value="nguyenvana@gmail.com"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-5 mt-3 ps-3">
+          <label class="fw-bold">Quận quản lý</label>
+          <select class="form-select" name="" id="">
+            <option selected>Chọn quận</option>
+            <option value="">Tân Bình</option>
+            <option value="">Quận 6</option>
+          </select>
+        </div>
+        <div class="col-md-5 mt-3 ps-3">
+          <label class="fw-bold">Phường quản lý</label>
+          <select class="form-select" name="" id="">
+            <option selected>Chọn phường</option>
+            <option value="">Phường 13</option>
+            <option value="">Phường 14</option>
+            <option value="">Phường 15</option>
+          </select>
+        </div>
+        <div class="col-md-10 mt-3 ps-3">
+          <label class="fw-bold">Mật khẩu đăng nhập</label>
+          <input
+            type="password"
+            name=""
+            placeholder=""
+            value="123"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-4 mt-5 mb-5 mx-1 mx-md-4 ps-3">
+          <button
+            class="form-control fs-6 fw-bold"
+            style="background-color: #468b4a"
+          >
+            <p class="text-white">Cập nhật tài khoản</p>
+          </button>
+        </div>
+      </div>
     </div>
 </form>
 
