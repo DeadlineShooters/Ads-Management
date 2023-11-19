@@ -21,7 +21,7 @@ import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
 
-const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/";
+const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
 try {
   await mongoose.connect(mongoURI);
@@ -43,8 +43,8 @@ canBoApp.set("views", path.join(__dirname, "/views"));
 canBoApp.use(express.json());
 canBoApp.use(express.urlencoded({ extended: false }));
 canBoApp.use(passport.initialize());
-canBoApp.use(methodOverride('_method'));
-canBoApp.use(express.static("public"));
+canBoApp.use(methodOverride("_method"));
+canBoApp.use("/", express.static(path.join(__dirname, "public")));
 canBoApp.use(
   session({
     secret: "keyboard cat",
@@ -54,10 +54,10 @@ canBoApp.use(
       mongoUrl: mongoURI,
     }),
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7
-    }
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
   }),
-  cookieParser('keyboard cat'),
+  cookieParser("keyboard cat"),
   flash()
 );
 
@@ -75,7 +75,8 @@ danApp.engine("ejs", ejsMate);
 danApp.set("view engine", "ejs");
 danApp.set("views", path.join(__dirname, "/views"));
 
-danApp.use(express.static("public"));
+// danApp.use(express.static("public"));
+danApp.use("/", express.static(path.join(__dirname, "public")));
 danApp.use("/", danRoutes);
 
 canBoApp.get("/", (req, res) => {

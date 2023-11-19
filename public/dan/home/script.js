@@ -10,7 +10,7 @@ async function initMap() {
   map = new Map(document.getElementById("map"), {
     zoom: 17,
     center: { lat: 10.762860099114166, lng: 106.68247164106691 },
-    mapId: "fcb0e7197754ed12",
+    mapId: "7396b5295dcb3c2",
     mapTypeControl: false,
   });
 
@@ -130,10 +130,7 @@ async function initMap() {
   });
 
   violatePointMarker.content.addEventListener("mouseover", () => {
-    if (
-      isClick &&
-      (infoWindow.getMap() == null || typeof infoWindow.getMap() == "undefined")
-    ) {
+    if (isClick && (infoWindow.getMap() == null || typeof infoWindow.getMap() == "undefined")) {
       isClick = false;
     }
     infoWindow.open(map, violatePointMarker);
@@ -231,79 +228,59 @@ function addMarker(position) {
 }
 
 document.querySelectorAll(".list-panel .ads-item").forEach((item) => {
-  item
-    .querySelector(".item__manipulate .more-info__icon")
-    .addEventListener("click", () => {
-      let content = item.firstElementChild;
-      if (content.tagName != "IMG") {
-        content.style.borderTopLeftRadius = "0";
-        content.style.borderTopRightRadius = "0";
-        let img = document.createElement("img");
-        img.className = "item__img";
-        img.src =
-          "https://img.freepik.com/premium-psd/mockup-rectangular-billboard_196070-273.jpg?w=740";
-        img.alt = "";
-        img.setAttribute("width", "100%");
-        item.insertBefore(img, item.firstChild);
-        img.style.border = "1px solid #ccc";
-        img.style.borderBottom = "none";
-        img.style.borderTopLeftRadius = "4px";
-        img.style.borderTopRightRadius = "4px";
+  item.querySelector(".item__manipulate .more-info__icon").addEventListener("click", () => {
+    let content = item.firstElementChild;
+    if (content.tagName != "IMG") {
+      content.style.borderTopLeftRadius = "0";
+      content.style.borderTopRightRadius = "0";
+      let img = document.createElement("img");
+      img.className = "item__img";
+      img.src = "https://img.freepik.com/premium-psd/mockup-rectangular-billboard_196070-273.jpg?w=740";
+      img.alt = "";
+      img.setAttribute("width", "100%");
+      item.insertBefore(img, item.firstChild);
+      img.style.border = "1px solid #ccc";
+      img.style.borderBottom = "none";
+      img.style.borderTopLeftRadius = "4px";
+      img.style.borderTopRightRadius = "4px";
 
-        let expiry = document.createElement("div");
-        expiry.className = "item__expiry";
-        expiry.innerHTML = "Ngày hết hạn hợp đồng: <span>21/12/2023</span>";
-        content.insertBefore(expiry, content.lastElementChild);
+      let expiry = document.createElement("div");
+      expiry.className = "item__expiry";
+      expiry.innerHTML = "Ngày hết hạn hợp đồng: <span>21/12/2023</span>";
+      content.insertBefore(expiry, content.lastElementChild);
 
-        let backward = document.createElement("i");
-        backward.setAttribute("class", "fa-solid fa-arrow-left backward-icon");
-        item.appendChild(backward);
-        backward.style.cssText =
-          "position: absolute; top: 0; left: 0; font-size: 1.8rem; color: #444; padding: 12px;";
-        backward.addEventListener("click", () => {
-          img.remove();
-          expiry.remove();
-          backward.remove();
-          content.style.borderTopLeftRadius = "4px";
-          content.style.borderTopRightRadius = "4px";
-        });
-      }
-    });
+      let backward = document.createElement("i");
+      backward.setAttribute("class", "fa-solid fa-arrow-left backward-icon");
+      item.appendChild(backward);
+      backward.style.cssText = "position: absolute; top: 0; left: 0; font-size: 1.8rem; color: #444; padding: 12px;";
+      backward.addEventListener("click", () => {
+        img.remove();
+        expiry.remove();
+        backward.remove();
+        content.style.borderTopLeftRadius = "4px";
+        content.style.borderTopRightRadius = "4px";
+      });
+    }
+  });
 });
 
-document
-  .querySelectorAll(".list-panel .panel__menu :nth-child(2)")
-  .forEach((item) => {
-    item.addEventListener("click", function () {
-      item.parentElement.parentElement
-        .querySelector(".report-list")
-        .classList.remove("d-none");
-      item.parentElement.parentElement
-        .querySelector(".ads-list")
-        .classList.add("d-none");
-      item.classList.add("report-list-active");
-      item.parentElement
-        .querySelector(":nth-child(1)")
-        .classList.remove("ads-list-active");
-    });
+document.querySelectorAll(".list-panel .panel__menu :nth-child(2)").forEach((item) => {
+  item.addEventListener("click", function () {
+    item.parentElement.parentElement.querySelector(".report-list").classList.remove("d-none");
+    item.parentElement.parentElement.querySelector(".ads-list").classList.add("d-none");
+    item.classList.add("report-list-active");
+    item.parentElement.querySelector(":nth-child(1)").classList.remove("ads-list-active");
   });
+});
 
-document
-  .querySelectorAll(".list-panel .panel__menu :nth-child(1)")
-  .forEach((item) => {
-    item.addEventListener("click", function () {
-      item.parentElement.parentElement
-        .querySelector(".ads-list")
-        .classList.remove("d-none");
-      item.parentElement.parentElement
-        .querySelector(".report-list")
-        .classList.add("d-none");
-      item.classList.add("ads-list-active");
-      item.parentElement
-        .querySelector(":nth-child(2)")
-        .classList.remove("report-list-active");
-    });
+document.querySelectorAll(".list-panel .panel__menu :nth-child(1)").forEach((item) => {
+  item.addEventListener("click", function () {
+    item.parentElement.parentElement.querySelector(".ads-list").classList.remove("d-none");
+    item.parentElement.parentElement.querySelector(".report-list").classList.add("d-none");
+    item.classList.add("ads-list-active");
+    item.parentElement.querySelector(":nth-child(2)").classList.remove("report-list-active");
   });
+});
 
 let tmpArr;
 document.querySelectorAll(".toggle-list input").forEach((item, ind) => {
