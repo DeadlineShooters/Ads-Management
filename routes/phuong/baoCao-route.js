@@ -5,14 +5,9 @@ const router = express.Router();
 
 router.get("/:baoCaoId?", (req, res) => {
   res.locals.currentPage = "bao-cao";
-  return req.params.baoCaoId
-    ? controller.showDetail(req, res)
-    : controller.show(req, res);
+  return req.params.baoCaoId ? controller.showDetail(req, res) : controller.show(req, res);
 });
 
-router.post(
-  "/cac-bao-cao/:baoCaoId/update-report-status",
-  controller.postReportStatus
-);
+router.post("/:baoCaoId/update-report-status", controller.postReportStatus);
 
 export default router;
