@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "startCanbo": "node appCanbo.js"
   },
   "type": "module",
   "dependencies": {
