@@ -149,7 +149,7 @@ async function initMap() {
   violatePoint.appendChild(violateIcon);
 
   // Đánh dấu khi click vị trí bất kỳ
-  map.addEventListener("gmp-click", (event) => {
+  map.addListener("click", (event) => {
     latLng = event.latLng;
     addMarker(latLng);
     // geocoder.geocode({
