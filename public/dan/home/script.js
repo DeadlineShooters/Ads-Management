@@ -36,7 +36,7 @@ async function initMap() {
   adsPoints.push(adsPointMarker);
 
   // Đảm bảo sự kiện hoạt động
-  adsPointMarker.addEventListener("click", () => {});
+  adsPointMarker.addListener("click", () => {});
 
   // Điểm qc có báo cáo
   let adsPointViolate = document.createElement("div");
@@ -58,7 +58,7 @@ async function initMap() {
   adsPoints.push(adsPointViolateMarker);
   violatePoints.push(adsPointViolateMarker);
 
-  adsPointViolateMarker.addEventListener("click", () => {});
+  adsPointViolateMarker.addListener("click", () => {});
 
   // Điểm bất kỳ có báo cáo
   let violatePoint = document.createElement("div");
@@ -105,7 +105,7 @@ async function initMap() {
     content: hoverMarkerInfo,
   });
 
-  google.maps.event.addEventListener(infoWindow, "domready", function () {
+  google.maps.event.addListener(infoWindow, "domready", function () {
     let wrap = $("#hook1").parent().parent().parent();
     wrap.css("padding", "0");
     wrap.css("border", "none");
@@ -149,7 +149,7 @@ async function initMap() {
   violatePoint.appendChild(violateIcon);
 
   // Đánh dấu khi click vị trí bất kỳ
-  map.addEventListener("click", (event) => {
+  map.addListener("click", (event) => {
     latLng = event.latLng;
     addMarker(latLng);
     // geocoder.geocode({
@@ -210,7 +210,7 @@ function addMarker(position) {
     map,
   });
 
-  google.maps.event.addEventListener(infoWindow, "domready", function () {
+  google.maps.event.addListener(infoWindow, "domready", function () {
     let wrap = $("#hook").parent().parent().parent();
     wrap.css("padding", "0");
     wrap.css("border", "none");
