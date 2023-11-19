@@ -44,7 +44,7 @@ canBoApp.use(express.json());
 canBoApp.use(express.urlencoded({ extended: false }));
 canBoApp.use(passport.initialize());
 canBoApp.use(methodOverride("_method"));
-canBoApp.use(express.static("public"));
+canBoApp.use("/", express.static(path.join(__dirname, "public")));
 canBoApp.use(
   session({
     secret: "keyboard cat",
