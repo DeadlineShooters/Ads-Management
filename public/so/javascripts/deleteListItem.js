@@ -6,4 +6,4 @@ document.querySelectorAll(".bi-trash3-fill").forEach((item) => {
   });
 });
 
-document.querySelector(`option[value="${window.location.pathname}"]`).selected = true;
+// document.querySelector(`option[value="${window.location.pathname}"]`).selected = true;

@@ -91,7 +91,8 @@ canBoApp.get("/", (req, res) => {
 });
 
 canBoApp.get("/edit-profile", (req, res) => {
-  res.render('editProfile');
+  const breadcrumbs = [];
+  res.render('editProfile', {breadcrumbs});
 })
 
 canBoApp.use("/", authRouter);

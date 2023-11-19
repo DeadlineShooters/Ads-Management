@@ -43,7 +43,7 @@ export const renderEditForm = (req, res) => {
     }
     const breadcrumbs = [
         { name: 'Danh sách Quận', link: '/so/quanly/quan'},
-        { name: "Thêm Quận", link: '' },
+        { name: "Chỉnh sửa Quận", link: '' },
     ]
 
     res.render('so/quanLy/quan-phuong/edit', {item: quan, props, breadcrumbs});

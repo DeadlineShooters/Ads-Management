@@ -10,7 +10,9 @@ export const dsCapPhepQC = async (req, res) => {
             tinhTrang: "khongDuyet",
         }
     ]
-    res.render('so/hanhChinh/dsYeuCauCapPhepQC.ejs', {objects: yeuCau});
+    const breadcrumbs = [];
+
+    res.render('so/hanhChinh/dsYeuCauCapPhepQC.ejs', {objects: yeuCau, breadcrumbs});
 }
 
 export const dsChinhDiemQC = async (req, res) => {
@@ -40,7 +42,8 @@ export const dsChinhBangQC = async (req, res) => {
             tinhTrang: "chuaDuyet",
         }
     ]
-    res.render('so/hanhChinh/dsYeuCauChinhBangQC.ejs', {objects: yeuCau});
+    const breadcrumbs = [];
+    res.render('so/hanhChinh/dsYeuCauChinhBangQC.ejs', {objects: yeuCau, breadcrumbs});
 }
 
 export const tkBaoCaoXuLy = async (req, res) => {
@@ -54,7 +57,8 @@ export const tkBaoCaoXuLy = async (req, res) => {
             danhGia: "43%",
         }
     ]
-    res.render('so/hanhChinh/dsThongKeBaoCao.ejs', {object: thongKe});
+    const breadcrumbs = [];
+    res.render('so/hanhChinh/dsThongKeBaoCao.ejs', {object: thongKe, breadcrumbs});
 }
 
 export const chiTietYeuCauCapPhep = async (req, res) => {
@@ -73,7 +77,8 @@ export const chiTietYeuCauCapPhep = async (req, res) => {
             tinhTrang: "",
         }
     ]
-    res.render('so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs', {object: chiTiet});
+    const breadcrumbs = [];
+    res.render('so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs', {object: chiTiet, breadcrumbs});
 }
 
 export const chiTietChinhDiemQC = async (req, res) => {
@@ -90,7 +95,8 @@ export const chiTietChinhDiemQC = async (req, res) => {
             quyHoach: "Đã quy hoạch",
         }
     ]
-    res.render('so/hanhChinh/chiTiet/ndChinhDiemQC.ejs', {object: chiTiet});
+    const breadcrumbs = [];
+    res.render('so/hanhChinh/chiTiet/ndChinhDiemQC.ejs', {object: chiTiet, breadcrumbs});
 }
 
 export const chiTietChinhBangQC = async (req, res) => {
@@ -106,5 +112,6 @@ export const chiTietChinhBangQC = async (req, res) => {
             hopDong: {ngayBatDau: "01/10/2023", ngayKetThuc: "31/10/2023"},
         }
     ]
-    res.render('so/hanhChinh/chiTiet/ndChinhBangQC.ejs', {object: chiTiet});
+    const breadcrumbs = [];
+    res.render('so/hanhChinh/chiTiet/ndChinhBangQC.ejs', {object: chiTiet, breadcrumbs});
 }
