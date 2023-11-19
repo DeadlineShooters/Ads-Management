@@ -46,10 +46,13 @@
 <script>
 	const items = document.querySelectorAll('.sidebar-nav');
 	const activeNav = [...items].find(item => {
-		const lastSlashIndex = item.href.lastIndexOf('/');
-		const href = item.href.substring(0, lastSlashIndex+1);
-		if (href === 'http://localhost:9000/') {
-			return href === window.location.href;
+		const temp = item.getAttribute('href');
+
+		const lastSlashIndex = temp.lastIndexOf('/');
+		const href = temp.substring(0, lastSlashIndex+1);
+
+		if (href === '/') {
+			return href === window.location.pathname;
 		} 
 		// Check if the current window location includes the href
 		return window.location.href.includes(href);
