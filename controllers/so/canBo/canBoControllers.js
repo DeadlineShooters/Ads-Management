@@ -55,8 +55,7 @@ export const guiInfoTaiKhoanCanBo = async (req, res) => {
     try {
         await User.create(newCanBo);
         await req.flash('info', 'Tạo tài khoản cán bộ thành công')
-        const breadcrumbs = [];
-        res.redirect('/so/canbo/tai-khoan-cb', {breadcrumbs});
+        res.redirect('/so/canbo/tai-khoan-cb');
     } catch(error) {
         console.log(error);
     }
@@ -89,8 +88,7 @@ export const capNhatTaiKhoanCanBo = async (req, res) => {
             hashed_password: hashedPassword,
         });
         await req.flash('edit', 'Cập nhật tài khoản cán bộ thành công')
-        const breadcrumbs = [];
-        res.redirect('/so/canbo/tai-khoan-cb', {breadcrumbs});
+        res.redirect('/so/canbo/tai-khoan-cb');
     } catch (error) {
         console.log(error);
     }
@@ -100,8 +98,7 @@ export const xoaTaiKhoanCanBo = async (req, res) => {
     try {
         await User.deleteOne({_id: req.params.id});
         await req.flash('del', 'Xóa tài khoản cán bộ thành công')
-        const breadcrumbs = [];
-        res.redirect('/so/canbo/tai-khoan-cb', {breadcrumbs});
+        res.redirect('/so/canbo/tai-khoan-cb');
     } catch (error) {
         console.log(error);
     }
