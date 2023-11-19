@@ -99,7 +99,8 @@ export const dsChinhDiemQC = async (req, res) => {
             tinhTrang: "chuaDuyet",
         },
     ]
-    res.render('so/hanhChinh/dsYeuCauChinhDiemQC.ejs', {objects: yeuCau});
+    const breadcrumbs = [];
+    res.render('so/hanhChinh/dsYeuCauChinhDiemQC.ejs', {objects: yeuCau, breadcrumbs});
 }
 
 export const dsChinhBangQC = async (req, res) => {
