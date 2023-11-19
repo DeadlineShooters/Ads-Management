@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-await mongoose.connect("mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/?directConnection=true");
+await mongoose.connect("mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?directConnection=true");
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
