@@ -1,59 +1,64 @@
 <% layout('layouts/canbo') %>
 
-<style>
- .status{
-    border-radius: 1rem;
-  }
-  .status.notAccept{
-    background-color: #F6808e;
-  }
-  .status.Accept{
-    background-color: #80f6b0;
-  }
-  .status.notHandle{
-    background-color: #9780f6;
-  }
-  p {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-  .table-hover {
-    color: aquamarine;
-  }
-</style>
+  <style>
+    .status {
+      border-radius: 1rem;
+    }
 
-<script>
-  jQuery(document).ready(function($) {
-    $(".clickable-row").click(function() {
+    .status.notAccept {
+      background-color: #F6808e;
+    }
+
+    .status.Accept {
+      background-color: #80f6b0;
+    }
+
+    .status.notHandle {
+      background-color: #9780f6;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .table-hover {
+      color: aquamarine;
+    }
+  </style>
+
+  <script>
+    jQuery(document).ready(function ($) {
+      $(".clickable-row").click(function () {
         window.location = $(this).data("href");
+      });
     });
-  });
-</script>
+  </script>
 
-<div class="container p-3 bg-light rounded overflow-auto">
   <section class="d-flex justify-content-between">
     <div>
       <%- include('../../partials/so/hanhChinhDropdown') %>
     </div>
     <div class="d-flex flex-row align-items-center">
       <div class="md-col-2 me-2">
-        <button type="button" class="btn btn-warning btn-sm btn-responsive"><span class="bi bi-arrows-vertical"></span>Sắp xếp</button>
+        <button type="button" class="btn btn-warning btn-sm btn-responsive"><span
+            class="bi bi-arrows-vertical"></span>Sắp xếp</button>
       </div>
       <div class="md-col-2 me-2">
-        <button type="button" class="btn btn-primary btn-sm btn-responsive"><span class="bi bi-filter"></span>Lọc</button>
+        <button type="button" class="btn btn-primary btn-sm btn-responsive"><span
+            class="bi bi-filter"></span>Lọc</button>
       </div>
       <div class="md-col-3">
         <div class="input-group">
           <input class="form-control border-right-0" placeholder="Tìm yêu cầu">
-            <span class="input-group-append bg-white border-left-0">
-              <button class="input-group-text bg-transparent">
-                <i class="bi bi-search"></i>
-              </button>
-            </span>
+          <span class="input-group-append bg-white border-left-0">
+            <button class="input-group-text bg-transparent">
+              <i class="bi bi-search"></i>
+            </button>
+          </span>
         </div>
       </div>
-  </div>
   </section>
   <section class="border rounded mt-2">
     <table class="table table-light table-striped table-hover">
@@ -70,42 +75,61 @@
         </tr>
       </thead>
       <tbody>
-        <% for (let i = 0; i<objects.length; i++) { %>
+        <% for (let i=0; i<objects.length; i++) { %>
           <tr class="clickable-row" data-href='chinh-diem-qc/chi-tiet-yeu-cau'>
-            <td scope="row"><%=i + 1%></td>
-            <td><%= objects[i].diaChi %></td>
-            <td><%= objects[i].khuVuc %></td>
-            <td><%= objects[i].loaiBang %></td>
-            <td><%= objects[i].kichThuoc %></td>
-            <td><%= objects[i].soLuong %></td>
-            <td><%= objects[i].thoiGianGui %></td>
-            <% if (objects[i].tinhTrang === 'khongDuyet') { %>
-              <td><p class="status notAccept">Không duyệt</p></td>
-            <% } else if (objects[i].tinhTrang === 'Duyet') { %>
-              <td><p class="status Accept">Đã duyệt</p></td>
-            <% } else { %>
-              <td><p class="status notHandle">Chưa duyệt</p></td>
-            <% } %>
+            <td scope="row">
+              <%=i + 1%>
+            </td>
+            <td>
+              <%= objects[i].diaChi %>
+            </td>
+            <td>
+              <%= objects[i].khuVuc %>
+            </td>
+            <td>
+              <%= objects[i].loaiBang %>
+            </td>
+            <td>
+              <%= objects[i].kichThuoc %>
+            </td>
+            <td>
+              <%= objects[i].soLuong %>
+            </td>
+            <td>
+              <%= objects[i].thoiGianGui %>
+            </td>
+            <% if (objects[i].tinhTrang==='khongDuyet' ) { %>
+              <td>
+                <p class="status notAccept">Không duyệt</p>
+              </td>
+              <% } else if (objects[i].tinhTrang==='Duyet' ) { %>
+                <td>
+                  <p class="status Accept">Đã duyệt</p>
+                </td>
+                <% } else { %>
+                  <td>
+                    <p class="status notHandle">Chưa duyệt</p>
+                  </td>
+                  <% } %>
           </tr>
-        <% } %>
+          <% } %>
       </tbody>
     </table>
   </section>
-</div>
-<section class="d-flex justify-content-center mt-auto">
-  <nav aria-label="...">
+  <section class="d-flex justify-content-center mt-auto">
+    <nav aria-label="...">
       <ul class="pagination m-0 justify-content-end">
-          <li class="page-item disabled">
-              <a class="page-link">Trang trước</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page">
-              <a class="page-link" href="#">2</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-              <a class="page-link" href="#">Trang sau</a>
-          </li>
+        <li class="page-item disabled">
+          <a class="page-link">Trang trước</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Trang sau</a>
+        </li>
       </ul>
-  </nav>
-</section>
+    </nav>
+  </section>

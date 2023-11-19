@@ -131,7 +131,7 @@
     <section class="d-flex justify-content-center mt-auto">
       <div class="alert alert-success alert-dismissible fade show">
         <strong>Thông báo:</strong>
-        <%= message %>.
+        <%= messageAdd %>.
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
     </section>
@@ -191,22 +191,22 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-title">Thông báo xác nhận xóa tài khoản cán bộ</div>
+          <div class="modal-title fw-bold">Thông báo xác nhận xóa tài khoản cán bộ</div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
         </div>
         <div class="modal-body">
           <p>
-            Hành động này sẽ xóa <strong>vĩnh viễn</strong> tài khoản cán bộ. 
-            <br> Bạn có chắc không?
+            Hiện tại chưa thể xóa tài khoản cán bộ ngay tại danh sách. 
+            <br> Hãy thử nó trong chế độ chỉnh sửa tài khoản!
           </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <form action="chinh-sua-tai-khoan-cb/$(this).attr('data-id')?_method=DELETE" method="POST" class="position-relative">
+          <!-- <form action="chinh-sua-tai-khoan-cb/$(this).attr('data-id')?_method=DELETE" method="POST" class="position-relative">
             <button type="submit" class="btn btn-primary">
                 Đồng ý
             </button>
-          </form>
+          </form> -->
         </div>
       </div>
     </div>
