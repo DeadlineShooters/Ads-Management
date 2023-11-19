@@ -75,7 +75,8 @@ danApp.engine("ejs", ejsMate);
 danApp.set("view engine", "ejs");
 danApp.set("views", path.join(__dirname, "/views"));
 
-danApp.use(express.static("public"));
+// danApp.use(express.static("public"));
+danApp.use("/", express.static(path.join(__dirname, "public")));
 danApp.use("/", danRoutes);
 
 canBoApp.get("/", (req, res) => {
