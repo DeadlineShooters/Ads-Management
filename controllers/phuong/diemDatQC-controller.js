@@ -80,9 +80,15 @@ controller.showEdit = (req, res) => {
     adType: "Quảng cáo thương mại",
     status: "Đã quy hoạch",
   };
+  const locationTypes = [
+    { name: 'Đất công/Công viên/Hành lang an toàn giao thông' }, { name: 'Đất tư nhân/Nhà ở riêng lẻ' }, { name: 'Trung tâm thương mại' }, { name: 'Chợ' }, { name: 'Cây xăng' }, { name: 'Nhà chờ xe buýt' }]
+  const adTypes = [
+    { name: 'Cổ động chính trị' }, { name: 'Quảng cáo thương mại' }, { name: 'Xã hội hoá' }]
+  
   res.render("so/quanLy/diemDatqc/edit", {
     adLocation,
     breadcrumbs,
+    locationTypes, adTypes
   });
 };
 
