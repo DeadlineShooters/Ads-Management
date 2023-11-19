@@ -1,49 +1,54 @@
 <% layout('layouts/canbo') %>
 
-<style>
-  .status{
-    border-radius: 1rem;
-  }
-  .status.low{
-    background-color: #F6808e;
-  }
-  .status.high{
-    background-color: #80f6b0;
-  }
-  .status.average{
-    background-color: #f6db80;
-  }
-  p {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    font-weight: bold;
-  }
-</style>
+  <style>
+    .status {
+      border-radius: 1rem;
+    }
 
-<div class="container p-3 bg-light rounded overflow-auto">
+    .status.low {
+      background-color: #F6808e;
+    }
+
+    .status.high {
+      background-color: #80f6b0;
+    }
+
+    .status.average {
+      background-color: #f6db80;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+
   <section class="d-flex justify-content-between">
     <div>
       <%- include('../../partials/so/hanhChinhDropdown') %>
     </div>
     <div class="d-flex flex-row align-items-center">
       <div class="md-col-2 me-2">
-        <button type="button" class="btn btn-warning btn-sm btn-responsive"><span class="bi bi-arrows-vertical"></span>Sắp xếp</button>
+        <button type="button" class="btn btn-warning btn-sm btn-responsive"><span
+            class="bi bi-arrows-vertical"></span>Sắp xếp</button>
       </div>
       <div class="md-col-2 me-2">
-        <button type="button" class="btn btn-primary btn-sm btn-responsive"><span class="bi bi-filter"></span>Lọc</button>
+        <button type="button" class="btn btn-primary btn-sm btn-responsive"><span
+            class="bi bi-filter"></span>Lọc</button>
       </div>
       <div class="md-col-3">
         <div class="input-group">
           <input class="form-control border-right-0">
-            <span class="input-group-append bg-white border-left-0">
-              <button class="input-group-text bg-transparent">
-                <i class="bi bi-search"></i>
-              </button>
-            </span>
+          <span class="input-group-append bg-white border-left-0">
+            <button class="input-group-text bg-transparent">
+              <i class="bi bi-search"></i>
+            </button>
+          </span>
         </div>
       </div>
-  </div>
+    </div>
   </section>
   <section class="border rounded mt-2">
     <table class="table table-light table-striped table-hover">
@@ -64,80 +69,91 @@
           <th scope="row">1</th>
           <td>Tân Bình</td>
           <td>Phường 13</td>
-          <td class="text-center" >07</td>
-          <td class="text-center" >04</td>
-          <td class="text-center" >03</td>
-          <td class="text-center" ><p class="status average">43%</p></td>
-          <td class="text-center" >Xem chi tiết</td>
+          <td class="text-center">07</td>
+          <td class="text-center">04</td>
+          <td class="text-center">03</td>
+          <td class="text-center">
+            <p class="status average">43%</p>
+          </td>
+          <td class="text-center">Xem chi tiết</td>
         </tr>
         <tr>
           <th scope="row">2</th>
           <td>Tân Bình</td>
           <td>Phường 14</td>
-          <td class="text-center" >09</td>
-          <td class="text-center" >08</td>
-          <td class="text-center" >01</td>
-          <td class="text-center" ><p class="status low">11%</p></td>
-          <td class="text-center" >Xem chi tiết</td>
+          <td class="text-center">09</td>
+          <td class="text-center">08</td>
+          <td class="text-center">01</td>
+          <td class="text-center">
+            <p class="status low">11%</p>
+          </td>
+          <td class="text-center">Xem chi tiết</td>
         </tr>
         <tr>
           <th scope="row">3</th>
           <td>Tân Bình</td>
           <td>Phường 15</td>
-          <td class="text-center" >05</td>
-          <td class="text-center" >01</td>
-          <td class="text-center" >04</td>
-          <td class="text-center" ><p class="status high">80%</p></td>
-          <td class="text-center" >Xem chi tiết</td>
+          <td class="text-center">05</td>
+          <td class="text-center">01</td>
+          <td class="text-center">04</td>
+          <td class="text-center">
+            <p class="status high">80%</p>
+          </td>
+          <td class="text-center">Xem chi tiết</td>
         </tr>
         <tr>
           <th scope="row">4</th>
           <td>Quận 6</td>
           <td>Phường 13</td>
-          <td class="text-center" >11</td>
-          <td class="text-center" >05</td>
-          <td class="text-center" >06</td>
-          <td class="text-center" ><p class="status average">55%</p></td>
-          <td class="text-center" >Xem chi tiết</td>
+          <td class="text-center">11</td>
+          <td class="text-center">05</td>
+          <td class="text-center">06</td>
+          <td class="text-center">
+            <p class="status average">55%</p>
+          </td>
+          <td class="text-center">Xem chi tiết</td>
         </tr>
         <tr>
           <th scope="row">5</th>
           <td>Quận 6</td>
           <td>Phường 14</td>
-          <td class="text-center" >19</td>
-          <td class="text-center" >02</td>
-          <td class="text-center" >17</td>
-          <td class="text-center" ><p class="status high">89%</p></td>
-          <td class="text-center" >Xem chi tiết</td>
+          <td class="text-center">19</td>
+          <td class="text-center">02</td>
+          <td class="text-center">17</td>
+          <td class="text-center">
+            <p class="status high">89%</p>
+          </td>
+          <td class="text-center">Xem chi tiết</td>
         </tr>
         <tr>
           <th scope="row">6</th>
           <td>Quận 6</td>
           <td>Phường 15</td>
-          <td class="text-center" >12</td>
-          <td class="text-center" >09</td>
-          <td class="text-center" >03</td>
-          <td class="text-center" ><p class="status low">25%</p></td>
-          <td class="text-center" >Xem chi tiết</td>
+          <td class="text-center">12</td>
+          <td class="text-center">09</td>
+          <td class="text-center">03</td>
+          <td class="text-center">
+            <p class="status low">25%</p>
+          </td>
+          <td class="text-center">Xem chi tiết</td>
         </tr>
       </tbody>
     </table>
   </section>
-</div>
-<section class="d-flex justify-content-center mt-auto">
-  <nav aria-label="...">
+  <section class="d-flex justify-content-center mt-auto">
+    <nav aria-label="...">
       <ul class="pagination m-0 justify-content-end">
-          <li class="page-item disabled">
-              <a class="page-link">Trang trước</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page">
-              <a class="page-link" href="#">2</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-              <a class="page-link" href="#">Trang sau</a>
-          </li>
+        <li class="page-item disabled">
+          <a class="page-link">Trang trước</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Trang sau</a>
+        </li>
       </ul>
-  </nav>
-</section>
+    </nav>
+  </section>
