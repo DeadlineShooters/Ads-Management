@@ -33,8 +33,8 @@ import methodOverride from "method-override";
 const danApp = express();
 // const canBoApp = express();
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // canBoApp.engine("ejs", ejsMate);
 // canBoApp.set("view engine", "ejs");
 // canBoApp.set("views", path.join(__dirname, "/views"));
