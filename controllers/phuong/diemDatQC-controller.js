@@ -80,7 +80,7 @@ controller.showEdit = (req, res) => {
     adType: "Quảng cáo thương mại",
     status: "Đã quy hoạch",
   };
-  res.render("so/quanly/diemDatqc/edit", {
+  res.render("so/quanLy/diemDatqc/edit", {
     adLocation,
     breadcrumbs,
   });
