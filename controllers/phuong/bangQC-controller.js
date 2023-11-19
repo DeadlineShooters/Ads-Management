@@ -93,6 +93,6 @@ controller.showEdit = (req, res) => {
     { name: "Chi tiết bảng quảng cáo", link: `/cac-bang-quang-cao/${bangId}` },
     { name: "Chỉnh sửa", link: "" },
   ];
-  res.render("so/quanly/bangqc/edit", { adBoard, breadcrumbs });
+  res.render("so/quanLy/bangqc/edit", { adBoard, breadcrumbs });
 };
 export default controller;
