@@ -36,7 +36,7 @@ async function initMap() {
   adsPoints.push(adsPointMarker);
 
   // Đảm bảo sự kiện hoạt động
-  adsPointMarker.addListener("click", () => {});
+  adsPointMarker.addEventListener("gmp-click", () => {});
 
   // Điểm qc có báo cáo
   let adsPointViolate = document.createElement("div");
@@ -58,7 +58,7 @@ async function initMap() {
   adsPoints.push(adsPointViolateMarker);
   violatePoints.push(adsPointViolateMarker);
 
-  adsPointViolateMarker.addListener("click", () => {});
+  adsPointViolateMarker.addEventListener("gmp-click", () => {});
 
   // Điểm bất kỳ có báo cáo
   let violatePoint = document.createElement("div");
@@ -121,7 +121,7 @@ async function initMap() {
     }
   });
 
-  violatePointMarker.addListener("click", () => {});
+  violatePointMarker.addEventListener("gmp-click", () => {});
 
   let isClick = false;
   violatePointMarker.content.addEventListener("click", () => {
@@ -149,7 +149,7 @@ async function initMap() {
   violatePoint.appendChild(violateIcon);
 
   // Đánh dấu khi click vị trí bất kỳ
-  map.addListener("click", (event) => {
+  map.addEventListener("gmp-click", (event) => {
     latLng = event.latLng;
     addMarker(latLng);
     // geocoder.geocode({
