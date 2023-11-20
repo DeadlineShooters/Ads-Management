@@ -1,13 +1,13 @@
 import express from "express";
 import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
-import danRoutes from "./routes/dan.js";
+// import danRoutes from "./routes/dan.js";
 // phuong
 import diemDatQCPhuong from "./routes/phuong/diemDatQC-route.js";
 import bangQCPhuong from "./routes/phuong/bangQC-route.js";
 import baoCaoPhuong from "./routes/phuong/baoCao-route.js";
 
-import phuongQuanRoutes from "./routes/phuong.js";
+// import phuongQuanRoutes from "./routes/phuong.js";
 import soQuanLyRoutes from "./routes/so/quanLy.js";
 import soHanhChinhRoutes from "./routes/so/hanhChinh.js";
 import soCanBoRoutes from "./routes/so/canbo.js";
@@ -30,7 +30,7 @@ try {
   console.log("Could not connect to the database", error);
 }
 
-const danApp = express();
+// const danApp = express();
 const canBoApp = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -71,13 +71,13 @@ canBoApp.use((req, res, next) => {
   next();
 });
 
-danApp.engine("ejs", ejsMate);
-danApp.set("view engine", "ejs");
-danApp.set("views", path.join(__dirname, "/views"));
+// danApp.engine("ejs", ejsMate);
+// danApp.set("view engine", "ejs");
+// danApp.set("views", path.join(__dirname, "/views"));
 
-// danApp.use(express.static("public"));
-danApp.use("/", express.static(path.join(__dirname, "public")));
-danApp.use("/", danRoutes);
+// // danApp.use(express.static("public"));
+// danApp.use("/", express.static(path.join(__dirname, "public")));
+// danApp.use("/", danRoutes);
 
 canBoApp.get("/", (req, res) => {
   // console.log("user:", req.user);
@@ -92,8 +92,10 @@ canBoApp.get("/", (req, res) => {
 });
 
 canBoApp.get("/edit-profile", (req, res) => {
-  const breadcrumbs = [];
-  res.render('editProfile', {breadcrumbs});
+  res.render('editProfile');
+})
+canBoApp.get('/group-info', (req, res) => {
+  res.render('info')
 })
 
 canBoApp.use("/", authRouter);

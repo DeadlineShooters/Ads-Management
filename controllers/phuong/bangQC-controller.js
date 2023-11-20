@@ -93,6 +93,10 @@ controller.showEdit = (req, res) => {
     { name: "Chi tiết bảng quảng cáo", link: `/cac-bang-quang-cao/${bangId}` },
     { name: "Chỉnh sửa", link: "" },
   ];
-  res.render("so/quanly/bangqc/edit", { adBoard, breadcrumbs });
+  const boardTypes = [
+    { name: 'Trụ bảng hiflex' }, { name: 'Trụ màn hình điện tử LED' }, { name: 'Trụ hộp đèn' }, { name: 'Bảng hiflex ốp tường' }, { name: 'Màn hình điện tử ốp tường' }, { name: 'Trụ treo băng rôn dọc' }, { name: 'Trụ treo băng rôn ngang' }, { name: 'Trụ/Cụm pano' }, { name: 'Cổng chào' }, { name: 'Trung tâm thương mại' }
+]
+
+  res.render("so/quanLy/bangqc/edit", { adBoard, breadcrumbs, boardTypes });
 };
 export default controller;

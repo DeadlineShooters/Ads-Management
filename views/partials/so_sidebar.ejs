@@ -1,6 +1,6 @@
 <div class="bg-dark flex-shrink-1 h-100 d-flex flex-column justify-content-between">
     <div class="bg-dark p-2">
-		<a href="" class="d-flex text-decoration-none mt-1 align-items-center text-white">
+		<a href="/group-info" class="d-flex text-decoration-none mt-1 align-items-center text-white">
 			<span class="fs-4 d-none d-xl-inline">Ads Management</span>
 		</a>
 		<hr class="border border-light border-1 opacity-100 my-2 d-none d-xl-block">
@@ -46,10 +46,13 @@
 <script>
 	const items = document.querySelectorAll('.sidebar-nav');
 	const activeNav = [...items].find(item => {
-		const lastSlashIndex = item.href.lastIndexOf('/');
-		const href = item.href.substring(0, lastSlashIndex+1);
-		if (href === 'http://localhost:9000/') {
-			return href === window.location.href;
+		const temp = item.getAttribute('href');
+
+		const lastSlashIndex = temp.lastIndexOf('/');
+		const href = temp.substring(0, lastSlashIndex+1);
+
+		if (href === '/') {
+			return href === window.location.pathname;
 		} 
 		// Check if the current window location includes the href
 		return window.location.href.includes(href);

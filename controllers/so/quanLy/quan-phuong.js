@@ -17,8 +17,7 @@ export const index = async (req, res) => {
     const props = {
         type: 'Quận',
     }
-    const breadcrumbs = [];
-    res.render('so/quanLy/quan-phuong/index', { items: quans, props, breadcrumbs })
+    res.render('so/quanLy/quan-phuong/index', { items: quans, props})
 };
 export const renderAddForm = (req, res) => {
     const props = {
