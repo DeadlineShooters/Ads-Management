@@ -1,16 +1,19 @@
 import mongoose from "mongoose";
-import AdType from "./adType";
-import District from "./district";
-import Ward from "./ward";
-import LocationType from "./locationType";
+const Schema = mongoose.Schema;
+import AdType from "./adType.js";
+import District from "./district.js";
+import Ward from "./ward.js";
+import LocationType from "./locationType.js";
+import Image from "./image.js";
 
-const adLocationSchema = new mongoose.Schema({
+const adLocationSchema = new Schema({
+    image: { type: Schema.Types.ObjectId, ref: "Image" },
     longLat: String,
     address: String,
-    district: { type: Schema.Types.ObjectId, ref: District },
-    ward: { type: Schema.Types.ObjectId, ref: Ward },
-    type: { type: Schema.Types.ObjectId, ref: LocationType },
-    adType: { type: Schema.Types.ObjectId, ref: AdType },
+    district: { type: Schema.Types.ObjectId, ref: "District" },
+    ward: { type: Schema.Types.ObjectId, ref: "Ward" },
+    type: { type: Schema.Types.ObjectId, ref: "LocationType" },
+    adType: { type: Schema.Types.ObjectId, ref: "AdType" },
     status: String,
 })
 
