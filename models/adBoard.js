@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 import AdLocation from "./adLocation.js";
 import BoardType from "./boardType.js";
+import imageSchema from "./image.js";
 
 const adBoardSchema = new Schema({
-    image: String,
+    image: imageSchema,
     boardType: { type: Schema.Types.ObjectId, ref: "BoardType" },
     size: { h: String, w: String },
     quantity: Number,

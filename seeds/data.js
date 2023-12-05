@@ -34,75 +34,75 @@ export const districts = [
     { name: "Bình Thạnh", description: "Mô tả", note: "Chú thích" },
 ]
 // export const wards = [
-//     { name: "Nguyễn Cư Trinh", description: "Mô tả", note: "Chú thích", district: districts[0]._id },
-//     { name: "Phạm Ngũ Lão", description: "Mô tả", note: "Chú thích", district: districts[0]._id },
-//     { name: "Bến Thành", description: "Mô tả", note: "Chú thích", district: districts[0]._id },
-//     { name: "1", description: "Mô tả", note: "Chú thích", district: districts[1]._id },
-//     { name: "2", description: "Mô tả", note: "Chú thích", district: districts[1]._id },
-//     { name: "3", description: "Mô tả", note: "Chú thích", district: districts[1]._id },
+//     { name: "Nguyễn Cư Trinh", description: "Mô tả", note: "Chú thích", district: districts[0] },
+//     { name: "Phạm Ngũ Lão", description: "Mô tả", note: "Chú thích", district: districts[0] },
+//     { name: "Bến Thành", description: "Mô tả", note: "Chú thích", district: districts[0] },
+//     { name: "1", description: "Mô tả", note: "Chú thích", district: districts[1] },
+//     { name: "2", description: "Mô tả", note: "Chú thích", district: districts[1] },
+//     { name: "3", description: "Mô tả", note: "Chú thích", district: districts[1] },
 // ]
 
 // export const adLocations = [
 //     {
-//         image: "/phuong/images/sample.png",
+//         image: images[0],
 //         longLat: "10.752334, 106.643366", // longlat để đại vd thôi
 //         address: "",
-//         district: districts[0]._id,
-//         ward: wards[0]._id,
-//         type: locationTypes[0]._id,
-//         adType: adTypes[0]._id,
+//         district: districts[0],
+//         ward: wards[0],
+//         type: locationTypes[0],
+//         adType: adTypes[0],
 //         status: "Đã quy hoạch"
 //     },
 //     {
-//         image: "/phuong/images/sample.png",
+//         image: images[0],
 //         longLat: "10.752334, 106.643366",
 //         address: "",
-//         district: districts[0]._id,
-//         ward: wards[1]._id,
-//         type: locationTypes[0]._id,
-//         adType: adTypes[0]._id,
+//         district: districts[0],
+//         ward: wards[1],
+//         type: locationTypes[0],
+//         adType: adTypes[0],
 //         status: "Đã quy hoạch"
 //     },
 //     {
-//         image: "/phuong/images/sample.png",
+//         image: images[0],
 //         longLat: "10.752334, 106.643366",
 //         address: "",
-//         district: districts[1]._id,
-//         ward: wards[0]._id,
-//         type: locationTypes[0]._id,
-//         adType: adTypes[0]._id,
+//         district: districts[1],
+//         ward: wards[0],
+//         type: locationTypes[0],
+//         adType: adTypes[0],
 //         status: "Đã quy hoạch"
 //     },
 //     {
-//         image: "/phuong/images/sample.png",
+//         image: images[0],
 //         longLat: "10.752334, 106.643366",
 //         address: "",
-//         district: districts[1]._id,
-//         ward: wards[1]._id,
-//         type: locationTypes[0]._id,
-//         adType: adTypes[0]._id,
+//         district: districts[1],
+//         ward: wards[1],
+//         type: locationTypes[0],
+//         adType: adTypes[0],
 //         status: "Chưa quy hoạch"
 //     },
 // ]
 // export const adBoards = [
 //     {
-//         image: "/phuong/images/sample.png",
-//         boardType: boardTypes[0]._id,
+//         image: images[0],
+//         boardType: boardTypes[0],
 //         size: { h: 2.5, w: 10 },
 //         quantity: 2,
 //         startDate: { d: 15, m: 5, y: 23 },
 //         expireDate: { d: 15, m: 5, y: 24 },
 //         status: 'Đã duyệt',
-//         adLocation: adLocations[0]._id,
+//         adLocation: adLocations[0],
 //     },
 //     {
-//         image: "/phuong/images/sample.png",
-//         boardType: boardTypes[0]._id,
+//         image: images[1],
+//         boardType: boardTypes[0],
 //         size: { h: 2.5, w: 10 },
 //         quantity: 2,
 //         startDate: { d: 15, m: 5, y: 23 },
 //         expireDate: { d: 15, m: 5, y: 24 },
 //         status: 'Chưa duyệt',
-//         adLocation: adLocations[0]._id,
+//         adLocation: adLocations[0],
 //     }
 // ]

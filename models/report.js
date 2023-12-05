@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 import ReportType from "./reportType.js";
+import imageSchema from "./image.js";
 
 const reportSchema = Schema({
     reportType: { type: Schema.Types.ObjectId, ref: "ReportType" },
@@ -8,7 +9,7 @@ const reportSchema = Schema({
     email: String,
     phone: String,
     content: String,
-    Image: String
+    Image: [imageSchema]
 })
 
 const Report = mongoose.model("AdBoard", reportSchema);

@@ -47,6 +47,7 @@ const seedDB = async () => {
 		const district = new District(i);
 		await district.save();
 	}
+
 };
 seedDB().then(() => {
 	mongoose.connection.close();
