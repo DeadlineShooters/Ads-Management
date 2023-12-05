@@ -3,6 +3,7 @@ import express from "express";
 import * as quan_phuong from '../../controllers/so/quanLy/quan-phuong.js';
 import * as loaiHinhqc from '../../controllers/so/quanLy/loaiHinhqc.js';
 import * as loaiBangqc from '../../controllers/so/quanLy/loaiBangqc.js';
+import * as loaiViTri from '../../controllers/so/quanLy/loaiViTri.js';
 import * as hinhThucbc from '../../controllers/so/quanLy/hinhThucbc.js';
 import * as diemDatqc from '../../controllers/so/quanLy/diemDatqc.js';
 import * as bangqc from '../../controllers/so/quanLy/bangqc.js';
@@ -27,6 +28,11 @@ router.get("/loai-hinh-quang-cao/add", loaiHinhqc.renderAddForm);
 router.get("/loai-bang-quang-cao", loaiBangqc.index);
 router.get("/loai-bang-quang-cao/:id/edit", loaiBangqc.renderEditForm);
 router.get("/loai-bang-quang-cao/add", loaiBangqc.renderAddForm);
+
+// Quản lý loại vị trí
+router.get("/loai-vi-tri", loaiViTri.index);
+router.get("/loai-vi-tri/:id/edit", loaiViTri.renderEditForm);
+router.get("/loai-vi-tri/add", loaiViTri.renderAddForm);
 
 // Quản lý hình thức báo cáo
 router.get("/hinh-thuc-bao-cao", hinhThucbc.index);
