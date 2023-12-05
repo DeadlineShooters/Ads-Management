@@ -4,10 +4,9 @@ import AdType from "./adType.js";
 import District from "./district.js";
 import Ward from "./ward.js";
 import LocationType from "./locationType.js";
-import Image from "./image.js";
 
 const adLocationSchema = new Schema({
-    image: { type: Schema.Types.ObjectId, ref: "Image" },
+    image: String,
     longLat: String,
     address: String,
     district: { type: Schema.Types.ObjectId, ref: "District" },
