@@ -46,24 +46,24 @@
                 <p class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">Tạo tài khoản cán bộ</p>
                 <div class="col-md-10 mt-3 ps-3">
                     <label class="fw-bold">Họ tên</label>
-                    <input type="text" name="username" placeholder="Nhập họ tên cán bộ" class="form-control">
+                    <input type="text" name="username" placeholder="Nhập họ tên cán bộ" class="form-control" required>
                 </div>
                 <div class="col-md-5 mt-3 ps-3">
                     <label class="fw-bold">Ngày sinh</label>
-                    <input type="date" name="birthday" placeholder="Chọn ngày, tháng, năm sinh" class="form-control">
+                    <input type="date" name="birthday" placeholder="Chọn ngày, tháng, năm sinh" class="form-control" required>
                 </div>
                 <div class="col-md-5 mt-3 ps-3">
                     <label class="fw-bold">Số điện thoại</label>
-                    <input type="text" name="phone" placeholder="Nhập số điện thoại" class="form-control">
+                    <input type="text" name="phone" placeholder="Nhập số điện thoại" class="form-control" required>
                 </div>
                 <div class="col-md-10 mt-3 ps-3">
                     <label class="fw-bold">Email</label>
-                    <input type="text" name="email" placeholder="Nhập địa chỉ email" class="form-control">
+                    <input type="text" name="email" placeholder="Nhập địa chỉ email" class="form-control" required>
                 </div>
                 
                 <div class="col-md-5 mt-3 ps-3">
                     <label class="fw-bold">Quận quản lý</label>
-                    <select class="form-select" name="ward" id="ward">
+                    <select class="form-select" name="ward" id="ward" required>
                         <option selected>Chọn quận</option>
                         <option value="Tân Bình">Tân Bình</option>
                         <option value="Quận 6">Quận 6</option>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-md-5 mt-3 ps-3">
                     <label class="fw-bold">Phường quản lý</label>
-                    <select class="form-select" name="district" id="district">
+                    <select class="form-select" name="district" id="district" required>
                         <option selected>Chọn phường</option>
                         <option value="Phường 13">Phường 13</option>
                         <option value="Phường 14">Phường 14</option>
@@ -81,7 +81,7 @@
                 <div class="col-md-10 mt-3 ps-3">
                     <label class="fw-bold">Mật khẩu đăng nhập</label>
                     <div class="input-group">
-                        <input type="text" name="password" id="password" placeholder="Nhập mật khẩu ban đầu cho cán bộ (thay đổi sau)" class="form-control">
+                        <input type="text" name="password" id="password" placeholder="Nhập mật khẩu ban đầu cho cán bộ (thay đổi sau)" class="form-control" required>
                         <!-- <span class="bg-white border-left-0">
                             <button class="input-group-text bg-transparent" id="btnSubmit">
                                 <i class="bi bi-eye-slash"></i>
