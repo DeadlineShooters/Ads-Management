@@ -14,6 +14,7 @@ controller.show = async (req, res) => {
       adLocations = await AdLocation.find({ district: foundDistrict._id }); // Fetch all ad locations from the database'
     } else {
       // phuong
+      console.log(req.user.ward + " " + req.user.district);
       const foundWard = await Ward.findOne({
         name: req.user.ward,
         district: foundDistrict._id,
