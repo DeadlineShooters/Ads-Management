@@ -4,8 +4,8 @@
     aria-label="Default select example"
     id="phuong-dropdown"
   >
-    <%for (let i = 1; i <= 12; ++i) {%>
-    <option value="phuong-<%=i%>">Phường <%=i%></option>
-    <%}%>
+    <% wards.forEach(ward => { %>
+    <option value="phuong-<%= ward.name %>">Phường <%= ward.name %></option>
+    <% }); %>
   </select>
 </div>

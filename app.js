@@ -7,7 +7,6 @@ import diemDatQCPhuong from "./routes/phuong/diemDatQC-route.js";
 import bangQCPhuong from "./routes/phuong/bangQC-route.js";
 import baoCaoPhuong from "./routes/phuong/baoCao-route.js";
 
-import phuongQuanRoutes from "./routes/phuong.js";
 import soQuanLyRoutes from "./routes/so/quanLy.js";
 import soHanhChinhRoutes from "./routes/so/hanhChinh.js";
 import soCanBoRoutes from "./routes/so/canbo.js";

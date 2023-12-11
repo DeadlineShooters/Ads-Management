@@ -1,7 +1,7 @@
 // contain authentication-related routes
 import express from "express";
 import passport from "passport";
-import User from "../db.js";
+import User from "../models/user.js";
 import LocalStrategy from "passport-local";
 
 import bcrypt from "bcrypt";
@@ -61,8 +61,8 @@ passport.serializeUser(function (user, cb) {
       role: user.role,
       ward: user.ward,
       district: user.district,
-      phoneNumber: user.phoneNumber,
-      birthDate: user.birthDate,
+      phoneNumber: user.phone,
+      birthDate: user.birthday,
     });
   });
 });

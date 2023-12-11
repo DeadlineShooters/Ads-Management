@@ -1,3 +1,5 @@
+import { getWardsForUser } from "../../utils/WardUtils.js";
+
 const controller = {};
 
 const adLocation = {
@@ -11,10 +13,11 @@ const adLocation = {
   status: "Đã quy hoạch",
 };
 
-controller.show = (req, res) => {
-  const breadcrumbs = [
-  ];
-  res.render("phuong/bangList", { breadcrumbs });
+controller.show = async (req, res) => {
+  const breadcrumbs = [];
+  const wards = await getWardsForUser(req.user);
+
+  res.render("phuong/bangList", { breadcrumbs, wards });
 };
 
 controller.showDetail = (req, res) => {
@@ -94,8 +97,17 @@ controller.showEdit = (req, res) => {
     { name: "Chỉnh sửa", link: "" },
   ];
   const boardTypes = [
-    { name: 'Trụ bảng hiflex' }, { name: 'Trụ màn hình điện tử LED' }, { name: 'Trụ hộp đèn' }, { name: 'Bảng hiflex ốp tường' }, { name: 'Màn hình điện tử ốp tường' }, { name: 'Trụ treo băng rôn dọc' }, { name: 'Trụ treo băng rôn ngang' }, { name: 'Trụ/Cụm pano' }, { name: 'Cổng chào' }, { name: 'Trung tâm thương mại' }
-]
+    { name: "Trụ bảng hiflex" },
+    { name: "Trụ màn hình điện tử LED" },
+    { name: "Trụ hộp đèn" },
+    { name: "Bảng hiflex ốp tường" },
+    { name: "Màn hình điện tử ốp tường" },
+    { name: "Trụ treo băng rôn dọc" },
+    { name: "Trụ treo băng rôn ngang" },
+    { name: "Trụ/Cụm pano" },
+    { name: "Cổng chào" },
+    { name: "Trung tâm thương mại" },
+  ];
 
   res.render("so/quanLy/bangqc/edit", { adBoard, breadcrumbs, boardTypes });
 };

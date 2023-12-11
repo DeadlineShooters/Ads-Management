@@ -1,9 +1,32 @@
+import AdLocation from "../../models/adLocation.js";
+import District from "../../models/district.js";
+import Ward from "../../models/ward.js";
+import { getWardsForUser } from "../../utils/WardUtils.js";
+
 const controller = {};
 
-controller.show = (req, res) => {
+controller.show = async (req, res) => {
   const breadcrumbs = [];
+  try {
+    let adLocations = await AdLocation.find(); // Fetch all ad locations from the database
+    adLocations = await AdLocation.populate(adLocations, [
+      "ward",
+      "district",
+      "type",
+      "adType",
+    ]); // Populate the 'ward', 'district', 'type', and 'adType' fields
 
-  res.render("phuong/diemDatList", { breadcrumbs });
+    const wards = await getWardsForUser(req.user);
+
+    res.render("phuong/diemDatList", {
+      adLocations: encodeURIComponent(JSON.stringify(adLocations)),
+      breadcrumbs,
+      wards,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 controller.showDetail = (req, res) => {
@@ -81,14 +104,24 @@ controller.showEdit = (req, res) => {
     status: "Đã quy hoạch",
   };
   const locationTypes = [
-    { name: 'Đất công/Công viên/Hành lang an toàn giao thông' }, { name: 'Đất tư nhân/Nhà ở riêng lẻ' }, { name: 'Trung tâm thương mại' }, { name: 'Chợ' }, { name: 'Cây xăng' }, { name: 'Nhà chờ xe buýt' }]
+    { name: "Đất công/Công viên/Hành lang an toàn giao thông" },
+    { name: "Đất tư nhân/Nhà ở riêng lẻ" },
+    { name: "Trung tâm thương mại" },
+    { name: "Chợ" },
+    { name: "Cây xăng" },
+    { name: "Nhà chờ xe buýt" },
+  ];
   const adTypes = [
-    { name: 'Cổ động chính trị' }, { name: 'Quảng cáo thương mại' }, { name: 'Xã hội hoá' }]
-  
+    { name: "Cổ động chính trị" },
+    { name: "Quảng cáo thương mại" },
+    { name: "Xã hội hoá" },
+  ];
+
   res.render("so/quanLy/diemDatqc/edit", {
     adLocation,
     breadcrumbs,
-    locationTypes, adTypes
+    locationTypes,
+    adTypes,
   });
 };
 

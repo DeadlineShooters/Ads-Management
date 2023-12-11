@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import User from "./models/user.js";
-await mongoose.connect("mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority");
+await mongoose.connect(
+  "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority"
+);
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
@@ -14,7 +16,7 @@ let update = {
   hashed_password: hashedPassword,
   role: "phuong",
   ward: "11",
-  district: "Phú Nhuận",
+  district: "1",
   salt: salt,
 };
 
