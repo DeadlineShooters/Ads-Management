@@ -1,4 +1,7 @@
 import { getWardsForUser } from "../../utils/WardUtils.js";
+import AdBoard from "../../models/adBoard.js";
+import District from "../../models/district.js";
+import Ward from "../../models/ward.js";
 
 const controller = {};
 
@@ -15,9 +18,51 @@ const adLocation = {
 
 controller.show = async (req, res) => {
   const breadcrumbs = [];
-  const wards = await getWardsForUser(req.user);
+  try {
+    let adBoards = [];
+    const foundDistrict = await District.findOne({ name: req.user.district });
+    adBoards = await AdBoard.find()
+      .populate({
+        path: "adLocation",
+        populate: [{ path: "district" }, { path: "ward" }],
+      })
+      .populate("boardType");
+    if (req.user.role === "quan") {
+      // console.log("District: " + foundDistrict._id);
+      adBoards = adBoards.filter((adBoard) => {
+        return (
+          adBoard.adLocation.district._id.toString() ===
+          foundDistrict._id.toString()
+        );
+      });
+    } else {
+      // phuong
+      console.log(
+        "District: " + req.user.district + "\nward: " + req.user.ward
+      );
 
-  res.render("phuong/bangList", { breadcrumbs, wards });
+      const foundWard = await Ward.findOne({
+        name: req.user.ward,
+        district: foundDistrict._id,
+      });
+      adBoards.filter(
+        (adBoard) =>
+          adBoard.adLocation.district._id.toString() ===
+            foundDistrict._id.toString() &&
+          adBoard.adLocation.ward._id.toString() === foundWard._id.toString()
+      );
+    }
+
+    const wards = await getWardsForUser(req.user);
+    res.render("phuong/bangList", {
+      breadcrumbs,
+      wards,
+      adBoards: encodeURIComponent(JSON.stringify(adBoards)),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 controller.showDetail = (req, res) => {

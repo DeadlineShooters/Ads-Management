@@ -10,16 +10,23 @@
     <table class="table table-hover table-light table-striped">
       <thead>
         <tr>
+          <% if (currentUrl === "/cac-bang-quang-cao") {%>
           <th scope="col">Địa chỉ</th>
           <th scope="col">Khu vực</th>
           <th scope="col">Loại bảng</th>
           <th scope="col">Kích thước</th>
           <th scope="col">Số lượng</th>
           <th scope="col">Tình trạng</th>
+          <% } else { %>
+          <th scope="col">Địa chỉ</th>
+          <th scope="col">Khu vực</th>
+          <th scope="col">Phân loại</th>
+          <th scope="col">Hình thức</th>
+          <% } %>
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="tableBody"></tbody>
     </table>
   </div>
 </section>
@@ -42,7 +49,6 @@
 </section>
 <script>
   let district = "<%= user.district %>";
-  let allAdBoards = JSON.parse(decodeURIComponent("<%= adBoards %>"));
 
   document.addEventListener("DOMContentLoaded", function () {
     // Get the select element
@@ -53,7 +59,7 @@
         // Get the selected value
         const selectedValue = selectPhuong.value;
         const phuongValue = selectedValue.split("phuong-")[1];
-        fetchAdBoards(phuongValue);
+        fetchAndFilterData(phuongValue);
       });
 
       // Initial fetch based on the first ward in the dropdown
@@ -63,11 +69,10 @@
       const initialWardValue = initialWardOption
         ? initialWardOption.value.split("phuong-")[1]
         : null;
+      console.log("Ward: " + initialWardValue);
       if (initialWardValue) {
-        fetchAdBoards(initialWardValue);
+        fetchAndFilterData(initialWardValue);
       }
-    } else {
-      updateTableWithData(allAdBoards);
     }
   });
 
@@ -82,54 +87,87 @@
     });
   });
 
-  function fetchAdBoards(ward) {
-    // Filter ad boards based on the selected ward
-    const filteredAdBoards = allAdBoards.filter((adBoard) => {
-      return (
-        adBoard.adLocation.ward.name === ward &&
-        adBoard.adLocation.district.name === district
-      );
-    });
+  async function fetchAndFilterData(ward) {
+    const path = window.location.pathname;
 
-    // Update the table with the filtered data
-    updateTableWithData(filteredAdBoards);
+    const isAdPage = path === "/cac-bang-quang-cao";
+    const isAdLocationPage = path === "/cac-diem-dat-quang-cao";
+
+    let dataString;
+    if (isAdPage) {
+      dataString = "<%= adBoards %>";
+    } else {
+      dataString = "<%= adLocations %>";
+    }
+
+    const allData = JSON.parse(decodeURIComponent(dataString));
+
+    // const filteredData = allData.filter((item) => {
+    //   if (isAdPage) {
+    //     return (
+    //       item.adLocation.ward.name === ward &&
+    //       item.adLocation.district.name === district
+    //     );
+    //   } else if (isAdLocationPage) {
+    //     return item.ward.name === ward && item.district.name === district;
+    //   }
+    //   return false;
+    // });
+
+    // updateTableWithData(filteredData);
   }
 
   function updateTableWithData(data) {
     // Clear existing table rows
-    const tableBody = document.querySelector("tbody");
-
+    const tableBody = document.getElementById("tableBody");
     tableBody.innerHTML = "";
 
     // Populate the table with the new data
-    data.forEach((adBoard) => {
+    data.forEach((item) => {
       const newRow = document.createElement("tr");
       newRow.classList.add("clickable-row");
-      newRow.setAttribute("data-href", `/cac-bang-quang-cao/${adBoard._id}`);
+      newRow.setAttribute("data-href", `/cac-diem-dat-quang-cao/${item._id}`);
 
-      newRow.innerHTML = `
-        <td>${adBoard.adLocation.address}</td>
-        <td class="khuVucField">Phường ${adBoard.adLocation.ward.name}, Quận ${
-        adBoard.adLocation.district.name
-      }</td>
-        <td>${adBoard.boardType.name}</td>
-        <td>${adBoard.size.w}m x ${adBoard.size.h}m</td>
-        <td>${adBoard.quantity}</td>
-        <td>
-          ${
-            adBoard.status === "Chưa duyệt"
-              ? '<span class="badge text-bg-secondary">Chưa duyệt</span>'
-              : adBoard.status === "Bị từ chối"
-              ? '<span class="badge text-bg-danger">Bị từ chối</span>'
-              : '<span class="badge text-bg-success">Đã duyệt</span>'
-          }
-        </td>
-        <td>
-          <div class="d-flex"></div>
-        </td>
-      `;
+      // Adjust the content based on the type of data
+      if (item.adLocation) {
+        newRow.innerHTML = `
+          <td>${item.adLocation.address}</td>
+          <td class="khuVucField">Phường ${item.adLocation.ward.name}, Quận ${
+          item.adLocation.district.name
+        }</td>
+          <td>${item.boardType.name}</td>
+          <td>${item.size.w}m x ${item.size.h}m</td>
+          <td>${item.quantity}</td>
+          <td>
+            ${getStatusBadge(item.status)}
+          </td>
+          <td>
+            <div class="d-flex"></div>
+          </td>
+        `;
+      } else if (item.ward) {
+        newRow.innerHTML = `
+          <td>${item.address}</td>
+          <td class="khuVucField">Phường ${item.ward.name}, Quận ${item.district.name}</td>
+          <td>${item.adType.name}</td>
+          <td>${item.type.name}</td>
+          <td>
+            <div class="d-flex"></div>
+          </td>
+        `;
+      }
 
       tableBody.appendChild(newRow);
     });
+  }
+
+  function getStatusBadge(status) {
+    if (status === "Chưa duyệt") {
+      return '<span class="badge text-bg-secondary">Chưa duyệt</span>';
+    } else if (status === "Bị từ chối") {
+      return '<span class="badge text-bg-danger">Bị từ chối</span>';
+    } else {
+      return '<span class="badge text-bg-success">Đã duyệt</span>';
+    }
   }
 </script>

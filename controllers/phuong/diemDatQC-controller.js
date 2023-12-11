@@ -8,13 +8,28 @@ const controller = {};
 controller.show = async (req, res) => {
   const breadcrumbs = [];
   try {
-    let adLocations = await AdLocation.find(); // Fetch all ad locations from the database
+    let adLocations = [];
+    const foundDistrict = await District.findOne({ name: req.user.district });
+    if (req.user.role === "quan") {
+      adLocations = await AdLocation.find({ district: foundDistrict._id }); // Fetch all ad locations from the database'
+    } else {
+      // phuong
+      const foundWard = await Ward.findOne({
+        name: req.user.ward,
+        district: foundDistrict._id,
+      });
+      adLocations = await AdLocation.find({
+        district: foundDistrict._id,
+        ward: foundWard._id,
+      });
+    }
+
     adLocations = await AdLocation.populate(adLocations, [
       "ward",
       "district",
       "type",
       "adType",
-    ]); // Populate the 'ward', 'district', 'type', and 'adType' fields
+    ]);
 
     const wards = await getWardsForUser(req.user);
 
