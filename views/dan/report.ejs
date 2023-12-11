@@ -1,112 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" data-purpose="Layout StyleSheet" title="Web Awesome" href="/css/app-wa-02670e9412103b5852dcbe140d278c49.css?vsn=d" />
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css" />
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-solid.css" />
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-regular.css" />
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-light.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="/dan/report/style.css" />
+        <script src="https://cdn.tiny.cloud/1/95upq7xk8zv7an46zst6m17saspbtsv6m16fp21sj0mdnpag/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" data-purpose="Layout StyleSheet" title="Web Awesome"
-        href="/css/app-wa-02670e9412103b5852dcbe140d278c49.css?vsn=d">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-solid.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-regular.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-light.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/dan/report/style.css">
-    <script src="https://cdn.tiny.cloud/1/95upq7xk8zv7an46zst6m17saspbtsv6m16fp21sj0mdnpag/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-</head>
-
-<body>
-    <div class="container header">
-        <div class="header__title">BÁO CÁO VI PHẠM</div>
-        <div class="header__desc">(Mẫu báo cáo cho các vấn đề liên quan đến bảng quảng cáo, hoặc một địa điểm trên bản
-            đồ)</div>
-    </div>
-
-    <div class="container form-section">
-        <div class="row">
-            <div class="col col-sm-6 col-md-5 col-lg-4">
-                <label for="form__type" class="form-label">Hình thức báo cáo</label>
-                <select class="form-select" aria-label="Default select example" id="form__type">
-                    <option selected>Lựa chọn hình thức báo cáo</option>
-                    <option value="1">Tố giác sai phạm</option>
-                    <option value="2">Đăng ký nội dung</option>
-                    <option value="3">Đóng góp ý kiến</option>
-                    <option value="4">Giải đáp thắc mắc</option>
-                </select>
-            </div>
+    <body>
+        <div class="container header">
+            <div class="header__title">BÁO CÁO VI PHẠM</div>
+            <div class="header__desc">(Mẫu báo cáo cho các vấn đề liên quan đến bảng quảng cáo, hoặc một địa điểm trên bản đồ)</div>
         </div>
 
-        <div class="row">
-            <div class="col col-sm-6 col-md-5 col-lg-4">
-                <label for="form__name" class="form-label">Họ tên</label>
-                <input type="text" class="form-control" id="form__name">
+        <form action="" id="reportForm" onsubmit="getReport(event)">
+            <div class="container form-section">
+                <div class="row">
+                    <div class="col col-sm-6 col-md-5 col-lg-4">
+                        <label for="form__type" class="form-label">Hình thức báo cáo</label>
+                        <select class="form-select" aria-label="Default select example" id="form__type" name="type">
+                            <option selected>Lựa chọn hình thức báo cáo</option>
+                            <option value="1">Tố giác sai phạm</option>
+                            <option value="2">Đăng ký nội dung</option>
+                            <option value="3">Đóng góp ý kiến</option>
+                            <option value="4">Giải đáp thắc mắc</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-sm-6 col-md-5 col-lg-4">
+                        <label for="form__name" class="form-label">Họ tên</label>
+                        <input type="text" class="form-control" id="form__name" name="name" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-sm-6 col-md-5 col-lg-4">
+                        <label for="form__email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="form__email" name="email" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-sm-6 col-md-5 col-lg-4">
+                        <label for="form__phone-number" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" id="form__phone-number" name="phoneNumber" />
+                    </div>
+                </div>
+
+                <label for="form__content" class="form-label">Nội dung báo cáo</label>
+                <script>
+                    tinymce.init({
+                        selector: 'textarea',
+                        body_id: 'form__content',
+                        content_style: '.tox.tox-tinymce { border: 1px solid #dee2e6; border-radius: 0.375rem; }',
+                        placeholder: 'Nhập nội dung báo cáo tại đây...',
+                        plugins:
+                            'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+                        toolbar:
+                            'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                        tinycomments_mode: 'embedded',
+                        tinycomments_author: 'Author name',
+                        mergetags_list: [
+                            { value: 'First.Name', title: 'First Name' },
+                            { value: 'Email', title: 'Email' },
+                        ],
+                        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                    });
+                </script>
+                <textarea name="content"></textarea>
+
+                <label for="form__file" class="form-label">Hình ảnh minh họa</label>
+                <br />
+                <button class="form__file-btn" type="button">
+                    <label for="form__file"><i class="fa-light fa-upload"></i> Thêm tệp</label>
+                </button>
+                <input type="file" id="form__file" name="files" accept="image/*" multiple />
+                <div id="form__file-list"></div>
+                <hr />
+
+                <script>
+                    function onSubmit(token) {
+                        document.getElementById('demo-form').submit();
+                    }
+                </script>
+
+                <div class="g-recaptcha" data-sitekey=""></div>
+
+                <div class="form__submit">
+                    <button type="submit" class="form__submit-btn">Gửi</button>
+                    <span>Xóa hết câu trả lời</span>
+                </div>
+            </div>
+        </form>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <span>Báo cáo đã được gửi thành công!</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Trở về trang chủ</button>
+                        <button type="button" class="btn btn-primary">Tạo báo cáo mới</button>
+                    </div>
+                </div>
             </div>
         </div>
+    </body>
 
-        <div class="row">
-            <div class="col col-sm-6 col-md-5 col-lg-4">
-                <label for="form__email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="form__email">
-            </div>
-        </div>
+    <script>
+        function getReport(e) {
+            e.preventDefault();
+            const formData = new FormData(document.getElementById('reportForm'));
+            const data = Object.fromEntries(formData.entries());
+            console.log(data);
+            fetch('/report', {
+                method: 'POST',
+                enctype: "multipart/form-data",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.message == 'success') {
+                        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                            keyboard: false,
+                        });
+                        myModal.show();
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
 
-        <div class="row">
-            <div class="col col-sm-6 col-md-5 col-lg-4">
-                <label for="form__phone-number" class="form-label">Số điện thoại</label>
-                <input type="text" class="form-control" id="form__phone-number">
-            </div>
-        </div>
+        document.getElementById('form__file').addEventListener('change', function () {
+            var fileList = this.files;
+            var fileListDisplay = document.getElementById('form__file-list');
 
-        <label for="form__content" class="form-label">Nội dung báo cáo</label>
-        <script>
-            tinymce.init({
-                selector: 'textarea',
-                body_id: 'form__content',
-                content_style: '.tox.tox-tinymce { border: 1px solid #dee2e6; border-radius: 0.375rem; }',
-                placeholder: "Nhập nội dung báo cáo tại đây...",
-                plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                tinycomments_mode: 'embedded',
-                tinycomments_author: 'Author name',
-                mergetags_list: [
-                    { value: 'First.Name', title: 'First Name' },
-                    { value: 'Email', title: 'Email' },
-                ],
-                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-            });
-        </script>
-        <textarea></textarea>
+            fileListDisplay.innerHTML = '';
 
-        <label for="form__file" class="form-label">Hình ảnh minh họa</label>
-        <br>
-        <button class="form__file-btn" type="button">
-            <label for="form__file"><i class="fa-light fa-upload"></i> Thêm tệp</label>
-        </button>
-        <input type="file" id="form__file" multiple>
-        <hr>
-
-        <script>
-            function onSubmit(token) {
-                document.getElementById("demo-form").submit();
+            var fileNames = [];
+            for (var i = 0; i < fileList.length; i++) {
+                fileNames.push(fileList[i].name); // Add each file name to the array
             }
-        </script>
 
-        <div class="g-recaptcha" data-sitekey=""></div>
-
-        <div class="form__submit">
-            <button type="submit" class="form__submit-btn">Gửi</button>
-            <span>Xóa hết câu trả lời</span>            
-        </div>
-        </div>
-    </div>
-
-</body>
-
+            fileListDisplay.innerHTML = fileNames.join(', ');
+        });
+    </script>
 </html>
