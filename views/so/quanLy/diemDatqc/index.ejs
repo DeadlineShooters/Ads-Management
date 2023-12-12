@@ -24,10 +24,10 @@
                 <tr class='clickable' onclick= "window.location='/so/quanly/diem-dat-quang-cao/<%= adLocation.id %>'">
                     <th scope="row"><%= i++ %></th>
                     <td><%= adLocation.address %></td>
-                    <td>Quận <%= adLocation.district %>, Phường <%= adLocation.ward %></td>
-                    <td><%= adLocation.type %></td>
-                    <td><%= adLocation.adType %></td>
-                    <td><div class="rounded-pill text-center text-light <%= (adLocation.status == 'Đã quy hoạch')? 'bg-success' : 'bg-danger'  %>"><%= adLocation.status %></div></td>
+                    <td>Quận <%= adLocation.district.name %>, Phường <%= adLocation.ward.name %></td>
+                    <td><%= adLocation.type.name %></td>
+                    <td><%= adLocation.adType.name %></td>
+                    <td class="min-w"><div class="rounded-pill text-center text-light <%= (adLocation.status == 'Đã quy hoạch')? 'bg-success' : 'bg-danger'  %>"><%= adLocation.status %></div></td>
                 </tr>
                 <% } %>
             </tbody>
@@ -51,3 +51,9 @@
         </ul>
     </nav>
 </section>
+<style>
+    /* Add this style to your custom CSS or in a style tag within your HTML */
+    .min-w {
+      min-width: 140px; /* Set the desired minimum width */
+    }
+  </style>

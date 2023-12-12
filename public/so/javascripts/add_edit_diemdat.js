@@ -23,7 +23,12 @@
         map.addControl(
             new MapboxGeocoder({
                 accessToken: mapboxgl.accessToken,
-                mapboxgl: mapboxgl
+                mapboxgl: mapboxgl,
+                geocodingQueryParams: {
+                    // Add your custom parameters here
+                    country: 'vn',  // Restrict search to the vn
+                    types: 'place', // Limit results to places
+                },
             })
         );
 

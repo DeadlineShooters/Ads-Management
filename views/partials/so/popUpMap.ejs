@@ -1,8 +1,56 @@
 <div class="d-none position-absolute col-10 offset-1 rounded border border-2 border-primary map-window bg-light p-0 d-flex flex-column"
     style="height: 500px;" id="map-window">
-        <div class="d-flex justify-content-between bg-primary">
-            <div class="btn bg-success rounded-0 text-light" id="save">Save</div>
-            <div class="btn bg-danger rounded-0 text-light" id="cancel">Cancel</div>
-        </div>
-        <div id="map" class="flex-grow-1"></div>
+    <div class="d-flex justify-content-between bg-primary">
+        <div class="btn bg-success rounded-0 text-light" id="save">Save</div>
+        <div class="btn bg-danger rounded-0 text-light" id="cancel">Cancel</div>
     </div>
+    <div class="position-relative d-flex">
+        <select name="item[districtId]" class="form-select" aria-label="Default select example">
+            <option value="" selected disabled>Chọn Quận</option>
+            <% for (let district of districts) { %>
+            <option value="<%= district.id %>"><%=district.name %></option>
+            <% } %>
+        </select>
+        <select name="item[phuongId]" class="form-select" aria-label="Default select example">
+            
+        </select>
+
+    </div>
+    <div id="map" class="flex-grow-1"></div>
+</div>
+
+<script>
+      // Get references to the two select elements
+        var districtSelect = document.querySelector('select[name="item[districtId]"]');
+        var wardSelect = document.querySelector('select[name="item[phuongId]"]');
+    
+        // Disable the second select initially
+        wardSelect.disabled = true;
+    
+        // Add an event listener to the first select to enable/disable the second select
+        districtSelect.addEventListener('change', function () {
+            var selectedDistrictId = districtSelect.value;
+            // Enable the second select if a district is selected, otherwise disable it
+            wardSelect.disabled = selectedDistrictId === '';
+            alert(selectedDistrictId)
+
+            // Clear existing options
+            wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
+
+            // Fetch and populate wards for the selected district
+            if (selectedDistrictId) {
+                fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Iterate over the array and append options to 'wardSelect'
+                        data.forEach(ward => {
+                            var option = document.createElement('option');
+                            option.value = ward.id;
+                            option.textContent = ward.name;
+                            wardSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching wards:', error));
+            }
+      });
+  </script>
