@@ -1,61 +1,83 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
-    <%- include('../../../partials/so/quanLyDropdown') %>
-    <div>
-        <a class="btn btn-primary rounded-pill" href="/so/quanly/bang-quang-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
-    </div>
+  <%- include('../../../partials/so/quanLyDropdown') %>
+  <div>
+    <a
+      class="btn btn-primary rounded-pill"
+      href="/so/quanly/bang-quang-cao/add"
+      role="button"
+      >Thêm <i class="bi bi-plus"></i
+    ></a>
+  </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
-    <div class=" ">
-        <table class="table table-light table-striped table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Địa chỉ</th>
-                    <th scope="col">Khu vực</th>
-                    <th scope="col">Loại bảng</th>
-                    <th scope="col">Kích thước</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Tình trạng</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% let i = 1; %>
-                <% for (let adBoard of adBoards) { %>
-                <tr class='clickable' onclick= "window.location='/so/quanly/bang-quang-cao/<%= adBoard.id %>'">
-                    <th scope="row"><%= i++ %></th>
-                    <td><%= adBoard.adLocation.address %></td>
-                    <td>Quận <%= adBoard.adLocation.district %>, Phường <%= adBoard.adLocation.ward %></td>
-                    <td><%= adBoard.boardType %></td>
-                    <td><%= adBoard.size.h %>m x <%= adBoard.size.w %>m</td>
-                    <td><%= adBoard.quantity %> trụ/bảng</td>
-                    <%if (adBoard.status == 'Chưa duyệt') { %>
-                        <td><div class="rounded-pill text-center text-light bg-secondary"><%= adBoard.status %></div></td>
-                        <%} else if (adBoard.status == 'Bị từ chối') {%>
-                        <td><div class="rounded-pill text-center text-light bg-danger"><%= adBoard.status %></div></td>
-                        <% }else { %>
-                        <td><div class="rounded-pill text-center text-light bg-success"><%= adBoard.status %></div></td>
-                    <%}%>
-                </tr>
-                <% } %>
-            </tbody>
-        </table>
-    </div>
+  <div class=" ">
+    <table class="table table-light table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">Địa chỉ</th>
+          <th scope="col">Khu vực</th>
+          <th scope="col">Loại bảng</th>
+          <th scope="col">Kích thước</th>
+          <th scope="col">Số lượng</th>
+          <th scope="col">Tình trạng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% let i = 1; %> <% for (let adBoard of adBoards) { %>
+        <tr
+          class="clickable"
+          onclick="window.location='/so/quanly/bang-quang-cao/<%= adBoard.id %>'"
+        >
+          <th scope="row"><%= i++ %></th>
+          <td><%= adBoard.adLocation.address %></td>
+          <td>
+            Quận <%= adBoard.adLocation.district %>, Phường <%=
+            adBoard.adLocation.ward %>
+          </td>
+          <td><%= adBoard.boardType %></td>
+          <td><%= adBoard.size.h %>m x <%= adBoard.size.w %>m</td>
+          <td><%= adBoard.quantity %> trụ/bảng</td>
+          <%if (adBoard.adBoardRequest.status == 'Chưa duyệt') { %>
+          <td>
+            <div class="rounded-pill text-center text-light bg-secondary">
+              <%= adBoard.adBoardRequest.status %>
+            </div>
+          </td>
+          <%} else if (adBoard.adBoardRequest.status == 'Bị từ chối') {%>
+          <td>
+            <div class="rounded-pill text-center text-light bg-danger">
+              <%= adBoard.adBoardRequest.status %>
+            </div>
+          </td>
+          <% }else { %>
+          <td>
+            <div class="rounded-pill text-center text-light bg-success">
+              <%= adBoard.adBoardRequest.status %>
+            </div>
+          </td>
+          <%}%>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
 </section>
 <section class="d-flex justify-content-center mt-auto">
-    <nav aria-label="...">
-        <ul class="pagination m-0 justify-content-end">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+  <nav aria-label="...">
+    <ul class="pagination m-0 justify-content-end">
+      <li class="page-item disabled">
+        <a class="page-link">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="#">2</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
 </section>

@@ -34,6 +34,7 @@ controller.show = async (req, res) => {
 
     const wards = await getWardsForUser(req.user);
 
+    console.log(adLocations);
     res.render("phuong/diemDatList", {
       adLocations: encodeURIComponent(JSON.stringify(adLocations)),
       breadcrumbs,
@@ -144,7 +145,7 @@ controller.showEdit = (req, res) => {
 
 controller.postCreateRequest = (req, res) => {
   const data = req.body;
-  // console.log(data);
+  console.log(data);
   res.redirect("/cac-bang-quang-cao");
 };
 export default controller;

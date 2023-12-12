@@ -26,7 +26,7 @@ controller.show = async (req, res) => {
         path: "adLocation",
         populate: [{ path: "district" }, { path: "ward" }],
       })
-      .populate("boardType");
+      .populate(["boardType", "adBoardRequest"]);
     if (req.user.role === "quan") {
       // console.log("District: " + foundDistrict._id);
       adBoards = adBoards.filter((adBoard) => {
