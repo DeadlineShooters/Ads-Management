@@ -4,7 +4,7 @@ import AdType from "./adType.js";
 import District from "./district.js";
 import Ward from "./ward.js";
 import LocationType from "./locationType.js";
-import { imageSchema } from "./image.js";
+import  imageSchema  from "./image.js";
 
 const adLocationSchema = new Schema({
   image: imageSchema,

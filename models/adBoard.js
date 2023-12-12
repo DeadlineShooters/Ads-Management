@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 import AdLocation from "./adLocation.js";
 import BoardType from "./boardType.js";
-import { imageSchema } from "./image.js";
+import imageSchema from "./image.js";
 
 const adBoardSchema = new Schema({
   image: imageSchema,
