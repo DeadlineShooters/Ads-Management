@@ -6,6 +6,7 @@ import ReportType from "../models/reportType.js";
 import District from "../models/district.js";
 import Ward from "../models/ward.js";
 import AdLocation from "../models/adLocation.js";
+import User from "../models/user.js";
 
 import {
   locationTypes,
@@ -35,6 +36,7 @@ const seedDB = async () => {
   await District.deleteMany({});
   await Ward.deleteMany({});
   await AdLocation.deleteMany({}); // Add this line to clear the AdLocation collection
+  await User.deleteMany({});
 
   for (let i of locationTypes) {
     const locationType = new LocationType(i);
@@ -65,6 +67,11 @@ const seedDB = async () => {
   for (let i of adLocations) {
     const adLocation = new AdLocation(i);
     await adLocation.save();
+  }
+
+  for (let i of canBo) {
+    const canBo = new User(i);
+    await canBo.save();
   }
 };
 

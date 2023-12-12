@@ -2,7 +2,7 @@ import User from "../../../models/user.js";
 import bcrypt from "bcrypt";
 
 export const danhSachCanBo =  async (req, res) => {
-    let perPage = 12; //moi trang co 10 tai khoan can bo
+    let perPage = 12; //moi trang co 12 tai khoan can bo
     let page = req.query.page || 1;
     const breadcrumbs = [];
     try {
@@ -44,7 +44,7 @@ export const guiInfoTaiKhoanCanBo = async (req, res) => {
     const newCanBo = new User({
         username : req.body.username,
         email: req.body.email,
-        role: 'quan',
+        role: req.body.role,
         phone: req.body.phone,
         ward: req.body.ward,
         district: req.body.district,
@@ -79,7 +79,7 @@ export const capNhatTaiKhoanCanBo = async (req, res) => {
         await User.findByIdAndUpdate(req.params.id, {
             username : req.body.username,
             email: req.body.email,
-            role: 'quan',
+            role: req.body.role,
             phone: req.body.phone,
             ward: req.body.ward,
             district: req.body.district,
