@@ -65,25 +65,25 @@ controller.show = async (req, res) => {
   }
 };
 
-controller.showDetail = (req, res) => {
+controller.showDetail = async (req, res) => {
   const { bangId } = req.params;
   const breadcrumbs = [
     { name: "Các bảng quảng cáo", link: "/cac-bang-quang-cao" },
     { name: "Chi tiết bảng quảng cáo", link: "" },
   ];
 
-  const adBoard = {
-    id: `${bangId}`,
+  // const adBoard = {
+  //   id: `${bangId}`,
 
-    boardType: "Trụ màn hình điện tử LED",
-    size: { w: 2.5, h: 10 },
+  //   boardType: "Trụ màn hình điện tử LED",
+  //   size: { w: 2.5, h: 10 },
 
-    quantity: 2,
-    startDate: { d: 15, m: 5, y: 23 },
-    expireDate: { d: 15, m: 5, y: 24 },
-    status: "Đã duyệt",
-    adLocation: adLocation,
-  };
+  //   quantity: 2,
+  //   startDate: { d: 15, m: 5, y: 23 },
+  //   expireDate: { d: 15, m: 5, y: 24 },
+  //   status: "Đã duyệt",
+  //   adLocation: adLocation,
+  // };
 
   const props = {
     title: "bảng",
@@ -97,13 +97,25 @@ controller.showDetail = (req, res) => {
     b2color: "success",
   };
 
-  res.render("phuong/QC-details.ejs", {
-    details: adBoard,
-    props,
-    user: req.user,
-    bangId,
-    breadcrumbs,
-  });
+  try {
+    // Fetch adLocation details based on the diemId
+    const adBoardDetails = await AdBoard.findById(bangId)
+      .populate({
+        path: "adLocation",
+        populate: [{ path: "district" }, { path: "ward" }, "type", "adType"],
+      })
+      .populate("boardType");
+
+    res.render("phuong/QC-details.ejs", {
+      details: adBoardDetails,
+      props,
+      bangId,
+      breadcrumbs,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 controller.showYeuCauCapPhep = (req, res) => {

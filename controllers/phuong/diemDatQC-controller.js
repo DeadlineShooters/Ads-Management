@@ -45,23 +45,12 @@ controller.show = async (req, res) => {
   }
 };
 
-controller.showDetail = (req, res) => {
+controller.showDetail = async (req, res) => {
   const { diemId } = req.params;
   const breadcrumbs = [
     { name: "Các điểm đặt quảng cáo", link: "/cac-diem-dat-quang-cao" },
     { name: "Chi tiết điểm đặt", link: "" },
   ];
-
-  const adLocation = {
-    id: `${diemId}`,
-    longLat: "10.752334, 106.643366",
-    address: "157 Nguyễn Đình Chính",
-    district: "Phú Nhuận",
-    ward: "11",
-    type: "Đất công/Công viên/Hành lang an toàn giao thông",
-    adType: "Quảng cáo thương mại",
-    status: "Đã quy hoạch",
-  };
 
   const props = {
     title: "điểm đặt",
@@ -74,14 +63,26 @@ controller.showDetail = (req, res) => {
     b2color: "success",
   };
 
-  // console.log(diemId);
-  res.render("phuong/QC-details.ejs", {
-    details: adLocation,
-    props,
-    cssfile: "/style.css",
-    diemId,
-    breadcrumbs,
-  });
+  try {
+    // Fetch adLocation details based on the diemId
+    const adLocationDetails = await AdLocation.findById(diemId).populate([
+      "ward",
+      "district",
+      "type",
+      "adType",
+    ]);
+
+    res.render("phuong/QC-details.ejs", {
+      details: adLocationDetails,
+      props,
+      cssfile: "/style.css",
+      diemId,
+      breadcrumbs,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 controller.showCreateRequest = (req, res) => {

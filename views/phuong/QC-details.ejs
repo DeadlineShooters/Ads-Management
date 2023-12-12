@@ -7,18 +7,18 @@
 <div class="card-body py-1">
   <h5 class="card-title">Chi tiết <%=props.title%> quảng cáo</h5>
   <%if (details.adLocation) {%>
-  <p class="card-text"><%=details.adLocation.address%>, Quận <%= details.adLocation.district %>, Phường <%= details.adLocation.ward %></p>
+  <p class="card-text"><%=details.adLocation.address%>, Quận <%= details.adLocation.district.name %>, Phường <%= details.adLocation.ward.name %></p>
   <%} else { %>
-    <p class="card-text"><%=details.address%>, Quận <%= details.district %>, Phường <%= details.ward %></p>
+    <p class="card-text"><%=details.address%>, Quận <%= details.district.name %>, Phường <%= details.ward.name %></p>
   <% } %>
 </div>
 <ul class="list-group list-group-flush">
   <%if (details.boardType) {%>
-  <li class="list-group-item">Loại bảng: <b><%=details.boardType%></b></li>
+  <li class="list-group-item">Loại bảng: <b><%=details.boardType.name%></b></li>
   <%}%>
 
-  <li class="list-group-item">Hình thức: <b><%=details.adLocation? details.adLocation.adType : details.adType %></b></li>
-  <li class="list-group-item">Phân loại: <b><%=details.adLocation? details.adLocation.type : details.type %></b></li>
+  <li class="list-group-item">Hình thức: <b><%=details.adLocation? details.adLocation.adType.name : details.adType.name %></b></li>
+  <li class="list-group-item">Phân loại: <b><%=details.adLocation? details.adLocation.type.name : details.type.name %></b></li>
   <%if (details.status && !details.adLocation) {%>
   <li class="list-group-item"><b><%=details.status%></b></li>
   <%}%> <%if (details.size) {%>
