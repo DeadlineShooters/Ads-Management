@@ -16,6 +16,7 @@ import {
   districts,
   adLocations,
   wards,
+  canBo,
 } from "../seeds/data.js";
 
 const mongoURI =

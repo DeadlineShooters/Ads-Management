@@ -92,6 +92,37 @@ const images = [
     filename: "shoe",
   },
 ];
+
+export const canBo = [
+  {
+    email: "phuong@gmail.com",
+    daycreated: "2023-11-19T02:35:34.230Z",
+    district: "1",
+    hashed_password:
+      "$2b$10$ofjFY6KDErYSd9yyNp8QYulbbrAe/V8b1nX0ETTmh5CJSgeyawp4i",
+    role: "phuong",
+    salt: "$2b$10$ofjFY6KDErYSd9yyNp8QYu",
+    ward: "Phạm Ngũ Lão",
+  },
+  {
+    email: "so@gmail.com",
+    daycreated: "2023-11-19T02:35:34.230Z",
+    hashed_password:
+      "$2b$10$O6ZN5c5IQBzdgOpHvCi28.XUeeWt2ZsLcAn8cvgvLZuiLX3qepYVS",
+    role: "so",
+    salt: "$2b$10$O6ZN5c5IQBzdgOpHvCi28.",
+  },
+  {
+    email: "quan@gmail.com",
+    daycreated: "2023-11-19T02:35:34.230Z",
+    district: "1",
+    hashed_password:
+      "$2b$10$hFKsMW5/QDFSlCpn1Jj0rOC7XIz1NrRzOz3BR3/OEfxaxEwaK91NS",
+    role: "quan",
+    salt: "$2b$10$hFKsMW5/QDFSlCpn1Jj0rO",
+  },
+];
+
 export const adLocations = [
   {
     image: images[0],
