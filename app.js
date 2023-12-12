@@ -23,14 +23,14 @@ import MongoStore from 'connect-mongo';
 import mongoose from 'mongoose';
 import methodOverride from 'method-override';
 
-// const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
+const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
-// try {
-//   await mongoose.connect(mongoURI);
-//   console.log("Connected to the database");
-// } catch (error) {
-//   console.log("Could not connect to the database", error);
-// }
+try {
+  await mongoose.connect(mongoURI);
+  console.log("Connected to the database");
+} catch (error) {
+  console.log("Could not connect to the database", error);
+}
 const danApp = express();
 // const canBoApp = express();
 
@@ -79,8 +79,8 @@ danApp.set('views', path.join(__dirname, '/views'));
 // danApp.use(express.static("public"));
 danApp.use('/', express.static(path.join(__dirname, 'public')));
 
-danApp.use(bodyParser.urlencoded({ extended: false }));
-danApp.use(bodyParser.json());
+danApp.use(bodyParser.json({ limit: '50mb' }));
+danApp.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 danApp.use('/', trangChuDan);
 danApp.use('/report', baoCaoDan);

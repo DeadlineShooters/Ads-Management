@@ -33,25 +33,17 @@
         </div>
     </div>
 
-    <div class="ads-point__info">
-        <div class="info__form">Cổ động chính trị</div>
-        <div class="info__type">Đất công/Công viên/Hành lang an toàn giao thông</div>
-        <div class="info__address">Đồng Khởi - Nguyễn Du (Sở văn hóa và thể thao), Phường Bến Nghé, Quận 1</div>
+    <% for (let i = 0; i < adLocations.length; i++) { %>
+        <div class="ads-point__info<%= i %>" data-lat="<%= adLocations[i].latlng.lat %>" data-lng="<%= adLocations[i].latlng.lng %>" data-violate="<%= adLocations[i].isViolated %>">
+        <div class="info__form"><%= adLocations[i].adType.name %></div>
+        <div class="info__type"><%= adLocations[i].type.name %></div>
+        <div class="info__address"><%= adLocations[i].address %></div>
         <img class="info__img"
-            src="https://static.vecteezy.com/system/resources/thumbnails/015/936/418/small_2x/square-blank-billboard-city-street-free-photo.jpg"
+            src="<%= adLocations[i].image.url %>"
             alt="">
-        <div class="info__planning-stt">ĐÃ QUY HOẠCH</div>
+        <div class="info__planning-stt"><%= adLocations[i].status %></div>
     </div>
-
-    <div class="ads-point__info1">
-        <div class="info__form">Cổ động chính trị</div>
-        <div class="info__type">Đất công/Công viên/Hành lang an toàn giao thông</div>
-        <div class="info__address">Đồng Khởi - Nguyễn Du (Sở văn hóa và thể thao), Phường Bến Nghé, Quận 1</div>
-        <img class="info__img"
-            src="https://static.vecteezy.com/system/resources/thumbnails/015/936/418/small_2x/square-blank-billboard-city-street-free-photo.jpg"
-            alt="">
-        <div class="info__planning-stt">ĐÃ QUY HOẠCH</div>
-    </div>
+    <% } %>
 
     <div class="row">
         <div class="col-10 col-lg-11 toggle-section">
@@ -253,7 +245,7 @@
     </div>
 
     <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
-            ({ key: "AIzaSyCC7uuaG-cOlBxUF14MHtIVoa7SAyWnMNo", v: "beta" });</script>
+            ({ key: "AIzaSyCUkQQJOoPXoOeFPUJzMg5RY0Bl48h5EFM", v: "beta" });</script>
 
 </body>
 
