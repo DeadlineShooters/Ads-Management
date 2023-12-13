@@ -5,5 +5,4 @@ const imageSchema = new mongoose.Schema({
     filename: String
 })
 
-const Image = mongoose.model("Image", imageSchema);
-export default Image;
+export default imageSchema;

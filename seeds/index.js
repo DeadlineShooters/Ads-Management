@@ -5,9 +5,9 @@ import AdType from "../models/adType.js";
 import BoardType from "../models/boardType.js";
 import ReportType from "../models/reportType.js";
 import District from "../models/district.js";
+import User from "../models/user.js";
 
-
-import { locationTypes, adTypes, boardTypes, reportTypes, districts } from "../seeds/data.js";
+import { locationTypes, adTypes, boardTypes, reportTypes, districts} from "../seeds/data.js";
 
 const mongoURI =
     "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
@@ -26,7 +26,7 @@ const seedDB = async () => {
     await BoardType.deleteMany({});
     await ReportType.deleteMany({});
     await District.deleteMany({});
-	
+
 	for (let i of locationTypes) {
 		const locationType = new LocationType(i);
 		await locationType.save();
@@ -46,6 +46,10 @@ const seedDB = async () => {
 	for (let i of districts) {
 		const district = new District(i);
 		await district.save();
+	}
+	for (let i of canBo) {
+		const canBo = new User(i);
+		await canBo.save();
 	}
 
 };

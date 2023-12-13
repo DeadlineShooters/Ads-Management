@@ -102,29 +102,51 @@
             </div>
         </li>
     </ul>
-    <ul class="list-group mt-3">
-        <li class="list-group-item" style="background-color: #7981d0">
-            <div class="row">
-                <div class="col" style="max-width: 200px"><b class="table header">Xử lý yêu cầu</b></div>
+    <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+        <button class="btn btn-danger mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" data-bs-toggle="modal" data-bs-target="#noModal">Không phê duyệt</button>
+        <button class="btn btn-success mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" data-bs-toggle="modal" data-bs-target="#yesModal">Phê duyệt</button>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="yesModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
             </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col header"><b>Thực hiện</b></div>
-                <!-- <div class="col">
-                    <input type="radio" class="btn-check" style="" name="options-outlined" id="success-outlined" autocomplete="off" checked>
-                    <label class="btn btn-outline-success" style="" for="success-outlined">Phê duyệt</label>
-                </div>
-                <div class="col">
-                    <input type="radio" class="btn-check" style="" name="options-outlined" id="danger-outlined" autocomplete="off">
-                    <label class="btn btn-outline-danger" style="" for="danger-outlined">Không phê duyệt</label>
-                </div>
-                <div class="col">
-                    <button type="submit" class="btn"style="background-color: #D9DBE4; "><i class="bi bi-send-fill"></i>Gửi</button>
-                </div> -->
-                <div class="col-4 text-center"><a class="btn btn-success w-50" for="success-outlined">Phê duyệt</a></div>
-                <div class="col-4 text-center"><a class="btn btn-danger w-50" for="danger-outlined">Không phê duyệt</a></div>
+            <div class="modal-body">
+              <p>
+                Cán bộ Sở thực hiện <strong>PHÊ DUYỆT</strong> yêu cầu cấp phép.
+              </p>
             </div>
-        </li>
-    </ul>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary">
+                    Đồng ý
+                </button>
+            </div>
+          </div>
+        </div>
+    </div>    
+    <div class="modal fade" tabindex="-1" role="dialog" id="noModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Cán bộ Sở thực hiện <strong>KHÔNG PHÊ DUYỆT</strong> yêu cầu cấp phép.
+              </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary">
+                    Đồng ý
+                </button>
+            </div>
+          </div>
+        </div>
+    </div>    
 <!-- </div> -->

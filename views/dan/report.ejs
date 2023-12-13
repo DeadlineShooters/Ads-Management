@@ -39,8 +39,8 @@
                 <div class="row">
                     <div class="col col-sm-6 col-md-5 col-lg-4">
                         <label for="form__type" class="form-label">Hình thức báo cáo</label>
-                        <select class="form-select" aria-label="Default select example" id="form__type" name="type">
-                            <option selected>Lựa chọn hình thức báo cáo</option>
+                        <select class="form-select" aria-label="Default select example" id="form__type" name="type" required>
+                            <option selected value="">Lựa chọn hình thức báo cáo</option>
                             <option value="1">Tố giác sai phạm</option>
                             <option value="2">Đăng ký nội dung</option>
                             <option value="3">Đóng góp ý kiến</option>
@@ -90,7 +90,7 @@
                         ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
                     });
                 </script>
-                <textarea name="content"></textarea>
+                <textarea name="content" required></textarea>
 
                 <label for="form__file" class="form-label">Hình ảnh minh họa</label>
                 <br />

@@ -7,7 +7,7 @@ import LocationType from "./locationType.js";
 import Image from "./image.js";
 
 const adLocationSchema = new Schema({
-    image: { type: Schema.Types.ObjectId, ref: "Image" },
+    image: Object,
     latlng: Object,
     address: String,
     district: { type: Schema.Types.ObjectId, ref: "District" },
