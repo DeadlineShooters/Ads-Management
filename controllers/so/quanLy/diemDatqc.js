@@ -13,7 +13,7 @@ export const showDetails = async (req, res) => {
     { name: 'Các điểm đặt quảng cáo', link: '/so/quanly/diem-dat-quang-cao'},
     { name: "Chi tiết điểm đặt quảng cáo", link: '' },
   ]
-  const adLocation = null;
+  const adLocation = {id:null};
   const props = {
     title: "điểm đặt",
     b1text: "Chỉnh sửa",

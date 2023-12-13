@@ -2,6 +2,9 @@ import District from "../../../models/district.js";
 
 export const index = async (req, res) => {
     const quans = await District.find({});
+    if (req.query.json && req.query.json == 'true') {
+        return res.json(quans);
+    }
     const props = {
         type: 'Quận',
     }

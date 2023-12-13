@@ -17,40 +17,200 @@
 
     </div>
     <div id="map" class="flex-grow-1"></div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="messageModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-      // Get references to the two select elements
+    const globeIcon = document.querySelector('.globe-icon');
+    globeIcon.style = 'cursor:pointer';
+    // const map = null;
+
+    globeIcon.onclick = () => {
+        document.querySelector('#map-window').classList.remove('d-none');
+        mapboxgl.accessToken = 'pk.eyJ1IjoibnRraWV0IiwiYSI6ImNsbndjM3pueDA2c3UybHBkbTRxeXl3em0ifQ.NGgwcE0h5N-KkQdlGFIVgA';
+
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            style: 'mapbox://styles/mapbox/streets-v12', // style URL
+            center: [106.68247164106691, 10.762860099114166], // starting position [lng, lat]
+            zoom: 17 // starting zoom
+        });
+
+        
+        // Add the control to the map.
+        map.addControl(
+            new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                mapboxgl: mapboxgl,
+                geocodingQueryParams: {
+                    // Add your custom parameters here
+                    country: 'vn',  // Restrict search to the vn
+                    proximity: '[longitude],[latitude]'
+                },
+            })
+        );
+
+        var address = undefined
+        var district = undefined
+        var ward = undefined
+        var coord = undefined
+        map.on('click', async (e) => {
+            const coordinates = e.lngLat;
+    
+            // Use Mapbox Geocoding API to get the address
+            const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates.lng},${coordinates.lat}.json?access_token=${mapboxgl.accessToken}`;
+    
+    
+            // const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/748300.json?country=VN&access_token=${mapboxgl.accessToken}`;
+            try {
+                const response = await fetch(url);
+                const dataJson = await response.json();
+                const data = dataJson.features[0];
+                
+    
+                // Find the items with type 'district' and 'ward'
+                address = data.place_name;
+                district = data.context[2].text.replace('Quận ', '');
+                ward = data.context[0].text.replace('Phường ', '');
+                coord = data.geometry.coordinates.join(', ');
+    
+                // Display the address in a popup
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML('<b>'+address+'</b>'+'<div>'+'Phường '+ward + ', Quận ' + district+'</div>'+'<div class="text-body-tertiary">'+coord+'</div>')
+                    .addTo(map);
+    
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+        document.querySelector('#save').onclick = async () => {
+            if (address !== undefined && ward !== undefined && district != undefined) {
+                
+                // alert(district + ward)
+
+                const districtsReponse = await fetch(`/so/quanly/quan?json=true`);
+                const districts = await districtsReponse.json();
+                // alert(JSON.stringify(districts))
+                const selectedDistrict = districts.find(item => item.name === district);
+                // alert(selectedDistrictId)
+                if (!selectedDistrict) {
+                    showMessageModal("Lưu ý", "Quận này nằm ngoài khu vực quản lý!");
+                    return;
+                }
+                const selectedDistrictId = selectedDistrict._id;
+                const wardsReponse = await fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`);
+                const wards = await wardsReponse.json();
+                if (!wards.some(item => item.name === ward)) {
+                    showMessageModal("Lưu ý", "Phường này nằm ngoài khu vực quản lý!");
+                    return;
+                }
+                
+                document.querySelector('#address').value = address;
+                document.querySelector('#district').value = district;
+                document.querySelector('#ward').value = ward;
+                document.querySelector('#coord').value = coord;
+                // Ensure that the element is being selected
+
+                document.querySelector('#map-window').classList.add('d-none');
+            }
+        }
+        document.querySelector('#cancel').onclick = () => {
+            document.querySelector('#map-window').classList.add('d-none');
+        }
+
+
+        // Get references to the two select elements
         var districtSelect = document.querySelector('select[name="item[districtId]"]');
         var wardSelect = document.querySelector('select[name="item[phuongId]"]');
-    
+
         // Disable the second select initially
         wardSelect.disabled = true;
-    
+
         // Add an event listener to the first select to enable/disable the second select
-        districtSelect.addEventListener('change', function () {
+        districtSelect.addEventListener('change', async function () {
             var selectedDistrictId = districtSelect.value;
+            var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
             // Enable the second select if a district is selected, otherwise disable it
             wardSelect.disabled = selectedDistrictId === '';
-            alert(selectedDistrictId)
+            // alert(selectedDistrictName)
 
-            // Clear existing options
-            wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
-
+            
             // Fetch and populate wards for the selected district
-            if (selectedDistrictId) {
-                fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
+            fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
+            .then(response => response.json())
+                .then(data => {
+                    // Clear existing options
+                    wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
+                    // Iterate over the array and append options to 'wardSelect'
+                    data.forEach(ward => {
+                        var option = document.createElement('option');
+                        option.value = ward.id;
+                        option.textContent = ward.name;
+                        wardSelect.appendChild(option);
+                    });
+                })
+            .catch(error => console.error('Error fetching wards:', error));
+                
+            fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(selectedDistrictName)}.json?country=vn&access_token=${mapboxgl.accessToken}`)
+                .then(response => response.json())
+                .then(data => {
+                    var coordinates = data.features[0].center;
+                    // Move the map to the selected district
+                    map.flyTo({
+                        center: coordinates,
+                        zoom: 14 // Adjust the zoom level as needed
+                    });
+                })
+            .catch(error => console.error('Error fetching district coordinates:', error));
+        
+            wardSelect.addEventListener('change', async function () {
+                var selectedWardId = districtSelect.value;
+                var selectedAreaName = 'Phường '+ wardSelect.options[wardSelect.selectedIndex].text + ', ' +selectedDistrictName+', Ho Chi Minh City, Vietnam';
+
+                fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(selectedAreaName)}.json?country=vn&access_token=${mapboxgl.accessToken}`)
                     .then(response => response.json())
                     .then(data => {
-                        // Iterate over the array and append options to 'wardSelect'
-                        data.forEach(ward => {
-                            var option = document.createElement('option');
-                            option.value = ward.id;
-                            option.textContent = ward.name;
-                            wardSelect.appendChild(option);
+                        var coordinates = data.features[0].center;
+                        // Move the map to the selected district
+                        map.flyTo({
+                            center: coordinates,
+                            zoom: 14.5 // Adjust the zoom level as needed
                         });
                     })
-                    .catch(error => console.error('Error fetching wards:', error));
-            }
-      });
-  </script>
+                    .catch(error => console.error('Error fetching district coordinates:', error));
+            });
+        });
+    }
+
+    
+    function showMessageModal(title, message) {
+        const modalTitle = document.querySelector('#messageModal .modal-title');
+        const modalMessage = document.querySelector('#modalMessage');
+
+        modalTitle.innerText = title;
+        modalMessage.innerText = message;
+
+        // Show the modal
+        const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+        messageModal.show();
+    }
+</script>
