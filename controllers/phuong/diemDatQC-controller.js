@@ -1,7 +1,9 @@
 import AdLocation from "../../models/adLocation.js";
 import District from "../../models/district.js";
+import AdBoardReq from "../../models/adBoardRequest.js";
 import Ward from "../../models/ward.js";
 import { getWardsForUser } from "../../utils/WardUtils.js";
+import mongoose from "mongoose";
 
 const controller = {};
 
@@ -25,12 +27,7 @@ controller.show = async (req, res) => {
       });
     }
 
-    adLocations = await AdLocation.populate(adLocations, [
-      "ward",
-      "district",
-      "type",
-      "adType",
-    ]);
+    adLocations = await AdLocation.populate(adLocations, ["ward", "district", "type", "adType"]);
 
     const wards = await getWardsForUser(req.user);
 
@@ -66,12 +63,7 @@ controller.showDetail = async (req, res) => {
 
   try {
     // Fetch adLocation details based on the diemId
-    const adLocationDetails = await AdLocation.findById(diemId).populate([
-      "ward",
-      "district",
-      "type",
-      "adType",
-    ]);
+    const adLocationDetails = await AdLocation.findById(diemId).populate(["ward", "district", "type", "adType"]);
 
     res.render("phuong/QC-details.ejs", {
       details: adLocationDetails,
@@ -129,23 +121,59 @@ controller.showEdit = (req, res) => {
     { name: "Cây xăng" },
     { name: "Nhà chờ xe buýt" },
   ];
-  const adTypes = [
-    { name: "Cổ động chính trị" },
-    { name: "Quảng cáo thương mại" },
-    { name: "Xã hội hoá" },
-  ];
+  const adTypes = [{ name: "Cổ động chính trị" }, { name: "Quảng cáo thương mại" }, { name: "Xã hội hoá" }];
 
   res.render("so/quanLy/diemDatqc/edit", {
     adLocation,
     breadcrumbs,
     locationTypes,
     adTypes,
+    postDest: req.baseUrl + req.path,
   });
 };
 
-controller.postCreateRequest = (req, res) => {
-  const data = req.body;
-  console.log(data);
-  res.redirect("/cac-bang-quang-cao");
+controller.processEdit = (req, res) => {
+  console.dir("Post to: " + req.originalUrl);
+  console.log(JSON.stringify(req.body, null, 2));
+};
+
+// controller.postCreateRequest = (req, res) => {
+//   const data = req.body;
+//   console.log("[Ad board request body:]");
+//   console.log(data);
+//   res.redirect("/cac-bang-quang-cao");
+// };
+
+const { Types } = mongoose;
+
+controller.postCreateRequest = async (req, res) => {
+  try {
+    const data = req.body;
+
+    console.log("adBoardID: " + req.path);
+    // Create a new instance of the AdBoardReq model
+    const newAdBoardReq = new AdBoardReq({
+      adBoard: Types.ObjectId(req.path),
+      adContent: data["ad-content"],
+      companyName: data["company-name"],
+      contactInfo: {
+        email: data.email,
+        phone: data["phone-number"],
+        address: data["company-location"],
+      },
+    });
+
+    // Save the new AdBoardReq instance to the database
+    const savedAdBoardReq = await newAdBoardReq.save();
+
+    console.log("AdBoardReq saved to database:", savedAdBoardReq);
+
+    // Redirect to the desired page after successful submission
+    res.redirect("/cac-bang-quang-cao");
+  } catch (error) {
+    console.error("Error saving AdBoardReq to database:", error);
+    // Handle the error appropriately (e.g., send an error response to the client)
+    res.status(500).send("Internal Server Error");
+  }
 };
 export default controller;

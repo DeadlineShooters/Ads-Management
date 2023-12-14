@@ -3,12 +3,7 @@
 <div class="card" style="background: #f8f8fd">
   <h5 class="card-header bg-primary-subtle">Tạo yêu cầu cấp phép</h5>
   <div class="card-body container p-3">
-    <form
-      action="/cac-diem-dat-quang-cao/<%=diemId%>/tao-yeu-cau"
-      method="post"
-      class="row g-3 mb-3"
-      id="create-request-form"
-    >
+    <form action="/cac-diem-dat-quang-cao/<%=diemId%>/tao-yeu-cau" method="post" class="row g-3 mb-3" id="create-request-form">
       <div class="col-md-5">
         <label for="address" class="form-label fw-semibold">Địa chỉ</label>
         <input
@@ -24,151 +19,61 @@
       </div>
       <div class="col-sm-3">
         <label for="ward" class="form-label fw-semibold">Phường</label>
-        <input
-          id="ward"
-          class="form-control w-auto"
-          type="text"
-          value="11"
-          aria-label="Disabled input example"
-          disabled
-          readonly
-          name="ward"
-        />
+        <input id="ward" class="form-control w-auto" type="text" value="11" aria-label="Disabled input example" disabled readonly name="ward" />
       </div>
       <div class="col-sm-4">
         <label for="district" class="form-label fw-semibold">Quận</label>
-        <input
-          id="district"
-          class="form-control w-auto"
-          type="text"
-          value="Phú Nhuận"
-          aria-label="Disabled input example"
-          disabled
-          readonly
-          name="district"
-        />
+        <input id="district" class="form-control w-auto" type="text" value="Phú Nhuận" aria-label="Disabled input example" disabled readonly name="district" />
       </div>
       <div class="col-md-3">
         <label for="amount" class="form-label fw-semibold">Số lượng</label>
         <div class="input-group">
-          <input
-            type="number"
-            class="form-control"
-            id="amount"
-            style="max-width: 20%"
-            required
-            name="amount"
-          />
+          <input type="number" class="form-control" id="amount" style="max-width: 20%" required name="amount" />
           <span class="input-group-text">trụ/bảng</span>
         </div>
       </div>
       <div class="col-md-4">
         <label for="size" class="form-label fw-semibold">Kích thước</label>
         <div class="input-group">
-          <input
-            type="number"
-            class="form-control"
-            id="size"
-            style="max-width: 20%"
-            required
-            name="width"
-          />
+          <input type="number" class="form-control" id="size" style="max-width: 20%" required name="width" />
           <span class="input-group-text">m x</span>
-          <input
-            type="number"
-            class="form-control"
-            id="size"
-            style="max-width: 20%"
-            required
-            name="height"
-          />
+          <input type="number" class="form-control" id="size" style="max-width: 20%" required name="height" />
           <span class="input-group-text">m (d x r)</span>
         </div>
       </div>
       <div class="col-md-5">
-        <label for="adType" class="form-label fw-semibold"
-          >Loại bảng quảng cáo</label
-        >
+        <label for="adType" class="form-label fw-semibold">Loại bảng quảng cáo</label>
         <%-include("../partials/selectLocationType")%>
       </div>
       <div class="col-md-10">
-        <label for="exampleFormControlTextarea1" class="form-label"
-          >Nội dung quảng cáo</label
-        >
-        <textarea
-          class="form-control"
-          id="formTextarea"
-          rows="3"
-          name="ad-content"
-          required
-        ></textarea>
+        <label for="exampleFormControlTextarea1" class="form-label">Nội dung quảng cáo</label>
+        <textarea class="form-control" id="formTextarea" rows="3" name="ad-content" required></textarea>
       </div>
 
       <div class="col-md-5">
         <label for="formFile" class="form-label">Hình ảnh minh họa</label>
-        <input
-          class="form-control"
-          type="file"
-          id="formFile"
-          required
-          name="image"
-        />
+        <input class="form-control" type="file" id="formFile" required name="image" accept="image/png, image/jpeg" />
       </div>
       <div class="col-md-5">
         <label for="companyName" class="form-label">Tên công ty</label>
-        <input
-          type="text"
-          class="form-control"
-          id="companyName"
-          required
-          name="company-name"
-        />
+        <input type="text" class="form-control" id="companyName" required name="company-name" />
       </div>
       <div class="col-md-12 container">
         <label for="contactInfo" class="form-label">Thông tin liên lạc</label>
         <div class="input-group mb-3 row">
           <div class="input-group col">
-            <span class="input-group-text" id="mail"
-              ><i class="bi bi-envelope-fill"></i
-            ></span>
-            <input
-              type="mail"
-              class="form-control me-3"
-              placeholder="name@example.com"
-              aria-label="mail"
-              aria-describedby="mail"
-              required
-              name="email"
-            />
+            <span class="input-group-text" id="mail"><i class="bi bi-envelope-fill"></i></span>
+            <input type="email" class="form-control me-3" placeholder="name@example.com" aria-label="mail" aria-describedby="mail" required name="email" />
           </div>
           <div class="input-group col">
-            <span class="input-group-text" id="phoneNumber"
-              ><i class="bi bi-telephone-fill"></i
-            ></span>
-            <input
-              type="tel"
-              class="form-control"
-              aria-label="phone"
-              aria-describedby="phoneNumber"
-              required
-              name="phone-number"
-            />
+            <span class="input-group-text" id="phoneNumber"><i class="bi bi-telephone-fill"></i></span>
+            <input type="tel" class="form-control" aria-label="phone" aria-describedby="phoneNumber" required name="phone-number" pattern="[0-9]{10}" />
           </div>
         </div>
         <div class="row">
           <div class="col input-group">
-            <span class="input-group-text" id="location"
-              ><i class="bi bi-geo-alt-fill"></i
-            ></span>
-            <input
-              type="text"
-              class="form-control"
-              aria-label="location"
-              aria-describedby="location"
-              style="max-width: 50%"
-              required
-              name="company-location"
-            />
+            <span class="input-group-text" id="location"><i class="bi bi-geo-alt-fill"></i></span>
+            <input type="text" class="form-control" aria-label="location" aria-describedby="location" style="max-width: 50%" required name="company-location" />
           </div>
         </div>
       </div>
@@ -176,35 +81,14 @@
         <label for="contactInfo" class="form-label">Hợp đồng</label>
         <div class="input-group d-flex align-items-center">
           <label for="start" class="input-group-text">Ngày bắt đầu</label>
-          <input
-            type="date"
-            id="start"
-            aria-label="Start date"
-            class="form-control"
-            required
-            name="start-date"
-          />
+          <input type="date" id="start" aria-label="Start date" class="form-control" required name="start-date" />
           <span class="validity"></span>
           <label for="end" class="input-group-text">Ngày kết thúc</label>
-          <input
-            type="date"
-            id="end"
-            aria-label="End date"
-            class="form-control"
-            required
-            name="end-date"
-          />
+          <input type="date" id="end" aria-label="End date" class="form-control" required name="end-date" />
           <span class="validity"></span>
         </div>
       </div>
-      <button
-        type="submit"
-        class="btn btn-primary w-auto m-auto mt-3"
-        id="gui-yeu-cau"
-        onclick="showToast()"
-      >
-        Gửi yêu cầu
-      </button>
+      <button type="submit" class="btn btn-primary w-auto m-auto mt-3" id="gui-yeu-cau" onclick="showToast()">Gửi yêu cầu</button>
       <div class="toast position-absolute z-1 bottom-0 end-0">
         <div class="toast-header d-flex justify-content-between">
           <div>
@@ -212,12 +96,7 @@
             <strong class="mr-auto">Thành công</strong>
           </div>
 
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="toast"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">Yêu cầu cấp phép của bạn đã được tạo</div>
       </div>
