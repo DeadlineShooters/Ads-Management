@@ -12,5 +12,5 @@ const reportSchema = Schema({
     Image: [imageSchema]
 })
 
-const Report = mongoose.model("AdBoard", reportSchema);
+const Report = mongoose.model("Report", reportSchema);
 export default Report;
