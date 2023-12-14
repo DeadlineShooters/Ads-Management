@@ -41,7 +41,7 @@ canBoApp.set("views", path.join(__dirname, "/views"));
 // console.log(__dirname);
 
 canBoApp.use(express.json());
-canBoApp.use(express.urlencoded({ extended: false }));
+canBoApp.use(express.urlencoded({ extended: true }));
 canBoApp.use(passport.initialize());
 canBoApp.use(methodOverride("_method"));
 canBoApp.use("/", express.static(path.join(__dirname, "public")));
@@ -78,6 +78,12 @@ canBoApp.use((req, res, next) => {
 // // danApp.use(express.static("public"));
 // danApp.use("/", express.static(path.join(__dirname, "public")));
 // danApp.use("/", danRoutes);
+
+canBoApp.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 canBoApp.get("/", (req, res) => {
   // console.log("user:", req.user);
