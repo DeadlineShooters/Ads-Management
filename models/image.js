@@ -2,7 +2,8 @@ import mongoose from "mongoose"
 
 const imageSchema = new mongoose.Schema({
     url: String,
-    public_id: String
+    filename: String
 
 });
+
 export default imageSchema;

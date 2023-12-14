@@ -33,6 +33,7 @@ export const districts = [
     { name: "1", description: "Mô tả", note: "Chú thích" },
     { name: "Bình Thạnh", description: "Mô tả", note: "Chú thích" },
 ]
+
 // export const wards = [
 //     { name: "Nguyễn Cư Trinh", description: "Mô tả", note: "Chú thích", district: districts[0] },
 //     { name: "Phạm Ngũ Lão", description: "Mô tả", note: "Chú thích", district: districts[0] },
