@@ -116,31 +116,39 @@
                     showMessageModal("Lưu ý", "Quận này nằm ngoài khu vực quản lý!");
                     return;
                 }
+
                 const selectedDistrictId = selectedDistrict._id;
                 const wardsReponse = await fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`);
                 const wards = await wardsReponse.json();
-                if (!wards.some(item => item.name === ward)) {
+
+                const selectedWard = wards.find(item => item.name === ward);
+                if (!selectedWard) {
                     showMessageModal("Lưu ý", "Phường này nằm ngoài khu vực quản lý!");
                     return;
                 }
                 
                 document.querySelector('#address').value = address;
-                document.querySelector('#district').value = district;
-                document.querySelector('#ward').value = ward;
+                document.querySelector('#district').value = selectedDistrictId;
+                document.querySelector('#displayDistrict').value = district;
+                document.querySelector('#ward').value = selectedWard._id;
+                document.querySelector('#displayWard').value = ward;
                 document.querySelector('#coord').value = coord;
                 // Ensure that the element is being selected
 
                 document.querySelector('#map-window').classList.add('d-none');
             }
         }
+        // Get references to the two select elements
+        var districtSelect = document.querySelector('select[name="item[districtId]"]');
+        var wardSelect = document.querySelector('select[name="item[phuongId]"]');
+
         document.querySelector('#cancel').onclick = () => {
+            districtSelect.value = '';
+            wardSelect.value = '';  
             document.querySelector('#map-window').classList.add('d-none');
         }
 
 
-        // Get references to the two select elements
-        var districtSelect = document.querySelector('select[name="item[districtId]"]');
-        var wardSelect = document.querySelector('select[name="item[phuongId]"]');
 
         // Disable the second select initially
         wardSelect.disabled = true;
@@ -177,7 +185,7 @@
                     // Move the map to the selected district
                     map.flyTo({
                         center: coordinates,
-                        zoom: 14 // Adjust the zoom level as needed
+                        zoom: 12.5 // Adjust the zoom level as needed
                     });
                 })
             .catch(error => console.error('Error fetching district coordinates:', error));

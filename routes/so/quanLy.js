@@ -1,4 +1,5 @@
 import express from "express";
+const router = express.Router();
 // import * as quan_phuong from '@controllers/so/quanLy/quan-phuong.js';
 import * as quan from '../../controllers/so/quanLy/quan.js';
 import * as phuong from '../../controllers/so/quanLy/phuong.js';
@@ -8,7 +9,12 @@ import * as loaiViTri from '../../controllers/so/quanLy/loaiViTri.js';
 import * as hinhThucbc from '../../controllers/so/quanLy/hinhThucbc.js';
 import * as diemDatqc from '../../controllers/so/quanLy/diemDatqc.js';
 import * as bangqc from '../../controllers/so/quanLy/bangqc.js';
-const router = express.Router();
+
+import multer from 'multer';
+import { storage } from "../../cloudinary/index.js";
+const upload = multer({ storage });
+// const upload = multer({ dest: 'cloudinary/' });
+
 
 
 // Quản lý quận
@@ -65,6 +71,7 @@ router.get("/diem-dat-quang-cao", diemDatqc.index);
 router.get("/diem-dat-quang-cao/add", diemDatqc.renderAddForm);
 router.get("/diem-dat-quang-cao/:id", diemDatqc.showDetails);
 router.get("/diem-dat-quang-cao/:id/edit", diemDatqc.renderEditForm);
+router.post("/diem-dat-quang-cao", upload.single("image"), diemDatqc.add);
 
 // Quản lý bảng quảng cáo
 router.get("/bang-quang-cao", bangqc.index);

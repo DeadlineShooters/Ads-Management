@@ -50,5 +50,19 @@ export const renderAddForm = async (req, res) => {
   res.render('so/quanLy/diemDatqc/add', {locationTypes, adTypes, breadcrumbs, districts, wards})
 };
 export const add = async (req, res) => {
+  // const { secure_url, public_id } = req.file;
+  // console.log(req.body.item)
+  // if (req.file)
+  //   return res.send(req.file)
+  // else res.send('asda')
+  try {
+    const adLocation = new AdLocation(req.body.item);
+    adLocation.image = { url: req.file.path, filename: req.file.filename }
+    // await adLocation.save();
+    req.flash('success', 'Điểm đặt mới đã được tạo thành công');
+    return res.redirect('/so/quanly/diem-dat-quang-cao');
 
+  } catch (e) {
+    res.send('error');
+  }
 }
