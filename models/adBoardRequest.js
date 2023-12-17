@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 import imageSchema from "./image.js";
+import AdBoard from "./adBoard.js";
+import User from "./user.js";
 
 const adBoardRequestSchema = new Schema({
-  adBoard: { type: Schema.Types.ObjectId, ref: "adBoard" },
+  adBoard: { type: Schema.Types.ObjectId, ref: "AdBoard" },
   adContent: String,
-  adImage: imageSchema,
+  // adImage: imageSchema,
   companyName: String,
   contactInfo: { email: String, phone: String, address: String },
-  sender: String,
+  sender: { type: Schema.Types.ObjectId, ref: "User" },
   sendDate: Date,
   status: String,
 });

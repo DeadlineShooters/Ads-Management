@@ -1,6 +1,8 @@
 import AdLocation from "../../models/adLocation.js";
 import District from "../../models/district.js";
+import AdBoard from "../../models/adBoard.js";
 import AdBoardReq from "../../models/adBoardRequest.js";
+import BoardType from "../../models/boardType.js";
 import Ward from "../../models/ward.js";
 import { getWardsForUser } from "../../utils/WardUtils.js";
 import mongoose from "mongoose";
@@ -78,7 +80,7 @@ controller.showDetail = async (req, res) => {
   }
 };
 
-controller.showCreateRequest = (req, res) => {
+controller.showCreateRequest = async (req, res) => {
   res.locals.currentPage = "quang-cao";
 
   const { diemId } = req.params;
@@ -86,10 +88,18 @@ controller.showCreateRequest = (req, res) => {
     { name: "Các điểm đặt quảng cáo", link: "/cac-diem-dat-quang-cao" },
     { name: "Tạo yêu cầu cấp phép", link: "" },
   ];
+
+  const adLocation = await AdLocation.findOne({ _id: diemId });
+  const ward = await Ward.findOne({ _id: adLocation.ward });
+  const district = await District.findOne({ _id: adLocation.district });
+
   res.render("phuong/taoYeuCauCapPhep", {
     cssfile: "/phuong/css/taoYeuCauCapPhep-style.css",
     diemId,
     breadcrumbs,
+    address: adLocation.address,
+    ward,
+    district,
   });
 };
 
@@ -149,11 +159,40 @@ const { Types } = mongoose;
 controller.postCreateRequest = async (req, res) => {
   try {
     const data = req.body;
+    console.log(data, req.file);
 
-    console.log("adBoardID: " + req.path);
+    const adPointID = req.path.split("/")[1];
+    console.log("adPointID: " + adPointID);
+
+    const foundBoardType = await BoardType.findOne({ name: data.boardType });
+    const startDate = new Date(data["start-date"]);
+    const endDate = new Date(data["end-date"]);
+
+    // create new adBoard
+    const newAdBoard = new AdBoard({
+      image: {
+        url: req.file.path,
+        filename: req.file.filename,
+      },
+      boardType: foundBoardType._id,
+      size: { h: data.height, w: data.width },
+      quantity: data.amount,
+      startDate: {
+        d: startDate.getUTCDate(),
+        m: startDate.getUTCMonth() + 1,
+        y: startDate.getUTCFullYear(),
+      },
+      expireDate: {
+        d: endDate.getUTCDate(),
+        m: endDate.getUTCMonth() + 1,
+        y: endDate.getUTCFullYear(),
+      },
+      adLocation: new Types.ObjectId(adPointID),
+    });
+
     // Create a new instance of the AdBoardReq model
     const newAdBoardReq = new AdBoardReq({
-      adBoard: Types.ObjectId(req.path),
+      adBoard: newAdBoard._id,
       adContent: data["ad-content"],
       companyName: data["company-name"],
       contactInfo: {
@@ -161,12 +200,17 @@ controller.postCreateRequest = async (req, res) => {
         phone: data["phone-number"],
         address: data["company-location"],
       },
+      sender: req.user._id,
+      sendDate: new Date(),
+      status: "Chưa duyệt",
     });
 
-    // Save the new AdBoardReq instance to the database
-    const savedAdBoardReq = await newAdBoardReq.save();
+    newAdBoard.adBoardReq = newAdBoardReq._id;
 
+    const savedAdBoardReq = await newAdBoardReq.save();
     console.log("AdBoardReq saved to database:", savedAdBoardReq);
+
+    console.log("AdBoard saved to database: ", await newAdBoard.save());
 
     // Redirect to the desired page after successful submission
     res.redirect("/cac-bang-quang-cao");

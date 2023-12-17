@@ -1,9 +1,6 @@
 <div>
-  <select
-    class="form-select"
-    aria-label="Default select example"
-    id="phuong-dropdown"
-  >
+  <select class="form-select" aria-label="Default select example" id="phuong-dropdown">
+    <option hidden disabled selected value>-- Chọn phường --</option>
     <% wards.forEach(ward => { %>
     <option value="phuong-<%= ward.name %>">Phường <%= ward.name %></option>
     <% }); %>

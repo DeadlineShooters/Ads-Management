@@ -1,8 +1,7 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
   <div class="d-flex flex-row">
-    <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
-    <%- include('../partials/quan/phuong-dropdown') %> <%}%>
+    <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%> <%- include('../partials/quan/phuong-dropdown') %> <%}%>
   </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
@@ -56,17 +55,10 @@
         fetchAdBoards(phuongValue);
       });
 
-      // Initial fetch based on the first ward in the dropdown
-      const initialWardOption = document.querySelector(
-        "#phuong-dropdown option:first-child"
-      );
-      const initialWardValue = initialWardOption
-        ? initialWardOption.value.split("phuong-")[1]
-        : null;
-      if (initialWardValue) {
-        fetchAdBoards(initialWardValue);
-      }
+      // Initially fetch all adboards
+      updateTableWithData(allAdBoards);
     } else {
+      // can bo phuong so there is no select dropdown
       updateTableWithData(allAdBoards);
     }
   });
@@ -85,10 +77,7 @@
   function fetchAdBoards(ward) {
     // Filter ad boards based on the selected ward
     const filteredAdBoards = allAdBoards.filter((adBoard) => {
-      return (
-        adBoard.adLocation.ward.name === ward &&
-        adBoard.adLocation.district.name === district
-      );
+      return adBoard.adLocation.ward.name === ward && adBoard.adLocation.district.name === district;
     });
 
     // Update the table with the filtered data
@@ -109,9 +98,7 @@
 
       newRow.innerHTML = `
         <td>${adBoard.adLocation.address}</td>
-        <td class="khuVucField">Phường ${adBoard.adLocation.ward.name}, Quận ${
-        adBoard.adLocation.district.name
-      }</td>
+        <td class="khuVucField">Phường ${adBoard.adLocation.ward.name}, Quận ${adBoard.adLocation.district.name}</td>
         <td>${adBoard.boardType.name}</td>
         <td>${adBoard.size.w}m x ${adBoard.size.h}m</td>
         <td>${adBoard.quantity}</td>

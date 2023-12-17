@@ -98,11 +98,11 @@ canBoApp.get("/", (req, res) => {
 });
 
 canBoApp.get("/edit-profile", (req, res) => {
-  res.render('editProfile');
-})
-canBoApp.get('/group-info', (req, res) => {
-  res.render('info')
-})
+  res.render("editProfile");
+});
+canBoApp.get("/group-info", (req, res) => {
+  res.render("info");
+});
 
 canBoApp.use("/", authRouter);
 canBoApp.use("/cac-diem-dat-quang-cao/", diemDatQCPhuong);

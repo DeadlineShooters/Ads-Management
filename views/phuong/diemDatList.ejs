@@ -1,8 +1,7 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
   <div class="d-flex flex-row">
-    <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
-    <%- include('../partials/quan/phuong-dropdown') %> <%}%>
+    <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%> <%- include('../partials/quan/phuong-dropdown') %> <%}%>
   </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
@@ -40,6 +39,7 @@
 </section>
 <script>
   let district = "<%= user.district %>";
+  const allAdLocations = JSON.parse(decodeURIComponent("<%= adLocations %>"));
 
   document.addEventListener("DOMContentLoaded", function () {
     // Get the select element
@@ -54,16 +54,7 @@
       });
 
       // Initial fetch based on the first ward in the dropdown
-
-      const initialWardOption = document.querySelector(
-        "#phuong-dropdown option:first-child"
-      );
-      const initialWardValue = initialWardOption
-        ? initialWardOption.value.split("phuong-")[1]
-        : null;
-      if (initialWardValue) {
-        fetchAdLocations(initialWardValue);
-      }
+      updateTableWithData(allAdLocations);
     } else {
       // init table
       updateTableWithData(JSON.parse(decodeURIComponent("<%= adLocations %>")));
@@ -83,11 +74,8 @@
 
   async function fetchAdLocations(ward) {
     // Filter ad locations based on the selected ward
-    const allAdLocations = JSON.parse(decodeURIComponent("<%= adLocations %>"));
     const filteredAdLocations = allAdLocations.filter((adLocation) => {
-      return (
-        adLocation.ward.name === ward && adLocation.district.name === district
-      );
+      return adLocation.ward.name === ward && adLocation.district.name === district;
     });
 
     // Update the table with the filtered data
@@ -103,10 +91,7 @@
     data.forEach((adLocation) => {
       const newRow = document.createElement("tr");
       newRow.classList.add("clickable-row");
-      newRow.setAttribute(
-        "data-href",
-        `/cac-diem-dat-quang-cao/${adLocation._id}`
-      );
+      newRow.setAttribute("data-href", `/cac-diem-dat-quang-cao/${adLocation._id}`);
 
       newRow.innerHTML = `
         <td>${adLocation.address}</td>

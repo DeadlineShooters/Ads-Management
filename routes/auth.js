@@ -23,10 +23,7 @@ passport.use(
           });
         }
 
-        const passwordMatch = await bcrypt.compare(
-          password,
-          user.hashed_password
-        );
+        const passwordMatch = await bcrypt.compare(password, user.hashed_password);
 
         if (!passwordMatch) {
           console.log("Incorrect email or password.");
@@ -55,15 +52,7 @@ Note: cb(error, user, message) - message describes why authentication failed.
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, {
-      id: user.id,
-      email: user.email,
-      role: user.role,
-      ward: user.ward,
-      district: user.district,
-      phoneNumber: user.phone,
-      birthDate: user.birthday,
-    });
+    cb(null, user);
   });
 });
 
