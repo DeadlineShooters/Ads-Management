@@ -68,13 +68,13 @@ router.put("/hinh-thuc-bao-cao/:id", hinhThucbc.update);
 router.delete("/hinh-thuc-bao-cao/:id", hinhThucbc.remove);
 
 // Quản lý điểm đặt
-router.get("/diem-dat-quang-cao", diemDatqc.index);
-router.get("/diem-dat-quang-cao/add", diemDatqc.renderAddForm);
+router.get("/diem-dat-quang-cao", catchAsync(diemDatqc.index));
+router.get("/diem-dat-quang-cao/add", catchAsync(diemDatqc.renderAddForm));
 router.get("/diem-dat-quang-cao/:id", catchAsync(diemDatqc.showDetails));
-router.get("/diem-dat-quang-cao/:id/edit", diemDatqc.renderEditForm);
+router.get("/diem-dat-quang-cao/:id/edit", catchAsync(diemDatqc.renderEditForm));
 router.post("/diem-dat-quang-cao", upload.single("image"), catchAsync(diemDatqc.add));
-router.delete("/diem-dat-quang-cao/:id", catchAsync(diemDatqc.index));
-router.delete("/diem-dat-quang-cao/:id", catchAsync(diemDatqc.index));
+router.put("/diem-dat-quang-cao/:id", upload.single("image"), catchAsync(diemDatqc.update));
+router.delete("/diem-dat-quang-cao/:id", catchAsync(diemDatqc.remove));
 
 // Quản lý bảng quảng cáo
 router.get("/bang-quang-cao", bangqc.index);
