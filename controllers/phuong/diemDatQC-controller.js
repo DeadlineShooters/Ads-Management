@@ -67,11 +67,9 @@ controller.showDetail = async (req, res) => {
     // Fetch adLocation details based on the diemId
     const adLocationDetails = await AdLocation.findById(diemId).populate(["ward", "district", "type", "adType"]);
 
-    res.render("phuong/QC-details.ejs", {
+    res.render("so/quanLy/diemDatqc/details", {
       details: adLocationDetails,
-      props,
-      cssfile: "/style.css",
-      diemId,
+
       breadcrumbs,
     });
   } catch (error) {
@@ -89,17 +87,13 @@ controller.showCreateRequest = async (req, res) => {
     { name: "Tạo yêu cầu cấp phép", link: "" },
   ];
 
-  const adLocation = await AdLocation.findOne({ _id: diemId });
-  const ward = await Ward.findOne({ _id: adLocation.ward });
-  const district = await District.findOne({ _id: adLocation.district });
+  const adLocation = await AdLocation.findById(diemId).populate(["district", "ward"]);
 
   res.render("phuong/taoYeuCauCapPhep", {
     cssfile: "/phuong/css/taoYeuCauCapPhep-style.css",
     diemId,
     breadcrumbs,
-    address: adLocation.address,
-    ward,
-    district,
+    adLocation,
   });
 };
 

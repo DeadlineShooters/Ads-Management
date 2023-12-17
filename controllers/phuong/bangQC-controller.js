@@ -30,16 +30,11 @@ controller.show = async (req, res) => {
     if (req.user.role === "quan") {
       // console.log("District: " + foundDistrict._id);
       adBoards = adBoards.filter((adBoard) => {
-        return (
-          adBoard.adLocation.district._id.toString() ===
-          foundDistrict._id.toString()
-        );
+        return adBoard.adLocation.district._id.toString() === foundDistrict._id.toString();
       });
     } else {
       // phuong
-      console.log(
-        "District: " + req.user.district + "\nward: " + req.user.ward
-      );
+      console.log("District: " + req.user.district + "\nward: " + req.user.ward);
 
       const foundWard = await Ward.findOne({
         name: req.user.ward,
@@ -47,9 +42,7 @@ controller.show = async (req, res) => {
       });
       adBoards.filter(
         (adBoard) =>
-          adBoard.adLocation.district._id.toString() ===
-            foundDistrict._id.toString() &&
-          adBoard.adLocation.ward._id.toString() === foundWard._id.toString()
+          adBoard.adLocation.district._id.toString() === foundDistrict._id.toString() && adBoard.adLocation.ward._id.toString() === foundWard._id.toString()
       );
     }
 
@@ -106,10 +99,8 @@ controller.showDetail = async (req, res) => {
       })
       .populate("boardType");
 
-    res.render("phuong/QC-details.ejs", {
+    res.render("so/quanLy/bangqc/details", {
       details: adBoardDetails,
-      props,
-      bangId,
       breadcrumbs,
     });
   } catch (error) {

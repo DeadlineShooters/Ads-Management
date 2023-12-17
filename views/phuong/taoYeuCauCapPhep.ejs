@@ -6,11 +6,29 @@
     <form action="/cac-diem-dat-quang-cao/<%=diemId%>/tao-yeu-cau" method="post" class="row g-3 mb-3" id="create-request-form" enctype="multipart/form-data">
       <div class="col-md-5">
         <label for="address" class="form-label fw-semibold">Địa chỉ</label>
-        <input id="address" class="form-control w-auto" type="text" value="<%=address%>" aria-label="Disabled input example" disabled readonly name="address" />
+        <input
+          id="address"
+          class="form-control w-auto"
+          type="text"
+          value="<%=adLocation.address%>"
+          aria-label="Disabled input example"
+          disabled
+          readonly
+          name="address"
+        />
       </div>
       <div class="col-sm-4">
         <label for="ward" class="form-label fw-semibold">Phường</label>
-        <input id="ward" class="form-control w-auto" type="text" value="<%=ward.name%>" aria-label="Disabled input example" disabled readonly name="ward" />
+        <input
+          id="ward"
+          class="form-control w-auto"
+          type="text"
+          value="<%=adLocation.ward.name%>"
+          aria-label="Disabled input example"
+          disabled
+          readonly
+          name="ward"
+        />
       </div>
       <div class="col-sm-3">
         <label for="district" class="form-label fw-semibold">Quận</label>
@@ -18,7 +36,7 @@
           id="district"
           class="form-control w-auto"
           type="text"
-          value="<%=district.name%>"
+          value="<%=adLocation.district.name%>"
           aria-label="Disabled input example"
           disabled
           readonly
