@@ -4,6 +4,8 @@ import AdType from "../../../models/adType.js";
 import District from "../../../models/district.js";
 import Ward from "../../../models/ward.js";
 import ExpressError from '../../../utils/ExpressError.js';
+import { cloudinary } from "../../../cloudinary/index.js";
+import AdBoard from "../../../models/adBoard.js";
 
 export const index = async (req, res) => {
   const adLocations = await AdLocation.find({}).populate(['district', 'ward', 'type', 'adType']);
@@ -16,9 +18,8 @@ export const showDetails = async (req, res) => {
     { name: "Chi tiết điểm đặt quảng cáo", link: '' },
   ]
   const adLocation = await AdLocation.findById(id).populate(['district', 'ward', 'type', 'adType']);
-  console.log(adLocation);
   if (!adLocation) {
-    return new ExpressError(501, "Không tìm thấy điểm đặt quảng cáo");
+    throw new ExpressError(501, "Không tìm thấy điểm đặt quảng cáo");
   }
   const props = {
     title: "điểm đặt",
@@ -31,18 +32,22 @@ export const showDetails = async (req, res) => {
   }
   res.render("so/quanLy/diemDatqc/details", { details: adLocation, props, breadcrumbs });
 };
-export const renderEditForm = (req, res) => {
+export const renderEditForm = async (req, res) => {
+  const { id } = req.params;
   const breadcrumbs = [
     { name: 'Các điểm đặt quảng cáo', link: '/so/quanly/diem-dat-quang-cao'},
     { name: "Chi tiết điểm đặt quảng cáo", link: `/so/quanly/diem-dat-quang-cao/${req.params.id}` },
     { name: "Chỉnh sửa điểm đặt quảng cáo", link: '' },
   ]
-  const locationTypes = [
-    { name: 'Đất công/Công viên/Hành lang an toàn giao thông' }, { name: 'Đất tư nhân/Nhà ở riêng lẻ' }, { name: 'Trung tâm thương mại' }, { name: 'Chợ' }, { name: 'Cây xăng' }, { name: 'Nhà chờ xe buýt' }]
-  const adTypes = [
-    { name: 'Cổ động chính trị' }, { name: 'Quảng cáo thương mại' }, { name: 'Xã hội hoá' }]
-  
-  res.render('so/quanLy/diemDatqc/edit', {adLocation, locationTypes, adTypes, breadcrumbs})
+  const adLocation = await AdLocation.findById(id).populate(['district', 'ward', 'type', 'adType']);
+  if (!adLocation) {
+    throw new ExpressError(501, "Không tìm thấy điểm đặt quảng cáo");
+  }
+  const locationTypes = await LocationType.find({});
+  const adTypes = await AdType.find({});
+  const districts = await District.find({});
+  const wards = await Ward.find({}).populate('district');
+  res.render('so/quanLy/diemDatqc/edit', {adLocation, locationTypes, adTypes, breadcrumbs, districts, wards})
 };
 export const renderAddForm = async (req, res) => {
   const breadcrumbs = [
@@ -58,11 +63,46 @@ export const renderAddForm = async (req, res) => {
 export const add = async (req, res) => {
   const adLocation = new AdLocation(req.body.item);
 
-  adLocation.image = { url: req.file.path, filename: req.file.filename };
+  if (req.file) {
+    adLocation.image = { url: req.file.path, filename: req.file.filename };
+  } else {
+    adLocation.image = {
+      url: 'https://res.cloudinary.com/dk6q93ryt/image/upload/v1702823976/AdsManagement/logo_jur19a.png',
+      filename: 'logo_jur19a'
+    };
+  }
 
   await adLocation.save();
 
   req.flash('success', 'Điểm đặt mới đã được tạo thành công');
   return res.redirect('/so/quanly/diem-dat-quang-cao');
 
+};
+export const update = async (req, res) => {
+  const { id } = req.params;
+  const adLocation = await AdLocation.findById(id);
+  const item = req.body.item;
+  console.log(item);
+  
+  if (req.file) {
+    await cloudinary.uploader.destroy(adLocation.image.filename);
+    item.image = { url: req.file.path, filename: req.file.filename };
+  }
+  await AdLocation.findByIdAndUpdate(id, { $set: { ...item } });
+  // await AdLocation.findByIdAndUpdate(id, { ...item });
+
+  req.flash('success', 'Điểm đặt đã được cập thành công');
+  return res.redirect('/so/quanly/diem-dat-quang-cao');
+};
+export const remove = async (req, res) => {
+  const { id } = req.params;
+  const isInUse = await AdBoard.findOne({ adLocation: id })
+  // console.log(isInUse);
+  if (isInUse) {
+    req.flash('error', 'Điểm đặt đang được sử dụng! Không thể xoá');
+    return res.redirect('/so/quanly/diem-dat-quang-cao');
+  }
+  // await AdLocation.findByIdAndDelete(id);
+  req.flash('success', 'Điểm đặt đã được xoá thành công');
+  return res.redirect('/so/quanly/diem-dat-quang-cao');
 }
