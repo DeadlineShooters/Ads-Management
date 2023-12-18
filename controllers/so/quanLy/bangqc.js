@@ -4,7 +4,8 @@ export const index = async (req, res) => {
     // boardtype: Trụ bảng hiflex, Trụ màn hình điện tử LED, Trụ hộp đèn, Bảng hiflex ốp tường, Màn hình điện tử ốp tường, Trụ treo băng rôn dọc, Trụ treo băng rôn ngang, Trụ/Cụm pano, Cổng chào, Trung tâm thương mại
     // adType: Cổ động chính trị, Quảng cáo thương mại, Xã hội hoá
     // locationType: Đất công/Công viên/Hành lang an toàn giao thông, Đất tư nhân/Nhà ở riêng lẻ, Trung tâm thương mại, Chợ, Cây xăng, Nhà chờ xe buýt
-    const adBoards = await AdBoard.find({}).populate(['boardType', 'adLocation']);
+    const adBoards = await AdBoard.find({}).populate('boardType')
+    .populate({path: 'adLocation', populate: ['district', 'ward', 'type', 'adType']});
     res.render("so/quanLy/bangqc/index", {adBoards});
 };
 export const showDetails = async (req, res) => {

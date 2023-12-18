@@ -4,26 +4,27 @@
   <!-- refer to routes/phuong.js to see data example -->
   <img src="<%= details.image.url %>" class="card-img-top" alt="" />
 
-  <div class="card-body py-1">
-    <h4 class="card-title">Chi tiết điểm đặt quảng cáo</h4>
-    <!-- <p class="card-text"><%= details.address %></p> -->
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Địa chỉ: <b><%= details.address %></b></li>
-    <li class="list-group-item">Khu vực: <b>Quận <%= details.district.name %></b>, <b>Phường <%= details.ward.name %></b></li>
-    <li class="list-group-item">Hình thức: <b><%= details.adType.name %></b></li>
-    <li class="list-group-item">Phân loại: <b><%= details.type.name %></b></li>
-    <li class="list-group-item">Tình trạng: <b><%= details.status %></b></li>
-  </ul>
-  <div class="card-body d-flex flex-row" id="buttons">
-    <% if (user.role == 'so') { %>
-    <a href="/diem-dat-quang-cao/<%= details._id %>/edit" class="btn btn-secondary me-3">Chỉnh sửa</a>
-    <form action="/diem-dat-quang-cao/<%= details._id %>/edit?_method=delete" method="post"><button class="btn btn-danger">Xoá</button></form>
-    <% } else { %>
-    <a href="/cac-diem-dat-quang-cao/<%= details._id %>/tao-yeu-cau" class="btn btn-primary me-3">Tạo yêu cầu cấp phép</a>
-
-    <a href="/cac-diem-dat-quang-cao/<%= details._id %>/chinh-sua" class="btn btn-info me-3">Chỉnh sửa</a>
-
-    <% } %>
-  </div>
+    <div class="card-body py-1">
+        <h4 class="card-title">Chi tiết điểm đặt quảng cáo</h4>
+        <!-- <p class="card-text"><%= details.address %></p> -->
+        
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Địa chỉ: <b><%= details.address %></b></li>
+        <li class="list-group-item">Khu vực: <b>Quận <%= details.district.name %></b>, <b>Phường <%= details.ward.name %></b></li>
+        <li class="list-group-item">Hình thức: <b><%= details.adType.name %></b></li>
+        <li class="list-group-item">Phân loại: <b><%= details.type.name %></b></li>
+        <li class="list-group-item">Tình trạng: <b><%= details.status %></b></li>
+    </ul>
+    <div class="card-body d-flex flex-row" id="buttons">
+        <% if (user.role == 'so') { %>
+            <a href="/so/quanly/diem-dat-quang-cao/<%= details._id %>/edit" class="btn btn-secondary me-3">Chỉnh sửa</a>
+            <form class="showPopUp" action="/so/quanly/diem-dat-quang-cao/<%= details._id %>?_method=delete" method="post">
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Xoá</button>
+            </form>
+        <% } else { %>
+            <a href="" class="btn btn-secondary me-3">Chỉnh sửa</a>
+            <a href="" class="btn btn-warning me-3">Tạo yêu cầu cấp phép</a>
+        <% } %>
+    </div>
 </div>

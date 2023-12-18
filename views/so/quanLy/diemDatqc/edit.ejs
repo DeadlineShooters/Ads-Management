@@ -7,98 +7,96 @@
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css" />
 
 <div class="row mt-3 position-relative">
-  <div class="container rounded border shadow col-8" style="padding: 1rem 7rem">
-    <h1 class="text-center mb-4">Chỉnh sửa điểm đặt quảng cáo</h1>
-    <form action="<%=postDest%>" method="post">
-      <div class="mb-3">
-        <label for="coord" class="form-label">Toạ độ</label>
-        <div class="input-group">
-          <input
-            id="coord"
-            type="text"
-            class="form-control"
-            value="<%= adLocation.longLat %>"
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
-            disabled
-            readonly
-          />
-          <span class="input-group-text globe-icon" id="basic-addon2"><i class="bi bi-globe"></i></span>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="address" class="form-label">Địa chỉ </label>
-        <input type="text" class="form-control" id="address" value="<%= adLocation.address %>" disabled readonly />
-      </div>
-      <div class="row">
-        <div class="mb-3 col-6">
-          <label for="district" class="form-label">Quận</label>
-          <input type="text" class="form-control" id="district" value="<%= adLocation.district %>" disabled readonly />
-        </div>
-        <div class="mb-3 col-6">
-          <label for="ward" class="form-label">Phường</label>
-          <input type="text" class="form-control" id="ward" value="<%= adLocation.ward %>" disabled readonly />
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="boardType" class="form-label">Loại vị trí</label>
-        <select class="form-select" aria-label="Default select example" id="boardType">
-          <% for (let locationType of locationTypes) { %> <% if (locationType.name === adLocation.type) { %>
-          <option value="" selected><%= locationType.name %></option>
-          <% } else { %>
-          <option value="<%= locationType.name %>"><%= locationType.name %></option>
-          <% } %> <% } %>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="boardType" class="form-label">Hình thức</label>
-        <select class="form-select" aria-label="Default select example" id="boardType" required>
-          <% for (let adType of adTypes) { %> <% if (adType.name === adLocation.adType) { %>
-          <option value="" selected><%= adType.name %></option>
-          <% } else { %>
-          <option value="<%= adType.name %>"><%= adType.name %></option>
-          <% } %> <% } %>
-        </select>
-      </div>
-      <div class="mb-3">
-        <p>Quy hoạch</p>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" <%= (adLocation.status == 'Đã quy hoạch')?
-          "checked" : "" %> required>
-          <label class="form-check-label" for="inlineRadio1">Đã quy hoạch</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" <%= (adLocation.status == 'Chưa quy hoạch')?
-          "checked" : "" %> required>
-          <label class="form-check-label" for="inlineRadio2">Chưa quy hoạch</label>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="formFile" class="form-label">Chọn ảnh mới</label>
-        <input class="form-control" type="file" id="formFile" required />
-      </div>
-      <% if (user.role !== 'so') { %>
-      <div class="mb-3">
-        <label for="moTa" class="form-label">Lý do chỉnh sửa</label>
-        <textarea class="form-control" id="moTa" rows="3" required></textarea>
-      </div>
-      <% } %>
-      <div class="mb-3 text-center">
-        <%if (breadcrumbs[0].name === "Các điểm đặt quảng cáo" || breadcrumbs[0].name === "Các bảng quảng cáo") {%>
-        <button class="btn btn-info">Gửi yêu cầu chỉnh sửa</button>
-        <%} else {%>
-        <button class="btn btn-info">Chỉnh sửa</button>
-        <%}%>
-      </div>
-    </form>
-  </div>
-  <%-include("../../../partials/so/popUpMap.ejs")%>
+    <div class="container rounded border shadow col-8" style="padding: 1rem 7rem;">
+        <h1 class="text-center mb-4">Chỉnh sửa điểm đặt quảng cáo</h1>
+        <form action="/so/quanly/diem-dat-quang-cao/<%= adLocation._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="coord" class="form-label">Toạ độ</label>
+                <div class="input-group">
+                    <input name="item[longLat]" id="coord" type="text" class="form-control" value="<%= adLocation.longLat %>" readonly required>
+                    <span class="input-group-text globe-icon" id="basic-addon2"><i class="bi bi-globe2"></i></span>
+                </div>
+                </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Địa chỉ </label>
+                <input name="item[address]" value="<%= adLocation.address %>" type="text" class="form-control" id="address" readonly required>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="district" class="form-label">Quận</label>
+                    <div>
+                        <input id="displayDistrict" value="<%= adLocation.district.name %>" class="form-control" readonly disabled></input>
+                        <input name="item[district]" value="<%= adLocation.district._id %>" type="text" class="form-control d-none" id="district" readonly required>
+                    </div>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="ward" class="form-label">Phường</label>
+                    <div>
+                        <input id="displayWard" value="<%= adLocation.ward.name %>" class="form-control" readonly disabled></input>
+                        <input name="item[ward]" value="<%= adLocation.ward._id %>" type="text" class="form-control d-none" id="ward" readonly required>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="boardType" class="form-label">Loại vị trí</label>
+                <select name="item[type]" class="form-select" aria-label="Default select example" id="boardType">
+                    <% for (let locationType of locationTypes) { %>
+                        <% if (locationType.name === adLocation.type.name) { %>
+                        <option value="<%= locationType._id %>" selected><%= locationType.name %></option>
+                        <% } else { %>
+                        <option value="<%= locationType.name %>"><%= locationType.name %></option>
+                        <% } %>
+                    <% } %>
+                  </select>
+            </div>
+            <div class="mb-3">
+                <label for="boardType" class="form-label">Hình thức</label>
+                <select name="item[adType]" class="form-select" aria-label="Default select example" id="boardType">
+                    <% for (let adType of adTypes) { %>
+                        <% if (adType.name === adLocation.adType.name) { %>
+                        <option value="<%= adType._id %>" selected><%= adType.name %></option>
+                        <% } else { %>
+                        <option value="<%= adType.name %>"><%= adType.name %></option>
+                        <% } %>
+                    <% } %>
+                  </select>
+            </div>
+            <div class="mb-3">
+                <p>Quy hoạch</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio1" value="Đã quy hoạch" <%= (adLocation.status == 'Đã quy hoạch')? "checked" : "" %> >
+                    <label class="form-check-label" for="inlineRadio1">Đã quy hoạch</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio2" value="Chưa quy hoạch" <%= (adLocation.status == 'Chưa quy hoạch')? "checked" : "" %>>
+                    <label class="form-check-label" for="inlineRadio2">Chưa quy hoạch</label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Chọn ảnh mới</label>
+                <input name="image" class="form-control" type="file" id="formFile">
+            </div>
+            <% if (user.role !== 'so') { %>
+            <div class="mb-3">
+                <label for="moTa" class="form-label">Lý do chỉnh sửa</label>
+                <textarea name="reason" class="form-control" id="moTa" rows="3"></textarea>
+            </div>
+            <% } %>
+            <div class="mb-3 text-center">
+                <button class="btn btn-info">Chỉnh sửa</button>
+            </div>
+        </form>
+    </div>
+    <%-include("../../../partials/so/popUpMap.ejs")%>
 </div>
 
 <style>
-  label {
-    font-weight: bold;
-  }
+    label {
+        font-weight: bold;
+    }
+    #coord, #address {
+        background-color: #e9ecef;
+    }
 </style>
 
 <script src="/so/javascripts/add_edit_diemdat.js"></script>
