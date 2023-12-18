@@ -20,6 +20,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
+import ExpressError from "./utils/ExpressError.js";
 
 const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
@@ -111,6 +112,18 @@ canBoApp.use("/cac-bao-cao/", baoCaoPhuong);
 canBoApp.use("/so/quanly", soQuanLyRoutes);
 canBoApp.use("/so/hanhchinh", soHanhChinhRoutes);
 canBoApp.use("/so/canbo", soCanBoRoutes);
+
+
+canBoApp.all('*', (req, res, next) => {
+  next(new ExpressError(404, 'Page not found'));
+})
+
+canBoApp.use((err, req, res, next) => {
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = 'Đã xảy ra lỗi, vui lòng thử lại.';
+  console.log(err.message);
+  res.status(statusCode).render('error', {err});
+});
 
 // danApp.listen(3000, () => {
 //   console.log("Serving on port 3000");

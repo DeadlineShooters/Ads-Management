@@ -16,7 +16,6 @@
                     <th scope="col">Loại bảng</th>
                     <th scope="col">Kích thước</th>
                     <th scope="col">Số lượng</th>
-                    <th scope="col">Tình trạng</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,17 +24,10 @@
                 <tr class='clickable' onclick= "window.location='/so/quanly/bang-quang-cao/<%= adBoard.id %>'">
                     <th scope="row"><%= i++ %></th>
                     <td><%= adBoard.adLocation.address %></td>
-                    <td>Quận <%= adBoard.adLocation.district %>, Phường <%= adBoard.adLocation.ward %></td>
-                    <td><%= adBoard.boardType %></td>
+                    <td>Quận <%= adBoard.adLocation.district.name %>, Phường <%= adBoard.adLocation.ward.name %></td>
+                    <td><%= adBoard.boardType.name %></td>
                     <td><%= adBoard.size.h %>m x <%= adBoard.size.w %>m</td>
                     <td><%= adBoard.quantity %> trụ/bảng</td>
-                    <%if (adBoard.status == 'Chưa duyệt') { %>
-                        <td><div class="rounded-pill text-center text-light bg-secondary"><%= adBoard.status %></div></td>
-                        <%} else if (adBoard.status == 'Bị từ chối') {%>
-                        <td><div class="rounded-pill text-center text-light bg-danger"><%= adBoard.status %></div></td>
-                        <% }else { %>
-                        <td><div class="rounded-pill text-center text-light bg-success"><%= adBoard.status %></div></td>
-                    <%}%>
                 </tr>
                 <% } %>
             </tbody>

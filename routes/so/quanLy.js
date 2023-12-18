@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+import catchAsync from "../../utils/catchAsync.js";
 // import * as quan_phuong from '@controllers/so/quanLy/quan-phuong.js';
 import * as quan from '../../controllers/so/quanLy/quan.js';
 import * as phuong from '../../controllers/so/quanLy/phuong.js';
@@ -59,19 +60,21 @@ router.put("/loai-vi-tri/:id", loaiViTri.update);
 router.delete("/loai-vi-tri/:id", loaiViTri.remove);
 
 // Quản lý hình thức báo cáo
-router.get("/hinh-thuc-bao-cao", hinhThucbc.index);
+router.get("/hinh-thuc-bao-cao", catchAsync(hinhThucbc.index));
 router.get("/hinh-thuc-bao-cao/:id/edit", hinhThucbc.renderEditForm);
 router.get("/hinh-thuc-bao-cao/add", hinhThucbc.renderAddForm);
-router.post("/hinh-thuc-bao-cao", hinhThucbc.add);
+router.post("/hinh-thuc-bao-cao", catchAsync(hinhThucbc.add));
 router.put("/hinh-thuc-bao-cao/:id", hinhThucbc.update);
 router.delete("/hinh-thuc-bao-cao/:id", hinhThucbc.remove);
 
 // Quản lý điểm đặt
-router.get("/diem-dat-quang-cao", diemDatqc.index);
-router.get("/diem-dat-quang-cao/add", diemDatqc.renderAddForm);
-router.get("/diem-dat-quang-cao/:id", diemDatqc.showDetails);
-router.get("/diem-dat-quang-cao/:id/edit", diemDatqc.renderEditForm);
-router.post("/diem-dat-quang-cao", upload.single("image"), diemDatqc.add);
+router.get("/diem-dat-quang-cao", catchAsync(diemDatqc.index));
+router.get("/diem-dat-quang-cao/add", catchAsync(diemDatqc.renderAddForm));
+router.get("/diem-dat-quang-cao/:id", catchAsync(diemDatqc.showDetails));
+router.get("/diem-dat-quang-cao/:id/edit", catchAsync(diemDatqc.renderEditForm));
+router.post("/diem-dat-quang-cao", upload.single("image"), catchAsync(diemDatqc.add));
+router.put("/diem-dat-quang-cao/:id", upload.single("image"), catchAsync(diemDatqc.update));
+router.delete("/diem-dat-quang-cao/:id", catchAsync(diemDatqc.remove));
 
 // Quản lý bảng quảng cáo
 router.get("/bang-quang-cao", bangqc.index);

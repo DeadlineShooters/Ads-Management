@@ -1,0 +1,30 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div> -->
+        <div class="modal-body">
+            <p>Bạn có chắc muốn làm thao tác này</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button class="btn btn-primary" id="saveChangesBtn">Đồng ý</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.showPopUp button').forEach(button => {
+        button.setAttribute('type', 'button');
+        button.setAttribute('data-bs-toggle', 'modal');
+        button.setAttribute('data-bs-target', '#exampleModal');
+    });
+
+    document.getElementById('saveChangesBtn').addEventListener('click', function () {
+        // Trigger the form submission when "Save changes" is clicked
+        document.querySelectorAll('.showPopUp').forEach(form => form.submit());
+    });
+</script>
