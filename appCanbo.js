@@ -113,15 +113,14 @@ canBoApp.use("/so/quanly", soQuanLyRoutes);
 canBoApp.use("/so/hanhchinh", soHanhChinhRoutes);
 canBoApp.use("/so/canbo", soCanBoRoutes);
 
-
-canBoApp.all('*', (req, res, next) => {
-  next(new ExpressError(404, 'Page not found'));
-})
+canBoApp.all("*", (req, res, next) => {
+  next(new ExpressError(404, "Page not found"));
+});
 
 canBoApp.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
-  if (!err.message) err.message = 'Oh No, Something Went Wrong!';
-  res.status(statusCode).render('error', {err});
+  if (!err.message) err.message = "Oh No, Something Went Wrong!";
+  res.status(statusCode).render("error", { err });
 });
 
 // danApp.listen(3000, () => {
