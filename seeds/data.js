@@ -24,10 +24,10 @@ export const boardTypes = [
     { name: "Trung tâm thương mại", description: "Mô tả", note: "Chú thích" },
 ];
 export const reportTypes = [
-    { name: "Tố giác sai phạm", description: "Mô tả", note: "Chú thích" },
-    { name: "Đăng ký nội dung", description: "Mô tả", note: "Chú thích" },
-    { name: "Đóng góp ý kiến", description: "Mô tả", note: "Chú thích" },
-    { name: "Giải đáp thắc mắc", description: "Mô tả", note: "Chú thích" }
+    { name: "Tố giác sai phạm", description: "1", note: "red" },
+    { name: "Đăng ký nội dung", description: "2", note: "blue" },
+    { name: "Đóng góp ý kiến", description: "3", note: "green" },
+    { name: "Giải đáp thắc mắc", description: "4", note: "yellow" }
 ]
 export const districts = [
     { name: "1", description: "Mô tả", note: "Chú thích" },
