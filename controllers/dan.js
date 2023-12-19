@@ -14,7 +14,7 @@ controller.home = async (req, res) => {
 	try {
 		const adLocations = await AdLocation.find({}).populate('adType').populate('type').populate('image');
 		const violatedPoints = await ViolatedPoint.find({});
-		res.render('dan/home', { adLocations: adLocations, violatedPoints: violatedPoints });
+		res.render('dan/home', { adLocations: adLocations, violatedPoints: violatedPoints, user: req.user ? req.user : null });
 	} catch (err) {
 		console.log(err);
 		res.status(500).send(err);
@@ -70,7 +70,8 @@ controller.reportForm = (req, res) => {
 };
 
 controller.getReport = (req, res) => {
-	let { type, name, email, phoneNumber, content, location, board, id, lat, lng } = req.body;
+	let { type, name, email, phoneNumber, content, location, board, id, lat, lng, district, ward } = req.body;
+	console.log(content)
 	const captcha = req.body['g-recaptcha-response'];
 	if (!captcha) {
 		return res.json({ success: false, msg: 'Captcha token is undefined!' });
@@ -110,16 +111,22 @@ controller.getReport = (req, res) => {
 				uploadedImages.push(finalImg);
 			}
 			try {
-				const report = new Report({ reportType: reportType[0]._id, fullName: name, email, phone: phoneNumber, content, uploadedImages });
+				const report = new Report({ reportType: reportType[0]._id, fullName: name, email, phone: phoneNumber, content, uploadedImages, sendDate: Date.now() });
 				await report.save();
 				if (location && board) {
 					await AdLocation.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(location) }, { $set: { isViolated: true } }, { new: true });
 					await AdBoard.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(board) }, { $push: { reports: report._id } }, { new: true });
+					report.adBoard = new mongoose.Types.ObjectId(board);
+					await report.save();
 				} else if (id) {
 					await ViolatedPoint.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(id) }, { $push: { reports: report._id } }, { new: true });
+					report.randomPoint = new mongoose.Types.ObjectId(id);
+					await report.save();
 				} else {
-					const violatedPoint = new ViolatedPoint({ _id: new mongoose.Types.ObjectId(id), latlng: lat + ', ' + lng, reports: [report._id]})
+					const violatedPoint = new ViolatedPoint({ latlng: lat + ', ' + lng, reports: [report._id], district, ward})
 					await violatedPoint.save();
+					report.randomPoint = violatedPoint._id;
+					await report.save();
 				}
 				res.json({ success: true });
 			} catch (error) {

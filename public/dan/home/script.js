@@ -457,7 +457,7 @@ async function addMarker(position) {
 			wards.forEach((item) => {
 				if (item.name == ward.replace('Phường', '').trim() && item.district.name == district.replace('Quận', '').trim()) {
 					clickMarkerInfo += `
-				<a href="/report?lat=${position.lat()}&lng=${position.lng()}" class="location__report-btn">
+				<a href="/report?lat=${position.lat()}&lng=${position.lng()}&district=${item.district._id}&ward=${item._id}" class="location__report-btn">
 					<i class="fa-solid fa-hexagon-exclamation item__icon"></i>
 					<span>BÁO CÁO VI PHẠM</span>
 				</a>`;
