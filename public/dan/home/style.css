@@ -52,6 +52,15 @@ html {
     color: #333;
 }
 
+.search-bar__close-icon {
+    color: #ccc;
+}
+
+.search-bar__close-icon:hover {
+    color: #333;
+    cursor: pointer;
+}
+
 .search-bar__input {
     font-family: Nunito;
     flex: 1;
@@ -91,6 +100,7 @@ html {
 .ads-point:hover [class^="ads-point__info"] {
     display: block;
     animation: fade-in ease-out 0.3s;
+    z-index: 1;
 }
 
 .ads-point .info__form {

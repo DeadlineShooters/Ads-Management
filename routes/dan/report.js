@@ -24,6 +24,7 @@ const router = express.Router(); //server.js
 const upload = multer({ storage });
 
 router.get('/', controller.reportForm);
+
 router.post('/', upload.array('uploadedImages', 2), controller.getReport);
 
 export default router;
