@@ -9,7 +9,7 @@ import AdBoard from "../../../models/adBoard.js";
 
 export const index = async (req, res) => {
   const adLocations = await AdLocation.find({}).populate(['district', 'ward', 'type', 'adType']);
-  res.render("so/quanLy/diemDatqc/index", {adLocations, breadcrumbs:[]});
+  res.render("so/quanLy/diemDatqc/index", {adLocations});
 };
 export const showDetails = async (req, res) => {
   const { id } = req.params;
@@ -80,11 +80,11 @@ export const add = async (req, res) => {
 };
 export const update = async (req, res) => {
   const { id } = req.params;
-  const adLocation = await AdLocation.findById(id);
   const item = req.body.item;
   console.log(item);
   
   if (req.file) {
+    const adLocation = await AdLocation.findById(id);
     await cloudinary.uploader.destroy(adLocation.image.filename);
     item.image = { url: req.file.path, filename: req.file.filename };
   }

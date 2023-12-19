@@ -81,5 +81,8 @@ router.get("/bang-quang-cao", bangqc.index);
 router.get("/bang-quang-cao/add", bangqc.renderAddForm);
 router.get("/bang-quang-cao/:id", bangqc.showDetails);
 router.get("/bang-quang-cao/:id/edit", bangqc.renderEditForm);
+// router.post("/bang-quang-cao", upload.single("image"), catchAsync(bangqc.add));
+// router.put("/bang-quang-cao/:id", upload.single("image"), catchAsync(bangqc.update));
+// router.delete("/bang-quang-cao/:id", catchAsync(bangqc.remove));
 
 export default router;
