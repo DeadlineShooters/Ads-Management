@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 import AdLocation from "./adLocation.js";
 import BoardType from "./boardType.js";
 import imageSchema from "./image.js";
+import Report from "./report.js";
 import AdBoardReq from "./adBoardRequest.js";
 
 const adBoardSchema = new Schema({
@@ -14,6 +15,7 @@ const adBoardSchema = new Schema({
   expireDate: { d: Number, m: Number, y: Number },
   adLocation: { type: Schema.Types.ObjectId, ref: "AdLocation" },
   adBoardRequest: { type: Schema.Types.ObjectId, ref: "AdBoardRequest" },
+  reports: [{ type: Schema.Types.ObjectId, ref: "Report" }],
 });
 
 const AdBoard = mongoose.model("AdBoard", adBoardSchema);

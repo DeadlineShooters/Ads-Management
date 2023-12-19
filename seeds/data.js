@@ -38,10 +38,10 @@ export const boardTypes = [
   { name: "Trung tâm thương mại", description: "Mô tả", note: "Chú thích" },
 ];
 export const reportTypes = [
-  { name: "Tố giác sai phạm", description: "Mô tả", note: "Chú thích" },
-  { name: "Đăng ký nội dung", description: "Mô tả", note: "Chú thích" },
-  { name: "Đóng góp ý kiến", description: "Mô tả", note: "Chú thích" },
-  { name: "Giải đáp thắc mắc", description: "Mô tả", note: "Chú thích" },
+  { name: "Tố giác sai phạm", description: "1", note: "red" },
+  { name: "Đăng ký nội dung", description: "2", note: "blue" },
+  { name: "Đóng góp ý kiến", description: "3", note: "green" },
+  { name: "Giải đáp thắc mắc", description: "4", note: "yellow" },
 ];
 export const districts = [
   { name: "1", description: "Mô tả", note: "Chú thích" },
@@ -98,8 +98,7 @@ export const canBo = [
     email: "phuong@gmail.com",
     daycreated: "2023-11-19T02:35:34.230Z",
     district: "1",
-    hashed_password:
-      "$2b$10$ofjFY6KDErYSd9yyNp8QYulbbrAe/V8b1nX0ETTmh5CJSgeyawp4i",
+    hashed_password: "$2b$10$ofjFY6KDErYSd9yyNp8QYulbbrAe/V8b1nX0ETTmh5CJSgeyawp4i",
     role: "phuong",
     salt: "$2b$10$ofjFY6KDErYSd9yyNp8QYu",
     ward: "Phạm Ngũ Lão",
@@ -107,8 +106,7 @@ export const canBo = [
   {
     email: "so@gmail.com",
     daycreated: "2023-11-19T02:35:34.230Z",
-    hashed_password:
-      "$2b$10$O6ZN5c5IQBzdgOpHvCi28.XUeeWt2ZsLcAn8cvgvLZuiLX3qepYVS",
+    hashed_password: "$2b$10$O6ZN5c5IQBzdgOpHvCi28.XUeeWt2ZsLcAn8cvgvLZuiLX3qepYVS",
     role: "so",
     salt: "$2b$10$O6ZN5c5IQBzdgOpHvCi28.",
   },
@@ -116,8 +114,7 @@ export const canBo = [
     email: "quan@gmail.com",
     daycreated: "2023-11-19T02:35:34.230Z",
     district: "1",
-    hashed_password:
-      "$2b$10$hFKsMW5/QDFSlCpn1Jj0rOC7XIz1NrRzOz3BR3/OEfxaxEwaK91NS",
+    hashed_password: "$2b$10$hFKsMW5/QDFSlCpn1Jj0rOC7XIz1NrRzOz3BR3/OEfxaxEwaK91NS",
     role: "quan",
     salt: "$2b$10$hFKsMW5/QDFSlCpn1Jj0rO",
   },
