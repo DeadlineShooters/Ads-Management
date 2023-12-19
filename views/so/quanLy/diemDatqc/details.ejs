@@ -1,5 +1,4 @@
-<% layout('layouts/canbo') %>
-
+<% layout('layouts/canbo') %> <% if (user.role !== 'so') { %>
 <div class="card m-auto" style="width: 30rem">
   <!-- refer to routes/phuong.js to see data example -->
   <img src="<%= details.image.url %>" class="card-img-top" alt="" />
@@ -16,15 +15,95 @@
     <li class="list-group-item">Tình trạng: <b><%= details.status %></b></li>
   </ul>
   <div class="card-body d-flex flex-row" id="buttons">
-    <% if (user.role == 'so') { %>
-    <a href="/so/quanly/diem-dat-quang-cao/<%= details._id %>/edit" class="btn btn-secondary me-3">Chỉnh sửa</a>
-    <form class="showPopUp" action="/so/quanly/diem-dat-quang-cao/<%= details._id %>?_method=delete" method="post">
-      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Xoá</button>
-    </form>
-    <% } else { %>
     <a href="/cac-diem-dat-quang-cao/<%= details._id %>/tao-yeu-cau" class="btn btn-primary me-3">Tạo yêu cầu cấp phép</a>
 
     <a href="/cac-diem-dat-quang-cao/<%= details._id %>/chinh-sua" class="btn btn-info me-3">Chỉnh sửa</a>
-    <% } %>
   </div>
 </div>
+<%} else {%>
+<div class="container p-3">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Chi tiết điểm đặt quảng cáo</h4>
+    </div>
+    <div class="card-body p-2">
+      <div class="row">
+        <div class="col align-self-center">
+          <img src="<%= details.image.url %>" class="img-thumbnail mx-auto d-block" />
+        </div>
+        <div class="col d-flex flex-column p-2">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Địa chỉ: <b><%= details.address %></b></li>
+            <li class="list-group-item">Khu vực: <b>Quận <%= details.district.name %></b>, <b>Phường <%= details.ward.name %></b></li>
+            <li class="list-group-item">Hình thức: <b><%= details.adType.name %></b></li>
+            <li class="list-group-item">Phân loại: <b><%= details.type.name %></b></li>
+            <li class="list-group-item">Tình trạng: <b><%= details.status %></b></li>
+          </ul>
+          <div class="d-flex flex-row mt-auto justify-content-end">
+            <% if (user.role == 'so') { %>
+            <a href="/so/quanly/diem-dat-quang-cao/<%= details._id %>/bang-quang-cao/add" class="btn btn-primary mx-3">Thêm bảng quảng cáo</a>
+            <a href="/so/quanly/diem-dat-quang-cao/<%= details._id %>/edit" class="btn btn-secondary">Chỉnh sửa</a>
+            <form class="showPopUp" action="/so/quanly/diem-dat-quang-cao/<%= details._id %>?_method=delete" method="post">
+              <button class="btn btn-danger mx-3">Xoá</button>
+            </form>
+            <% } else { %>
+            <a href="" class="btn btn-secondary me-3">Chỉnh sửa</a>
+            <a href="" class="btn btn-warning me-3">Tạo yêu cầu cấp phép</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="mt-4">Danh sách các bảng quảng cáo</h2>
+  <section class="overflow-auto mb-3 border rounded" style="height: 20rem">
+    <div class=" ">
+      <table class="table table-light table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Loại bảng</th>
+            <th scope="col">Kích thước</th>
+            <th scope="col">Số lượng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% let i = 1; %> <% for (let adBoard of adBoards) { %>
+          <tr class="clickable" onclick="window.location='/so/quanly/diem-dat-quang-cao/<%= details._id %>/bang-quang-cao/<%= adBoard.id %>'">
+            <th scope="row"><%= i++ %></th>
+            <td><%= adBoard.boardType.name %></td>
+            <td class="min-w"><%= adBoard.size.h %>m x <%= adBoard.size.w %>m</td>
+            <td class="min-w"><%= adBoard.quantity %> trụ/bảng</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="d-flex justify-content-center mt-auto">
+    <nav aria-label="...">
+      <ul class="pagination m-0 justify-content-end">
+        <li class="page-item disabled">
+          <a class="page-link">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </section>
+</div>
+<%}%>
+
+<style>
+  /* Add this style to your custom CSS or in a style tag within your HTML */
+  .min-w {
+    min-width: 100px; /* Set the desired minimum width */
+  }
+</style>

@@ -25,7 +25,6 @@ controller.show = async (req, res) => {
   const breadcrumbs = [];
   try {
     let adBoards = [];
-    const foundDistrict = await District.findById(req.user.district._id);
     adBoards = await AdBoard.find({})
       .populate({
         path: "adLocation",
@@ -35,7 +34,7 @@ controller.show = async (req, res) => {
     if (req.user.role === "quan") {
       // console.log("District: " + foundDistrict._id);
       adBoards = adBoards.filter((adBoard) => {
-        return adBoard.adLocation.district._id.toString() === foundDistrict._id.toString();
+        return adBoard.adLocation.district._id == req.user.district._id;
       });
     } else {
       // phuong
@@ -43,13 +42,15 @@ controller.show = async (req, res) => {
 
       const foundWard = await Ward.findOne({
         name: req.user.ward.name,
-        district: foundDistrict._id,
+        district: req.user.district._id,
       });
 
-      console.log(adBoards);
-      adBoards = adBoards.filter((adBoard) => adBoard.adLocation.district._id == foundDistrict._id && adBoard.adLocation.ward._id == foundWard._id);
+      adBoards = adBoards.filter((adBoard) => {
+        console.log(adBoard.adLocation.district.name + " " + adBoard.adLocation.ward.name);
+        return adBoard.adLocation.district._id == req.user.district._id && adBoard.adLocation.ward._id == req.user.ward._id;
+      });
     }
-
+    console.log(adBoards);
     const wards = await getWardsForUser(req.user);
     res.render("phuong/bangList", {
       breadcrumbs,
@@ -68,31 +69,6 @@ controller.showDetail = async (req, res) => {
     { name: "Các bảng quảng cáo", link: "/cac-bang-quang-cao" },
     { name: "Chi tiết bảng quảng cáo", link: "" },
   ];
-
-  // const adBoard = {
-  //   id: `${bangId}`,
-
-  //   boardType: "Trụ màn hình điện tử LED",
-  //   size: { w: 2.5, h: 10 },
-
-  //   quantity: 2,
-  //   startDate: { d: 15, m: 5, y: 23 },
-  //   expireDate: { d: 15, m: 5, y: 24 },
-  //   status: "Đã duyệt",
-  //   adLocation: adLocation,
-  // };
-
-  // const props = {
-  //   title: "bảng",
-  //   b1text: "Xem yêu cầu cấp phép",
-  //   b2text: "Chỉnh sửa",
-  //   b1url: `/cac-bang-quang-cao/${bangId}/xem-yeu-cau`,
-
-  //   b2url: `/cac-bang-quang-cao/${bangId}/chinh-sua`,
-
-  //   b1color: "secondary",
-  //   b2color: "success",
-  // };
 
   try {
     // Fetch adLocation details based on the diemId
