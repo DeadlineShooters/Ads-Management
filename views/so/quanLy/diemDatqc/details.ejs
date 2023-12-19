@@ -2,8 +2,9 @@
 
 <div class="container p-3">
     <div class="card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between">
             <h4 class="card-title">Chi tiết điểm đặt quảng cáo</h4>
+            <a href="" class="btn btn-warning">Đến bản đồ <i class="bi bi-arrow-up-right-square"></i></a>
         </div>
         <div class="card-body p-2">
             <div class="row">
@@ -35,8 +36,8 @@
         </div>
     </div>
 
-    <h2 class="mt-4">Danh sách các bảng quảng cáo</h2>
-    <section class="overflow-auto mb-3 border rounded" style="height: 20rem;">
+    <h4 class="mt-4">Danh sách các bảng quảng cáo</h4>
+    <section class="overflow-auto mb-3 border rounded" style="">
         <div class=" ">
             <table class="table table-light table-striped table-hover">
                 <thead>
@@ -61,23 +62,7 @@
             </table>
         </div>
     </section>
-    <section class="d-flex justify-content-center mt-auto">
-        <nav aria-label="...">
-            <ul class="pagination m-0 justify-content-end">
-                <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </section>
+    <%- include('../../../partials/pagination') %>
 </div>
     
 <style>

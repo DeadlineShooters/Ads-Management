@@ -2,13 +2,28 @@ import LocationType from "../../../models/locationType.js";
 import AdLocation from "../../../models/adLocation.js";
 
 export const index = async (req, res) => {
-    const locationTypes = await LocationType.find({});
+    
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await LocationType.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+        page,
+        totalPages,
+        itemsPerPage,
+    };
+
+    const locationTypes = await LocationType.find({})
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+    
     const props = {
         type: 'loại vị trí',
-        pathName: 'loai-vi-tri'
+        pathName: 'loai-vi-tri',
+        
     }
-    const breadcrumbs = [];
-    res.render('so/quanLy/lhqc-htbc/index', {items: locationTypes, props, breadcrumbs})
+    
+    res.render('so/quanLy/lhqc-htbc/index', {items: locationTypes, props, pagination})
 };
 export const renderAddForm = (req, res) => {
     const breadcrumbs = [

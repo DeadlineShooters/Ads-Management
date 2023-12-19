@@ -67,6 +67,7 @@ canBoApp.use(passport.authenticate("session"));
 canBoApp.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.currentPage = req.currentPage;
+  res.locals.defaultItemsPerPage = 20;
 
   // res.locals.ayo = asfkdjsdfk;
   next();
