@@ -18,6 +18,22 @@
   }
 </style>
 
+<!-- <script>
+    $(document).ready(function() {
+        $('#yesModal button[type="submit"]').click(function() {
+            console.log("button clicked");
+                $.ajax({
+                url: '/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietCapPhepQC._id %>/update-status',
+                type: 'PUT',
+                data: {
+                    adBoardRequestId: 'your_ad_board_request_id',
+                    newStatus: 'new_status_value'
+                },
+            });
+        });
+    });
+</script> -->
+
 <!-- <div class="container p-3 bg-light rounded overflow-hidden"> -->
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -29,8 +45,8 @@
         <div class="col">
             <div class="row">
                 <div class="col text-end fw-lighter">
-                    <i class="bi bi-person-fill"></i><b> <%= object[0].nguoiGui %></b>&nbsp&nbsp
-                    <i class="bi bi-clock-fill"></i><b> <%= object[0].thoiDiemGui %></b>
+                    <i class="bi bi-person-fill"></i><b> <%= chiTietCapPhepQC.sender.username %></b>&nbsp&nbsp
+                    <i class="bi bi-clock-fill"></i><b> <%= new Date(chiTietCapPhepQC.sendDate).toLocaleDateString() %></b>
                 </div>
             </div>
         </div>
@@ -44,34 +60,34 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Nội dung quảng cáo</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].noiDung %></div>
+                <div class="col" style="max-width: 100%;"><%= chiTietCapPhepQC.adContent %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Hình minh họa</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].hinhMinhHoa %></div>
+                <div class="col" style="max-width: 100%;"><a href="<%=chiTietCapPhepQC.adImage.url%>" download><%= chiTietCapPhepQC.adImage.filename %></a></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Điểm đặt</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].diemDat %></div>
+                <div class="col" style="max-width: 100%;"><%= chiTietCapPhepQC.adBoard?.adLocation.address %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Khu vực</b></div>
-                <div class="col" style="max-width: 30%;"><b>Quận:</b> <%= object[0].khuVuc.q %></div>
-                <div class="col" style="max-width: 25%;"><b>Phường:</b> <%= object[0].khuVuc.p %></div>
+                <div class="col" style="max-width: 30%;"><b>Quận:</b> <%= chiTietCapPhepQC.adBoard?.adLocation.district.name %></div>
+                <div class="col" style="max-width: 25%;"><b>Phường:</b> <%= chiTietCapPhepQC.adBoard?.adLocation.ward.name %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Phân loại</b></div>
-                <div class="col" style="max-width: 30%;"><b>Loại bảng:</b> <%= object[0].phanLoai.loaiBang %></div>
-                <div class="col" style="max-width: 25%;"><b>Số lượng:</b> <%= object[0].phanLoai.soLuong %></div>
-                <div class="col" style="max-width: 25%;"><b>Kích thước:</b> <%= object[0].phanLoai.kichThuoc %></div>
+                <div class="col" style="max-width: 30%;"><b>Loại bảng:</b> <%= chiTietCapPhepQC.adBoard?.boardType.name %></div>
+                <div class="col" style="max-width: 25%;"><b>Số lượng:</b> <%= chiTietCapPhepQC.adBoard?.quantity %></div>
+                <div class="col" style="max-width: 25%;"><b>Kích thước:</b> <%= chiTietCapPhepQC.adBoard?.size.h %>m x  <%= chiTietCapPhepQC.adBoard?.size.w %>m</div>
             </div>
         </li>
     </ul>
@@ -84,21 +100,21 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Tên công ty</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].tenCongTy %></div>
+                <div class="col" style="max-width: 100%;"><%= chiTietCapPhepQC.companyName %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Thông tin liên lạc</b></div>
-                <div class="col" style="max-width: 55%;"><b>Mail:</b> <%= object[0].lienLac.mail %></div>
-                <div class="col" style="max-width: 25%;"><b>Điện thoại:</b> <%= object[0].lienLac.dienThoai %></div>
+                <div class="col" style="max-width: 55%;"><b>Mail:</b> <%= chiTietCapPhepQC.contactInfo.email %></div>
+                <div class="col" style="max-width: 25%;"><b>Điện thoại:</b> <%= chiTietCapPhepQC.contactInfo.phone %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Hợp đồng</b></div>
-                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu:</b> <%= object[0].hopDong.ngayBatDau %></div>
-                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc:</b> <%= object[0].hopDong.ngayKetThuc %></div>
+                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu:</b> <%= chiTietCapPhepQC.adBoard.startDate.d %>/<%= chiTietCapPhepQC.adBoard.startDate.m %>/<%= chiTietCapPhepQC.adBoard.startDate.y %></div>
+                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc:</b> <%= chiTietCapPhepQC.adBoard.expireDate.d %>/<%= chiTietCapPhepQC.adBoard.expireDate.m %>/<%= chiTietCapPhepQC.adBoard.expireDate.y %></div>
             </div>
         </li>
     </ul>
@@ -121,9 +137,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-primary">
-                    Đồng ý
-                </button>
+                <form action="/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietCapPhepQC._id %>/update-status?_method=PUT" method="POST" enctype="application/x-www-form-urlencoded">
+                    <button type="submit" class="btn btn-primary">
+                        Đồng ý
+                    </button>
+                </form>
             </div>
           </div>
         </div>

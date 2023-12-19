@@ -5,8 +5,20 @@ import User from "./user.js";
 
 const adBoardRequestSchema = new Schema({
     adBoard: {type: Schema.Types.ObjectId, ref: "adBoard"},
+    adContent: String,
+    adImage: {
+        url: String,
+        filename: String,
+    },
+    companyName: String,
+    contactInfo:{
+        email: String,
+        phone: String,
+        address: String,
+    },
     sender: {type: Schema.Types.ObjectId, ref: "User"},
-    date: {type: Date},
+    sendDate: {type: Date},
+    status: String,
 })
 
 const AdBoardReq = mongoose.model("AdBoardRequest", adBoardRequestSchema);

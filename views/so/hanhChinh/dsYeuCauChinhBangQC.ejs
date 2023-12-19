@@ -66,45 +66,46 @@
     <table class="table table-light table-striped table-hover">
       <thead>
         <tr>
-          <th scope="col">STT</th>
-          <th scope="col">Địa chỉ</th>
-          <th scope="col">Khu vực</th>
-          <th scope="col">Loại bảng</th>
-          <th scope="col">Kích thước</th>
-          <th scope="col">Số lượng</th>
-          <th scope="col">Thời gian gửi</th>
-          <th class="text-center" scope="col">Tình trạng</th>
+          <th scope="col" style="width:2%">STT</th>
+          <th scope="col" style="width:25%">Địa chỉ</th>
+          <th scope="col" style="width:20%">Khu vực</th>
+          <th scope="col" style="width:14%">Loại bảng</th>
+          <th scope="col" style="width:9%">Kích thước</th>
+          <th scope="col" style="width:7%">Số lượng</th>
+          <th scope="col" style="width:10%">Thời gian gửi</th>
+          <th class="text-center" scope="col" style="width:10%">Tình trạng</th>
         </tr>
       </thead>
       <tbody>
-        <% for (let i=0; i<objects.length; i++) { %>
-          <tr class="clickable-row" data-href='chinh-bang-qc/chi-tiet-yeu-cau'>
-            <td scope="row">
-              <%=i + 1%>
+        <% let i = 1; %>
+        <% for (let motBaoCaoQC of BaoCaoQC ) { %>
+          <tr class="clickable-row" data-href='chinh-bang-qc/chi-tiet-yeu-cau/<%= motBaoCaoQC._id %>'>
+            <th scope="row">
+              <%= i++ %>
+            </td>
+            <td class="md-col-2">
+              <%= motBaoCaoQC.adBoard?.adLocation.address %>
             </td>
             <td>
-              <%= objects[i].diaChi %>
+              Phường <%= motBaoCaoQC.adBoard?.adLocation.ward.name %>, Quận <%= motBaoCaoQC.adBoard?.adLocation.district.name %>
             </td>
             <td>
-              <%= objects[i].khuVuc %>
+              <%= motBaoCaoQC.adBoard?.boardType.name %>
             </td>
             <td>
-              <%= objects[i].loaiBang %>
+              <%= motBaoCaoQC.adBoard?.size.h %>m x <%= motBaoCaoQC.adBoard?.size.w %>m
             </td>
             <td>
-              <%= objects[i].kichThuoc %>
+              <%= motBaoCaoQC.adBoard?.quantity %>
             </td>
             <td>
-              <%= objects[i].soLuong %>
+              <%= new Date(motBaoCaoQC?.sendDate).toLocaleDateString() %>
             </td>
-            <td>
-              <%= objects[i].thoiGianGui %>
-            </td>
-            <% if (objects[i].tinhTrang==='khongDuyet' ) { %>
+            <% if (motBaoCaoQC.status ==='khongDuyet' ) { %>
               <td>
                 <p class="status notAccept">Không duyệt</p>
               </td>
-              <% } else if (objects[i].tinhTrang==='Duyet' ) { %>
+              <% } else if (motBaoCaoQC.status ==='Duyet' ) { %>
                 <td>
                   <p class="status Accept">Đã duyệt</p>
                 </td>

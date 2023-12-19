@@ -14,5 +14,5 @@ const adBoardSchema = new Schema({
     adLocation: { type: Schema.Types.ObjectId, ref: "AdLocation" },
 })
 
-const AdBoard = mongoose.model("AdBoard", adBoardSchema);
+const AdBoard = mongoose.model("adBoard", adBoardSchema);
 export default AdBoard;
