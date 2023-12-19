@@ -6,6 +6,7 @@ import AdBoard from '../models/adBoard.js';
 import ReportType from '../models/reportType.js';
 import Report from '../models/report.js';
 import fs from 'fs';
+import Ward from '../models/ward.js';
 
 const controller = {};
 
@@ -34,6 +35,16 @@ controller.getAdBoard = async (req, res) => {
 				populate: [{ path: 'reportType' }],
 			});
 		res.json(adBoards);
+	} catch (err) {
+		console.log(err);
+		res.status(500).send(err);
+	}
+};
+
+controller.getWard = async (req, res) => {
+	try {
+		const wards = await Ward.find({}).populate('district');
+		res.json(wards);
 	} catch (err) {
 		console.log(err);
 		res.status(500).send(err);
@@ -105,8 +116,10 @@ controller.getReport = (req, res) => {
 					await AdLocation.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(location) }, { $set: { isViolated: true } }, { new: true });
 					await AdBoard.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(board) }, { $push: { reports: report._id } }, { new: true });
 				} else if (id) {
-					console.log(id);
+					await ViolatedPoint.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(id) }, { $push: { reports: report._id } }, { new: true });
 				} else {
+					const violatedPoint = new ViolatedPoint({ _id: new mongoose.Types.ObjectId(id), latlng: lat + ', ' + lng, reports: [report._id]})
+					await violatedPoint.save();
 				}
 				res.json({ success: true });
 			} catch (error) {

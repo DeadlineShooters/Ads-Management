@@ -42,8 +42,8 @@
         <div
             class="ads-point__info<%= i %>"
             data-id="<%= adLocations[i]._id %>"
-            data-lat="<%= adLocations[i].latlng.lat %>"
-            data-lng="<%= adLocations[i].latlng.lng %>"
+            data-lat="<%= adLocations[i].latlng.split(",")[0].trim() %>"
+            data-lng="<%= adLocations[i].latlng.split(",")[1].trim() %>"
             data-violate="<%= adLocations[i].isViolated %>"
         >
             <div class="info__form"><%= adLocations[i].adType.name %></div>
@@ -59,8 +59,8 @@
         <div
             class="violated-point__latlng<%= i %>"
             data-id="<%= violatedPoints[i]._id %>"
-            data-lat="<%= violatedPoints[i].latlng.lat %>"
-            data-lng="<%= violatedPoints[i].latlng.lng %>"
+            data-lat="<%= violatedPoints[i].latlng.split(",")[0].trim() %>"
+            data-lng="<%= violatedPoints[i].latlng.split(",")[1].trim() %>"
             hidden
         ></div>
         <% } %>
@@ -120,7 +120,7 @@
                             m.head.append(a);
                         }));
                 d[l] ? console.warn(p + ' only loads once. Ignoring:', g) : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
-            })({ key: 'AIzaSyB6lVMsqPOPAB4Tv3Dyky9urZcNc7qGwGU', v: 'beta' });
+            })({ key: 'AIzaSyANb88RtyBcD1EbaNEFtJT2w5P96_O9PLs', v: 'beta' });
         </script>
     </body>
 </html>

@@ -316,6 +316,15 @@ input:checked + .toggle-slider:before {
     font-weight: 600;
 }
 
+.click-marker__info .location__out-range {
+    border: 1px solid #1e4620;
+    border-radius: 2px;
+    text-align: center;
+    padding: 4px;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
 .list-panel.offcanvas.offcanvas-start {
     bottom: 100%;
     height: 80%;

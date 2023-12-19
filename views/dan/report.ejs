@@ -171,6 +171,7 @@
 			for (const [key, value] of urlParams.entries()) {
 				formData.append(key, value);
 			}
+			formData.set('content', content)
 			console.log(Object.fromEntries(formData.entries()))
 			fetch('/report', {
 				method: 'POST',

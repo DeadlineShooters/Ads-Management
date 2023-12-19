@@ -1,4 +1,4 @@
-import { MarkerClusterer } from "https://cdn.skypack.dev/@googlemaps/markerclusterer@2.0.3";
+import { MarkerClusterer } from 'https://cdn.skypack.dev/@googlemaps/markerclusterer@2.0.3';
 let map;
 let marker;
 let latLng;
@@ -14,7 +14,7 @@ async function initMap() {
 	map = new Map(document.getElementById('map'), {
 		zoom: 17,
 		center: { lat: 10.762860099114166, lng: 106.68247164106691 },
-		mapId: '20c0578c16bcc075',
+		mapId: '1e03ae666a7988f6',
 		mapTypeControl: false,
 	});
 
@@ -427,6 +427,9 @@ async function addMarker(position) {
 	let addr;
 	await getAddress(position).then((res) => (addr = res));
 	let placeName = await getPlaceName(position);
+	let district = await getDistrict(position);
+	let ward = await getWard(position);
+	console.log(district, ward);
 
 	let clickMarkerInfo = `<div id="hook" class="click-marker__info">
         <div class="info__ads info__item">
@@ -446,11 +449,27 @@ async function addMarker(position) {
                 <div class="item__content">
                     <div class="location__name">${placeName}</div>
                     <div class="location__addr">${addr}</div>
-                </div>
-                <a href="/report?lat=${position.lat()}&lng=${position.lng()}" class="location__report-btn">
+                </div>`;
+	let outRange = true;
+	await fetch('/ward')
+		.then((response) => response.json())
+		.then((wards) => {
+			wards.forEach((item) => {
+				if (item.name == ward.replace('Phường', '').trim() && item.district.name == district.replace('Quận', '').trim()) {
+					clickMarkerInfo += `
+				<a href="/report?lat=${position.lat()}&lng=${position.lng()}" class="location__report-btn">
 					<i class="fa-solid fa-hexagon-exclamation item__icon"></i>
-                    <span>BÁO CÁO VI PHẠM</span>
-                </a>
+					<span>BÁO CÁO VI PHẠM</span>
+				</a>`;
+					outRange = false;
+				} 
+			});
+		});
+	if (outRange) {
+		clickMarkerInfo += `
+				<div class="location__out-range">Địa điểm không nằm trong khu vực quản lí</div>`;
+	}
+	clickMarkerInfo += `
             </div>
         </div>
     </div>`;
@@ -515,13 +534,57 @@ function getAddress(position) {
 	});
 }
 
+function getWard(position) {
+	let geocoder = new google.maps.Geocoder();
+	return new Promise((resolve, reject) => {
+		geocoder.geocode({ latLng: position }, function (results, status) {
+			if (status !== google.maps.GeocoderStatus.OK) {
+				reject(status);
+			}
+			if (status == google.maps.GeocoderStatus.OK) {
+				for (let result of results) {
+					for (let item of result.address_components) {
+						if (item.types.includes('administrative_area_level_3')) {
+							resolve(item.long_name);
+							return;
+						}
+					}
+				}
+				resolve(null);
+			}
+		});
+	});
+}
+
+function getDistrict(position) {
+	let geocoder = new google.maps.Geocoder();
+	return new Promise((resolve, reject) => {
+		geocoder.geocode({ latLng: position }, function (results, status) {
+			if (status !== google.maps.GeocoderStatus.OK) {
+				reject(status);
+			}
+			if (status == google.maps.GeocoderStatus.OK) {
+				for (let result of results) {
+					for (let item of result.address_components) {
+						if (item.types.includes('administrative_area_level_2')) {
+							resolve(item.long_name);
+							return;
+						}
+					}
+				}
+				resolve(null);
+			}
+		});
+	});
+}
+
 function getPlaceName(position) {
 	let service = new google.maps.places.PlacesService(map);
 	return new Promise((resolve, reject) => {
 		service.nearbySearch(
 			{
 				location: position,
-				radius: '10',
+				radius: '50',
 				fields: ['name', 'geometry'],
 			},
 			function (results, status) {
