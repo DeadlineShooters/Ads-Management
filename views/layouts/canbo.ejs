@@ -39,8 +39,10 @@
         class="m-2 p-3 flex-grow-1 rounded d-flex flex-column overflow-auto"
         id="outer-rectangle"
       >
+        <%- include('../partials/flash') %>
         <%- include('../partials/breadcrumb') %>
         <%- body %>
+        <%- include('../partials/popUpModal') %>
       </div>
     </main>
     <%#- include('../partials/footer') %>

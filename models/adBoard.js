@@ -12,7 +12,6 @@ const adBoardSchema = new Schema({
     quantity: Number,
     startDate: { d: Number, m: Number, y: Number },
     expireDate: { d: Number, m: Number, y: Number },
-    status: String,
     adLocation: { type: Schema.Types.ObjectId, ref: "AdLocation" },
     reports: [{ type: Schema.Types.ObjectId, ref: "Report" }],
 })

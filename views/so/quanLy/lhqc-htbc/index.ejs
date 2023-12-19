@@ -2,13 +2,7 @@
 <section class="d-flex justify-content-between">
     <%- include('../../../partials/so/quanLyDropdown') %>
     <div>
-        <% if (props.type === 'loại hình quảng cáo') { %>
-        <a class="btn btn-primary rounded-pill" href="/so/quanly/loai-hinh-quang-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
-        <% } else if (props.type === 'hình thức báo cáo') { %>
-        <a class="btn btn-primary rounded-pill" href="/so/quanly/hinh-thuc-bao-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
-        <% } else if (props.type === 'loại bảng quảng cáo') { %>
-        <a class="btn btn-primary rounded-pill" href="/so/quanly/loai-bang-quang-cao/add" role="button">Thêm <i class="bi bi-plus"></i></a>
-        <% } %>
+        <a class="btn btn-primary rounded-pill" href="/so/quanly/<%= props.pathName %>/add" role="button">Thêm <i class="bi bi-plus"></i></a>
     </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
@@ -20,7 +14,7 @@
                     <th scope="col">Tên <%= props.name %></th>
                     <th scope="col">Mô tả</th>
                     <th scope="col">Chú thích</th>
-                    <th scope="col"></th>
+                    <th scope="col">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,21 +22,15 @@
                 <% for (let item of items) { %>
                 <tr class="myElement">
                     <th scope="row"><%= i++ %></th>
-                    <td><%= item.name %></td>
-                    <td><%= item.description %></td>
-                    <td><%= item.note %></td>
-                    <td>
-                        <div class="d-flex justify-content-center">
-                            <% if (props.type === 'loại hình quảng cáo') { %>
-                            <a href="/so/quanly/loai-hinh-quang-cao/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
-                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
-                            <% } else if (props.type === 'hình thức báo cáo') { %>
-                            <a href="/so/quanly/hinh-thuc-bao-cao/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
-                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
-                            <% } else if (props.type === 'loại bảng quảng cáo') { %>
-                            <a href="/so/quanly/loai-bang-quang-cao/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
-                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
-                            <% } %>
+                    <td class="text-break"><%= item.name %></td>
+                    <td class="text-break"><%= item.description %></td>
+                    <td class="text-break"><%= item.note %></td>
+                    <td class="text-break">
+                        <div class="d-flex">
+                            <a href="/so/quanly/<%= props.pathName %>/<%= item.id %>/edit"><i class="bi bi-pencil-fill btn p-0 btn-link"></i></a>
+                            <form class="showPopUp" action="/so/quanly/<%= props.pathName %>/<%= item.id %>?_method=DELETE"method="post">
+                                <button class="btn btn-link p-0 ms-2"><i class="bi bi-trash3-fill"></i></button>
+                            </form>
                         </div>
                     </td>
                 </tr>

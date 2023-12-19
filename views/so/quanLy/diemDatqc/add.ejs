@@ -10,63 +10,69 @@
 <div class="row mt-3 position-relative">
     <div class="container rounded border shadow col-8" style="padding: 1rem 7rem;">
         <h1 class="text-center mb-4">Thêm điểm đặt quảng cáo</h1>
-        <form action="#">
+        <form action="/so/quanly/diem-dat-quang-cao" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="coord" class="form-label">Toạ độ</label>
                 <div class="input-group">
-                    <input id="coord" type="text" class="form-control" placeholder="Nhấn vào icon để chọn địa điểm..." aria-label="Recipient's username" aria-describedby="basic-addon2" disabled readonly>
+                    <input name="item[longLat]" id="coord" type="text" class="form-control" placeholder="Nhấn vào icon để chọn địa điểm..." readonly required>
                     <span class="input-group-text globe-icon" id="basic-addon2"><i class="bi bi-globe2"></i></span>
                 </div>
                 </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Địa chỉ </label>
-                <input type="text" class="form-control" id="address" placeholder="" disabled readonly>
+                <input name="item[address]" type="text" class="form-control" id="address" readonly required>
             </div>
             <div class="row">
                 <div class="mb-3 col-6">
                     <label for="district" class="form-label">Quận</label>
-                    <input type="text" class="form-control" id="district" placeholder="" disabled readonly>
+                    <div>
+                        <input id="displayDistrict" class="form-control" readonly disabled></input>
+                        <input name="item[district]" type="text" class="form-control d-none" id="district" readonly required>
+                    </div>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="ward" class="form-label">Phường</label>
-                    <input type="text" class="form-control" id="ward" placeholder="" disabled readonly>
+                    <div>
+                        <input id="displayWard" class="form-control" readonly disabled></input>
+                        <input name="item[ward]" type="text" class="form-control d-none" id="ward" readonly required>
+                    </div>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="boardType" class="form-label">Loại vị trí</label>
-                <select class="form-select" aria-label="Default select example" id="boardType">
+                <select name="item[type]" class="form-select" aria-label="Default select example" id="boardType">
                     <% for (let locationType of locationTypes) { %>
-                        <option value="<%= locationType.name %>"><%= locationType.name %></option>
+                        <option value="<%= locationType._id %>"><%= locationType.name %></option>
                     <% } %>
                   </select>
             </div>
             <div class="mb-3">
                 <label for="boardType" class="form-label">Hình thức</label>
-                <select class="form-select" aria-label="Default select example" id="boardType">
+                <select name="item[adType]" class="form-select" aria-label="Default select example" id="boardType">
                     <% for (let adType of adTypes) { %>
-                        <option value="<%= adType.name %>"><%= adType.name %></option>
+                        <option value="<%= adType._id %>"><%= adType.name %></option>
                     <% } %>
                   </select>
             </div>
             <div class="mb-3">
                 <p>Quy hoạch</p>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Đã quy hoạch">
+                    <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio1" value="Đã quy hoạch">
                     <label class="form-check-label" for="inlineRadio1">Đã quy hoạch</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Chưa quy hoạch" checked>
+                    <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio2" value="Chưa quy hoạch" checked>
                     <label class="form-check-label" for="inlineRadio2">Chưa quy hoạch</label>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="formFile" class="form-label">Chọn ảnh mới</label>
-                <input class="form-control" type="file" id="formFile">
+                <input name="image" class="form-control" type="file" id="formFile" require>
             </div>
             <% if (user.role !== 'so') { %>
             <div class="mb-3">
                 <label for="moTa" class="form-label">Lý do chỉnh sửa</label>
-                <textarea class="form-control" id="moTa" rows="3"></textarea>
+                <textarea name="reason" class="form-control" id="moTa" rows="3"></textarea>
             </div>
             <% } %>
             <div class="mb-3 text-center">
@@ -80,6 +86,9 @@
 <style>
     label {
         font-weight: bold;
+    }
+    #coord, #address {
+        background-color: #e9ecef;
     }
 </style>
 

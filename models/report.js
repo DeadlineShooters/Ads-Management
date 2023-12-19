@@ -12,5 +12,6 @@ const reportSchema = Schema({
     uploadedImages: [Object],
 });
 
-const Report = mongoose.model('Report', reportSchema);
+const Report = mongoose.model("Report", reportSchema);
 export default Report;
+

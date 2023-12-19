@@ -1,6 +1,9 @@
 <% layout('layouts/canbo') %>
-<section class="d-flex justify-content-between">
+<%#- include('../../../partials/modal.ejs') %>
+<section class="d-flex <%= props.type==='Quận'? 'justify-content-between' : 'justify-content-end' %> ">
+    <% if (props.type === "Quận") {%>
     <%- include('../../../partials/so/quanLyDropdown') %>
+    <% } %>
     <div>
         <% if (props.type === 'Quận') { %>
         <a class="btn btn-primary rounded-pill" href="/so/quanly/quan/add" role="button">Thêm <i class="bi bi-plus"></i></a>
@@ -10,7 +13,7 @@
     </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
-    <div class=" ">
+    <div>
         <table class="table table-light table-striped">
             <thead>
                 <tr>
@@ -18,7 +21,7 @@
                     <th scope="col">Tên <%= props.type %></th>
                     <th scope="col">Mô tả</th>
                     <th scope="col">Chú thích</th>
-                    <th scope="col"></th>
+                    <th scope="col">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,18 +29,23 @@
                 <% for (let item of items) { %>
                 <tr class="myElement">
                     <th scope="row"><%= i++ %></th>
-                    <td><%= item.name %></td>
-                    <td><%= item.description %></td>
-                    <td><%= item.note %></td>
-                    <td>
-                        <div class="d-flex justify-content-center">
+                    <td class="text-break"><%= item.name %></td>
+                    <td class="text-break"><%= item.description %></td>
+                    <td class="text-break"><%= item.note %></td>
+                    <td class="text-break">
+                        <div class="d-flex">
                             <% if (props.type === 'Quận') { %>
-                            <a href="/so/quanly/quan/<%= item.id %>/phuong"><i class="bi bi-info-circle"></i></a>
-                            <a href="/so/quanly/quan/<%= item.id %>/edit"><i class="bi bi-pencil-fill ms-2"></i></a>
+                            <a href="/so/quanly/quan/<%= item.id %>/phuong"><i class="bi bi-info-circle btn p-0 btn-link"></i></a>
+                            <a href="/so/quanly/quan/<%= item.id %>/edit"><i class="bi bi-pencil-fill ms-2 btn p-0 btn-link"></i></a>
+                            <form action="/so/quanly/quan/<%= item.id %>?_method=DELETE"method="post">
+                                <button class="btn btn-link p-0 ms-2 showModal"><i class="bi bi-trash3-fill"></i></button>
+                            </form>
                             <% } else { %>
-                            <a href="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>/edit"><i class="bi bi-pencil-fill ms-2"></i></a>
+                            <a class="btn btn-link p-0" href="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
+                            <form action="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>?_method=DELETE"method="post">
+                                <button class="btn btn-link p-0 ms-2"><i class="bi bi-trash3-fill"></i></button>
+                            </form>
                             <% } %>
-                            <a href=""><i class="bi bi-trash3-fill ms-2"></i></a>
                         </div>
                     </td>
                 </tr>
