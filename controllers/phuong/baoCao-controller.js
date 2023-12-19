@@ -42,6 +42,7 @@ controller.show = async (req, res) => {
     });
   } else {
     // phuong
+    console.log("reports", reports);
     reports = reports.filter((report) => {
       if (report.randomPoint) {
         return report.randomPoint.district._id == req.user.district._id && report.randomPoint.ward._id == req.user.ward._id;
@@ -106,6 +107,7 @@ controller.postReportStatus = async (req, res) => {
   });
 
   console.log("Message sent: %s", emailOptions.messageId);
+  console.log("Receiver: ", foundReport.email);
   res.redirect(`/cac-bao-cao/${baoCaoId}`);
 };
 
