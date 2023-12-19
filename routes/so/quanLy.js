@@ -77,10 +77,13 @@ router.put("/diem-dat-quang-cao/:id", upload.single("image"), catchAsync(diemDat
 router.delete("/diem-dat-quang-cao/:id", catchAsync(diemDatqc.remove));
 
 // Quản lý bảng quảng cáo
-router.get("/bang-quang-cao", bangqc.index);
-router.get("/bang-quang-cao/add", bangqc.renderAddForm);
-router.get("/bang-quang-cao/:id", bangqc.showDetails);
-router.get("/bang-quang-cao/:id/edit", bangqc.renderEditForm);
+// router.get("/bang-quang-cao", bangqc.index);
+router.get("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/add", catchAsync(bangqc.renderAddForm));
+router.get("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId", bangqc.showDetails);
+router.get("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId/edit", bangqc.renderEditForm);
+router.post("/diem-dat-quang-cao/:adLocationId/bang-quang-cao", upload.single("image"), catchAsync(bangqc.add));
+router.put("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId", upload.single("image"), catchAsync(bangqc.update));
+router.delete("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId", catchAsync(bangqc.remove));
 // router.post("/bang-quang-cao", upload.single("image"), catchAsync(bangqc.add));
 // router.put("/bang-quang-cao/:id", upload.single("image"), catchAsync(bangqc.update));
 // router.delete("/bang-quang-cao/:id", catchAsync(bangqc.remove));

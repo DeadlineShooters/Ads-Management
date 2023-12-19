@@ -7,6 +7,8 @@ import ExpressError from '../../../utils/ExpressError.js';
 import { cloudinary } from "../../../cloudinary/index.js";
 import AdBoard from "../../../models/adBoard.js";
 
+const defaultImageName = 'logo_jur19a';
+
 export const index = async (req, res) => {
   const adLocations = await AdLocation.find({}).populate(['district', 'ward', 'type', 'adType']);
   res.render("so/quanLy/diemDatqc/index", {adLocations});
@@ -18,6 +20,7 @@ export const showDetails = async (req, res) => {
     { name: "Chi tiết điểm đặt quảng cáo", link: '' },
   ]
   const adLocation = await AdLocation.findById(id).populate(['district', 'ward', 'type', 'adType']);
+  const adBoards = await AdBoard.find({adLocation: id}).populate('boardType')
   if (!adLocation) {
     throw new ExpressError(501, "Không tìm thấy điểm đặt quảng cáo");
   }
@@ -30,7 +33,7 @@ export const showDetails = async (req, res) => {
     b1color: 'secondary',
     b2color: 'danger',
   }
-  res.render("so/quanLy/diemDatqc/details", { details: adLocation, props, breadcrumbs });
+  res.render("so/quanLy/diemDatqc/details", { details: adLocation, adBoards, props, breadcrumbs });
 };
 export const renderEditForm = async (req, res) => {
   const { id } = req.params;
@@ -67,8 +70,8 @@ export const add = async (req, res) => {
     adLocation.image = { url: req.file.path, filename: req.file.filename };
   } else {
     adLocation.image = {
-      url: 'https://res.cloudinary.com/dk6q93ryt/image/upload/v1702823976/AdsManagement/logo_jur19a.png',
-      filename: 'logo_jur19a'
+      url: `https://res.cloudinary.com/dk6q93ryt/image/upload/v1702823976/AdsManagement/${defaultImageName}.png`,
+      filename: defaultImageName
     };
   }
 
@@ -89,7 +92,6 @@ export const update = async (req, res) => {
     item.image = { url: req.file.path, filename: req.file.filename };
   }
   await AdLocation.findByIdAndUpdate(id, { $set: { ...item } });
-  // await AdLocation.findByIdAndUpdate(id, { ...item });
 
   req.flash('success', 'Điểm đặt đã được cập thành công');
   return res.redirect('/so/quanly/diem-dat-quang-cao');
@@ -97,12 +99,15 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
   const { id } = req.params;
   const isInUse = await AdBoard.findOne({ adLocation: id })
-  // console.log(isInUse);
   if (isInUse) {
     req.flash('error', 'Điểm đặt đang được sử dụng! Không thể xoá');
     return res.redirect('/so/quanly/diem-dat-quang-cao');
   }
-  // await AdLocation.findByIdAndDelete(id);
+  const adLocation = await AdLocation.findById(id);
+  if (adLocation.image.filename !== defaultImageName) {
+    await cloudinary.uploader.destroy(adLocation.image.filename);
+  }
+  await AdLocation.findByIdAndDelete(id);
   req.flash('success', 'Điểm đặt đã được xoá thành công');
   return res.redirect('/so/quanly/diem-dat-quang-cao');
 }
