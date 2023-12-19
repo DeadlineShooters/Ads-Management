@@ -107,19 +107,7 @@ controller.showYeuCauCapPhep = async (req, res) => {
     })
     .populate("boardType");
 
-  // format date YYYY-MM-DD
-  let year = adBoard.startDate.y;
-  let month = ("0" + adBoard.startDate.m).slice(-2); // adds leading zero if necessary
-  let day = ("0" + adBoard.startDate.d).slice(-2); // adds leading zero if necessary
-
-  let yearE = adBoard.expireDate.y;
-  let monthE = ("0" + adBoard.expireDate.m).slice(-2); // adds leading zero if necessary
-  let dayE = ("0" + adBoard.expireDate.d).slice(-2); // adds leading zero if necessary
-
-  let formattedStartDate = `${year}-${month}-${day}`;
-  let formattedEndDate = `${yearE}-${monthE}-${dayE}`;
-
-  res.render("so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs", { breadcrumbs, adBoardReq, adBoard, formattedStartDate, formattedEndDate });
+  res.render("so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs", { breadcrumbs, adBoardReq, adBoard });
 };
 
 controller.showEdit = async (req, res) => {
@@ -138,19 +126,7 @@ controller.showEdit = async (req, res) => {
     .populate("boardType")
     .populate({ path: "adLocation", populate: ["district", "ward", "type", "adType"] });
 
-  // format date YYYY-MM-DD
-  let year = adBoard.startDate.y;
-  let month = ("0" + adBoard.startDate.m).slice(-2); // adds leading zero if necessary
-  let day = ("0" + adBoard.startDate.d).slice(-2); // adds leading zero if necessary
-
-  let yearE = adBoard.expireDate.y;
-  let monthE = ("0" + adBoard.expireDate.m).slice(-2); // adds leading zero if necessary
-  let dayE = ("0" + adBoard.expireDate.d).slice(-2); // adds leading zero if necessary
-
-  let formattedStartDate = `${year}-${month}-${day}`;
-  let formattedEndDate = `${yearE}-${monthE}-${dayE}`;
-
-  res.render("so/quanLy/bangqc/edit", { adBoard, breadcrumbs, boardTypes, formattedStartDate, formattedEndDate });
+  res.render("so/quanLy/bangqc/edit", { adBoard, breadcrumbs, boardTypes });
 };
 
 controller.processEdit = async (req, res) => {
