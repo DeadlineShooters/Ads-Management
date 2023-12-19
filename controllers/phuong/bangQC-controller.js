@@ -12,7 +12,7 @@ const controller = {};
 
 const adLocation = {
   id: "001",
-  longLat: "10.752334, 106.643366",
+  latlng: "10.752334, 106.643366",
   address: "157 Nguyễn Đình Chính",
   district: "Phú Nhuận",
   ward: "11",
@@ -46,10 +46,8 @@ controller.show = async (req, res) => {
         district: foundDistrict._id,
       });
 
-      adBoards = adBoards.filter(
-        (adBoard) =>
-          adBoard.adLocation.district._id.toString() === foundDistrict._id.toString() && adBoard.adLocation.ward._id.toString() === foundWard._id.toString()
-      );
+      console.log(adBoards);
+      adBoards = adBoards.filter((adBoard) => adBoard.adLocation.district._id == foundDistrict._id && adBoard.adLocation.ward._id == foundWard._id);
     }
 
     const wards = await getWardsForUser(req.user);

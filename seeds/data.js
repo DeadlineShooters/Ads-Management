@@ -123,7 +123,7 @@ export const canBo = [
 export const adLocations = [
   {
     image: images[0],
-    longLat: "10.752334, 106.643366", // longlat để đại vd thôi
+    latlng: "10.752334, 106.643366", // longlat để đại vd thôi
     address: "168/25 đường Nguyễn Cư Trinh",
     district: new mongoose.Types.ObjectId("657654fc897c69de7cc49224"),
     ward: new mongoose.Types.ObjectId("657654fd897c69de7cc49228"),

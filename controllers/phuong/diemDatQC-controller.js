@@ -17,19 +17,14 @@ controller.show = async (req, res) => {
   const breadcrumbs = [];
   try {
     let adLocations = [];
-    const foundDistrict = await District.findOne({ name: req.user.district });
     if (req.user.role === "quan") {
       adLocations = await AdLocation.find({ district: foundDistrict._id }); // Fetch all ad locations from the database'
     } else {
       // phuong
-      console.log(req.user.ward + " " + req.user.district);
-      const foundWard = await Ward.findOne({
-        name: req.user.ward,
-        district: foundDistrict._id,
-      });
+
       adLocations = await AdLocation.find({
-        district: foundDistrict._id,
-        ward: foundWard._id,
+        district: req.user.district._id,
+        ward: req.user.ward._id,
       });
     }
 
@@ -141,7 +136,7 @@ controller.processEdit = async (req, res) => {
   console.log(req.body, req.file);
   const editedLocation = await AdLocation.findById(diemId).populate(["district", "ward", "type", "adType"]);
   const newAdLocation = new AdLocation({
-    longLat: editedLocation.longLat,
+    latlng: editedLocation.latlng,
     address: editedLocation.address,
     district: editedLocation.district._id,
     ward: editedLocation.ward._id,
