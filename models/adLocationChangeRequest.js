@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import AdLocation from "./adLocation";
-import User from "./user";
+import AdLocation from "./adLocation.js";
+import User from "./user.js";
 
 const Schema = mongoose.Schema;
 

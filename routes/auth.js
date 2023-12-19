@@ -14,7 +14,7 @@ passport.use(
     },
     async function (email, password, cb) {
       try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate(["ward", "district"]);
 
         if (!user) {
           console.log("No such user with that email found.");

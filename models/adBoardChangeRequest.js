@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import User from "./user";
-import AdBoard from "./adBoard";
+import User from "./user.js";
+import AdBoard from "./adBoard.js";
 
 const Schema = mongoose.Schema;
 

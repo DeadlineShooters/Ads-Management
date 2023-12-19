@@ -1,57 +1,31 @@
 <% layout('layouts/canbo') %>
 <div class="container rounded border shadow col-8" style="padding: 1rem 7rem">
   <h1 class="text-center mb-4">Chỉnh sửa bảng quảng cáo</h1>
-  <form action="">
+  <form action="" enctype="multipart/form-data" method="POST">
     <div class="row">
       <div class="mb-3 col-6">
         <label for="address" class="form-label">Địa chỉ </label>
-        <input
-          type="text"
-          class="form-control"
-          id="address"
-          placeholder=""
-          value="<%= adBoard.adLocation.address %>"
-          disabled
-          readonly
-        />
+        <input type="text" class="form-control" id="address" placeholder="" value="<%= adBoard.adLocation.address %>" disabled readonly />
       </div>
       <div class="mb-3 col-3">
         <label for="district" class="form-label">Quận</label>
-        <input
-          type="text"
-          class="form-control"
-          id="district"
-          placeholder=""
-          value="<%= adBoard.adLocation.district %>"
-          disabled
-          readonly
-        />
+        <input type="text" class="form-control" id="districtDisplay" placeholder="" value="<%= adBoard.adLocation.district.name %>" disabled readonly />
+        <!-- invisible input  -->
+        <input name="district" value="<%= adBoard.adLocation.district._id %>" type="text" class="form-control d-none" id="district" readonly required />
       </div>
       <div class="mb-3 col-3">
         <label for="ward" class="form-label">Phường</label>
-        <input
-          type="text"
-          class="form-control"
-          id="ward"
-          placeholder=""
-          value="<%= adBoard.adLocation.ward %>"
-          disabled
-          readonly
-        />
+        <input type="text" class="form-control" id="wardDisplay" placeholder="" value="<%= adBoard.adLocation.ward.name %>" disabled readonly />
+        <input name="ward" value="<%= adBoard.adLocation.ward._id %>" type="text" class="form-control d-none" id="ward" readonly required />
       </div>
     </div>
     <div class="mb-3">
       <label for="boardType" class="form-label">Loại bảng quảng cáo</label>
-      <select
-        class="form-select"
-        aria-label="Default select example"
-        id="boardType"
-      >
-        <% for (let boardType of boardTypes) { %> <% if (boardType.name ===
-        adBoard.boardType) { %>
-        <option value="" selected><%= boardType.name %></option>
+      <select class="form-select" aria-label="Default select example" id="boardType" name="boardType">
+        <% for (let boardType of boardTypes) { %> <% if (boardType.name === adBoard.boardType) { %>
+        <option value="<%=boardType._id%>" selected><%= boardType.name %></option>
         <% } else { %>
-        <option value="<%= boardType.name %>"><%= boardType.name %></option>
+        <option value="<%= boardType._id %>"><%= boardType.name %></option>
         <% } %> <% } %>
       </select>
     </div>
@@ -59,36 +33,38 @@
       <div class="mb-3">
         <label for="moTa" class="form-label d-block">Số lượng</label>
         <input
-          type="text"
+          type="number"
           class="form-control d-inline"
           id="ward"
           placeholder=""
           value="<%= adBoard.quantity %>"
-          oninput="resizeInput(this)"
-          style="width: 1ch; box-sizing: content-box"
+          style="width: 3ch; box-sizing: content-box"
+          name="amount"
         />
         trụ/bảng
       </div>
       <fieldset class="mb-3 ms-4">
         <label for="moTa" class="form-label d-block">Kích thước</label>
         <input
-          type="text"
+          type="number"
           class="form-control d-inline"
           id="ward"
           placeholder=""
           value="<%= adBoard.size.h %>"
-          oninput="resizeInput(this)"
-          style="width: 3ch; box-sizing: content-box"
+          style="width: 5ch; box-sizing: content-box"
+          name="height"
+          step="0.1"
         />
         m x
         <input
-          type="text"
+          type="number"
           class="form-control d-inline"
           id="ward"
           placeholder=""
           value="<%= adBoard.size.w %>"
-          oninput="resizeInput(this)"
-          style="width: 3ch; box-sizing: content-box"
+          style="width: 5ch; box-sizing: content-box"
+          name="width"
+          step="0.1"
         />
         m
       </fieldset>
@@ -96,41 +72,26 @@
     <div class="row">
       <div class="mb-3 col-4">
         <label for="start" class="form-label">Ngày bắt đầu hợp đồng</label>
-        <input
-          class="form-control"
-          type="date"
-          id="start"
-          name="trip-start"
-          value="<%= adBoard.startDate.y %>-<%= adBoard.startDate.m %>-<%= adBoard.startDate.d %>"
-          min="2018-01-01"
-          max="2030-12-31"
-        />
+        <input class="form-control" type="date" id="start" name="startDate" value="<%=formattedStartDate%>" />
       </div>
       <div class="mb-3 col-4">
         <label for="start" class="form-label">Ngày kết thúc hợp đồng</label>
-        <input
-          class="form-control"
-          type="date"
-          id="start"
-          name="trip-start"
-          value="<%= adBoard.expireDate.y %>-<%= adBoard.expireDate.m %>-<%= adBoard.expireDate.d %>"
-          min="2018-01-01"
-          max="2030-12-31"
-        />
+        <input class="form-control" type="date" id="start" name="endDate" value="<%= formattedEndDate %>" />
       </div>
     </div>
     <div class="mb-3">
       <label for="formFile" class="form-label">Chọn ảnh mới</label>
-      <input class="form-control" type="file" id="formFile" />
+      <input class="form-control" type="file" id="formFile" accept="image/png, image/jpeg" name="image" />
     </div>
     <% if (user.role !== 'so') { %>
     <div class="mb-3">
       <label for="moTa" class="form-label">Lý do chỉnh sửa</label>
-      <textarea class="form-control" id="moTa" rows="3"></textarea>
+      <textarea class="form-control" id="moTa" rows="3" name="reason"></textarea>
+      <div id="validationFeedback" class="invalid-feedback">Hãy cung cấp lý do chỉnh sửa</div>
     </div>
     <% } %>
     <div class="mb-3 text-center">
-      <button class="btn btn-info">Chỉnh sửa</button>
+      <button id="editButton" class="btn btn-info">Chỉnh sửa</button>
     </div>
   </form>
 </div>
@@ -142,7 +103,25 @@
 </style>
 
 <script>
-  function resizeInput(input) {
-    input.style.width = input.value.length + "ch";
+  // function resizeInput(input) {
+  //   input.style.width = input.value.length + 5 + "ch" + ;
+  // }
+
+  let user = "<%= user.role %>";
+
+  if (user !== "so") {
+    const submitTrigger = document.getElementById("editButton");
+
+    submitTrigger.onclick = function (event) {
+      let editReasonEmpty = document.getElementById("moTa").value === "";
+
+      if (editReasonEmpty) {
+        event.preventDefault();
+        event.stopPropagation();
+        document.getElementById("moTa").classList.add("is-invalid");
+      } else {
+        document.getElementById("moTa").classList.remove("is-invalid");
+      }
+    };
   }
 </script>

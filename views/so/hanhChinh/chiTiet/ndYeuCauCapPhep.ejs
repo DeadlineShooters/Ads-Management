@@ -18,135 +18,148 @@
   }
 </style>
 
-<!-- <div class="container p-3 bg-light rounded overflow-hidden"> -->
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/so/hanhchinh/cap-phep-qc">Danh sách yêu cầu cấp phép quảng cáo</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Chi tiết yêu cầu</li>
-        </ol>
-    </nav>
-    <div class="d-flex justify-content-between flex-wrap nowrap align-items-center pb-2 mb-3 border-bottom flex-end">
+<!-- <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/so/hanhchinh/cap-phep-qc">Danh sách yêu cầu cấp phép quảng cáo</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Chi tiết yêu cầu</li>
+  </ol>
+</nav> -->
+<div class="card m-auto" style="width: 65rem">
+  <%if (user.role === "so") {%>
+  <div class="d-flex justify-content-between flex-wrap nowrap align-items-center pb-2 mb-3 border-bottom flex-end">
+    <div class="col">
+      <div class="row">
+        <div class="col text-end fw-lighter">
+          <i class="bi bi-person-fill"></i><b> <%= adBoardReq.sender.username %></b>&nbsp&nbsp <i class="bi bi-clock-fill"></i
+          ><b><%= new Date(adBoardReq.sendDate).toLocaleString('en-US') %></b>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%}%>
+  <ul class="list-group">
+    <li class="list-group-item" style="background-color: #7981d0">
+      <div class="row">
+        <div class="col" style="max-width: 200px"><b class="table header">Thông tin yêu cầu</b></div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col header"><b>Nội dung quảng cáo</b></div>
+        <div class="col" style="max-width: 100%"><%= adBoardReq.adContent %></div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col header"><b>Hình minh họa</b></div>
         <div class="col">
-            <div class="row">
-                <div class="col text-end fw-lighter">
-                    <i class="bi bi-person-fill"></i><b> <%= object[0].nguoiGui %></b>&nbsp&nbsp
-                    <i class="bi bi-clock-fill"></i><b> <%= object[0].thoiDiemGui %></b>
-                </div>
-            </div>
+          <img src="<%= adBoard.image.url %>" class="card-img-top img-fluid" alt="" style="width: 50%; height: auto" />
         </div>
-    </div>
-    <ul class="list-group">
-        <li class="list-group-item" style="background-color: #7981d0">
-            <div class="row">
-                <div class="col" style="max-width: 200px;"><b class="table header">Thông tin yêu cầu</b></div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col header"><b>Nội dung quảng cáo</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].noiDung %></div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col header"><b>Hình minh họa</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].hinhMinhHoa %></div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col header"><b>Điểm đặt</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].diemDat %></div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col header"><b>Khu vực</b></div>
-                <div class="col" style="max-width: 30%;"><b>Quận:</b> <%= object[0].khuVuc.q %></div>
-                <div class="col" style="max-width: 25%;"><b>Phường:</b> <%= object[0].khuVuc.p %></div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col header"><b>Phân loại</b></div>
-                <div class="col" style="max-width: 30%;"><b>Loại bảng:</b> <%= object[0].phanLoai.loaiBang %></div>
-                <div class="col" style="max-width: 25%;"><b>Số lượng:</b> <%= object[0].phanLoai.soLuong %></div>
-                <div class="col" style="max-width: 25%;"><b>Kích thước:</b> <%= object[0].phanLoai.kichThuoc %></div>
-            </div>
-        </li>
-    </ul>
-    <ul class="list-group mt-3">
-        <li class="list-group-item" style="background-color: #7981d0">
-            <div class="row">
-                <div class="col" style="max-width: 200px;"><b class="table header">Thông tin công ty</b></div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col header"><b>Tên công ty</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].tenCongTy %></div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col header"><b>Thông tin liên lạc</b></div>
-                <div class="col" style="max-width: 55%;"><b>Mail:</b> <%= object[0].lienLac.mail %></div>
-                <div class="col" style="max-width: 25%;"><b>Điện thoại:</b> <%= object[0].lienLac.dienThoai %></div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col header"><b>Hợp đồng</b></div>
-                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu:</b> <%= object[0].hopDong.ngayBatDau %></div>
-                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc:</b> <%= object[0].hopDong.ngayKetThuc %></div>
-            </div>
-        </li>
-    </ul>
-    <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
-        <button class="btn btn-danger mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" data-bs-toggle="modal" data-bs-target="#noModal">Không phê duyệt</button>
-        <button class="btn btn-success mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" data-bs-toggle="modal" data-bs-target="#yesModal">Phê duyệt</button>
-    </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col header"><b>Điểm đặt</b></div>
+        <div class="col" style="max-width: 100%"><%=adBoard.adLocation.address%></div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col header"><b>Khu vực</b></div>
+        <div class="col" style="max-width: 30%"><b>Quận:</b> <%= adBoard.adLocation.district.name %></div>
+        <div class="col" style="max-width: 25%"><b>Phường:</b> <%= adBoard.adLocation.ward.name %></div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col header"><b>Phân loại</b></div>
+        <div class="col" style="max-width: 30%"><b>Loại bảng:</b> <%= adBoard.boardType.name %></div>
+        <div class="col" style="max-width: 25%"><b>Số lượng:</b> <%= adBoard.quantity %></div>
+        <div class="col" style="max-width: 25%"><b>Kích thước:</b> <%= adBoard.size.h %>m x <%= adBoard.size.w %>m</div>
+      </div>
+    </li>
+  </ul>
+  <ul class="list-group mt-3">
+    <li class="list-group-item" style="background-color: #7981d0">
+      <div class="row">
+        <div class="col" style="max-width: 200px"><b class="table header">Thông tin công ty</b></div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col header"><b>Tên công ty</b></div>
+        <div class="col" style="max-width: 100%"><%= adBoardReq.companyName %></div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col header"><b>Thông tin liên lạc</b></div>
+        <div class="col" style="max-width: 55%"><b>Mail:</b> <%= adBoardReq.contactInfo.email %></div>
+        <div class="col" style="max-width: 25%"><b>Điện thoại:</b> <%= adBoardReq.contactInfo.phone %></div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col header"><b>Hợp đồng</b></div>
+        <div class="col" style="max-width: 30%"><b>Ngày bắt đầu:</b> <%= formattedStartDate %></div>
+        <div class="col" style="max-width: 25%"><b>Ngày kết thúc:</b> <%= formattedEndDate %></div>
+      </div>
+    </li>
+  </ul>
+  <%if (user.role === "so") {%>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="yesModal">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
-            </div>
-            <div class="modal-body">
-              <p>
-                Cán bộ Sở thực hiện <strong>PHÊ DUYỆT</strong> yêu cầu cấp phép.
-              </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-primary">
-                    Đồng ý
-                </button>
-            </div>
-          </div>
+  <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem">
+    <button class="btn btn-danger mx-1" style="width: 25%" for="success-outlined" id="noButton" type="button" data-bs-toggle="modal" data-bs-target="#noModal">
+      Không phê duyệt
+    </button>
+    <button
+      class="btn btn-success mx-1"
+      style="width: 25%"
+      for="success-outlined"
+      id="yesButton"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#yesModal"
+    >
+      Phê duyệt
+    </button>
+  </div>
+  <%}%> <%if (user.role === "so") {%>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="yesModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
         </div>
-    </div>    
-    <div class="modal fade" tabindex="-1" role="dialog" id="noModal">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
-            </div>
-            <div class="modal-body">
-              <p>
-                Cán bộ Sở thực hiện <strong>KHÔNG PHÊ DUYỆT</strong> yêu cầu cấp phép.
-              </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-primary">
-                    Đồng ý
-                </button>
-            </div>
-          </div>
+        <div class="modal-body">
+          <p>Cán bộ Sở thực hiện <strong>PHÊ DUYỆT</strong> yêu cầu cấp phép.</p>
         </div>
-    </div>    
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-primary">Đồng ý</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" tabindex="-1" role="dialog" id="noModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
+        </div>
+        <div class="modal-body">
+          <p>Cán bộ Sở thực hiện <strong>KHÔNG PHÊ DUYỆT</strong> yêu cầu cấp phép.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-primary">Đồng ý</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%}%>
+</div>
 <!-- </div> -->

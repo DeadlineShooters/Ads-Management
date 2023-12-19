@@ -1,6 +1,6 @@
 <!-- Hình thức qc -->
 <select id="adType" class="form-select" name="adType">
-  <option value="Cổ đông chính trị">Cổ đông chính trị</option>
-  <option value="Quảng cáo thương mại">Quảng cáo thương mại</option>
-  <option value="Xã hội hóa">Xã hội hóa</option>
+  <% adTypes.forEach(function(adType) { %>
+  <option value="<%= adType.name %>"><%= adType.name %></option>
+  <% }); %>
 </select>

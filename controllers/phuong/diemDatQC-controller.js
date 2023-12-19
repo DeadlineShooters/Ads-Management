@@ -1,12 +1,16 @@
 import AdLocation from "../../models/adLocation.js";
+import LocationType from "../../models/locationType.js";
 import District from "../../models/district.js";
+import AdType from "../../models/adType.js";
 import AdBoard from "../../models/adBoard.js";
 import AdBoardReq from "../../models/adBoardRequest.js";
+import AdLocationChangeRequest from "../../models/adLocationChangeRequest.js";
 import BoardType from "../../models/boardType.js";
 import Ward from "../../models/ward.js";
 import { getWardsForUser } from "../../utils/WardUtils.js";
 import mongoose from "mongoose";
 
+const { Types } = mongoose;
 const controller = {};
 
 controller.show = async (req, res) => {
@@ -52,16 +56,16 @@ controller.showDetail = async (req, res) => {
     { name: "Chi tiết điểm đặt", link: "" },
   ];
 
-  const props = {
-    title: "điểm đặt",
-    b1text: "Tạo yêu cầu cấp phép",
-    b2text: "Chỉnh sửa",
-    b1url: `/cac-diem-dat-quang-cao/${diemId}/tao-yeu-cau`,
-    b2url: `/cac-diem-dat-quang-cao/${diemId}/chinh-sua`,
+  // const props = {
+  //   title: "điểm đặt",
+  //   b1text: "Tạo yêu cầu cấp phép",
+  //   b2text: "Chỉnh sửa",
+  //   b1url: `/cac-diem-dat-quang-cao/${diemId}/tao-yeu-cau`,
+  //   b2url: `/cac-diem-dat-quang-cao/${diemId}/chinh-sua`,
 
-    b1color: "secondary",
-    b2color: "success",
-  };
+  //   b1color: "secondary",
+  //   b2color: "success",
+  // };
 
   try {
     // Fetch adLocation details based on the diemId
@@ -90,14 +94,13 @@ controller.showCreateRequest = async (req, res) => {
   const adLocation = await AdLocation.findById(diemId).populate(["district", "ward"]);
 
   res.render("phuong/taoYeuCauCapPhep", {
-    cssfile: "/phuong/css/taoYeuCauCapPhep-style.css",
     diemId,
     breadcrumbs,
     adLocation,
   });
 };
 
-controller.showEdit = (req, res) => {
+controller.showEdit = async (req, res) => {
   res.locals.currentPage = "quang-cao";
   const { diemId } = req.params;
 
@@ -107,48 +110,68 @@ controller.showEdit = (req, res) => {
     { name: "Chỉnh sửa", link: "" },
   ];
 
-  const adLocation = {
-    id: `${diemId}`,
-    longLat: "10.752334, 106.643366",
-    address: "157 Nguyễn Đình Chính",
-    district: "Phú Nhuận",
-    ward: "11",
-    type: "Đất công/Công viên/Hành lang an toàn giao thông",
-    adType: "Quảng cáo thương mại",
-    status: "Đã quy hoạch",
-  };
-  const locationTypes = [
-    { name: "Đất công/Công viên/Hành lang an toàn giao thông" },
-    { name: "Đất tư nhân/Nhà ở riêng lẻ" },
-    { name: "Trung tâm thương mại" },
-    { name: "Chợ" },
-    { name: "Cây xăng" },
-    { name: "Nhà chờ xe buýt" },
-  ];
-  const adTypes = [{ name: "Cổ động chính trị" }, { name: "Quảng cáo thương mại" }, { name: "Xã hội hoá" }];
-
+  // const adLocation = {
+  //   id: `${diemId}`,
+  //   longLat: "10.752334, 106.643366",
+  //   address: "157 Nguyễn Đình Chính",
+  //   district: "Phú Nhuận",
+  //   ward: "11",
+  //   type: "Đất công/Công viên/Hành lang an toàn giao thông",
+  //   adType: "Quảng cáo thương mại",
+  //   status: "Đã quy hoạch",
+  // };
+  const locationTypes = await LocationType.find({});
+  const adTypes = await AdType.find({});
+  const adLocation = await AdLocation.findById(diemId).populate(["district", "ward", "type", "adType"]);
+  if (!adLocation) {
+    throw new ExpressError(501, "Không tìm thấy điểm đặt quảng cáo");
+  }
+  console.log("POST edit request to: " + req.baseUrl + req.path);
   res.render("so/quanLy/diemDatqc/edit", {
-    adLocation,
     breadcrumbs,
     locationTypes,
     adTypes,
     postDest: req.baseUrl + req.path,
+    adLocation,
   });
 };
 
-controller.processEdit = (req, res) => {
-  console.dir("Post to: " + req.originalUrl);
-  console.log(JSON.stringify(req.body, null, 2));
+controller.processEdit = async (req, res) => {
+  const { diemId } = req.params;
+  console.log(req.body, req.file);
+  const editedLocation = await AdLocation.findById(diemId).populate(["district", "ward", "type", "adType"]);
+  const newAdLocation = new AdLocation({
+    longLat: editedLocation.longLat,
+    address: editedLocation.address,
+    district: editedLocation.district._id,
+    ward: editedLocation.ward._id,
+    type: new Types.ObjectId(req.body.item.type),
+    adType: new Types.ObjectId(req.body.item.adType),
+    status: req.body.item.status,
+  });
+
+  if (req.file) {
+    newAdLocation.image = {
+      url: req.file.path,
+      filename: req.file.filename,
+    };
+  } else {
+    newAdLocation.image = editedLocation.image;
+  }
+
+  const newAdLocationEditReq = new AdLocationChangeRequest({
+    adLocation: newAdLocation._id,
+    reason: req.body.reason,
+    sender: req.user._id,
+    sendDate: new Date(),
+  });
+
+  console.log("New Ad Location saved to database:", await newAdLocation.save());
+  console.log("New Ad Location Edit Request saved to database:", await newAdLocationEditReq.save());
+  req.flash("success", "Yêu cầu chỉnh sửa điểm đặt đã được gửi thành công");
+
+  res.redirect(`/cac-diem-dat-quang-cao/${diemId}`);
 };
-
-// controller.postCreateRequest = (req, res) => {
-//   const data = req.body;
-//   console.log("[Ad board request body:]");
-//   console.log(data);
-//   res.redirect("/cac-bang-quang-cao");
-// };
-
-const { Types } = mongoose;
 
 controller.postCreateRequest = async (req, res) => {
   try {
