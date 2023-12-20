@@ -126,7 +126,8 @@ controller.showEdit = async (req, res) => {
     .populate("boardType")
     .populate({ path: "adLocation", populate: ["district", "ward", "type", "adType"] });
 
-  res.render("so/quanLy/bangqc/edit", { adBoard, breadcrumbs, boardTypes });
+  console.log("ad board", adBoard);
+  res.render("so/quanLy/bangqc/edit", { adBoard, breadcrumbs, boardTypes, adLocation: adBoard.adLocation });
 };
 
 controller.processEdit = async (req, res) => {

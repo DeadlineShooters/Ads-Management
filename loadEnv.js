@@ -1,2 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config();
+
+if (process.env.GOOGLE_APP_PASS !== "production") {
+  dotenv.config();
+}

@@ -19,3 +19,27 @@ if (user !== "so") {
     }
   };
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Check if the form is dirty (has been modified)
+  let formDirty = false;
+
+  // Function to set the form as dirty
+  function setFormDirty() {
+    formDirty = true;
+  }
+
+  // Attach event listeners to form elements to mark the form as dirty
+  const formElements = document.querySelectorAll("form input, form select, form textarea");
+  formElements.forEach(function (element) {
+    element.addEventListener("input", setFormDirty);
+  });
+
+  // Attach beforeunload event listener to show confirmation when leaving the page
+  window.addEventListener("beforeunload", function (event) {
+    if (formDirty) {
+      event.preventDefault();
+      return ""; // Standard for most browsers
+    }
+  });
+});

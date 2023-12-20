@@ -103,10 +103,11 @@
     <div class="mb-3">
       <label for="moTa" class="form-label">Lý do chỉnh sửa</label>
       <textarea class="form-control" id="moTa" rows="3"></textarea>
+      <div id="validationFeedback" class="invalid-feedback">Không được để trống lý do chỉnh sửa</div>
     </div>
     <% } %>
     <div class="mb-3 text-center">
-      <button class="btn btn-info">Chỉnh sửa</button>
+      <button class="btn btn-info" id="editButton">Chỉnh sửa</button>
     </div>
   </form>
 </div>

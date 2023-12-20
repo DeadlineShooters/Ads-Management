@@ -24,8 +24,6 @@ import methodOverride from "method-override";
 
 const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
-if (process.env.GOOGLE_APP_PASS !== "production") {
-}
 try {
   await mongoose.connect(mongoURI);
   console.log("Connected to the database");

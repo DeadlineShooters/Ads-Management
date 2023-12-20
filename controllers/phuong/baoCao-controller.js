@@ -44,6 +44,7 @@ controller.show = async (req, res) => {
     // phuong
     console.log("reports", reports);
     reports = reports.filter((report) => {
+      console.log("Report", report._id);
       if (report.randomPoint) {
         return report.randomPoint.district._id == req.user.district._id && report.randomPoint.ward._id == req.user.ward._id;
       } else {
@@ -105,6 +106,8 @@ controller.postReportStatus = async (req, res) => {
     subject: "Report Status Update",
     text: `Dear ${foundReport.fullName},\n\nYour report status has been updated to "${status}".\nHandling Procedure: ${method}\n\nBest regards,\nAds Management System`,
   });
+
+  req.flash("success", "Bạn đã cập nhật thành công. Đã gửi mail tới " + foundReport.email);
 
   console.log("Message sent: %s", emailOptions.messageId);
   console.log("Receiver: ", foundReport.email);
