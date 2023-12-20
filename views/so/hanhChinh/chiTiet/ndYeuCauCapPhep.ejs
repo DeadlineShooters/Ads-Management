@@ -18,21 +18,30 @@
   }
 </style>
 
-<!-- <script>
+<script>
     $(document).ready(function() {
         $('#yesModal button[type="submit"]').click(function() {
-            console.log("button clicked");
                 $.ajax({
-                url: '/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietCapPhepQC._id %>/update-status',
+                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietCapPhepQC._id %>/update-status',
                 type: 'PUT',
                 data: {
-                    adBoardRequestId: 'your_ad_board_request_id',
-                    newStatus: 'new_status_value'
+                    adBoardRequestId: $('#baoCaoID').val(),
+                    newStatus: 'Đã duyệt'
+                },
+            });
+        });
+        $('#noModal button[type="submit"]').click(function() {
+                $.ajax({
+                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietCapPhepQC._id %>/update-status',
+                type: 'PUT',
+                data: {
+                    adBoardRequestId: $('#baoCaoID').val(),
+                    newStatus: 'Không duyệt'
                 },
             });
         });
     });
-</script> -->
+</script>
 
 <!-- <div class="container p-3 bg-light rounded overflow-hidden"> -->
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -47,6 +56,7 @@
                 <div class="col text-end fw-lighter">
                     <i class="bi bi-person-fill"></i><b> <%= chiTietCapPhepQC.sender.username %></b>&nbsp&nbsp
                     <i class="bi bi-clock-fill"></i><b> <%= new Date(chiTietCapPhepQC.sendDate).toLocaleDateString() %></b>
+                    <input type="hidden" id="baoCaoID" value="<%= chiTietCapPhepQC._id %>" />
                 </div>
             </div>
         </div>
@@ -118,10 +128,22 @@
             </div>
         </li>
     </ul>
-    <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
-        <button class="btn btn-danger mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" data-bs-toggle="modal" data-bs-target="#noModal">Không phê duyệt</button>
-        <button class="btn btn-success mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" data-bs-toggle="modal" data-bs-target="#yesModal">Phê duyệt</button>
-    </div>
+    <% if (chiTietCapPhepQC.status === "Đã duyệt") { %>
+        <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+            <button class="btn btn btn-secondary mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" disabled>Không phê duyệt</button>
+            <button class="btn btn btn-success mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" disabled>Phê duyệt</button>
+        </div>
+    <% } else if (chiTietCapPhepQC.status === "Không duyệt") { %>
+        <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+            <button class="btn btn btn-danger mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" disabled>Không phê duyệt</button>
+            <button class="btn btn btn-secondary mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" disabled>Phê duyệt</button>
+        </div>
+    <% } else { %>
+        <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+            <button class="btn btn btn-secondary mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" data-bs-toggle="modal" data-bs-target="#noModal">Không phê duyệt</button>
+            <button class="btn btn btn-secondary mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" data-bs-toggle="modal" data-bs-target="#yesModal">Phê duyệt</button>
+        </div>
+    <% } %>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="yesModal">
         <div class="modal-dialog" role="document">
@@ -137,11 +159,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <form action="/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietCapPhepQC._id %>/update-status?_method=PUT" method="POST" enctype="application/x-www-form-urlencoded">
-                    <button type="submit" class="btn btn-primary">
-                        Đồng ý
-                    </button>
-                </form>
+                <button type="submit" class="btn btn-primary">
+                    Đồng ý
+                </button>
             </div>
           </div>
         </div>

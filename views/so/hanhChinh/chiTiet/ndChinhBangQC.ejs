@@ -29,8 +29,8 @@
         <div class="col">
             <div class="row">
                 <div class="col text-end fw-lighter">
-                    <i class="bi bi-person-fill"></i><b><%= chiTietBaoCaoQC.sender.username %></b>&nbsp&nbsp
-                    <i class="bi bi-clock-fill"></i><b><%= chiTietBaoCaoQC.sendDate %></b>
+                    <i class="bi bi-person-fill"></i><b><%= chiTietChinhBangQC.sender.username %></b>&nbsp&nbsp
+                    <i class="bi bi-clock-fill"></i><b> <%= new Date(chiTietChinhBangQC.sendDate).toLocaleDateString() %></b>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Lý do chỉnh sửa</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].lyDoChinhSua %></div>
+                <div class="col" style="max-width: 100%;"><%= chiTietChinhBangQC.reason %></div>
             </div>
         </li>
         <li class="list-group-item">
@@ -56,29 +56,29 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Điểm đặt</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].diemDat %></div>
+                <div class="col" style="max-width: 100%;"><%= chiTietChinhBangQC.adBoard?.address %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Khu vực</b></div>
-                <div class="col" style="max-width: 30%;"><b>Quận:</b> <%= object[0].khuVuc.q %></div>
-                <div class="col" style="max-width: 25%;"><b>Phường:</b> <%= object[0].khuVuc.p %></div>
+                <div class="col" style="max-width: 30%;"><b>Quận:</b> <%= chiTietChinhBangQC.adBoard?.adLocation.district.name %></div>
+                <div class="col" style="max-width: 25%;"><b>Phường:</b> <%= chiTietChinhBangQC.adBoard?.adLocation.ward.name %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Phân loại</b></div>
-                <div class="col" style="max-width: 30%;"><b>Loại bảng:</b> <%= object[0].phanLoai.loaiBang %></div>
-                <div class="col" style="max-width: 25%;"><b>Số lượng:</b> <%= object[0].phanLoai.soLuong %></div>
-                <div class="col" style="max-width: 25%;"><b>Kích thước:</b> <%= object[0].phanLoai.kichThuoc %></div>
+                <div class="col" style="max-width: 30%;"><b>Loại bảng:</b> <%= chiTietChinhBangQC.adBoard?.boardType.name %></div>
+                <div class="col" style="max-width: 25%;"><b>Số lượng:</b> <%= chiTietChinhBangQC.adBoard?.quantity %></div>
+                <div class="col" style="max-width: 25%;"><b>Kích thước:</b> <%= chiTietChinhBangQC.adBoard?.size.h %>m x  <%= chiTietChinhBangQC.adBoard?.size.w %>m</div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Hợp đồng</b></div>
-                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu:</b> <%= object[0].hopDong.ngayBatDau %></div>
-                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc:</b> <%= object[0].hopDong.ngayKetThuc %></div>
+                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu:</b> <%= chiTietChinhBangQC.adBoard.startDate.d %>/<%= chiTietChinhBangQC.adBoard.startDate.m %>/<%= chiTietChinhBangQC.adBoard.startDate.y %></div>
+                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc:</b> <%= chiTietChinhBangQC.adBoard.expireDate.d %>/<%= chiTietChinhBangQC.adBoard.expireDate.m %>/<%= chiTietChinhBangQC.adBoard.expireDate.y %></div>
             </div>
         </li>
     </ul>

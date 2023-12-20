@@ -78,34 +78,34 @@
       </thead>
       <tbody>
         <% let i = 1; %>
-        <% for (let motBaoCaoQC of BaoCaoQC ) { %>
-          <tr class="clickable-row" data-href='chinh-bang-qc/chi-tiet-yeu-cau/<%= motBaoCaoQC._id %>'>
+        <% for (let motChinhBangQC of ChinhBangQC ) { %>
+          <tr class="clickable-row" data-href='chinh-bang-qc/chi-tiet-yeu-cau/<%= motChinhBangQC._id %>'>
             <th scope="row">
               <%= i++ %>
             </td>
             <td class="md-col-2">
-              <%= motBaoCaoQC.adBoard?.adLocation.address %>
+              <%= motChinhBangQC.adBoard?.adLocation.address %>
             </td>
             <td>
-              Phường <%= motBaoCaoQC.adBoard?.adLocation.ward.name %>, Quận <%= motBaoCaoQC.adBoard?.adLocation.district.name %>
+              Phường <%= motChinhBangQC.adBoard?.adLocation.ward.name %>, Quận <%= motChinhBangQC.adBoard?.adLocation.district.name %>
             </td>
             <td>
-              <%= motBaoCaoQC.adBoard?.boardType.name %>
+              <%= motChinhBangQC.adBoard?.boardType.name %>
             </td>
             <td>
-              <%= motBaoCaoQC.adBoard?.size.h %>m x <%= motBaoCaoQC.adBoard?.size.w %>m
+              <%= motChinhBangQC.adBoard?.size.h %>m x <%= motChinhBangQC.adBoard?.size.w %>m
             </td>
             <td>
-              <%= motBaoCaoQC.adBoard?.quantity %>
+              <%= motChinhBangQC.adBoard?.quantity %>
             </td>
             <td>
-              <%= new Date(motBaoCaoQC?.sendDate).toLocaleDateString() %>
+              <%= new Date(motChinhBangQC?.sendDate).toLocaleDateString() %>
             </td>
-            <% if (motBaoCaoQC.status ==='khongDuyet' ) { %>
+            <% if (motChinhBangQC.status ==='khongDuyet' ) { %>
               <td>
                 <p class="status notAccept">Không duyệt</p>
               </td>
-              <% } else if (motBaoCaoQC.status ==='Duyet' ) { %>
+              <% } else if (motChinhBangQC.status ==='Duyet' ) { %>
                 <td>
                   <p class="status Accept">Đã duyệt</p>
                 </td>
