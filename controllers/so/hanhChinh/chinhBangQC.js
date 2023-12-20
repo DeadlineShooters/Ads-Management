@@ -53,3 +53,15 @@ export const chiTietChinhBangQC = async (req, res) => {
       res.status(500).json({ error: 'Server error' });
     }
 }
+
+export const capNhatChinhBangQC = async (req, res) => {
+    const id = req.body.adBoardChangeRequestId;
+    try {
+        await AdBoardChangeReq.findByIdAndUpdate(id, {
+            status: req.body.newStatus
+        })
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Server error' });
+    }
+}
