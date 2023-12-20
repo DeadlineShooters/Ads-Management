@@ -10,30 +10,48 @@ import AdBoard from "../../../models/adBoard.js";
 const defaultImageName = "logo_jur19a";
 
 export const index = async (req, res) => {
-  const adLocations = await AdLocation.find({}).populate(["district", "ward", "type", "adType"]);
-  res.render("so/quanLy/diemDatqc/index", { adLocations });
+  const page = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+  const totalItems = await AdLocation.countDocuments();
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const pagination = {
+    page,
+    totalPages,
+    itemsPerPage,
+  };
+
+  const adLocations = await AdLocation.find({})
+    .populate(["district", "ward", "type", "adType"])
+    .skip((page - 1) * itemsPerPage)
+    .limit(itemsPerPage);
+  res.render("so/quanLy/diemDatqc/index", { adLocations, pagination });
 };
 export const showDetails = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+  const totalItems = await AdBoard.countDocuments();
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const pagination = {
+    page,
+    totalPages,
+    itemsPerPage,
+  };
+
   const { id } = req.params;
   const breadcrumbs = [
     { name: "Các điểm đặt quảng cáo", link: "/so/quanly/diem-dat-quang-cao" },
     { name: "Chi tiết điểm đặt quảng cáo", link: "" },
   ];
   const adLocation = await AdLocation.findById(id).populate(["district", "ward", "type", "adType"]);
-  const adBoards = await AdBoard.find({ adLocation: id }).populate("boardType");
+  const adBoards = await AdBoard.find({ adLocation: id })
+    .populate("boardType")
+    .skip((page - 1) * itemsPerPage)
+    .limit(itemsPerPage);
   if (!adLocation) {
     throw new ExpressError(501, "Không tìm thấy điểm đặt quảng cáo");
   }
-  const props = {
-    title: "điểm đặt",
-    b1text: "Chỉnh sửa",
-    b2text: "Xoá",
-    b1url: `/so/quanly/diem-dat-quang-cao/${adLocation.id}/edit`,
-    b2url: `#`,
-    b1color: "secondary",
-    b2color: "danger",
-  };
-  res.render("so/quanLy/diemDatqc/details", { details: adLocation, adBoards, props, breadcrumbs });
+
+  res.render("so/quanLy/diemDatqc/details", { details: adLocation, adBoards, breadcrumbs, pagination });
 };
 export const renderEditForm = async (req, res) => {
   const { id } = req.params;
@@ -75,7 +93,10 @@ export const add = async (req, res) => {
     };
   }
 
-  console.log(await adLocation.save());
+  await adLocation.save();
+
+  req.flash("success", "Điểm đặt mới đã được tạo thành công");
+  return res.redirect("/so/quanly/diem-dat-quang-cao");
 
   req.flash("success", "Điểm đặt mới đã được tạo thành công");
   return res.redirect("/so/quanly/diem-dat-quang-cao");

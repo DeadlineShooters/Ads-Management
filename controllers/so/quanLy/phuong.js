@@ -2,8 +2,22 @@ import Ward from "../../../models/ward.js";
 import District from "../../../models/district.js";
 
 export const index = async (req, res) => {
+
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await Ward.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+        page,
+        totalPages,
+        itemsPerPage,
+    };
+
     const quanId = req.params.quanId;
-    const phuongs = await Ward.find({ district: { _id: quanId } });
+    const phuongs = await Ward.find({ district: { _id: quanId } })
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+    
     if (req.query.json && req.query.json == 'true') {
         return res.json(phuongs);
     }
@@ -16,7 +30,7 @@ export const index = async (req, res) => {
         { name: 'Danh sách Quận', link: '/so/quanly/quan'},
         { name: `Danh sách Phường của Quận ${quan.name}`, link: '' },
     ]
-    res.render('so/quanLy/quan-phuong/index', { items: phuongs, props, breadcrumbs })
+    res.render('so/quanLy/quan-phuong/index', { items: phuongs, props, breadcrumbs, pagination })
 }
 export const renderAddForm = (req, res) => {
     const quanId = req.params.quanId;

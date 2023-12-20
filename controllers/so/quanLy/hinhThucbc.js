@@ -2,14 +2,27 @@ import ReportType from "../../../models/reportType.js";
 import Report from "../../../models/report.js";
 
 export const index = async (req, res) => {
-    // Tố giác sai phạm, Đăng ký nội dung, Đóng góp ý kiến, Giải đáp thắc mắc
-    const hinhThucbcs = await ReportType.find({});
+    
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await ReportType.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+        page,
+        totalPages,
+        itemsPerPage,
+    };
+    
+    const hinhThucbcs = await ReportType.find({})
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+    
     const props = {
         type: 'hình thức báo cáo',
         pathName: 'hinh-thuc-bao-cao'
     }
-    const breadcrumbs = [];
-    res.render('so/quanLy/lhqc-htbc/index', {items: hinhThucbcs, props, breadcrumbs})
+
+    res.render('so/quanLy/lhqc-htbc/index', {items: hinhThucbcs, props, pagination})
 };
 export const renderAddForm = (req, res) => {
     const breadcrumbs = [

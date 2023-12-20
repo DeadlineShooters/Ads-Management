@@ -1,14 +1,28 @@
 import District from "../../../models/district.js";
 
 export const index = async (req, res) => {
-    const quans = await District.find({});
+
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await District.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+        page,
+        totalPages,
+        itemsPerPage,
+    };
+
+    const quans = await District.find({})
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+    
     if (req.query.json && req.query.json == 'true') {
         return res.json(quans);
     }
     const props = {
         type: 'Quận',
     }
-    res.render('so/quanLy/quan-phuong/index', { items: quans, props})
+    res.render('so/quanLy/quan-phuong/index', { items: quans, props, pagination})
 };
 export const renderAddForm = (req, res) => {
     const props = {

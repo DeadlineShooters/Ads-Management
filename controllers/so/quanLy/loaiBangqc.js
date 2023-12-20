@@ -2,13 +2,26 @@ import BoardType from "../../../models/boardType.js";
 import AdBoard from "../../../models/adBoard.js"
 
 export const index = async (req, res) => {
-    const loaibangqcs = await BoardType.find({});
+
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await BoardType.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+        page,
+        totalPages,
+        itemsPerPage,
+    };
+
+    const loaibangqcs = await BoardType.find({})
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage);
     const props = {
         type: 'loại bảng quảng cáo',
         pathName: 'loai-bang-quang-cao'
     }
-    const breadcrumbs = [];
-    res.render('so/quanLy/lhqc-htbc/index', {items: loaibangqcs, props, breadcrumbs})
+
+    res.render('so/quanLy/lhqc-htbc/index', {items: loaibangqcs, props, pagination})
 };
 export const renderAddForm = (req, res) => {
     const breadcrumbs = [
