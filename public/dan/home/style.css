@@ -95,6 +95,10 @@ html {
 
 .ads-point .info__form {
     font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.ads-point .info__address {
     font-weight: 600;
 }
 
@@ -140,7 +144,7 @@ html {
     border: 2px solid #d32e2e;
 }
 
-.violate-point {
+.violated-point {
     width: 21px;
     height: 21px;
     text-align: center;
