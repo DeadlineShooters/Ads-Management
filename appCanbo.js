@@ -2,6 +2,9 @@ import express from "express";
 import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
 // import danRoutes from "./routes/dan.js";
+import trangChuDan from './routes/dan/home.js';
+import baoCaoDan from './routes/dan/report.js';
+
 // phuong
 import diemDatQCPhuong from "./routes/phuong/diemDatQC-route.js";
 import bangQCPhuong from "./routes/phuong/bangQC-route.js";
@@ -86,17 +89,21 @@ canBoApp.use((req, res, next) => {
   next();
 });
 
-canBoApp.get("/", (req, res) => {
-  // console.log("user:", req.user);
-  res.locals.currentPage = "trang-chu";
+// canBoApp.get("/", (req, res) => {
+//   // console.log("user:", req.user);
+//   res.locals.currentPage = "trang-chu";
 
-  if (req.user) {
-    return res.render("index.ejs", {
-      user: req.user,
-      cssfile: "/canbo-home-style.css",
-    });
-  } else return res.redirect("/login");
-});
+//   if (req.user) {
+//     return res.render("index.ejs", {
+//       user: req.user,
+//       cssfile: "/canbo-home-style.css",
+//     });
+//   } else return res.redirect("/login");
+// });
+
+// TỪ DÂN QUA NÈ ADKFJA;KDLFJA;SLFJ;SL
+canBoApp.use('/', trangChuDan);
+canBoApp.use('/report', baoCaoDan);
 
 canBoApp.get("/edit-profile", (req, res) => {
   res.render('editProfile');
