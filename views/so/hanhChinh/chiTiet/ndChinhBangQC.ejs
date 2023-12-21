@@ -22,7 +22,7 @@
     $(document).ready(function() {
         $('#yesModal button[type="submit"]').click(function() {
                 $.ajax({
-                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietChinhBangQC._id %>/update-status',
+                url: '/so/hanhchinh/chinh-bang-qc/chi-tiet-yeu-cau/<%= chiTietChinhBangQC._id %>/update-status',
                 type: 'PUT',
                 data: {
                     adBoardChangeRequestId: $('#chinhBangID').val(),
@@ -32,7 +32,7 @@
         });
         $('#noModal button[type="submit"]').click(function() {
                 $.ajax({
-                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietChinhBangQC._id %>/update-status',
+                url: '/so/hanhchinh/chinh-bang-qc/chi-tiet-yeu-cau/<%= chiTietChinhBangQC._id %>/update-status',
                 type: 'PUT',
                 data: {
                     adBoardChangeRequestId: $('#chinhBangID').val(),

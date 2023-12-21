@@ -101,11 +101,11 @@
             <td>
               <%= new Date(motChinhBangQC?.sendDate).toLocaleDateString() %>
             </td>
-            <% if (motChinhBangQC.status ==='khongDuyet' ) { %>
+            <% if (motChinhBangQC.status ==='Không duyệt' ) { %>
               <td>
                 <p class="status notAccept">Không duyệt</p>
               </td>
-              <% } else if (motChinhBangQC.status ==='Duyet' ) { %>
+              <% } else if (motChinhBangQC.status ==='Đã duyệt' ) { %>
                 <td>
                   <p class="status Accept">Đã duyệt</p>
                 </td>
