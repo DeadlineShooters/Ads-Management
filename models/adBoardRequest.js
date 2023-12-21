@@ -9,5 +9,5 @@ const adBoardRequestSchema = new Schema({
     date: {type: Date},
 })
 
-const AdBoardReq = mongoose.model("AdBoardRequest", adBoardRequestSchema);
-export default AdBoardReq;
+const AdBoardRequest = mongoose.model("AdBoardRequest", adBoardRequestSchema);
+export default AdBoardRequest;

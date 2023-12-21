@@ -106,6 +106,7 @@ async function initMap() {
 				fetch('/adboards/' + item.dataset.id)
 					.then((response) => response.json())
 					.then((adBoards) => {
+						console.log(adBoards)
 						let offcanvas = `
                     <div class="list-panel offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasAP${index}" aria-labelledby="offcanvasLabelAP${index}">
                         <div class="offcanvas-header">
@@ -197,7 +198,7 @@ async function initMap() {
 						var helper = document.createElement('div');
 						helper.innerHTML = offcanvas;
 						while (helper.firstChild) {
-							document.body.insertBefore(helper.firstChild, document.querySelector('body script'));
+							document.getElementById('home').append(helper.firstChild);
 						}
 						var offcanvasElement = document.getElementById('offcanvasAP' + index);
 						var bsOffcanvas = new bootstrap.Offcanvas(offcanvasElement);
@@ -368,7 +369,7 @@ async function initMap() {
 						var helper = document.createElement('div');
 						helper.innerHTML = offcanvas;
 						while (helper.firstChild) {
-							document.body.insertBefore(helper.firstChild, document.querySelector('body script'));
+							document.getElementById('home').append(helper.firstChild);
 						}
 						var offcanvasElement = document.getElementById('offcanvasVP' + index);
 						var bsOffcanvas = new bootstrap.Offcanvas(offcanvasElement);

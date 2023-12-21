@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+import BoardType from './boardType.js';
+import AdLocation from './adLocation.js';
+import AdBoardRequest from './adBoardRequest.js';
+import Report from './report.js';
 const Schema = mongoose.Schema;
 
 const adBoardSchema = new Schema({
