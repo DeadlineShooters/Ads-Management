@@ -27,8 +27,12 @@
             </thead>
             <tbody>
                 <% let i = 1; %>
-                <% for (let item of items) { %>
+                <% for (let item of items) { %> 
+                <% if (props.type === 'Quận') { %>
                 <tr class="clickable" onclick= "window.location='/so/quanly/quan/<%= item.id %>/phuong'">
+                <% } else { %>
+                <tr class="clickable">
+                <% } %>
                     <th scope="row"><%= i++ %></th>
                     <td class="text-break"><%= item.name %></td>
                     <td class="text-break"><%= item.description %></td>
@@ -38,12 +42,12 @@
                             <% if (props.type === 'Quận') { %>
                             <!-- <a href="/so/quanly/quan/<%= item.id %>/phuong"><i class="bi bi-info-circle btn p-0 btn-link"></i></a> -->
                             <a href="/so/quanly/quan/<%= item.id %>/edit"><i class="bi bi-pencil-fill ms-2 btn p-0 btn-link"></i></a>
-                            <form action="/so/quanly/quan/<%= item.id %>?_method=DELETE"method="post">
-                                <button class="btn btn-link p-0 ms-2 showModal"><i class="bi bi-trash3-fill"></i></button>
+                            <form class="showPopUp" action="/so/quanly/quan/<%= item.id %>?_method=DELETE"method="post">
+                                <button class="btn btn-link p-0 ms-2"><i class="bi bi-trash3-fill"></i></button>
                             </form>
                             <% } else { %>
                             <a class="btn btn-link p-0" href="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
-                            <form action="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>?_method=DELETE"method="post">
+                            <form class="showPopUp" action="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>?_method=DELETE"method="POST">
                                 <button class="btn btn-link p-0 ms-2"><i class="bi bi-trash3-fill"></i></button>
                             </form>
                             <% } %>
@@ -55,4 +59,4 @@
         </table>
     </div>
 </section>
-<%- include('../../../partials/pagination') %>
+<%#- include('../../../partials/pagination') %>

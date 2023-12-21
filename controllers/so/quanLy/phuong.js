@@ -1,5 +1,6 @@
 import Ward from "../../../models/ward.js";
 import District from "../../../models/district.js";
+import AdLocation from "../../../models/adLocation.js";
 
 export const index = async (req, res) => {
 
@@ -13,7 +14,7 @@ export const index = async (req, res) => {
         itemsPerPage,
     };
 
-    const quanId = req.params.quanId;
+    const {quanId} = req.params;
     const phuongs = await Ward.find({ district: { _id: quanId } })
         .skip((page - 1) * itemsPerPage)
         .limit(itemsPerPage);
@@ -22,6 +23,7 @@ export const index = async (req, res) => {
         return res.json(phuongs);
     }
     const quan = await District.findById(quanId);
+    console.log("ayy"+quanId);
     const props = {
         type: 'Phường',
         quanId: quanId,
@@ -79,6 +81,14 @@ export const update = async (req, res) => {
 };
 export const remove = async (req, res) => {
     const { quanId, phuongId } = req.params;
+
+    let isInUse = await AdLocation.findOne({ ward: phuongId });
+    // phải thêm dòng dưới
+    // isInUse = await ViolatedPoint.findOne({ward: phuongId})
+    if (isInUse) {
+        req.flash('error', 'Phường đang được sử dụng! Không thể xoá');
+        return res.redirect(`/so/quanly/quan/${quanId}/phuong`);
+    }
     await Ward.findByIdAndDelete(phuongId);
     req.flash('success', 'Phường được xoá thành công');
     res.redirect(`/so/quanly/quan/${quanId}/phuong`);
