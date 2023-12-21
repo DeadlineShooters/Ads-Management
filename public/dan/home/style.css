@@ -5,7 +5,6 @@
 
 html {
     box-sizing: border-box;
-    font-size: 62.5%;
     font-family: Nunito;
 }
 
@@ -27,14 +26,19 @@ html {
     }
 }
 
+#home {
+    position: relative;
+    height: 100vh;
+}
+
 #map {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position: relative;
 }
 
 .search-bar {
-    font-size: 1.6rem;
+    font-size: calc(1.6rem / 1.6);
     position: absolute;
     left: 2.4rem;
     top: 1.6rem;
@@ -71,7 +75,7 @@ html {
 .ads-point {
     width: 21px;
     height: 21px;
-    font-size: 1.4rem;
+    font-size: calc(1.4rem / 1.6);
     line-height: 21px;
     text-align: center;
     background-color: #4285f4;
@@ -81,7 +85,7 @@ html {
 }
 
 [class^="ads-point__info"] {
-    font-size: 1.5rem;
+    font-size: calc(1.5rem / 1.6);
     font-family: Nunito;
     text-align: left;
     position: absolute;
@@ -104,7 +108,7 @@ html {
 }
 
 .ads-point .info__form {
-    font-size: 1.6rem;
+    font-size: calc(1.6rem / 1.6);
     font-weight: 700;
 }
 
@@ -160,7 +164,7 @@ html {
     text-align: center;
     background-color: #d32e2e;
     line-height: 21px;
-    font-size: 1.6rem;
+    font-size: calc(1.6rem / 1.6);
     padding: 4px;
     border-radius: 50%;
 }
@@ -249,13 +253,13 @@ input:checked + .toggle-slider:before {
 }
 
 .toggle-label {
-    font-size: 1.4rem;
+    font-size: calc(1.4rem / 1.6);
     font-family: Nunito;
     margin-left: 8px;
 }
 
 .click-marker__info {
-    font-size: 1.4rem;
+    font-size: calc(1.4rem / 1.6);
     width: 357px;
 }
 
@@ -272,7 +276,7 @@ input:checked + .toggle-slider:before {
 }
 
 .click-marker__info .item__icon {
-    font-size: 1.8rem;
+    font-size: calc(1.8rem / 1.6);
     padding-top: 8px;
 }
 
@@ -351,7 +355,7 @@ input:checked + .toggle-slider:before {
 
 
 .list-panel .offcanvas-title {
-    font-size: 2rem;
+    font-size: calc(2rem / 1.6);
     font-weight: 600;
     padding: 8px 0 0 4px;
 }
@@ -367,7 +371,7 @@ input:checked + .toggle-slider:before {
 .list-panel .panel__menu {
     display: flex;
     flex-direction: column;
-    font-size: 1.8rem;
+    font-size: calc(1.8rem / 1.6);
     color: #aaa;
     position: -webkit-sticky;
     position: sticky;
@@ -393,7 +397,7 @@ input:checked + .toggle-slider:before {
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 10px 16px;
-    font-size: 1.4rem;
+    font-size: calc(1.4rem / 1.6);
     color: #333;
     margin-bottom: 8px;
 }
@@ -404,7 +408,7 @@ input:checked + .toggle-slider:before {
 
 .list-panel .ads-list .item__title,
 .list-panel .report-item .info__title {
-    font-size: 1.8rem;
+    font-size: calc(1.8rem / 1.6);
     font-weight: 600;
 }
 
@@ -429,7 +433,7 @@ input:checked + .toggle-slider:before {
 }
 
 .list-panel .ads-list .item__manipulate .more-info__icon {
-    font-size: 2rem;
+    font-size: calc(2rem / 1.6);
     vertical-align: middle;
     color: #0288d1;
 }
@@ -447,7 +451,7 @@ input:checked + .toggle-slider:before {
 }
 
 .list-panel .ads-list .item__manipulate .report__icon {
-    font-size: 2rem;
+    font-size: calc(2rem / 1.6);
     vertical-align: middle;
     color: #d32e2e;
     padding-right: 8px;
@@ -463,7 +467,7 @@ input:checked + .toggle-slider:before {
 }
 
 .list-panel .report-list__no-report-message {
-    font-size: 1.6rem;
+    font-size: calc(1.6rem / 1.6);
     color: #aaa;
     position: absolute;
     top: 50%;
@@ -475,7 +479,7 @@ input:checked + .toggle-slider:before {
 .list-panel .report-item .content__title {
     color: #d32e2e;
     font-weight: 600;
-    font-size: 1.6rem;
+    font-size: calc(1.6rem / 1.6);
 }
 
 .list-panel .report-item__content .title__icon {
@@ -490,7 +494,7 @@ input:checked + .toggle-slider:before {
 
 .list-panel .report-item .content__report-item .report-item__type,
 .list-panel .report-item .report-item__type {
-    font-size: 1.5rem;
+    font-size: calc(1.5rem / 1.6);
     font-weight: 500;
     margin-bottom: 4px;
 }
