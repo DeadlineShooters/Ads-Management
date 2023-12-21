@@ -4,7 +4,7 @@ import AdType from "./adType.js";
 import District from "./district.js";
 import Ward from "./ward.js";
 import LocationType from "./locationType.js";
-import imageSchema from "./image.js";
+import Image from "./image.js";
 
 const adLocationSchema = new Schema({
     image: imageSchema,
@@ -15,6 +15,7 @@ const adLocationSchema = new Schema({
     type: { type: Schema.Types.ObjectId, ref: "LocationType" },
     adType: { type: Schema.Types.ObjectId, ref: "AdType" },
     status: String,
+    isViolated: Boolean,
 })
 
 const AdLocation = mongoose.model("AdLocation", adLocationSchema);
