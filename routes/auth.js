@@ -82,4 +82,11 @@ router.post('/logout', function (req, res, next) {
 	});
 });
 
+router.get('/forget-password', (req, res) => {
+	res.render('forgetPassword');
+})
+router.get('/input-code', (req, res) => {
+	res.render('inputCode');
+})
+
 export default router;

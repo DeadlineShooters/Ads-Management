@@ -68,17 +68,51 @@
                   placeholder="Điền mật khẩu của bạn"
                 />
               </div>
+              <div class="form-check form-check-inline m-3 mb-0">
+                <input class="form-check-input" type="checkbox" id="showPassword" value="true" onclick="show(this.checked)">
+                <label class="form-check-label" for="showPassword">Hiện mật khẩu</label>
+              </div>
             </div>
-            <button
-              type="submit"
-              class="btn btn-success d-flex align-self-center"
-            >
-              Đăng nhập
-            </button>
+            <button class="btn btn-success d-flex align-self-center">Đăng nhập</button>
+
+            <a class="link-opacity-50-hover text-center mt-2" href="#"  data-bs-toggle="modal" data-bs-target="#forgetPwd">Quên mật khẩu</a>
           </form>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="forgetPwd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Quên mật khẩu</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="" method="post" enctype="application/x-www-form-urlencoded">
+                  <div class="modal-body">
+                      <div class="mb-3">
+                          <p>Vui lòng nhập email đăng nhập để chúng tôi gửi mã PIN cho bạn</p>
+                          <label for="email" class="form-label">Email</label>
+                          <input type="email" class="form-control" name="email" id="email"">
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-primary">Tiếp tục</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      function show(checked) {
+        if (checked) {
+            document.querySelector('#inputPassword').type = 'text';
+        } else {
+            document.querySelector('#inputPassword').type = 'password';
+        }
+      }
+    </script>
     <!-- Bootstrap JavaScript Libraries -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
