@@ -1,9 +1,9 @@
 <% if (user) {
-    layout('layouts/canbo')
-} else {
+    layout('layouts/canbo') %>
+    <div id="user" hidden></div>
+<% } else {
     layout('layouts/dan') 
 } %>
-
 <div id="home">
     <div id="map"></div>
     
@@ -32,6 +32,11 @@
         <div class="info__address"><%= adLocations[i].address %></div>
         <img class="info__img" src="<%= adLocations[i].image.url %>" alt="" />
         <div class="info__planning-stt"><%= adLocations[i].status %></div>
+        <div class="info__details">
+            <a href="/so/quanly/diem-dat-quang-cao/<%= adLocations[i]._id %>" class="details__btn">
+                <span>CHI TIẾT ĐIỂM ĐẶT</span>
+            </a>
+        </div>
     </div>
     <% } %>
     
@@ -105,5 +110,5 @@
                     m.head.append(a);
                 }));
         d[l] ? console.warn(p + ' only loads once. Ignoring:', g) : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
-    })({ key: 'AIzaSyA9x6dilQo2-0LuqFtvUgUMNxYWacsuiys', v: 'beta' });
+    })({ key: 'AIzaSyC6-xrDaqKgWPD8ht5vafZNEfBiiPCBmhc', v: 'beta' });
 </script>

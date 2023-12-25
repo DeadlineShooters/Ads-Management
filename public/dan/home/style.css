@@ -93,7 +93,7 @@ html {
     left: 50%;
     transform: translateX(-50%);
     width: 284px;
-    padding: 12px 12px 0;
+    padding: 12px;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -438,6 +438,7 @@ input:checked + .toggle-slider:before {
     color: #0288d1;
 }
 
+[class^="ads-point__info"] .details__btn,
 .list-panel .ads-item .manipulate__report {
     color: #d32e2e;
     text-decoration: none;
