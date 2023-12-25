@@ -93,7 +93,7 @@ export const add = async (req, res) => {
     };
   }
 
-  await adLocation.save();
+  // await adLocation.save();
 
   req.flash("success", "Điểm đặt mới đã được tạo thành công");
   return res.redirect("/so/quanly/diem-dat-quang-cao");

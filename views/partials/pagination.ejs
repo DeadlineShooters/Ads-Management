@@ -1,9 +1,9 @@
 <section class="d-flex justify-content-center mt-auto position-relative">
 
-    <div class="d-flex justify-content-center position-absolute start-0">
-        <p class="w-auto">Items per page:</p>
+    <div class="d-flex justify-content-center position-absolute start-0 align-items-center">
+        <p class="w-auto m-0">Items per page</p>
         <!-- <label for="itemsPerPage" class="form-label col">Items per page:</label> -->
-        <select id="itemsPerPage" class="form-select mx-3 w-auto" onchange="changeItemsPerPage(this.value)">
+        <select id="itemsPerPage" class="form-select mx-2 w-auto" onchange="changeItemsPerPage(this.value)">
             <option value="5" <%= pagination.itemsPerPage == 5 ? 'selected' : '' %>>5</option>
             <option value="10" <%= pagination.itemsPerPage == 10 ? 'selected' : '' %>>10</option>
             <option value="15" <%= pagination.itemsPerPage == 15 ? 'selected' : '' %>>15</option>

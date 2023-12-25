@@ -16,8 +16,6 @@ import { storage } from "../../cloudinary/index.js";
 const upload = multer({ storage });
 // const upload = multer({ dest: 'cloudinary/' });
 
-
-
 // Quản lý quận
 router.get("/quan", quan.index);
 router.get("/quan/add", quan.renderAddForm);
@@ -31,9 +29,8 @@ router.get("/quan/:quanId/phuong", phuong.index);
 router.get("/quan/:quanId/phuong/add", phuong.renderAddForm);
 router.get("/quan/:quanId/phuong/:phuongId/edit", phuong.renderEditForm);
 router.post("/quan/:quanId/phuong", phuong.add);
-router.delete("/quan/:quanId/phuong/:phuongId", phuong.remove);
 router.put("/quan/:quanId/phuong/:phuongId", phuong.update);
-
+router.delete("/quan/:quanId/phuong/:phuongId", phuong.remove);
 
 // Quản lý loại hình quảng cáo
 router.get("/loai-hinh-quang-cao", loaiHinhqc.index);
