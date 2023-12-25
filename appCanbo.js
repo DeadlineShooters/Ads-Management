@@ -76,6 +76,7 @@ canBoApp.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.currentPage = req.currentPage;
   res.locals.defaultItemsPerPage = 20;
+  // console.log("user" + JSON.stringify(req.user))
 
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -93,14 +94,6 @@ canBoApp.use("/", authRouter);
 canBoApp.use('/', isLoggedIn, trangChuDan);
 canBoApp.use('/report', isLoggedIn, baoCaoDan);
 
-canBoApp.get("/edit-profile", isLoggedIn, (req, res) => {
-  res.render('editProfile');
-})
-canBoApp.get('/group-info', isLoggedIn, (req, res) => {
-  res.render('info')
-})
-
-
 canBoApp.use("/cac-diem-dat-quang-cao/", isLoggedIn, diemDatQCPhuong);
 canBoApp.use("/cac-bang-quang-cao/", isLoggedIn, bangQCPhuong);
 canBoApp.use("/cac-bao-cao/", isLoggedIn, baoCaoPhuong);
@@ -116,7 +109,7 @@ canBoApp.all('*', (req, res, next) => {
 canBoApp.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = 'Đã xảy ra lỗi, vui lòng thử lại.';
-  console.log(err.message);
+  console.log("Error log from middleware: "+err.message);
   res.status(statusCode).render('error', {err});
 });
 

@@ -19,7 +19,7 @@ passport.use(
 				if (!user) {
 					console.log('No such user with that email found.');
 					return cb(null, false, {
-						message: 'No such user with that email found.',
+						message: '',
 					});
 				}
 
@@ -27,7 +27,7 @@ passport.use(
 
 				if (!passwordMatch) {
 					console.log('Incorrect email or password.');
-					return cb(null, false, { message: 'Incorrect email or password.' });
+					return cb(null, false, { message: 'Email hoặc mật khẩu đăng nhập chưa đúng' });
 				}
 
 				console.log('Validation passed');

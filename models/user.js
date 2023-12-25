@@ -12,7 +12,7 @@ const userSchema = new Schema({
 	ward: { type: Schema.Types.ObjectId, ref: 'Ward' },
 	district: { type: Schema.Types.ObjectId, ref: 'District' },
 	phone: { type: String },
-	birthday: { type: Date },
+	birthday: String,
 	daycreated: { type: Date, default: Date.now() },
 });
 

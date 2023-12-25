@@ -1,4 +1,4 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmPopUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <!-- <div class="modal-header">
@@ -17,10 +17,10 @@
 </div>
 
 <script>
-    document.querySelectorAll('.showPopUp button').forEach(button => {
+    document.querySelectorAll('.showPopUp button:not([type="button"])').forEach(button => {
         button.setAttribute('type', 'button');
         button.setAttribute('data-bs-toggle', 'modal');
-        button.setAttribute('data-bs-target', '#exampleModal');
+        button.setAttribute('data-bs-target', '#confirmPopUp');
     });
 
     document.getElementById('saveChangesBtn').addEventListener('click', function () {

@@ -30,12 +30,16 @@
 	</div>
 
 	<div class="dropdown open">
-		<button class="btn border-none dropdown-toggle text-white" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+		<button class="btn border-none dropdown-toggle text-white d-flex align-items-center" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false">
-				<i class="bi bi-person-circle fs-2"></i><span class="ms-2 d-none d-xl-inline">Nguyễn Tuấn Kiệt</span>
-			</button>
+			<i class="bi bi-person-circle fs-2"></i>
+			<div class="d-flex flex-column">
+				<span class="ms-2 d-none d-xl-inline"><%= user.username %></span>
+				<p class="fst-italic" style="font-size: 0.9rem; font-weight: normal; color: lightgrey;">Cán bộ sở</p>
+			</div>
+		</button>
 		<div class="dropdown-menu" aria-labelledby="triggerId">
-			<a class="dropdown-item" href="/edit-profile">Cập nhật thông tin</a>
+			<a class="dropdown-item" href="/edit-profile/<%= user._id %>">Cập nhật thông tin</a>
 			<form action="/logout" method="post">
 				<button class="logout dropdown-item" type="submit">Đăng xuất</button>
 			  </form>

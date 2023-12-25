@@ -64,8 +64,7 @@ export const guiInfoTaiKhoanCanBo = async (req, res) => {
 export const suaTaiKhoanCanBo = async (req, res) => {
     try {
         const canBo = await User.findOne({ _id: req.params.id });
-        const breadcrumbs = [];
-        res.render('so/canBo/chinhSuaTaiKhoan.ejs', {canBo, breadcrumbs});
+        res.render('so/canBo/chinhSuaTaiKhoan.ejs', {canBo});
     } catch (error) {
         console.log(error);
     }
