@@ -15,5 +15,5 @@ const adBoardRequestSchema = new Schema({
   status: String, // Bị từ chối, Đã duyệt, Chưa duyệt
 });
 
-const AdBoardReq = mongoose.model("AdBoardRequest", adBoardRequestSchema);
-export default AdBoardReq;
+const AdBoardRequest = mongoose.model("AdBoardRequest", adBoardRequestSchema);
+export default AdBoardRequest;

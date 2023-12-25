@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import BoardType from './boardType.js';
+import AdLocation from './adLocation.js';
+import AdBoardRequest from './adBoardRequest.js';
+import Report from './report.js';
+import imageSchema from './image.js';
 const Schema = mongoose.Schema;
-import AdLocation from "./adLocation.js";
-import BoardType from "./boardType.js";
-import imageSchema from "./image.js";
-import Report from "./report.js";
-import AdBoardReq from "./adBoardRequest.js";
 
 const adBoardSchema = new Schema({
   image: imageSchema,

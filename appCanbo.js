@@ -2,6 +2,9 @@ import express from "express";
 import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
 // import danRoutes from "./routes/dan.js";
+import trangChuDan from './routes/dan/home.js';
+import baoCaoDan from './routes/dan/report.js';
+
 // phuong
 import diemDatQCPhuong from "./routes/phuong/diemDatQC-route.js";
 import bangQCPhuong from "./routes/phuong/bangQC-route.js";
@@ -21,6 +24,7 @@ import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
 import ExpressError from "./utils/ExpressError.js";
+import { isLoggedIn } from "./middleware.js";
 
 const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
@@ -44,7 +48,7 @@ canBoApp.set("views", path.join(__dirname, "/views"));
 
 canBoApp.use(express.json());
 canBoApp.use(express.urlencoded({ extended: true }));
-canBoApp.use(passport.initialize());
+// canBoApp.use(passport.initialize());
 canBoApp.use(methodOverride("_method"));
 canBoApp.use("/", express.static(path.join(__dirname, "public")));
 canBoApp.use(
@@ -56,14 +60,17 @@ canBoApp.use(
       mongoUrl: mongoURI,
     }),
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      // maxAge: 1000 * 60 * 60 * 24 * 7,
+      maxAge: 1000 * 60 * 60,
     },
   }),
   cookieParser("keyboard cat"),
-  flash()
+  flash(),
+  passport.initialize(),
+  passport.session(),
 );
 
-canBoApp.use(passport.authenticate("session"));
+// canBoApp.use(passport.authenticate("session"));
 
 canBoApp.use((req, res, next) => {
   res.locals.user = req.user;
@@ -74,46 +81,44 @@ canBoApp.use((req, res, next) => {
   next();
 });
 
-// danApp.engine("ejs", ejsMate);
-// danApp.set("view engine", "ejs");
-// danApp.set("views", path.join(__dirname, "/views"));
-
-// // danApp.use(express.static("public"));
-// danApp.use("/", express.static(path.join(__dirname, "public")));
-// danApp.use("/", danRoutes);
-
 canBoApp.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
 
-canBoApp.get("/", (req, res) => {
-  // console.log("user:", req.user);
-  res.locals.currentPage = "trang-chu";
+// canBoApp.get("/", (req, res) => {
+//   // console.log("user:", req.user);
+//   res.locals.currentPage = "trang-chu";
 
-  if (req.user) {
-    return res.render("index.ejs", {
-      user: req.user,
-      cssfile: "/canbo-home-style.css",
-    });
-  } else return res.redirect("/login");
-});
-
-canBoApp.get("/edit-profile", (req, res) => {
-  res.render("editProfile");
-});
-canBoApp.get("/group-info", (req, res) => {
-  res.render("info");
-});
+//   if (req.user) {
+//     return res.render("index.ejs", {
+//       user: req.user,
+//       cssfile: "/canbo-home-style.css",
+//     });
+//   } else return res.redirect("/login");
+// });
 
 canBoApp.use("/", authRouter);
-canBoApp.use("/cac-diem-dat-quang-cao/", diemDatQCPhuong);
-canBoApp.use("/cac-bang-quang-cao/", bangQCPhuong);
-canBoApp.use("/cac-bao-cao/", baoCaoPhuong);
-canBoApp.use("/so/quanly", soQuanLyRoutes);
-canBoApp.use("/so/hanhchinh", soHanhChinhRoutes);
-canBoApp.use("/so/canbo", soCanBoRoutes);
+
+// TỪ DÂN QUA NÈ ADKFJA;KDLFJA;SLFJ;SL
+canBoApp.use('/', isLoggedIn, trangChuDan);
+canBoApp.use('/report', isLoggedIn, baoCaoDan);
+
+canBoApp.get("/edit-profile", isLoggedIn, (req, res) => {
+  res.render('editProfile');
+})
+canBoApp.get('/group-info', isLoggedIn, (req, res) => {
+  res.render('info')
+})
+
+
+canBoApp.use("/cac-diem-dat-quang-cao/", isLoggedIn, diemDatQCPhuong);
+canBoApp.use("/cac-bang-quang-cao/", isLoggedIn, bangQCPhuong);
+canBoApp.use("/cac-bao-cao/", isLoggedIn, baoCaoPhuong);
+canBoApp.use("/so/quanly", isLoggedIn, soQuanLyRoutes);
+canBoApp.use("/so/hanhchinh", isLoggedIn, soHanhChinhRoutes);
+canBoApp.use("/so/canbo", isLoggedIn, soCanBoRoutes);
 
 canBoApp.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
