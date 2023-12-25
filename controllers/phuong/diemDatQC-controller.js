@@ -15,33 +15,41 @@ const controller = {};
 
 controller.show = async (req, res) => {
   const breadcrumbs = [];
-  try {
-    let adLocations = [];
-    if (req.user.role === "quan") {
-      adLocations = await AdLocation.find({ district: req.user.district._id }); // Fetch all ad locations from the database'
-    } else {
-      // phuong
+  const page = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
 
-      adLocations = await AdLocation.find({
-        district: req.user.district._id,
-        ward: req.user.ward._id,
-      });
-    }
+  let adLocations = [];
+  if (req.user.role === "quan") {
+    adLocations = await AdLocation.find({ district: req.user.district._id }); // Fetch all ad locations from the database'
+  } else {
+    // phuong
 
-    adLocations = await AdLocation.populate(adLocations, ["ward", "district", "type", "adType"]);
-
-    const wards = await getWardsForUser(req.user);
-
-    console.log(adLocations);
-    res.render("phuong/diemDatList", {
-      adLocations: encodeURIComponent(JSON.stringify(adLocations)),
-      breadcrumbs,
-      wards,
+    adLocations = await AdLocation.find({
+      district: req.user.district._id,
+      ward: req.user.ward._id,
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
   }
+
+  adLocations = await AdLocation.populate(adLocations, ["ward", "district", "type", "adType"]);
+
+  const totalItems = adLocations.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const pagination = {
+    page,
+    totalPages,
+    itemsPerPage,
+  };
+
+  adLocations = adLocations.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
+  const wards = await getWardsForUser(req.user);
+
+  res.render("phuong/diemDatList", {
+    adLocations: encodeURIComponent(JSON.stringify(adLocations)),
+    breadcrumbs,
+    pagination,
+    wards,
+  });
 };
 
 controller.showDetail = async (req, res) => {

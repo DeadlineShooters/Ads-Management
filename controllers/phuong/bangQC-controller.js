@@ -11,19 +11,12 @@ import Report from "../../models/report.js";
 const { Types } = mongoose;
 const controller = {};
 
-const adLocation = {
-  id: "001",
-  latlng: "10.752334, 106.643366",
-  address: "157 Nguyễn Đình Chính",
-  district: "Phú Nhuận",
-  ward: "11",
-  type: "Đất công/Công viên/Hành lang an toàn giao thông",
-  adType: "Quảng cáo thương mại",
-  status: "Đã quy hoạch",
-};
-
 controller.show = async (req, res) => {
   const breadcrumbs = [];
+
+  const page = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+
   try {
     let adBoards = [];
     adBoards = await AdBoard.find({})
@@ -45,6 +38,17 @@ controller.show = async (req, res) => {
         return adBoard.adLocation.district._id == req.user.district._id && adBoard.adLocation.ward._id == req.user.ward._id;
       });
     }
+
+    const totalItems = adBoards.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+      page,
+      totalPages,
+      itemsPerPage,
+    };
+
+    adBoards = adBoards.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
     const wards = await getWardsForUser(req.user);
 
     // console.log("@@ Wards ", wards);
@@ -52,6 +56,7 @@ controller.show = async (req, res) => {
       breadcrumbs,
       wards,
       adBoards: encodeURIComponent(JSON.stringify(adBoards)),
+      pagination,
     });
   } catch (err) {
     console.error(err);
