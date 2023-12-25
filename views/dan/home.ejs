@@ -21,7 +21,7 @@
     });
     for (let i = 0; i < adLocations.length; i++) { %>
     <div
-        class="ads-point__info<%= i %>"
+        class="ads-point__info<%= i %> troinoi"
         data-id="<%= adLocations[i]._id %>"
         data-lat="<%= adLocations[i].latlng.split(",")[0].trim() %>"
         data-lng="<%= adLocations[i].latlng.split(",")[1].trim() %>"
@@ -112,4 +112,7 @@
     })({ key: '<%= googleMapKey %>', v: 'beta' });
 
     const mapId = '<%= mapId %>';
+
+    const lat = parseFloat('<%= lat%>')
+    const lng = parseFloat('<%= lng%>')
 </script>

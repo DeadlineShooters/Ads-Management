@@ -13,10 +13,14 @@ async function initMap() {
 	let { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 	map = new Map(document.getElementById('map'), {
 		zoom: 17,
-		center: { lat: 10.762860099114166, lng: 106.68247164106691 },
+		center: { lat: lat, lng: lng },
 		mapId: mapId,
 		mapTypeControl: false,
 	});
+
+	// if (fliedIn) {
+	// 	document.querySelector('adpoint')
+	// }
 
 	// searchbar
 	const searchInput = document.querySelector('.search-bar__input');
@@ -80,6 +84,8 @@ async function initMap() {
 
 	// ads point
 	adsPoints.forEach((item, index) => {
+		if (item.dataset.lat == lat && item.dataset.lng == lng)
+			item.classList.add('d-block')
 		let adsPoint = document.createElement('div');
 		adsPoint.className = 'ads-point';
 		adsPoint.textContent = 'QC';
@@ -410,6 +416,10 @@ async function initMap() {
 	new MarkerClusterer({ adsPointMarkers, map });
 	// reverse geocoding
 	map.addListener('click', (event) => {
+		const hover = document.querySelector('.troinoi.d-block');
+		if (hover) {
+			hover.classList.remove('d-block');
+		}
 		latLng = event.latLng;
 		addMarker(latLng);
 	});
