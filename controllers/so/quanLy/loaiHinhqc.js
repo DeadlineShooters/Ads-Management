@@ -2,13 +2,26 @@ import AdType from "../../../models/adType.js";
 import AdLocation from "../../../models/adLocation.js";
 
 export const index = async (req, res) => {
-    const loaihinhqcs = await AdType.find({});
+
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await AdType.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+        page,
+        totalPages,
+        itemsPerPage,
+    };
+
+    const loaihinhqcs = await AdType.find({})
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage);
     const props = {
         type: 'loại hình quảng cáo',
         pathName: 'loai-hinh-quang-cao'
     }
-    const breadcrumbs = [];
-    res.render('so/quanLy/lhqc-htbc/index', {items: loaihinhqcs, props, breadcrumbs})
+
+    res.render('so/quanLy/lhqc-htbc/index', {items: loaihinhqcs, props, pagination})
 };
 export const renderAddForm = (req, res) => {
     // dành cho place holders
