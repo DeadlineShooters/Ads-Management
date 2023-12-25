@@ -25,9 +25,9 @@
 
 
     <!-- Link icon bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
     <title>Ads Management</title>
 
     <!-- General css file -->
@@ -42,17 +42,10 @@
     <%#- include('../partials/header') %>
     <main class="d-flex vh-100">
       <!-- here check whether role is so or phuong/quan to use the right sidebar  -->
-      <% if (user && user.role == "so") { %>
-        <%- include('../partials/so_sidebar') %>
-      <% } else { %>
-        <%- include('../partials/pq_sidebar') %>
-      <% } %>
+      <% if (user && user.role == "so") { %> <%- include('../partials/so_sidebar') %> <% } else { %> <%- include('../partials/pq_sidebar') %> <% } %>
 
       <div class="m-2 p-3 flex-grow-1 rounded d-flex flex-column overflow-auto" id="outer-rectangle">
-        <%- include('../partials/flash') %>
-        <%- include('../partials/breadcrumb') %>
-        <%- body %>
-        <%- include('../partials/popUpModal') %>
+        <%- include('../partials/flash') %> <%- include('../partials/breadcrumb') %> <%- body %> <%- include('../partials/popUpModal') %>
       </div>
     </main>
     <%#- include('../partials/footer') %>

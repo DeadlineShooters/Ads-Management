@@ -1,9 +1,8 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const imageSchema = new mongoose.Schema({
-    url: String,
-    filename: String
-
+  url: String,
+  filename: String,
 });
 
 export default imageSchema;

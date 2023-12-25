@@ -1,27 +1,29 @@
 <% layout('layouts/canbo') %>
 
-<div class="card" style="background: #f8f8fd">
+<div class="card m-auto" style="background: #f8f8fd" style="width: 5rem">
   <h5 class="card-header bg-primary-subtle">Chi tiết báo cáo</h5>
   <div class="card-body container">
     <div class="row mb-3">
       <div class="col-md-5">
         <div class="input-group">
-          <span class="input-group-text bg-body-secondary fw-semibold"
-            >Thời điểm gửi</span
-          >
-          <span class="form-control" aria-label="Thời điểm gửi"
-            >25/10/2023 15h30</span
-          >
+          <span class="input-group-text bg-body-secondary fw-semibold">Thời điểm gửi</span>
+          <span class="form-control" aria-label="Thời điểm gửi"><%=new Date(JSON.parse(decodeURIComponent(report)).sendDate).toLocaleString()%></span>
         </div>
       </div>
 
       <div class="col-md-7">
         <div class="input-group">
-          <span class="input-group-text bg-body-secondary fw-semibold"
-            >Địa điểm bị báo cáo</span
-          >
-          <span class="form-control" aria-label="Địa điểm bị báo cáo"
-            >446 Hoàng Văn Thụ, Phường 4, Tân Bình, Thành phố Hồ Chí Minh
+          <span class="input-group-text bg-body-secondary fw-semibold">Địa điểm bị báo cáo</span>
+          <span class="form-control custom-width" aria-label="Địa điểm bị báo cáo"
+            ><% if (JSON.parse(decodeURIComponent(report)).adBoard ) { %>
+            <a href="/cac-bang-quang-cao/<%=JSON.parse(decodeURIComponent(report)).adBoard._id%>">
+              <%=JSON.parse(decodeURIComponent(report)).adBoard.adLocation.address%>, Phường
+              <%=JSON.parse(decodeURIComponent(report)).adBoard.adLocation.ward.name%>, Quận
+              <%=JSON.parse(decodeURIComponent(report)).adBoard.adLocation.district.name%>
+            </a>
+            <% } else { %> <%=JSON.parse(decodeURIComponent(report)).randomPoint.address%>, Phường
+            <%=JSON.parse(decodeURIComponent(report)).randomPoint.ward.name%>, Quận <%=JSON.parse(decodeURIComponent(report)).randomPoint.district.name%> <% }
+            %>
           </span>
         </div>
       </div>
@@ -29,43 +31,44 @@
     <div class="row mb-3">
       <div class="col-md-6">
         <div class="input-group">
-          <span class="input-group-text bg-body-secondary fw-semibold"
-            >Họ tên người gửi</span
-          >
-          <span class="form-control" aria-label="Họ tên người gửi"
-            >Phạm Văn A</span
-          >
+          <span class="input-group-text bg-body-secondary fw-semibold">Họ tên người gửi</span>
+          <span class="form-control" aria-label="Họ tên người gửi"><%=JSON.parse(decodeURIComponent(report)).fullName%></span>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="input-group">
-          <span class="input-group-text bg-body-secondary fw-semibold"
-            >Email</span
-          >
-          <span class="form-control" aria-label="Email">123@example.com </span>
+          <span class="input-group-text bg-body-secondary fw-semibold">Email</span>
+          <span class="form-control" aria-label="Email"><%=JSON.parse(decodeURIComponent(report)).email%></span>
         </div>
       </div>
     </div>
     <div class="row mb-3">
       <div class="col-md-6">
         <div class="input-group">
-          <span class="input-group-text bg-body-secondary fw-semibold"
-            >Điện thoại liên lạc</span
-          >
-          <span class="form-control" aria-label="Điện thoại liên lạc"
-            >0123456789</span
-          >
+          <span class="input-group-text bg-body-secondary fw-semibold">Điện thoại liên lạc</span>
+          <span class="form-control" aria-label="Điện thoại liên lạc"><%=JSON.parse(decodeURIComponent(report)).phone%></span>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="input-group">
-          <span class="input-group-text bg-body-secondary fw-semibold"
-            >Hình thức báo cáo</span
-          >
-          <span class="form-control" aria-label="Hình thức báo cáo"
-            >Tố giác sai phạm
+          <span class="input-group-text bg-body-secondary fw-semibold">Hình thức báo cáo</span>
+          <span class="form-control" aria-label="Hình thức báo cáo"><%=JSON.parse(decodeURIComponent(report)).reportType.name%> </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <div class="input-group">
+          <span class="input-group-text bg-body-secondary fw-semibold">Hình minh họa</span>
+          <span class="form-control" aria-label="Hình minh họa">
+            <% if(JSON.parse(decodeURIComponent(report)).uploadedImages && JSON.parse(decodeURIComponent(report)).uploadedImages.length > 0) { %> <%
+            JSON.parse(decodeURIComponent(report)).uploadedImages.forEach(function(image) { %>
+            <img src="<%=image.url%>" class="img-thumbnail" alt="hinh-minh-hoa" style="width: 50%; height: auto" />
+            <% }); %> <% } else { %>
+            <p>No images to display</p>
+            <% } %>
           </span>
         </div>
       </div>
@@ -73,146 +76,81 @@
     <div class="row mb-3">
       <div class="col">
         <div class="input-group">
-          <span class="input-group-text bg-body-secondary fw-semibold"
-            >Hình minh họa</span
-          >
-          <span class="form-control" aria-label="Hình minh họa">
-            <img
-              src="/phuong/images/sample.png"
-              class="img-thumbnail"
-              alt="hinh-minh-hoa"
-            />
-            <img
-              src="/phuong/images/sample.png"
-              class="img-thumbnail"
-              alt="hinh-minh-hoa"
-            />
-          </span>
+          <span class="input-group-text bg-body-secondary fw-semibold">Nội dung</span>
+          <div class="form-control" aria-label="content" style="max-width: 100%"><%= JSON.parse(decodeURIComponent(report)).content %></div>
         </div>
       </div>
     </div>
     <div class="row">
-      <button
-        type="button"
-        class="btn btn-secondary w-auto m-auto"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
+      <button type="button" class="btn btn-secondary w-auto m-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Cập nhật tình trạng và cách thức xử lý
       </button>
     </div>
   </div>
 </div>
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <form
-      class="modal-content"
-      action="/cac-bao-cao/<%=baoCaoId%>/update-report-status"
-      method="post"
-      id="updateReport"
-    >
+    <form class="modal-content" action="/cac-bao-cao/<%=JSON.parse(decodeURIComponent(report))._id%>/update-report-status" method="post" id="updateReport">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">
-          Cập nhật tình trạng và cách thức xử lý
-        </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Cập nhật tình trạng và cách thức xử lý</h1>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
       </div>
       <div class="modal-body">
         <div class="input-group mb-3">
-          <span class="input-group-text bg-body-secondary fw-semibold"
-            >Tình trạng xử lý</span
-          >
-          <select
-            class="form-select"
-            aria-label="Tình trạng xử lý"
-            name="status"
-            required
-          >
-            <option value="" disabled selected>Chọn tình trạng xử lý</option>
-            <option value="Đang xử lý">Đang xử lý</option>
+          <span class="input-group-text bg-body-secondary fw-semibold">Tình trạng xử lý</span>
+          <select class="form-select" aria-label="Tình trạng xử lý" name="status" required>
+            <!-- <option value="" disabled selected>Chọn tình trạng xử lý</option> -->
+            <option value="Đang xử lý" selected>Đang xử lý</option>
             <option value="Đã xử lý xong">Đã xử lý xong</option>
           </select>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text bg-body-secondary fw-semibold"
-            >Cách thức xử lý</span
-          >
-          <textarea
-            name="method"
-            class="form-control"
-            aria-label="Cách thức xử lý"
-            rows="5"
-          ></textarea>
+          <span class="input-group-text bg-body-secondary fw-semibold">Cách thức xử lý</span>
+          <textarea name="method" class="form-control" aria-label="Cách thức xử lý" rows="5" id="handlingProcedure"></textarea>
+          <div id="validationFeedback" class="invalid-feedback">Không được để trống cách thức xử lý</div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button
-          id="submit-button"
-          type="submit"
-          class="btn btn-primary"
-          data-bs-dismiss="modal"
-          onclick="updateReport()"
-          disabled
-        >
-          Cập nhật
-        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="submit-button" class="btn btn-primary">Cập nhật</button>
       </div>
     </form>
   </div>
 </div>
 <script>
+  let report = JSON.parse(decodeURIComponent("<%= report %>"));
+
   const statusDropdown = document.querySelector("select");
-  const methodTextarea = document.querySelector(
-    "textarea[aria-label='Cách thức xử lý']"
-  );
-  const submitButton = document.querySelector("#submit-button");
+  const methodTextarea = document.querySelector("textarea[aria-label='Cách thức xử lý']");
 
-  statusDropdown.onchange = () => {
-    submitButton.disabled = false;
-  };
-
-  methodTextarea.onchange = () => {
-    submitButton.disabled = false;
-  };
-  // update report status and method on "Cập nhật"
-  function updateReport() {
-    const status = statusDropdown.value;
-    const method = methodTextarea.value;
-
-    console.log("clicked");
-    localStorage.setItem("lastReportStatus", status);
-    localStorage.setItem("lastReportMethod", method);
-  }
-
-  // Get previous status and method on page load
   document.addEventListener("DOMContentLoaded", () => {
-    const lastReportStatus = localStorage.getItem("lastReportStatus");
-    const lastReportMethod = localStorage.getItem("lastReportMethod");
+    const submitButton = document.getElementById("submit-button");
+    submitButton.onclick = (event) => {
+      console.log("not empty");
+      let methodEmpty = document.getElementById("handlingProcedure").value === "";
 
-    if (lastReportStatus) {
-      document.querySelector(
-        `option[value="${lastReportStatus}"]`
-      ).selected = true;
-    }
+      if (methodEmpty) {
+        event.preventDefault();
+        event.stopPropagation();
+        document.getElementById("handlingProcedure").classList.add("is-invalid");
+      } else {
+        document.getElementById("handlingProcedure").classList.remove("is-invalid");
+      }
+    };
+
+    // Get previous status and method on page load
+    const lastReportStatus = report.status;
+    const lastReportMethod = report.handlingProcedure;
+    // const lastReportStatus = localStorage.getItem("lastReportStatus");
+    // const lastReportMethod = localStorage.getItem("lastReportMethod");
+
+    // if (lastReportStatus) {
+    document.querySelector(`option[value="${lastReportStatus}"]`).selected = true;
+    // }
 
     if (lastReportMethod) {
       methodTextarea.value = lastReportMethod;
-      console.log("should work");
     }
   });
 </script>

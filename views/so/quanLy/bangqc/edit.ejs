@@ -46,11 +46,11 @@
         <div class="row">
             <div class="mb-3 col-4">
                 <label for="start"class="form-label">Ngày bắt đầu hợp đồng</label>
-                <input name="item[startDate]" class="form-control" type="date" id="start" value="<%= adBoard.startDate %>" min="2018-01-01" max="2030-12-31" />
+                <input name="item[startDate]" class="form-control" type="date" id="start" name="trip-start" value="<%= adBoard.startDate %>" min="2018-01-01" max="2030-12-31" />
             </div>
             <div class="mb-3 col-4">
                 <label for="start"class="form-label">Ngày kết thúc hợp đồng</label>
-                <input name="item[expireDate]" class="form-control" type="date" id="start" value="<%= adBoard.expireDate %>" min="2018-01-01" max="2030-12-31" />
+                <input name="item[expireDate]" class="form-control" type="date" id="start" name="trip-start" value="<%= adBoard.expireDate %>" min="2018-01-01" max="2030-12-31" />
             </div>
         </div>
         <div class="mb-3">
@@ -61,23 +61,41 @@
         <div class="mb-3">
             <label for="moTa" class="form-label">Lý do chỉnh sửa</label>
             <textarea class="form-control" id="moTa" rows="3"></textarea>
+            <div id="validationFeedback" class="invalid-feedback">Không được để trống lý do chỉnh sửa</div>
         </div>
         <% } %>
         <div class="mb-3 text-center">
-            <button class="btn btn-info">Chỉnh sửa</button>
+            <button class="btn btn-info" id="editButton">Chỉnh sửa</button>
         </div>
     </form>
 </div>
 
 <style>
-    label {
-        font-weight: bold;
-    }
+  label {
+    font-weight: bold;
+  }
 </style>
 
-
 <script>
-  function resizeInput(input) {
-    input.style.width = input.value.length + "ch";
+  // function resizeInput(input) {
+  //   input.style.width = input.value.length + 5 + "ch" + ;
+  // }
+
+  let user = "<%= user.role %>";
+
+  if (user !== "so") {
+    const submitTrigger = document.getElementById("editButton");
+
+    submitTrigger.onclick = function (event) {
+      let editReasonEmpty = document.getElementById("moTa").value === "";
+
+      if (editReasonEmpty) {
+        event.preventDefault();
+        event.stopPropagation();
+        document.getElementById("moTa").classList.add("is-invalid");
+      } else {
+        document.getElementById("moTa").classList.remove("is-invalid");
+      }
+    };
   }
 </script>

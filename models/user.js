@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
-import District from "./district.js";
+import mongoose from "mongoose";
 import Ward from "./ward.js";
+import District from "./district.js";
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -16,5 +17,5 @@ const userSchema = new Schema({
 	daycreated: { type: Date, default: Date.now() },
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;

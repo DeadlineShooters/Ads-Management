@@ -101,11 +101,6 @@ canBoApp.use("/so/quanly", isLoggedIn, soQuanLyRoutes);
 canBoApp.use("/so/hanhchinh", isLoggedIn, soHanhChinhRoutes);
 canBoApp.use("/so/canbo", isLoggedIn, soCanBoRoutes);
 
-
-canBoApp.all('*', (req, res, next) => {
-  next(new ExpressError(404, 'Page not found'));
-})
-
 canBoApp.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = 'Đã xảy ra lỗi, vui lòng thử lại.';
