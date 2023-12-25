@@ -43,27 +43,13 @@ passport.use(
   )
 );
 
-var router = express.Router();
-
-router.get("/login", function (req, res, next) {
-  res.render("login");
-});
-
 /* See: https://www.passportjs.org/concepts/authentication/password/
 Note: cb(error, user, message) - message describes why authentication failed.
  */
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, {
-      id: user.id,
-      email: user.email,
-      role: user.role,
-      ward: user.ward,
-      district: user.district,
-      phoneNumber: user.phoneNumber,
-      birthDate: user.birthDate,
-    });
+    cb(null, user);
   });
 });
 
@@ -73,12 +59,19 @@ passport.deserializeUser(function (user, cb) {
   });
 });
 
+var router = express.Router();
+
+router.get("/login", function (req, res, next) {
+  res.render("login");
+});
+
 router.post(
   "/login/password",
   passport.authenticate("local", {
+    failureFlash: true,
     successReturnToOrRedirect: "/",
     failureRedirect: "/login",
-    failureMessage: true,
+    // failureMessage: true,
   })
 );
 
