@@ -106,7 +106,7 @@ async function initMap() {
 				fetch('/adboards/' + item.dataset.id)
 					.then((response) => response.json())
 					.then((adBoards) => {
-						console.log(adBoards)
+						console.log(adBoards);
 						let offcanvas = `
                     <div class="list-panel offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasAP${index}" aria-labelledby="offcanvasLabelAP${index}">
                         <div class="offcanvas-header">
@@ -121,27 +121,29 @@ async function initMap() {
                             <div class="ads-list">`;
 						let noAdBoard = true;
 						adBoards.forEach((item1) => {
-							noAdBoard = false;
-							offcanvas += `
-                                <div class="ads-item">
-                                    <div class="item__content">
-                                        <div class="item__title">${item1.boardType.name}</div>
-                                        <div class="item__addr">${item1.adLocation.address}</div>
-                                        <div class="item__size">Kích thước: <span>${item1.size.h}m x ${item1.size.w}m</span></div>
-                                        <div class="item__quantity">Số lượng: <span>${item1.quantity} trụ / bảng</span></div>
-                                        <div class="item__type">Hình thức: <span>${item1.adLocation.adType.name}</span></div>
-                                        <div class="item__category">Phân loại: <span>${item1.adLocation.type.name}</span></div>
-                                        <div class="item__manipulate">
-                                            <div class="manipulate__more-info"><i
-                                                    class="fa-light fa-circle-info more-info__icon"></i>
-                                            </div>
-                                            <a href="/report?location=${item1.adLocation._id}&board=${item1._id}" class="manipulate__report">
-                                                <i class="fa-solid fa-hexagon-exclamation report__icon"></i>
-                                                <span>BÁO CÁO VI PHẠM</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>`;
+							if (item1.status) {
+								noAdBoard = false;
+								offcanvas += `
+									<div class="ads-item">
+										<div class="item__content">
+											<div class="item__title">${item1.boardType.name}</div>
+											<div class="item__addr">${item1.adLocation.address}</div>
+											<div class="item__size">Kích thước: <span>${item1.size.h}m x ${item1.size.w}m</span></div>
+											<div class="item__quantity">Số lượng: <span>${item1.quantity} trụ / bảng</span></div>
+											<div class="item__type">Hình thức: <span>${item1.adLocation.adType.name}</span></div>
+											<div class="item__category">Phân loại: <span>${item1.adLocation.type.name}</span></div>
+											<div class="item__manipulate">
+												<div class="manipulate__more-info"><i
+														class="fa-light fa-circle-info more-info__icon"></i>
+												</div>
+												<a href="/report?location=${item1.adLocation._id}&board=${item1._id}" class="manipulate__report">
+													<i class="fa-solid fa-hexagon-exclamation report__icon"></i>
+													<span>BÁO CÁO VI PHẠM</span>
+												</a>
+											</div>
+										</div>
+									</div>`;
+							}
 						});
 						if (noAdBoard) {
 							offcanvas += `
@@ -223,7 +225,7 @@ async function initMap() {
 
 									let expiry = document.createElement('div');
 									expiry.className = 'item__expiry';
-									expiry.innerHTML = `Ngày hết hạn hợp đồng: <span>${adBoards[index1].expireDate.d}/${adBoards[index1].expireDate.m}/${adBoards[index1].expireDate.y}</span>`;
+									expiry.innerHTML = `Ngày hết hạn hợp đồng: <span>${adBoards[index1].expireDate}</span>`;
 									content.insertBefore(expiry, content.lastElementChild);
 
 									let backward = document.createElement('i');
@@ -463,7 +465,7 @@ async function addMarker(position) {
 					<span>BÁO CÁO VI PHẠM</span>
 				</a>`;
 					outRange = false;
-				} 
+				}
 			});
 		});
 	if (outRange) {

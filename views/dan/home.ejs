@@ -16,7 +16,10 @@
     </div>
     
     <!-- ad location -->
-    <% for (let i = 0; i < adLocations.length; i++) { %>
+    <% adLocations = adLocations.filter(item => {
+        return (!user || (user.role == 'so' || (user.role == 'quan' && item.district == user.district._id) || (user.role == 'phuong' && item.district == user.district._id && item.ward == user.ward._id)));
+    });
+    for (let i = 0; i < adLocations.length; i++) { %>
     <div
         class="ads-point__info<%= i %>"
         data-id="<%= adLocations[i]._id %>"
@@ -33,7 +36,10 @@
     <% } %>
     
     <!-- violated point latlng -->
-    <% for (let i = 0; i < violatedPoints.length; i++) { %>
+    <% violatedPoints = violatedPoints.filter(item => {
+        return (!user || (user.role == 'so' || (user.role == 'quan' && item.district == user.district._id) || (user.role == 'phuong' && item.district == user.district._id && item.ward == user.ward._id)));
+    })
+    for (let i = 0; i < violatedPoints.length; i++) { %>
     <div
         class="violated-point__latlng<%= i %>"
         data-id="<%= violatedPoints[i]._id %>"
