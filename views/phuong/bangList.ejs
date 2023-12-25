@@ -1,8 +1,7 @@
 <% layout('layouts/canbo') %>
 <section class="d-flex justify-content-between">
   <div class="d-flex flex-row">
-    <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%>
-    <%- include('../partials/quan/phuong-dropdown') %> <%}%>
+    <%- include('../partials/phuong/dropdown') %> <%if (user.role == "quan") {%> <%- include('../partials/quan/phuong-dropdown') %> <%}%>
   </div>
 </section>
 <section class="overflow-auto my-3 border rounded">
@@ -19,74 +18,89 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody>
-        <% for (let i = 1; i<14; i++) { %>
-        <!-- replace with real id -->
-        <tr class="clickable-row" data-href="/cac-bang-quang-cao/<%=i%>">
-          <td><%=150 + i %> Nguyễn Đình Chính</td>
-          <td class="khuVucField">Phường 1, Quận <%=user.district%></td>
-          <td>Trụ màn hình điện tử LED</td>
-          <td>2.5m x 10m</td>
-          <td>2 trụ/bảng</td>
-          <%if (i == 1) { %>
-          <td><span class="badge text-bg-secondary">Chưa duyệt</span></td>
-          <%} else if (i == 2) {%>
-          <td><span class="badge text-bg-danger">Bị từ chối</span></td>
-          <% }else { %>
-          <td><span class="badge text-bg-success">Đã duyệt</span></td>
-          <%}%>
-          <td>
-            <div class="d-flex"></div>
-          </td>
-        </tr>
-        <% } %>
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
 </section>
-<section class="d-flex justify-content-center mt-auto">
-  <nav aria-label="...">
-    <ul class="pagination m-0 justify-content-end">
-      <li class="page-item disabled">
-        <a class="page-link">Previous</a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item active" aria-current="page">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
-      </li>
-    </ul>
-  </nav>
-</section>
+<%- include('../partials/pagination') %>
+
 <script>
-  let district = "<%= user.district %>";
+  let district = "<%= user.district._id %>";
+  let allAdBoards = JSON.parse(decodeURIComponent("<%= adBoards %>"));
+
   document.addEventListener("DOMContentLoaded", function () {
     // Get the select element
     const selectPhuong = document.querySelector("#phuong-dropdown");
-
     if (selectPhuong) {
       // Add an event listener for the change event
       selectPhuong.addEventListener("change", function () {
         // Get the selected value
         const selectedValue = selectPhuong.value;
-        const phuongValue = selectedValue.split("phuong-")[1];
-
-        // Update the Khu vực field dynamically
-        document.querySelectorAll(".khuVucField").forEach((item) => {
-          item.textContent = `Phường ${phuongValue}, Quận ${district}`;
-        });
+        fetchAdBoards(selectedValue);
       });
+
+      // Initially fetch all adboards
+      updateTableWithData(allAdBoards);
+    } else {
+      // can bo phuong so there is no select dropdown
+      updateTableWithData(allAdBoards);
     }
   });
 
   // handle on click for each item on the list
-  jQuery(document).ready(function ($) {
-    $(".clickable-row").click(function () {
-      console.log($(this).data("href"));
-      window.location = $(this).data("href");
+  document.addEventListener("DOMContentLoaded", function () {
+    // Use event delegation for click events on the table: use the parent
+    document.querySelector("table").addEventListener("click", function (event) {
+      const clickedRow = event.target.closest(".clickable-row");
+      if (clickedRow) {
+        window.location = clickedRow.getAttribute("data-href");
+      }
     });
   });
+
+  function fetchAdBoards(ward) {
+    // Filter ad boards based on the selected ward
+    const filteredAdBoards = allAdBoards.filter((adBoard) => {
+      return adBoard.adLocation.ward._id == ward && adBoard.adLocation.district._id == district;
+    });
+
+    // Update the table with the filtered data
+    updateTableWithData(filteredAdBoards);
+  }
+
+  function updateTableWithData(data) {
+    // Clear existing table rows
+    const tableBody = document.querySelector("tbody");
+
+    tableBody.innerHTML = "";
+
+    // Populate the table with the new data
+    data.forEach((adBoard) => {
+      const newRow = document.createElement("tr");
+      newRow.classList.add("clickable-row");
+      newRow.setAttribute("data-href", `/cac-bang-quang-cao/${adBoard._id}`);
+
+      newRow.innerHTML = `
+        <td>${adBoard.adLocation.address}</td>
+        <td class="khuVucField">Phường ${adBoard.adLocation.ward.name}, Quận ${adBoard.adLocation.district.name}</td>
+        <td>${adBoard.boardType.name}</td>
+        <td>${adBoard.size.w}m x ${adBoard.size.h}m</td>
+        <td>${adBoard.quantity}</td>
+        <td>
+          ${
+            adBoard.adBoardRequest.status === "Chưa duyệt"
+              ? '<span class="badge text-bg-secondary">Chưa duyệt</span>'
+              : adBoard.adBoardRequest.status === "Bị từ chối"
+              ? '<span class="badge text-bg-danger">Bị từ chối</span>'
+              : '<span class="badge text-bg-success">Đã duyệt</span>'
+          }
+        </td>
+        <td>
+          <div class="d-flex"></div>
+        </td>
+      `;
+
+      tableBody.appendChild(newRow);
+    });
+  }
 </script>

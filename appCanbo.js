@@ -120,21 +120,17 @@ canBoApp.use("/so/quanly", isLoggedIn, soQuanLyRoutes);
 canBoApp.use("/so/hanhchinh", isLoggedIn, soHanhChinhRoutes);
 canBoApp.use("/so/canbo", isLoggedIn, soCanBoRoutes);
 
-
-canBoApp.all('*', (req, res, next) => {
-  next(new ExpressError(404, 'Page not found'));
-})
-
 canBoApp.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
-  if (!err.message) err.message = 'Đã xảy ra lỗi, vui lòng thử lại.';
+  if (!err.message) err.message = "Đã xảy ra lỗi, vui lòng thử lại.";
   console.log(err.message);
-  res.status(statusCode).render('error', {err});
+  res.status(statusCode).render("error", { err });
 });
 
-// danApp.listen(3000, () => {
-//   console.log("Serving on port 3000");
-// });
+canBoApp.all("*", (req, res, next) => {
+  next(new ExpressError(404, "Page not found"));
+});
+
 canBoApp.listen(9000, () => {
   console.log("Serving on port 9000");
 });

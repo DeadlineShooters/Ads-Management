@@ -1,12 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import Report from "./report.js";
+import Ward from "./ward.js";
+import District from "./district.js";
 const Schema = mongoose.Schema;
 
 const violatedPointSchema = new Schema({
-    latlng: Object,
-    reports: [{ type: Schema.Types.ObjectId, ref: 'Report' }],
-    district: { type: Schema.Types.ObjectId, ref: 'District' },
-    ward: { type: Schema.Types.ObjectId, ref: 'Ward' }
+  latlng: Object,
+  reports: [{ type: Schema.Types.ObjectId, ref: "Report" }],
+  address: String,
+  ward: { type: Schema.Types.ObjectId, ref: "Ward" },
+  district: { type: Schema.Types.ObjectId, ref: "District" },
 });
 
-const ViolatedPoint = mongoose.model('ViolatedPoint', violatedPointSchema);
+const ViolatedPoint = mongoose.model("ViolatedPoint", violatedPointSchema);
 export default ViolatedPoint;

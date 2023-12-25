@@ -55,18 +55,18 @@ const __dirname = path.dirname(__filename);
 //   next();
 // });
 
-danApp.engine('ejs', ejsMate);
-danApp.set('view engine', 'ejs');
-danApp.set('views', path.join(__dirname, '/views'));
+danApp.engine("ejs", ejsMate);
+danApp.set("view engine", "ejs");
+danApp.set("views", path.join(__dirname, "/views"));
 
 // danApp.use(express.static("public"));
-danApp.use('/', express.static(path.join(__dirname, 'public')));
+danApp.use("/", express.static(path.join(__dirname, "public")));
 
-danApp.use(bodyParser.json({ limit: '50mb' }));
-danApp.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+danApp.use(bodyParser.json({ limit: "50mb" }));
+danApp.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
-danApp.use('/', trangChuDan);
-danApp.use('/report', baoCaoDan);
+danApp.use("/", trangChuDan);
+danApp.use("/report", baoCaoDan);
 
 // canBoApp.get("/", (req, res) => {
 //   // console.log("user:", req.user);
