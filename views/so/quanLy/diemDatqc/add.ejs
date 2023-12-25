@@ -6,15 +6,27 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
 
-
+<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title" id="warningModalLabel">Warning</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn chưa chọn vị trí cho điểm đặt! Hãy click vào icon quả cầu để chọn vị trí.
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row mt-3 position-relative">
     <div class="container rounded border shadow col-8" style="padding: 1rem 7rem;">
         <h1 class="text-center mb-4">Thêm điểm đặt quảng cáo</h1>
-        <form action="/so/quanly/diem-dat-quang-cao" method="post" enctype="multipart/form-data">
+        <form id="notEmpty" action="/so/quanly/diem-dat-quang-cao" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="coord" class="form-label">Toạ độ</label>
                 <div class="input-group">
-                    <input name="item[longLat]" id="coord" type="text" class="form-control" placeholder="Nhấn vào icon để chọn địa điểm..." readonly required>
+                    <input name="item[latlng]" id="coord" type="text" class="form-control" placeholder="Nhấn vào icon để chọn địa điểm..." readonly required>
                     <span class="input-group-text globe-icon" id="basic-addon2"><i class="bi bi-globe2"></i></span>
                 </div>
                 </div>
@@ -66,7 +78,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="formFile" class="form-label">Chọn ảnh mới</label>
+                <label for="formFile" class="form-label">Chọn ảnh</label>
                 <input name="image" class="form-control" type="file" id="formFile" require>
             </div>
             <% if (user.role !== 'so') { %>
@@ -91,5 +103,35 @@
         background-color: #e9ecef;
     }
 </style>
+<script>
+    
+    const form = document.querySelector('#notEmpty');    
 
-<script src="/so/javascripts/add_edit_diemdat.js"></script>
+    form.addEventListener('submit', function (event) {
+        // Prevent the form from being submitted
+        event.preventDefault();
+
+        // Check all required inputs
+        const requiredInputs = form.querySelectorAll('[required]');
+        let isValid = true;
+
+        requiredInputs.forEach(function (input) {
+            if (!input.value.trim()) {
+                isValid = false;
+            }
+        });
+
+        // If any required input is empty, show an alert
+        if (!isValid) {
+            // showAlert('A simple warning alert—check it out!');
+            // warningAlert.style.display = 'block';
+            const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
+            warningModal.show();
+        } else {
+            // If all required inputs have values, submit the form
+            form.submit();
+        }
+        
+    });
+
+</script>

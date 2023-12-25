@@ -1,13 +1,29 @@
 import Ward from "../../../models/ward.js";
 import District from "../../../models/district.js";
+import AdLocation from "../../../models/adLocation.js";
 
 export const index = async (req, res) => {
-    const quanId = req.params.quanId;
-    const phuongs = await Ward.find({ district: { _id: quanId } });
+
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await Ward.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+        page,
+        totalPages,
+        itemsPerPage,
+    };
+
+    const {quanId} = req.params;
+    const phuongs = await Ward.find({ district: { _id: quanId } })
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+    
     if (req.query.json && req.query.json == 'true') {
         return res.json(phuongs);
     }
     const quan = await District.findById(quanId);
+    console.log("ayy"+quanId);
     const props = {
         type: 'Phường',
         quanId: quanId,
@@ -16,7 +32,7 @@ export const index = async (req, res) => {
         { name: 'Danh sách Quận', link: '/so/quanly/quan'},
         { name: `Danh sách Phường của Quận ${quan.name}`, link: '' },
     ]
-    res.render('so/quanLy/quan-phuong/index', { items: phuongs, props, breadcrumbs })
+    res.render('so/quanLy/quan-phuong/index', { items: phuongs, props, breadcrumbs, pagination })
 }
 export const renderAddForm = (req, res) => {
     const quanId = req.params.quanId;
@@ -65,6 +81,14 @@ export const update = async (req, res) => {
 };
 export const remove = async (req, res) => {
     const { quanId, phuongId } = req.params;
+
+    let isInUse = await AdLocation.findOne({ ward: phuongId });
+    // phải thêm dòng dưới
+    // isInUse = await ViolatedPoint.findOne({ward: phuongId})
+    if (isInUse) {
+        req.flash('error', 'Phường đang được sử dụng! Không thể xoá');
+        return res.redirect(`/so/quanly/quan/${quanId}/phuong`);
+    }
     await Ward.findByIdAndDelete(phuongId);
     req.flash('success', 'Phường được xoá thành công');
     res.redirect(`/so/quanly/quan/${quanId}/phuong`);

@@ -1,14 +1,30 @@
 import District from "../../../models/district.js";
+import AdLocation from "../../../models/adLocation.js";
+import Ward from "../../../models/ward.js";
 
 export const index = async (req, res) => {
-    const quans = await District.find({});
+
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await District.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+        page,
+        totalPages,
+        itemsPerPage,
+    };
+
+    const quans = await District.find({})
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+    
     if (req.query.json && req.query.json == 'true') {
         return res.json(quans);
     }
     const props = {
         type: 'Quận',
     }
-    res.render('so/quanLy/quan-phuong/index', { items: quans, props})
+    res.render('so/quanLy/quan-phuong/index', { items: quans, props, pagination})
 };
 export const renderAddForm = (req, res) => {
     const props = {
@@ -49,7 +65,16 @@ export const update = async (req, res) => {
     res.redirect(`/so/quanly/quan`);
 }
 export const remove = async (req, res) => {
-    await District.findByIdAndDelete(req.params.quanId);
+    const { quanId } = req.params;
+    let isInUse = await AdLocation.findOne({ district: quanId });
+    isInUse = await Ward.findOne({ district: quanId });
+    // phải thêm dòng dưới
+    // isInUse = await ViolatedPoint.findOne({district: quanId})
+    if (isInUse) {
+        req.flash('error', 'Quận đang được sử dụng! Không thể xoá');
+        return res.redirect('/so/quanly/quan');
+    }
+    // await District.findByIdAndDelete(quanId);
     req.flash('success', 'Quận được xoá thành công');
-    res.redirect(`/so/quanly/quan`);
+    res.redirect('/so/quanly/quan');
 }

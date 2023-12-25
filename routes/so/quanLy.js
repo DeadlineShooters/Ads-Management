@@ -16,8 +16,6 @@ import { storage } from "../../cloudinary/index.js";
 const upload = multer({ storage });
 // const upload = multer({ dest: 'cloudinary/' });
 
-
-
 // Quản lý quận
 router.get("/quan", quan.index);
 router.get("/quan/add", quan.renderAddForm);
@@ -31,9 +29,8 @@ router.get("/quan/:quanId/phuong", phuong.index);
 router.get("/quan/:quanId/phuong/add", phuong.renderAddForm);
 router.get("/quan/:quanId/phuong/:phuongId/edit", phuong.renderEditForm);
 router.post("/quan/:quanId/phuong", phuong.add);
-router.delete("/quan/:quanId/phuong/:phuongId", phuong.remove);
 router.put("/quan/:quanId/phuong/:phuongId", phuong.update);
-
+router.delete("/quan/:quanId/phuong/:phuongId", phuong.remove);
 
 // Quản lý loại hình quảng cáo
 router.get("/loai-hinh-quang-cao", loaiHinhqc.index);
@@ -77,9 +74,15 @@ router.put("/diem-dat-quang-cao/:id", upload.single("image"), catchAsync(diemDat
 router.delete("/diem-dat-quang-cao/:id", catchAsync(diemDatqc.remove));
 
 // Quản lý bảng quảng cáo
-router.get("/bang-quang-cao", bangqc.index);
-router.get("/bang-quang-cao/add", bangqc.renderAddForm);
-router.get("/bang-quang-cao/:id", bangqc.showDetails);
-router.get("/bang-quang-cao/:id/edit", bangqc.renderEditForm);
+// router.get("/bang-quang-cao", bangqc.index);
+router.get("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/add", catchAsync(bangqc.renderAddForm));
+router.get("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId", bangqc.showDetails);
+router.get("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId/edit", bangqc.renderEditForm);
+router.post("/diem-dat-quang-cao/:adLocationId/bang-quang-cao", upload.single("image"), catchAsync(bangqc.add));
+router.put("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId", upload.single("image"), catchAsync(bangqc.update));
+router.delete("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId", catchAsync(bangqc.remove));
+// router.post("/bang-quang-cao", upload.single("image"), catchAsync(bangqc.add));
+// router.put("/bang-quang-cao/:id", upload.single("image"), catchAsync(bangqc.update));
+// router.delete("/bang-quang-cao/:id", catchAsync(bangqc.remove));
 
 export default router;
