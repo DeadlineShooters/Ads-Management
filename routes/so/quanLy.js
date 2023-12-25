@@ -81,8 +81,5 @@ router.get("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId/edit", b
 router.post("/diem-dat-quang-cao/:adLocationId/bang-quang-cao", upload.single("image"), catchAsync(bangqc.add));
 router.put("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId", upload.single("image"), catchAsync(bangqc.update));
 router.delete("/diem-dat-quang-cao/:adLocationId/bang-quang-cao/:adBoardId", catchAsync(bangqc.remove));
-// router.post("/bang-quang-cao", upload.single("image"), catchAsync(bangqc.add));
-// router.put("/bang-quang-cao/:id", upload.single("image"), catchAsync(bangqc.update));
-// router.delete("/bang-quang-cao/:id", catchAsync(bangqc.remove));
 
 export default router;
