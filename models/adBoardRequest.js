@@ -12,7 +12,7 @@ const adBoardRequestSchema = new Schema({
   contactInfo: { email: String, phone: String, address: String },
   sender: { type: Schema.Types.ObjectId, ref: "User" },
   sendDate: Date,
-  status: String,
+  status: String, // Bị từ chối, Đã duyệt, Chưa duyệt
 });
 
 const AdBoardReq = mongoose.model("AdBoardRequest", adBoardRequestSchema);

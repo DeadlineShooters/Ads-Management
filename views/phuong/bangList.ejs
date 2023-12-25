@@ -40,7 +40,7 @@
   </nav>
 </section>
 <script>
-  let district = "<%= user.district %>";
+  let district = "<%= user.district._id %>";
   let allAdBoards = JSON.parse(decodeURIComponent("<%= adBoards %>"));
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -51,8 +51,7 @@
       selectPhuong.addEventListener("change", function () {
         // Get the selected value
         const selectedValue = selectPhuong.value;
-        const phuongValue = selectedValue.split("phuong-")[1];
-        fetchAdBoards(phuongValue);
+        fetchAdBoards(selectedValue);
       });
 
       // Initially fetch all adboards
@@ -77,7 +76,7 @@
   function fetchAdBoards(ward) {
     // Filter ad boards based on the selected ward
     const filteredAdBoards = allAdBoards.filter((adBoard) => {
-      return adBoard.adLocation.ward.name === ward && adBoard.adLocation.district.name === district;
+      return adBoard.adLocation.ward._id == ward && adBoard.adLocation.district._id == district;
     });
 
     // Update the table with the filtered data

@@ -105,7 +105,7 @@
           <div id="validationFeedback" class="invalid-feedback">Ngày bắt đầu không được sau ngày kết thúc</div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary w-auto m-auto mt-3" id="gui-yeu-cau" onclick="showToast()">Gửi yêu cầu</button>
+      <button type="submit" class="btn btn-primary w-auto m-auto mt-3" id="gui-yeu-cau">Gửi yêu cầu</button>
       <div class="toast position-absolute z-1 bottom-0 end-0">
         <div class="toast-header d-flex justify-content-between">
           <div>
@@ -124,81 +124,58 @@
 <script type="module">
   document.addEventListener("DOMContentLoaded", function () {
     const toastTrigger = document.getElementById("gui-yeu-cau");
-    const toastLiveExample = document.getElementById("liveToast");
 
-    toastTrigger.onclick = function () {
-      // check whether all fields are filled to trigger toast
-
-      let allFilled = 1;
+    function validateFields() {
+      let allFilled = true;
       let requiredFields = "";
+
+      // Check if all input fields are filled
       $("#create-request-form input").each(function () {
-        if ($(this).val() == "") {
-          allFilled = 0;
+        if ($(this).val() === "") {
+          allFilled = false;
+          return false; // Exit the loop early if any field is empty
         }
       });
 
+      // Check if textarea is not empty
       let textareaEmpty = document.getElementById("formTextarea").value === "";
 
-      // check start and end dates
-      let startDate = new Date(document.querySelector('input[name="start-date"]').value);
-      let endDate = new Date(document.querySelector('input[name="end-date"]').value);
+      // Check start and end dates
+      let startDate = document.querySelector('input[name="start-date"]').value;
+      let endDate = document.querySelector('input[name="end-date"]').value;
 
       if (startDate > endDate) {
-        event.preventDefault();
-        event.stopPropagation();
         document.getElementById("start").classList.add("is-invalid");
         document.getElementById("end").classList.add("is-invalid");
+        allFilled = false;
       } else {
         document.getElementById("start").classList.remove("is-invalid");
         document.getElementById("end").classList.remove("is-invalid");
       }
-      // toasting!
-      // note that select tag is always selected so no need to check
-      if (allFilled && !textareaEmpty) {
+
+      return allFilled && !textareaEmpty;
+    }
+
+    toastTrigger.onclick = function () {
+      // check whether all fields are filled to trigger toast
+      event.preventDefault();
+      event.stopPropagation();
+
+      let isValid = validateFields();
+
+      if (isValid) {
         var toastElList = [].slice.call(document.querySelectorAll(".toast"));
         var toastList = toastElList.map(function (toastEl) {
-          // Creates an array of toasts (it only initializes them)
-          return new bootstrap.Toast(toastEl); // No need for options; use the default options
+          return new bootstrap.Toast(toastEl);
         });
-        toastList.forEach((toast) => toast.show()); // This show them
+        toastList.forEach((toast) => toast.show());
 
-        console.log(toastList); // Testing to see if it works
+        // Delay form submission so the user can have more time to look at the toast
+        setTimeout(function () {
+          document.getElementById("create-request-form").submit();
+        }, 3000);
       }
-
-      // delay form submission so user can have more time to look at toast
-      $("#create-request-form")
-        .eq(0)
-        .on("submit", function (e) {
-          var $form = $(this);
-
-          if ($form.data("blocked") !== true) {
-            // mark the form as blocked -> cant submit
-            $form.data("blocked", true);
-            console.log("Scheduling form submit...");
-
-            window.setTimeout(function () {
-              console.log("Submitting!");
-              $form.submit();
-              $form.data("blocked", false);
-            }, 3000);
-
-            // disallow submit
-            return false;
-          }
-        });
     };
-
-    // // check if start date <= end date
-    // document.querySelector("form").addEventListener("submit", function (event) {
-    //   var startDate = new Date(document.querySelector('input[name="start-date"]').value);
-    //   var endDate = new Date(document.querySelector('input[name="end-date"]').value);
-
-    //   console.log("Hey this violates");
-    //   if (startDate > endDate) {
-    //     alert("Ngày bắt đầu không được sau ngày kết thúc");
-    //     event.preventDefault();
-    //   }
-    // });
   });
 </script>
 <style>

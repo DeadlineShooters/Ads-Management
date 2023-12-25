@@ -11,6 +11,7 @@ router.get("/:bangId?", (req, res) => {
   return req.params.bangId ? controller.showDetail(req, res) : controller.show(req, res);
 });
 
+router.delete("/:bangId/huy-yeu-cau", controller.cancelRequest);
 router.get("/:bangId/xem-yeu-cau", controller.showYeuCauCapPhep);
 router.get("/:bangId/chinh-sua", controller.showEdit);
 router.route("/:bangId/chinh-sua").get(controller.showEdit).post(upload.single("image"), controller.processEdit);

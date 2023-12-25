@@ -6,6 +6,7 @@ import BoardType from "../../models/boardType.js";
 import mongoose from "mongoose";
 import AdBoardChangeRequest from "../../models/adBoardChangeRequest.js";
 import AdBoardReq from "../../models/adBoardRequest.js";
+import Report from "../../models/report.js";
 
 const { Types } = mongoose;
 const controller = {};
@@ -40,18 +41,13 @@ controller.show = async (req, res) => {
       // phuong
       console.log("District: " + req.user.district.name + "\nward: " + req.user.ward.name);
 
-      const foundWard = await Ward.findOne({
-        name: req.user.ward.name,
-        district: req.user.district._id,
-      });
-
       adBoards = adBoards.filter((adBoard) => {
-        console.log(adBoard.adLocation.district.name + " " + adBoard.adLocation.ward.name);
         return adBoard.adLocation.district._id == req.user.district._id && adBoard.adLocation.ward._id == req.user.ward._id;
       });
     }
-    console.log(adBoards);
     const wards = await getWardsForUser(req.user);
+
+    // console.log("@@ Wards ", wards);
     res.render("phuong/bangList", {
       breadcrumbs,
       wards,
@@ -181,4 +177,36 @@ controller.processEdit = async (req, res) => {
   console.log("New Ad Board Edit Request created!", await newAdBoardEditReq.save());
   res.redirect(`/cac-bang-quang-cao/${bangId}`);
 };
+
+controller.cancelRequest = async (req, res) => {
+  const { bangId } = req.params;
+
+  try {
+    // Check if the board exists
+    const boardToDelete = await AdBoard.findById(bangId);
+    if (!boardToDelete) {
+      return res.status(404).json({ error: "Board not found" });
+    }
+
+    // Check if adBoardRequest exists
+    const adBoardRequestId = boardToDelete.adBoardRequest;
+    if (!adBoardRequestId) {
+      return res.status(400).json({ error: "Invalid adBoardRequest ID" });
+    }
+
+    // Delete the adBoardRequest document
+    await AdBoardChangeRequest.findByIdAndDelete(adBoardRequestId);
+
+    // Delete the AdBoard document
+    await AdBoard.findByIdAndDelete(bangId);
+
+    // delete all reports which has adBoard field (ObjectId) equal to this adBoard
+
+    res.redirect("/cac-bang-quang-cao/");
+  } catch (error) {
+    console.error("Error cancelling request:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export default controller;

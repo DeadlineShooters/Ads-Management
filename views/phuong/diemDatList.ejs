@@ -38,7 +38,7 @@
   </nav>
 </section>
 <script>
-  let district = "<%= user.district %>";
+  let district = "<%= user.district._id %>";
   const allAdLocations = JSON.parse(decodeURIComponent("<%= adLocations %>"));
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -49,8 +49,7 @@
       selectPhuong.addEventListener("change", function () {
         // Get the selected value
         const selectedValue = selectPhuong.value;
-        const phuongValue = selectedValue.split("phuong-")[1];
-        fetchAdLocations(phuongValue);
+        fetchAdLocations(selectedValue);
       });
 
       // Initial fetch based on the first ward in the dropdown
@@ -75,7 +74,7 @@
   async function fetchAdLocations(ward) {
     // Filter ad locations based on the selected ward
     const filteredAdLocations = allAdLocations.filter((adLocation) => {
-      return adLocation.ward.name === ward && adLocation.district.name === district;
+      return adLocation.ward._id == ward && adLocation.district._id == district;
     });
 
     // Update the table with the filtered data

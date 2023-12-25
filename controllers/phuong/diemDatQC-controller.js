@@ -18,7 +18,7 @@ controller.show = async (req, res) => {
   try {
     let adLocations = [];
     if (req.user.role === "quan") {
-      adLocations = await AdLocation.find({ district: foundDistrict._id }); // Fetch all ad locations from the database'
+      adLocations = await AdLocation.find({ district: req.user.district._id }); // Fetch all ad locations from the database'
     } else {
       // phuong
 
@@ -168,17 +168,26 @@ controller.processEdit = async (req, res) => {
   res.redirect(`/cac-diem-dat-quang-cao/${diemId}`);
 };
 
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 controller.postCreateRequest = async (req, res) => {
   try {
     const data = req.body;
-    console.log(data, req.file);
+    console.log("@@ req body: ", data, req.file);
 
     const adPointID = req.path.split("/")[1];
     console.log("adPointID: " + adPointID);
 
     const foundBoardType = await BoardType.findOne({ name: data.boardType });
-    const startDate = new Date(data["start-date"]);
-    const endDate = new Date(data["end-date"]);
+    console.log("@@ start date: " + data["start-date"] + ", end date: " + data["end-date"]);
+
+    const startDate = data["start-date"];
+    const endDate = data["end-date"];
 
     // create new adBoard
     const newAdBoard = new AdBoard({
@@ -189,16 +198,8 @@ controller.postCreateRequest = async (req, res) => {
       boardType: foundBoardType._id,
       size: { h: data.height, w: data.width },
       quantity: data.amount,
-      startDate: {
-        d: startDate.getUTCDate(),
-        m: startDate.getUTCMonth() + 1,
-        y: startDate.getUTCFullYear(),
-      },
-      expireDate: {
-        d: endDate.getUTCDate(),
-        m: endDate.getUTCMonth() + 1,
-        y: endDate.getUTCFullYear(),
-      },
+      startDate: startDate, // Convert to string using toISOString()
+      expireDate: endDate,
       adLocation: new Types.ObjectId(adPointID),
     });
 
@@ -217,7 +218,7 @@ controller.postCreateRequest = async (req, res) => {
       status: "Chưa duyệt",
     });
 
-    newAdBoard.adBoardReq = newAdBoardReq._id;
+    newAdBoard.adBoardRequest = newAdBoardReq._id;
 
     const savedAdBoardReq = await newAdBoardReq.save();
     console.log("AdBoardReq saved to database:", savedAdBoardReq);

@@ -18,12 +18,6 @@
   }
 </style>
 
-<!-- <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/so/hanhchinh/cap-phep-qc">Danh sách yêu cầu cấp phép quảng cáo</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Chi tiết yêu cầu</li>
-  </ol>
-</nav> -->
 <div class="card m-auto" style="width: 65rem">
   <%if (user.role === "so") {%>
   <div class="d-flex justify-content-between flex-wrap nowrap align-items-center pb-2 mb-3 border-bottom flex-end">
@@ -162,4 +156,13 @@
   </div>
   <%}%>
 </div>
-<!-- </div> -->
+<!-- phuong, quan  -->
+<%if (user.role !== "so") {%> <% if (adBoardReq.status === "Chưa duyệt") {%>
+<div class="d-flex flex-row justify-content-center mt-3">
+  <form class="showPopUp" action="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau?_method=delete" method="post">
+    <button class="btn btn-danger mx-3">Hủy bỏ yêu cầu</button>
+  </form>
+  <!-- <a href="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau" class="btn btn-secondary me-3">Hủy bỏ yêu cầu</a> -->
+</div>
+
+<%} %> <%}%>

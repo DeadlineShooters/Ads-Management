@@ -36,7 +36,7 @@
   </nav>
 </section>
 <script>
-  let district = "<%= user.district %>";
+  let district = "<%= user.district._id %>";
   let allReports = JSON.parse(decodeURIComponent("<%= reports %>"));
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -48,8 +48,7 @@
       selectPhuong.addEventListener("change", function () {
         // Get the selected value
         const selectedValue = selectPhuong.value;
-        const phuongValue = selectedValue.split("phuong-")[1];
-        fetchReports(phuongValue);
+        fetchReports(selectedValue);
       });
 
       // initial data
@@ -63,14 +62,14 @@
   function fetchReports(ward) {
     const filteredReports = allReports.filter((report) => {
       if (report.randomPoint) {
-        return report.randomPoint.ward.name === ward;
+        return report.randomPoint.ward._id == ward && report.randomPoint.district._id == district;
       } else {
-        return report.adBoard.adLocation.ward.name === ward;
+        return report.adBoard.adLocation.ward._id == ward && report.adBoard.adLocation.district._id == district;
       }
     });
 
     // Update the table with the filtered data
-    updateTableWithData(filteredAdBoards);
+    updateTableWithData(filteredReports);
   }
 
   function updateTableWithData(data) {

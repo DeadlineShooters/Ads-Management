@@ -6,11 +6,8 @@ export async function getWardsForUser(user) {
 
   if (user.role === "quan") {
     // get all the wards for district of user (user.district)
-    const foundDistrict = await District.findOne({ name: user.district });
 
-    if (foundDistrict) {
-      wards = await Ward.find({ district: foundDistrict._id });
-    }
+    wards = await Ward.find({ district: user.district._id });
   }
 
   return wards;
