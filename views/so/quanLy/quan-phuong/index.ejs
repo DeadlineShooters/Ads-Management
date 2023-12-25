@@ -1,8 +1,9 @@
 <% layout('layouts/canbo') %>
-<%#- include('../../../partials/modal.ejs') %>
-<section class="d-flex <%= props.type==='Quận'? 'justify-content-between' : 'justify-content-end' %> ">
+<section class="d-flex justify-content-between">
     <% if (props.type === "Quận") {%>
     <%- include('../../../partials/so/quanLyDropdown') %>
+    <% } else { %>
+    <h4>Danh sách phường</h4>
     <% } %>
     <div>
         <% if (props.type === 'Quận') { %>
@@ -14,7 +15,7 @@
 </section>
 <section class="overflow-auto my-3 border rounded">
     <div>
-        <table class="table table-light table-striped">
+        <table class="table table-light table-striped table-hover">
             <thead>
                 <tr>
                     <th scope="col">No.</th>
@@ -26,8 +27,12 @@
             </thead>
             <tbody>
                 <% let i = 1; %>
-                <% for (let item of items) { %>
-                <tr class="myElement">
+                <% for (let item of items) { %> 
+                <% if (props.type === 'Quận') { %>
+                <tr class="clickable" onclick= "window.location='/so/quanly/quan/<%= item.id %>/phuong'">
+                <% } else { %>
+                <tr class="clickable">
+                <% } %>
                     <th scope="row"><%= i++ %></th>
                     <td class="text-break"><%= item.name %></td>
                     <td class="text-break"><%= item.description %></td>
@@ -35,14 +40,14 @@
                     <td class="text-break">
                         <div class="d-flex">
                             <% if (props.type === 'Quận') { %>
-                            <a href="/so/quanly/quan/<%= item.id %>/phuong"><i class="bi bi-info-circle btn p-0 btn-link"></i></a>
+                            <!-- <a href="/so/quanly/quan/<%= item.id %>/phuong"><i class="bi bi-info-circle btn p-0 btn-link"></i></a> -->
                             <a href="/so/quanly/quan/<%= item.id %>/edit"><i class="bi bi-pencil-fill ms-2 btn p-0 btn-link"></i></a>
-                            <form action="/so/quanly/quan/<%= item.id %>?_method=DELETE"method="post">
-                                <button class="btn btn-link p-0 ms-2 showModal"><i class="bi bi-trash3-fill"></i></button>
+                            <form class="showPopUp" action="/so/quanly/quan/<%= item.id %>?_method=DELETE"method="post">
+                                <button class="btn btn-link p-0 ms-2"><i class="bi bi-trash3-fill"></i></button>
                             </form>
                             <% } else { %>
                             <a class="btn btn-link p-0" href="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>/edit"><i class="bi bi-pencil-fill"></i></a>
-                            <form action="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>?_method=DELETE"method="post">
+                            <form class="showPopUp" action="/so/quanly/quan/<%= props.quanId %>/phuong/<%= item.id %>?_method=DELETE"method="POST">
                                 <button class="btn btn-link p-0 ms-2"><i class="bi bi-trash3-fill"></i></button>
                             </form>
                             <% } %>
@@ -54,20 +59,4 @@
         </table>
     </div>
 </section>
-<section class="d-flex justify-content-center mt-auto">
-    <nav aria-label="...">
-        <ul class="pagination m-0 justify-content-end">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-</section>
+<%#- include('../../../partials/pagination') %>

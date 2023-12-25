@@ -4,11 +4,11 @@ import AdType from "./adType.js";
 import District from "./district.js";
 import Ward from "./ward.js";
 import LocationType from "./locationType.js";
-import Image from "./image.js";
+import imageSchema from "./image.js";
 
 const adLocationSchema = new Schema({
-    image: Object,
-    latlng: Object,
+    image: imageSchema,
+    latlng: String,
     address: String,
     district: { type: Schema.Types.ObjectId, ref: "District" },
     ward: { type: Schema.Types.ObjectId, ref: "Ward" },
