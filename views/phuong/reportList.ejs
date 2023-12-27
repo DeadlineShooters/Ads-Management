@@ -1,9 +1,6 @@
 <% layout('layouts/canbo') %>
 
-<section class="d-flex justify-content-between">
-  <%if (user.role == "quan") {%> <%- include('../partials/quan/phuong-dropdown')
-  %> <%}%>
-</section>
+<section class="d-flex justify-content-between"><%if (user.role == "quan") {%> <%- include('../partials/quan/phuong-dropdown') %> <%}%></section>
 <section class="overflow-auto my-3 border rounded">
   <div class=" ">
     <table class="table table-hover table-light table-striped">
@@ -17,21 +14,7 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody>
-        <% for (let i = 1; i<14; i++) { %>
-        <!-- replace with real id -->
-        <tr class="clickable-row" data-href="/cac-bao-cao/<%=i%>">
-          <td>25/10/2023 15h30</td>
-          <td>Phạm Văn A</td>
-          <td><%=150 + i %> Nguyễn Đình Chính</td>
-          <td class="khuVucField">Phường 1, Quận <%=user.district%></td>
-          <td>Tố giác sai phạm</td>
-          <td>
-            <div class="d-flex"></div>
-          </td>
-        </tr>
-        <% } %>
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
 </section>
@@ -53,7 +36,9 @@
   </nav>
 </section>
 <script>
-  let district = "<%= user.district %>";
+  let district = "<%= user.district._id %>";
+  let allReports = JSON.parse(decodeURIComponent("<%= reports %>"));
+
   document.addEventListener("DOMContentLoaded", function () {
     // Get the select element
     const selectPhuong = document.querySelector("#phuong-dropdown");
@@ -63,15 +48,68 @@
       selectPhuong.addEventListener("change", function () {
         // Get the selected value
         const selectedValue = selectPhuong.value;
-        const phuongValue = selectedValue.split("phuong-")[1];
-
-        // Update the Khu vực field dynamically
-        document.querySelectorAll(".khuVucField").forEach((item) => {
-          item.textContent = `Phường ${phuongValue}, Quận ${district}`;
-        });
+        fetchReports(selectedValue);
       });
+
+      // initial data
+      updateTableWithData(allReports);
+    } else {
+      // can bo phuong
+      updateTableWithData(allReports);
     }
   });
+
+  function fetchReports(ward) {
+    const filteredReports = allReports.filter((report) => {
+      if (report.randomPoint) {
+        return report.randomPoint.ward._id == ward && report.randomPoint.district._id == district;
+      } else {
+        return report.adBoard.adLocation.ward._id == ward && report.adBoard.adLocation.district._id == district;
+      }
+    });
+
+    // Update the table with the filtered data
+    updateTableWithData(filteredReports);
+  }
+
+  function updateTableWithData(data) {
+    // Clear existing table rows
+    const tableBody = document.querySelector("tbody");
+    tableBody.innerHTML = "";
+
+    // Populate the table with the new data
+    data.forEach((report) => {
+      const newRow = document.createElement("tr");
+      newRow.classList.add("clickable-row");
+      newRow.setAttribute("data-href", `/cac-bao-cao/${report._id}`);
+
+      newRow.innerHTML = `
+      <td>${new Date(report.sendDate).toLocaleString()}</td>
+      <td>${report.fullName}</td>
+      ${
+        report.randomPoint
+          ? `
+        <td>${report.randomPoint.address}</td>
+        <td class="khuVucField">Phường ${report.randomPoint.ward.name}, Quận ${report.randomPoint.district.name}</td>
+        <td>${report.reportType.name}</td>
+        <td>
+          <div class="d-flex"></div>
+        </td>
+      `
+          : `
+          <td>${report.adBoard.adLocation.address}</td>
+        <td class="khuVucField">Phường ${report.adBoard.adLocation.ward.name}, Quận ${report.adBoard.adLocation.district.name}</td>
+        <td>${report.reportType.name}</td>
+        <td>
+          <div class="d-flex"></div>
+        </td>`
+      }
+    `;
+
+      tableBody.appendChild(newRow);
+    });
+  }
+
   // handle on click for each item on the list
   jQuery(document).ready(function ($) {
     $(".clickable-row").click(function () {

@@ -4,35 +4,18 @@ import { fileURLToPath } from 'url';
 import trangChuDan from './routes/dan/home.js';
 import baoCaoDan from './routes/dan/report.js';
 import bodyParser from 'body-parser';
-// phuong
-import diemDatQCPhuong from './routes/phuong/diemDatQC-route.js';
-import bangQCPhuong from './routes/phuong/bangQC-route.js';
-import baoCaoPhuong from './routes/phuong/baoCao-route.js';
-
-import phuongQuanRoutes from './routes/phuong.js';
-import soQuanLyRoutes from './routes/so/quanLy.js';
-import soHanhChinhRoutes from './routes/so/hanhChinh.js';
-import soCanBoRoutes from './routes/so/canbo.js';
 import ejsMate from 'ejs-mate';
-import authRouter from './routes/auth.js';
-import passport from 'passport';
-import flash from 'connect-flash';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
 import mongoose from 'mongoose';
-import methodOverride from 'method-override';
 
-const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
+const mongoURI = 'mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority';
 
 try {
-  await mongoose.connect(mongoURI);
-  console.log("Connected to the database");
+	await mongoose.connect(mongoURI);
+	console.log('Connected to the database');
 } catch (error) {
-  console.log("Could not connect to the database", error);
+	console.log('Could not connect to the database', error);
 }
 const danApp = express();
-// const canBoApp = express();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -72,18 +55,18 @@ const __dirname = path.dirname(__filename);
 //   next();
 // });
 
-danApp.engine('ejs', ejsMate);
-danApp.set('view engine', 'ejs');
-danApp.set('views', path.join(__dirname, '/views'));
+danApp.engine("ejs", ejsMate);
+danApp.set("view engine", "ejs");
+danApp.set("views", path.join(__dirname, "/views"));
 
 // danApp.use(express.static("public"));
-danApp.use('/', express.static(path.join(__dirname, 'public')));
+danApp.use("/", express.static(path.join(__dirname, "public")));
 
-danApp.use(bodyParser.json({ limit: '50mb' }));
-danApp.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+danApp.use(bodyParser.json({ limit: "50mb" }));
+danApp.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
-danApp.use('/', trangChuDan);
-danApp.use('/report', baoCaoDan);
+danApp.use("/", trangChuDan);
+danApp.use("/report", baoCaoDan);
 
 // canBoApp.get("/", (req, res) => {
 //   // console.log("user:", req.user);
@@ -111,7 +94,7 @@ danApp.use('/report', baoCaoDan);
 // canBoApp.use("/so/canbo", soCanBoRoutes);
 
 danApp.listen(3000, () => {
-    console.log('Serving on port 3000');
+	console.log('Serving on port 3000');
 });
 // canBoApp.listen(9000, () => {
 //   console.log("Serving on port 9000");

@@ -145,46 +145,49 @@
         </div>
     <% } %>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="yesModal">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
-            </div>
-            <div class="modal-body">
-              <p>
-                Cán bộ Sở thực hiện <strong>PHÊ DUYỆT</strong> yêu cầu cấp phép.
-              </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-primary">
-                    Đồng ý
-                </button>
-            </div>
-          </div>
+  <div class="modal fade" tabindex="-1" role="dialog" id="yesModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
         </div>
-    </div>    
-    <div class="modal fade" tabindex="-1" role="dialog" id="noModal">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
-            </div>
-            <div class="modal-body">
-              <p>
-                Cán bộ Sở thực hiện <strong>KHÔNG PHÊ DUYỆT</strong> yêu cầu cấp phép.
-              </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-primary">
-                    Đồng ý
-                </button>
-            </div>
-          </div>
+        <div class="modal-body">
+          <p>Cán bộ Sở thực hiện <strong>PHÊ DUYỆT</strong> yêu cầu cấp phép.</p>
         </div>
-    </div>    
-<!-- </div> -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-primary">Đồng ý</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" tabindex="-1" role="dialog" id="noModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
+        </div>
+        <div class="modal-body">
+          <p>Cán bộ Sở thực hiện <strong>KHÔNG PHÊ DUYỆT</strong> yêu cầu cấp phép.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-primary">Đồng ý</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%}%>
+</div>
+<!-- phuong, quan  -->
+<%if (user.role !== "so") {%> <% if (adBoardReq.status === "Chưa duyệt") {%>
+<div class="d-flex flex-row justify-content-center mt-3">
+  <form class="showPopUp" action="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau?_method=delete" method="post">
+    <button class="btn btn-danger mx-3">Hủy bỏ yêu cầu</button>
+  </form>
+  <!-- <a href="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau" class="btn btn-secondary me-3">Hủy bỏ yêu cầu</a> -->
+</div>
+
+<%} %> <%}%>

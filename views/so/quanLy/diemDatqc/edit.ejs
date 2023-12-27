@@ -1,5 +1,5 @@
 <% layout('layouts/canbo') %>
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
 
 <!-- Load the `mapbox-gl-geocoder` plugin. -->
@@ -9,17 +9,22 @@
 <div class="row mt-3 position-relative">
     <div class="container rounded border shadow col-8" style="padding: 1rem 7rem;">
         <h1 class="text-center mb-4">Chỉnh sửa điểm đặt quảng cáo</h1>
-        <form action="/so/quanly/diem-dat-quang-cao/<%= adLocation._id %>?_method=PUT" method="post" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="coord" class="form-label">Toạ độ</label>
-                <div class="input-group">
-                    <input name="item[longLat]" id="coord" type="text" class="form-control" value="<%= adLocation.longLat %>" readonly required>
-                    <span class="input-group-text globe-icon" id="basic-addon2"><i class="bi bi-globe2"></i></span>
+        <form action="<%= user.role === 'so' ? '/so/quanly/diem-dat-quang-cao/' + adLocation._id + '?_method=PUT' : postDest %>" method="post" enctype="multipart/form-data">
+
+            <% if (user.role === 'so') { %>
+                <div class="mb-3">
+                    <label for="coord" class="form-label">Toạ độ</label>
+                    <div class="input-group">
+                        <input name="item[latlng]" id="coord" type="text" class="form-control" value="<%= adLocation.latlng %>" readonly required>
+                        <span class="input-group-text globe-icon" id="basic-addon2"><i class="bi bi-globe2"></i></span>
+                    </div>
                 </div>
+            <%}%>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="address" class="form-label">Địa chỉ </label>
+                    <input name="item[address]" value="<%= adLocation.address %>" type="text" class="form-control" id="address" readonly required>
                 </div>
-            <div class="mb-3">
-                <label for="address" class="form-label">Địa chỉ </label>
-                <input name="item[address]" value="<%= adLocation.address %>" type="text" class="form-control" id="address" readonly required>
             </div>
             <div class="row">
                 <div class="mb-3 col-6">
@@ -44,7 +49,7 @@
                         <% if (locationType.name === adLocation.type.name) { %>
                         <option value="<%= locationType._id %>" selected><%= locationType.name %></option>
                         <% } else { %>
-                        <option value="<%= locationType.name %>"><%= locationType.name %></option>
+                        <option value="<%= locationType._id %>"><%= locationType.name %></option>
                         <% } %>
                     <% } %>
                   </select>
@@ -74,20 +79,25 @@
             </div>
             <div class="mb-3">
                 <label for="formFile" class="form-label">Chọn ảnh mới</label>
-                <input name="image" class="form-control" type="file" id="formFile">
+                <input name="image" class="form-control" type="file" id="formFile" accept="image/png, image/jpeg">
             </div>
             <% if (user.role !== 'so') { %>
             <div class="mb-3">
                 <label for="moTa" class="form-label">Lý do chỉnh sửa</label>
                 <textarea name="reason" class="form-control" id="moTa" rows="3"></textarea>
+                <div id="validationFeedback" class="invalid-feedback">
+                    Hãy cung cấp lý do chỉnh sửa
+                </div>
             </div>
             <% } %>
             <div class="mb-3 text-center">
-                <button class="btn btn-info">Chỉnh sửa</button>
+                <button class="btn btn-info" id="editButton">Chỉnh sửa</button>
             </div>
         </form>
     </div>
-    <%-include("../../../partials/so/popUpMap.ejs")%>
+    <% if (user.role === 'so') { %>
+        <%-include("../../../partials/so/popUpMap.ejs")%>
+    <%}%>
 </div>
 
 <style>

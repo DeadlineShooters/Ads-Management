@@ -5,5 +5,8 @@
   </select>
 </div>
 <script>
-  document.querySelector(`option[value="${window.location.pathname}"]`).selected = true;
+  // no cache when going back so this will work when the user go back to previous page as well
+  window.addEventListener("pageshow", () => {
+    document.querySelector(`option[value="${window.location.pathname}"]`).selected = true;
+  });
 </script>

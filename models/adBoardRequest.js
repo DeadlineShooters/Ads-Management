@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-import adBoard from "./adBoard.js";
+import imageSchema from "./image.js";
+import AdBoard from "./adBoard.js";
 import User from "./user.js";
 
 const adBoardRequestSchema = new Schema({
@@ -21,5 +22,5 @@ const adBoardRequestSchema = new Schema({
     status: String,
 })
 
-const AdBoardReq = mongoose.model("AdBoardRequest", adBoardRequestSchema);
-export default AdBoardReq;
+const AdBoardRequest = mongoose.model("AdBoardRequest", adBoardRequestSchema);
+export default AdBoardRequest;

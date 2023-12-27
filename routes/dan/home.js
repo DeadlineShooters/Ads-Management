@@ -5,5 +5,6 @@ const router = express.Router();
 router.get('/', controller.home);
 router.get('/adboards/:id', controller.getAdBoard);
 router.get('/violatedpoint/:id', controller.getViolatedPoint);
+router.get('/ward', controller.getWard)
 
 export default router;
