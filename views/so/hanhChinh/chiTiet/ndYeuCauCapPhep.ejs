@@ -179,15 +179,15 @@
       </div>
     </div>
   </div>
-  <%}%>
-</div>
-<!-- phuong, quan  -->
-<%if (user.role !== "so") {%> <% if (adBoardReq.status === "Chưa duyệt") {%>
-<div class="d-flex flex-row justify-content-center mt-3">
-  <form class="showPopUp" action="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau?_method=delete" method="post">
-    <button class="btn btn-danger mx-3">Hủy bỏ yêu cầu</button>
-  </form>
-  <!-- <a href="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau" class="btn btn-secondary me-3">Hủy bỏ yêu cầu</a> -->
 </div>
 
+<!-- phuong, quan  -->
+<% if (user.role !== "so") { %> 
+    <% if (adBoardReq.status === "Chưa duyệt") { %>
+        <div class="d-flex flex-row justify-content-center mt-3">
+        <form class="showPopUp" action="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau?_method=delete" method="post">
+            <button class="btn btn-danger mx-3">Hủy bỏ yêu cầu</button>
+        </form>
+        <!-- <a href="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau" class="btn btn-secondary me-3">Hủy bỏ yêu cầu</a> -->
+        </div>
 <%} %> <%}%>
