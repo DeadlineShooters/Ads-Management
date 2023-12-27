@@ -2,22 +2,32 @@ import User from "../../../models/user.js";
 import bcrypt from "bcrypt";
 
 export const danhSachCanBo =  async (req, res) => {
-    let perPage = 12; //moi trang co 12 tai khoan can bo
-    let page = req.query.page || 1;
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await User.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+      page,
+      totalPages,
+      itemsPerPage,
+    };
     const breadcrumbs = [];
     try {
-        const canBo = await User.aggregate([ {$sort: {daycreated: -1}}])
-            .skip(perPage*page - perPage)
-            .limit(perPage)
+        const canBo = await User.find({}).populate([
+            {path: 'ward', populate: {
+                path: 'district', model: 'District',
+            }},
+            {path: 'district', model: 'District'}])
+            .skip((page - 1) * itemsPerPage)
+            .limit(itemsPerPage)
             .exec();
-        const count = await User.countDocuments({});
+        console.log(canBo);
         res.render('so/canBo/dsTaiKhoanCanBo.ejs',  { 
             messageAdd: req.flash('info'),
             messageEdit: req.flash('edit'),
             messageDel: req.flash('del'),
             canBo,
-            current: page,
-            pages: Math.ceil(count / perPage),
+            pagination,
             breadcrumbs,
         });
     } catch (error) {

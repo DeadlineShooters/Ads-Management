@@ -2,8 +2,15 @@ import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js"
 import AdBoard from "../../../models/adBoard.js";
 
 export const dsChinhBangQC = async (req, res) => {
-    let perPage = 12; //moi trang co 12 tai khoan can bo
-    let page = req.query.page || 1;
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await AdBoardChangeReq.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+      page,
+      totalPages,
+      itemsPerPage,
+    };
     const breadcrumbs = [];
     try {
         const ChinhBangQC = await AdBoardChangeReq.find({}).populate({
@@ -15,12 +22,10 @@ export const dsChinhBangQC = async (req, res) => {
                     { path: 'district', model: 'District' }
                 ]}
             ]
-        }).populate('sender')
-        const count = await AdBoardChangeReq.countDocuments({});
+        }).populate('sender').skip((page - 1) * itemsPerPage).limit(itemsPerPage);
         res.render('so/hanhChinh/dsYeuCauChinhBangQC.ejs',  { 
             ChinhBangQC,
-            current: page,
-            pages: Math.ceil(count / perPage),
+            pagination,
             breadcrumbs,
         });
     } catch (err) {

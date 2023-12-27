@@ -2,8 +2,15 @@ import AdLocationChangeReq from "../../../models/adLocationChangeRequest.js"
 import AdBoard from "../../../models/adBoard.js";
 
 export const dsChinhDiemQC = async (req, res) => {
-    let perPage = 12; //moi trang co 12 tai khoan can bo
-    let page = req.query.page || 1;
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await AdLocationChangeReq.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+      page,
+      totalPages,
+      itemsPerPage,
+    };
     const breadcrumbs = [];
     try {
         const ChinhDiemQC = await AdLocationChangeReq.find({}).populate({
@@ -16,11 +23,9 @@ export const dsChinhDiemQC = async (req, res) => {
             ]
         }).populate('sender')
         console.log(ChinhDiemQC);
-        const count = await AdLocationChangeReq.countDocuments({});
         res.render('so/hanhChinh/dsYeuCauChinhDiemQC.ejs',  { 
             ChinhDiemQC,
-            current: page,
-            pages: Math.ceil(count / perPage),
+            pagination,
             breadcrumbs,
         });
     } catch (err) {

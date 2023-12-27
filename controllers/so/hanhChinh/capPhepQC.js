@@ -1,8 +1,15 @@
 import AdBoardReq from "../../../models/adBoardRequest.js"
 
 export const dsCapPhepQC = async (req, res) => {
-    let perPage = 12; //moi trang co 12 tai khoan can bo
-    let page = req.query.page || 1;
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await AdBoardReq.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+      page,
+      totalPages,
+      itemsPerPage,
+    };
     const breadcrumbs = [];
     try {
         const CapPhepQC = await AdBoardReq.find({}).populate({
@@ -14,12 +21,10 @@ export const dsCapPhepQC = async (req, res) => {
                     { path: 'district', model: 'District' }
                 ]}
             ]
-        }).populate('sender')
-        const count = await AdBoardReq.countDocuments({});
+        }).populate('sender').skip((page - 1) * itemsPerPage).limit(itemsPerPage);
         res.render('so/hanhChinh/dsYeuCauCapPhepQC.ejs',  { 
             CapPhepQC,
-            current: page,
-            pages: Math.ceil(count / perPage),
+            pagination,
             breadcrumbs,
         });
     } catch (err) {
