@@ -7,10 +7,6 @@ import User from "./user.js";
 const adBoardRequestSchema = new Schema({
     adBoard: {type: Schema.Types.ObjectId, ref: "AdBoard"},
     adContent: String,
-    adImage: {
-        url: String,
-        filename: String,
-    },
     companyName: String,
     contactInfo:{
         email: String,
