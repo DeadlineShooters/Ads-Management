@@ -5,7 +5,7 @@ import AdBoard from "./adBoard.js";
 import User from "./user.js";
 
 const adBoardRequestSchema = new Schema({
-    adBoard: {type: Schema.Types.ObjectId, ref: "adBoard"},
+    adBoard: {type: Schema.Types.ObjectId, ref: "AdBoard"},
     adContent: String,
     adImage: {
         url: String,
