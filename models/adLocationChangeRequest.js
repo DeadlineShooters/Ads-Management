@@ -11,5 +11,5 @@ const adLocationChangeRequestSchema = new Schema({
     status: String,
 })
 
-const AdBoardChangeRequest  = mongoose.model("AdLocationChangeRequest", adLocationChangeRequestSchema);
-export default AdBoardChangeRequest;
+const AdLocationChangeRequest  = mongoose.model("AdLocationChangeRequest", adLocationChangeRequestSchema);
+export default AdLocationChangeRequest;
