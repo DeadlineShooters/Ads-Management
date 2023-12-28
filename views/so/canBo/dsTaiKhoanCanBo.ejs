@@ -78,16 +78,15 @@
           <th scope="col">Ngày sinh</th>
           <th scope="col">Email</th>
           <th scope="col">Điện thoại</th>
-          <th scope="col">Quận quản lý</th>
           <th scope="col">Phường quản lý</th>
+          <th scope="col">Quận quản lý</th>
           <th scope="col">Quản lý</th>
         </tr>
       </thead>
       <tbody>
         <% for (let i=0; i<canBo.length; i++) { %>
-          <% if (canBo[i].role == "Quận" || canBo[i].role == "Phường") { %>
-            <tr class="align-items-center">
-              <th scope="row">
+          <tr class="align-items-center">
+            <th scope="row">
                 <%= i + 1 %>
               </th>
               <td>
@@ -120,7 +119,6 @@
                 </div>
               </td>
             </tr>
-            <% } %>
           <% } %>
       </tbody>
     </table>
@@ -175,11 +173,11 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <!-- <form action="chinh-sua-tai-khoan-cb/$(this).attr('data-id')?_method=DELETE" method="POST" class="position-relative">
+          <form action="chinh-sua-tai-khoan-cb/$(this).attr('data-id')?_method=DELETE" method="POST" class="position-relative">
             <button type="submit" class="btn btn-primary">
                 Đồng ý
             </button>
-          </form> -->
+          </form>
         </div>
       </div>
     </div>

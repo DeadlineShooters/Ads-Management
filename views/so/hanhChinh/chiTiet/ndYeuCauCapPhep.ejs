@@ -21,23 +21,31 @@
 <script>
     $(document).ready(function() {
         $('#yesModal button[type="submit"]').click(function() {
-                $.ajax({
+            $.ajax({
                 url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietCapPhepQC._id %>/update-status',
                 type: 'PUT',
                 data: {
                     adBoardRequestId: $('#baoCaoID').val(),
                     newStatus: 'Đã duyệt'
                 },
+                success: window.location.href = "/so/hanhchinh/cap-phep-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
             });
         });
         $('#noModal button[type="submit"]').click(function() {
-                $.ajax({
+            $.ajax({
                 url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= chiTietCapPhepQC._id %>/update-status',
                 type: 'PUT',
                 data: {
                     adBoardRequestId: $('#baoCaoID').val(),
                     newStatus: 'Không duyệt'
                 },
+                success: window.location.href = "/so/hanhchinh/cap-phep-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
             });
         });
     });
@@ -76,7 +84,7 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Hình minh họa</b></div>
-                <div class="col" style="max-width: 100%;"><a href="<%=chiTietCapPhepQC.adImage.url%>" download><%= chiTietCapPhepQC.adImage.filename %></a></div>
+                <div class="col" style="max-width: 100%;"><a href="<%=chiTietCapPhepQC.adBoard.image.url%>" download><%= chiTietCapPhepQC.adBoard.image.filename %></a></div>
             </div>
         </li>
         <li class="list-group-item">

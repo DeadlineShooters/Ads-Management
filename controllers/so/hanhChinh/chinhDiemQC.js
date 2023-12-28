@@ -1,10 +1,10 @@
-import AdLocationChangeReq from "../../../models/adLocationChangeRequest.js"
+import AdBoardChangeRequest from "../../../models/adLocationChangeRequest.js"
 import AdBoard from "../../../models/adBoard.js";
 
 export const dsChinhDiemQC = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-    const totalItems = await AdLocationChangeReq.countDocuments();
+    const totalItems = await AdBoardChangeRequest.countDocuments();
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const pagination = {
       page,
@@ -13,7 +13,7 @@ export const dsChinhDiemQC = async (req, res) => {
     };
     const breadcrumbs = [];
     try {
-        const ChinhDiemQC = await AdLocationChangeReq.find({}).populate({
+        const ChinhDiemQC = await AdBoardChangeRequest.find({}).populate({
             path: 'adLocation',
             populate: [
                 { path: 'ward', model: 'Ward'  },
@@ -38,7 +38,7 @@ export const chiTietChinhDiemQC = async (req, res) => {
     const { id } = req.params;
     const breadcrumbs = [];
     try {
-        const chiTietChinhDiemQC = await AdLocationChangeReq.findById(id).populate({
+        const chiTietChinhDiemQC = await AdBoardChangeRequest.findById(id).populate({
             path: 'adLocation',
             populate: [
                 { path: 'ward', model: 'Ward'  },
@@ -61,7 +61,7 @@ export const chiTietChinhDiemQC = async (req, res) => {
 export const capNhatChinhDiemQC = async (req, res) => {
     const id = req.body.adLocationChangeRequestId;
     try {
-        await AdLocationChangeReq.findByIdAndUpdate(id, {
+        await AdBoardChangeRequest.findByIdAndUpdate(id, {
             status: req.body.newStatus
         })
     } catch (err) {

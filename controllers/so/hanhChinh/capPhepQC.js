@@ -1,9 +1,9 @@
-import AdBoardReq from "../../../models/adBoardRequest.js"
+import AdBoardRequest from "../../../models/adBoardRequest.js"
 
 export const dsCapPhepQC = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-    const totalItems = await AdBoardReq.countDocuments();
+    const totalItems = await AdBoardRequest.countDocuments();
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const pagination = {
       page,
@@ -12,7 +12,7 @@ export const dsCapPhepQC = async (req, res) => {
     };
     const breadcrumbs = [];
     try {
-        const CapPhepQC = await AdBoardReq.find({}).populate({
+        const CapPhepQC = await AdBoardRequest.find({}).populate({
             path: 'adBoard',
             populate: [
                 { path: 'boardType', model: 'BoardType' },
@@ -26,6 +26,7 @@ export const dsCapPhepQC = async (req, res) => {
             CapPhepQC,
             pagination,
             breadcrumbs,
+            inform: req.flash('info'), 
         });
     } catch (err) {
       console.error(err);
@@ -37,7 +38,7 @@ export const chiTietYeuCauCapPhep = async (req, res) => {
     const { id } = req.params;
     const breadcrumbs = [];
     try {
-        const chiTietCapPhepQC = await AdBoardReq.findById(id).populate({
+        const chiTietCapPhepQC = await AdBoardRequest.findById(id).populate({
             path: 'adBoard',
             populate: [
                 { path: 'boardType', model: 'BoardType' },
@@ -61,9 +62,9 @@ export const chiTietYeuCauCapPhep = async (req, res) => {
 export const capNhatYeuCauCapPhep = async (req, res) => {
     const id = req.body.adBoardRequestId;
     try {
-        await AdBoardReq.findByIdAndUpdate(id, {
+        await AdBoardRequest.findByIdAndUpdate(id, {
             status: req.body.newStatus
-        })
+        });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Server error' });

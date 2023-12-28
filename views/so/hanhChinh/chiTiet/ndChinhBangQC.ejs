@@ -28,6 +28,10 @@
                     adBoardChangeRequestId: $('#chinhBangID').val(),
                     newStatus: 'Đã duyệt'
                 },
+                success: window.location.href = "/so/hanhchinh/chinh-bang-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
             });
         });
         $('#noModal button[type="submit"]').click(function() {
@@ -38,6 +42,10 @@
                     adBoardChangeRequestId: $('#chinhBangID').val(),
                     newStatus: 'Không duyệt'
                 },
+                success: window.location.href = "/so/hanhchinh/chinh-bang-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
             });
         });
     });

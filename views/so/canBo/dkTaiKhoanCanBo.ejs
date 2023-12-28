@@ -16,23 +16,6 @@
     }
 </style>
 
-<script>
-    $(document).ready(function() {
-        $("#btnSubmit").click(function(){
-            var passInput=$("#password");
-            var passClass=$("#btnSubmit");
-            if(passInput.attr('type')==='password')
-            {
-                passInput.attr('type','text');
-                $("i", this).toggleClass("bi bi-eye bi bi-eye-slash");
-            } else {
-                passInput.attr('type','password');
-                $("i", this).toggleClass("bi bi-eye-slash bi bi-eye");
-            }
-        }); 
-    });
-</script>
-
 <form action="/so/canbo/dang-ky-tai-khoan-cb" method="POST">
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -70,19 +53,17 @@
                 </div>   
                 <div class="col-md-5 mt-3 ps-3">
                     <label class="fw-bold">Quận quản lý</label>
-                    <select class="form-select" name="ward" id="ward" required>
-                        <option selected>Chọn quận</option>
-                        <option value="Tân Bình">Tân Bình</option>
-                        <option value="Quận 6">Quận 6</option>
+                    <select name="item[districtId]" class="form-select" aria-label="Default select example">
+                        <option value="" selected disabled>Chọn Quận</option>
+                        <% for (let district of districtList) { %>
+                        <option value="<%= district.id %>"><%= district.name %></option>
+                        <% } %>
                     </select>
                 </div>
                 <div class="col-md-5 mt-3 ps-3">
                     <label class="fw-bold">Phường quản lý</label>
-                    <select class="form-select" name="district" id="district" required>
-                        <option selected>Chọn phường</option>
-                        <option value="Phường 13">Phường 13</option>
-                        <option value="Phường 14">Phường 14</option>
-                        <option value="Phường 15">Phường 15</option>
+                    <select name="item[phuongId]" class="form-select" aria-label="Default select example">
+                        
                     </select>
                 </div>
                 <div class="col-md-10 mt-3 ps-3">
@@ -103,3 +84,57 @@
         </div>
     </div>
 </form>
+
+<script>
+    $(document).ready(function() {
+        $("#btnSubmit").click(function(){
+            var passInput=$("#password");
+            var passClass=$("#btnSubmit");
+            if(passInput.attr('type')==='password')
+            {
+                passInput.attr('type','text');
+                $("i", this).toggleClass("bi bi-eye bi bi-eye-slash");
+            } else {
+                passInput.attr('type','password');
+                $("i", this).toggleClass("bi bi-eye-slash bi bi-eye");
+            }
+        }); 
+    });
+</script>
+
+<script>
+    var district = undefined
+    var ward = undefined
+    var districtSelect = document.querySelector('select[name="item[districtId]"]');
+    var wardSelect = document.querySelector('select[name="item[phuongId]"]');
+
+    // Disable the second select initially
+    wardSelect.disabled = true;
+
+    // Add an event listener to the first select to enable/disable the second select
+    districtSelect.addEventListener('change', async function () {
+        var selectedDistrictId = districtSelect.value;
+        var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
+        // Enable the second select if a district is selected, otherwise disable it
+        wardSelect.disabled = selectedDistrictId === '';
+        // Fetch and populate wards for the selected district
+        fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
+            .then(response => response.json())
+                .then(data => {
+                    // Clear existing options
+                    wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
+                    // Iterate over the array and append options to 'wardSelect'
+                    data.forEach(ward => {
+                        var option = document.createElement('option');
+                        option.value = ward._id;
+                        option.textContent = ward.name;
+                        wardSelect.appendChild(option);
+                    });
+                })
+            .catch(error => console.error('Error fetching wards:', error));
+        
+        wardSelect.addEventListener('change', async function () {
+            var selectedWardId = wardSelect.value;
+        });
+    });
+</script>
