@@ -4,7 +4,7 @@ import adBoard from "./adBoard.js";
 import User from "./user.js";
 
 const adBoardChangeRequestSchema = new Schema({
-    adBoard: {type: Schema.Types.ObjectId, ref: "adBoard"},
+    adBoard: {type: Schema.Types.ObjectId, ref: "AdBoard"},
     reason: String,
     sender: {type: Schema.Types.ObjectId, ref: "User"},
     sendDate: {type: Date},
