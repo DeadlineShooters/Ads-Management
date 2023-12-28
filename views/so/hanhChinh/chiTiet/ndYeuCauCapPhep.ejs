@@ -18,107 +18,105 @@
   }
 </style>
 
-<div class="card m-auto" style="width: 65rem">
-  <%if (user.role === "so") {%>
-  <div class="d-flex justify-content-between flex-wrap nowrap align-items-center pb-2 mb-3 border-bottom flex-end">
-    <div class="col">
-      <div class="row">
-        <div class="col text-end fw-lighter">
-          <i class="bi bi-person-fill"></i><b> <%= adBoardReq.sender.username %></b>&nbsp&nbsp <i class="bi bi-clock-fill"></i
-          ><b><%= new Date(adBoardReq.sendDate).toLocaleString('en-US') %></b>
-        </div>
-      </div>
-    </div>
-  </div>
-  <%}%>
-  <ul class="list-group">
-    <li class="list-group-item" style="background-color: #7981d0">
-      <div class="row">
-        <div class="col" style="max-width: 200px"><b class="table header">Thông tin yêu cầu</b></div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Nội dung quảng cáo</b></div>
-        <div class="col" style="max-width: 100%"><%= adBoardReq.adContent %></div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Hình minh họa</b></div>
-        <div class="col">
-          <img src="<%= adBoard.image.url %>" class="card-img-top img-fluid" alt="" style="width: 50%; height: auto" />
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Điểm đặt</b></div>
-        <div class="col" style="max-width: 100%"><%=adBoard.adLocation.address%></div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Khu vực</b></div>
-        <div class="col" style="max-width: 30%"><b>Quận:</b> <%= adBoard.adLocation.district.name %></div>
-        <div class="col" style="max-width: 25%"><b>Phường:</b> <%= adBoard.adLocation.ward.name %></div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Phân loại</b></div>
-        <div class="col" style="max-width: 30%"><b>Loại bảng:</b> <%= adBoard.boardType.name %></div>
-        <div class="col" style="max-width: 25%"><b>Số lượng:</b> <%= adBoard.quantity %></div>
-        <div class="col" style="max-width: 25%"><b>Kích thước:</b> <%= adBoard.size.h %>m x <%= adBoard.size.w %>m</div>
-      </div>
-    </li>
-  </ul>
-  <ul class="list-group mt-3">
-    <li class="list-group-item" style="background-color: #7981d0">
-      <div class="row">
-        <div class="col" style="max-width: 200px"><b class="table header">Thông tin công ty</b></div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Tên công ty</b></div>
-        <div class="col" style="max-width: 100%"><%= adBoardReq.companyName %></div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Thông tin liên lạc</b></div>
-        <div class="col" style="max-width: 55%"><b>Mail:</b> <%= adBoardReq.contactInfo.email %></div>
-        <div class="col" style="max-width: 25%"><b>Điện thoại:</b> <%= adBoardReq.contactInfo.phone %></div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col header"><b>Hợp đồng</b></div>
-        <div class="col" style="max-width: 30%"><b>Ngày bắt đầu:</b> <%= adBoard.startDate %></div>
-        <div class="col" style="max-width: 25%"><b>Ngày kết thúc:</b> <%= adBoard.expireDate %></div>
-      </div>
-    </li>
-  </ul>
-  <%if (user.role === "so") {%>
 
-  <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem">
-    <button class="btn btn-danger mx-1" style="width: 25%" for="success-outlined" id="noButton" type="button" data-bs-toggle="modal" data-bs-target="#noModal">
-      Không phê duyệt
-    </button>
-    <button
-      class="btn btn-success mx-1"
-      style="width: 25%"
-      for="success-outlined"
-      id="yesButton"
-      type="button"
-      data-bs-toggle="modal"
-      data-bs-target="#yesModal"
-    >
-      Phê duyệt
-    </button>
-  </div>
-  <%}%> <%if (user.role === "so") {%>
+<!-- <div class="container p-3 bg-light rounded overflow-hidden"> -->
+    
+    <div class="d-flex justify-content-between flex-wrap nowrap align-items-center pb-2 mb-3 border-bottom flex-end">
+        <div class="col">
+            <div class="row">
+                <div class="col text-end fw-lighter">
+                    <i class="bi bi-person-fill"></i><b> <%= adBoardReq.sender.username %></b>&nbsp&nbsp
+                    <i class="bi bi-clock-fill"></i><b> <%= new Date(adBoardReq.sendDate).toLocaleDateString() %></b>
+                    <input type="hidden" id="baoCaoID" value="<%= adBoardReq._id %>" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item" style="background-color: #7981d0">
+            <div class="row">
+                <div class="col" style="max-width: 200px;"><b class="table header">Thông tin yêu cầu</b></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Nội dung quảng cáo</b></div>
+                <div class="col" style="max-width: 100%;"><%= adBoardReq.adContent %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Hình minh họa</b></div>
+                <div class="col" style="max-width: 100%;"><a href="<%=adBoard.image.url%>" download><%= adBoard.image.filename %></a></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Điểm đặt</b></div>
+                <div class="col" style="max-width: 100%;"><%= adBoard.adLocation.address %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Khu vực</b></div>
+                <div class="col" style="max-width: 30%;"><b>Quận:</b> <%= adBoard.adLocation.district.name %></div>
+                <div class="col" style="max-width: 25%;"><b>Phường:</b> <%= adBoard.adLocation.ward.name %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Phân loại</b></div>
+                <div class="col" style="max-width: 30%;"><b>Loại bảng:</b> <%= adBoard.boardType.name %></div>
+                <div class="col" style="max-width: 25%;"><b>Số lượng:</b> <%= adBoard.quantity %></div>
+                <div class="col" style="max-width: 25%;"><b>Kích thước:</b> <%= adBoard.size.h %>m x  <%= adBoard.size.w %>m</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="list-group mt-3">
+        <li class="list-group-item" style="background-color: #7981d0">
+            <div class="row">
+                <div class="col" style="max-width: 200px;"><b class="table header">Thông tin công ty</b></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Tên công ty</b></div>
+                <div class="col" style="max-width: 100%;"><%= adBoardReq.companyName %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Thông tin liên lạc</b></div>
+                <div class="col" style="max-width: 55%;"><b>Mail:</b> <%= adBoardReq.contactInfo.email %></div>
+                <div class="col" style="max-width: 25%;"><b>Điện thoại:</b> <%= adBoardReq.contactInfo.phone %></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Hợp đồng</b></div>
+                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu:</b> <%= adBoard.startDate %></div>
+                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc:</b> <%= adBoard.expireDate %></div>
+            </div>
+        </li>
+    </ul>
+    <%if (user.role === "so") {%>
+
+    <% if (adBoardReq.status === "Đã duyệt") { %>
+        <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+            <button class="btn btn btn-secondary mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" disabled>Không phê duyệt</button>
+            <button class="btn btn btn-success mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" disabled>Phê duyệt</button>
+        </div>
+    <% } else if (adBoardReq.status === "Không duyệt") { %>
+        <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+            <button class="btn btn btn-danger mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" disabled>Không phê duyệt</button>
+            <button class="btn btn btn-secondary mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" disabled>Phê duyệt</button>
+        </div>
+    <% } else { %>
+        <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+            <button class="btn btn btn-danger mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" data-bs-toggle="modal" data-bs-target="#noModal">Không phê duyệt</button>
+            <button class="btn btn btn-success mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" data-bs-toggle="modal" data-bs-target="#yesModal">Phê duyệt</button>
+        </div>
+    <% } %>
 
   <div class="modal fade" tabindex="-1" role="dialog" id="yesModal">
     <div class="modal-dialog" role="document">
@@ -154,15 +152,49 @@
       </div>
     </div>
   </div>
-  <%}%>
 </div>
+<%}%>
 <!-- phuong, quan  -->
-<%if (user.role !== "so") {%> <% if (adBoardReq.status === "Chưa duyệt") {%>
-<div class="d-flex flex-row justify-content-center mt-3">
-  <form class="showPopUp" action="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau?_method=delete" method="post">
-    <button class="btn btn-danger mx-3">Hủy bỏ yêu cầu</button>
-  </form>
-  <!-- <a href="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau" class="btn btn-secondary me-3">Hủy bỏ yêu cầu</a> -->
-</div>
-
+<% if (user.role !== "so") { %> 
+    <% if (adBoardReq.status === "Chưa duyệt") { %>
+        <div class="d-flex flex-row justify-content-center mt-3">
+        <form class="showPopUp" action="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau?_method=delete" method="post">
+            <button class="btn btn-danger mx-3">Hủy bỏ yêu cầu</button>
+        </form>
+        <!-- <a href="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau" class="btn btn-secondary me-3">Hủy bỏ yêu cầu</a> -->
+        </div>
 <%} %> <%}%>
+
+
+<script>
+    $(document).ready(function() {
+        $('#yesModal button[type="submit"]').click(function() {
+            $.ajax({
+                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= adBoardReq._id %>/update-status',
+                type: 'PUT',
+                data: {
+                    adBoardRequestId: $('#baoCaoID').val(),
+                    newStatus: 'Đã duyệt'
+                },
+                success: window.location.href = "/so/hanhchinh/cap-phep-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
+            });
+        });
+        $('#noModal button[type="submit"]').click(function() {
+            $.ajax({
+                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= adBoardReq._id %>/update-status',
+                type: 'PUT',
+                data: {
+                    adBoardRequestId: $('#baoCaoID').val(),
+                    newStatus: 'Không duyệt'
+                },
+                success: window.location.href = "/so/hanhchinh/cap-phep-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
+            });
+        });
+    });
+</script>

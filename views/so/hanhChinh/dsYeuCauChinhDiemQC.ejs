@@ -64,45 +64,46 @@
     <table class="table table-light table-striped table-hover">
       <thead>
         <tr>
-          <th scope="col">STT</th>
-          <th scope="col">Địa chỉ</th>
-          <th scope="col">Khu vực</th>
-          <th scope="col">Loại bảng</th>
-          <th scope="col">Kích thước</th>
-          <th scope="col">Số lượng</th>
-          <th scope="col">Thời gian gửi</th>
-          <th class="text-center" scope="col">Tình trạng</th>
+          <th scope="col" style="width:2%">STT</th>
+          <th scope="col" style="width:20%">Địa chỉ</th>
+          <th scope="col" style="width:18%">Khu vực</th>
+          <th scope="col" style="width:12%">Phân loại</th>
+          <th scope="col" style="width:20%">Hình thức</th>
+          <th scope="col" style="width:10%">Quy hoạch</th>
+          <th scope="col" style="width:10%">Thời gian gửi</th>
+          <th class="text-center" scope="col" style="width:15%">Tình trạng</th>
         </tr>
       </thead>
       <tbody>
-        <% for (let i=0; i<objects.length; i++) { %>
-          <tr class="clickable-row" data-href='chinh-diem-qc/chi-tiet-yeu-cau'>
-            <td scope="row">
-              <%=i + 1%>
+        <% let i = 1; %>
+        <% for (let motChinhDiemQC of ChinhDiemQC ) { %>
+          <tr class="clickable-row" data-href='chinh-diem-qc/chi-tiet-yeu-cau/<%= motChinhDiemQC._id %>'>
+            <th scope="row">
+              <%= i++ %>
+            </td>
+            <td class="md-col-2">
+              <%= motChinhDiemQC.adLocation?.address %>
             </td>
             <td>
-              <%= objects[i].diaChi %>
+              Phường <%= motChinhDiemQC.adLocation?.ward.name %>, Quận <%= motChinhDiemQC.adLocation?.district.name %>
             </td>
             <td>
-              <%= objects[i].khuVuc %>
+              <%= motChinhDiemQC.adLocation?.adType.name %>
             </td>
             <td>
-              <%= objects[i].loaiBang %>
+              <%= motChinhDiemQC.adLocation?.type.name %>
             </td>
             <td>
-              <%= objects[i].kichThuoc %>
+              <%= motChinhDiemQC.adLocation?.status %>
             </td>
             <td>
-              <%= objects[i].soLuong %>
+              <%= new Date(motChinhDiemQC?.sendDate).toLocaleDateString() %>
             </td>
-            <td>
-              <%= objects[i].thoiGianGui %>
-            </td>
-            <% if (objects[i].tinhTrang==='khongDuyet' ) { %>
+            <% if (motChinhDiemQC.status ==='Không duyệt' ) { %>
               <td>
                 <p class="status notAccept">Không duyệt</p>
               </td>
-              <% } else if (objects[i].tinhTrang==='Duyet' ) { %>
+              <% } else if (motChinhDiemQC.status ==='Đã duyệt' ) { %>
                 <td>
                   <p class="status Accept">Đã duyệt</p>
                 </td>
@@ -116,20 +117,11 @@
       </tbody>
     </table>
   </section>
-  <section class="d-flex justify-content-center mt-auto">
-    <nav aria-label="...">
-      <ul class="pagination m-0 justify-content-end">
-        <li class="page-item disabled">
-          <a class="page-link">Trang trước</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#">Trang sau</a>
-        </li>
-      </ul>
-    </nav>
-  </section>
+  
+<%- include('../../partials/pagination') %>
+<style>
+  /* Add this style to your custom CSS or in a style tag within your HTML */
+  .min-w {
+    min-width: 140px; /* Set the desired minimum width */
+  }
+</style>

@@ -66,57 +66,46 @@
     <table class="table table-light table-striped table-hover">
       <thead>
         <tr>
-          <th scope="col">STT</th>
-          <th scope="col">Địa chỉ</th>
-          <th scope="col">Khu vực</th>
-          <th scope="col">Loại bảng</th>
-          <th scope="col">Kích thước</th>
-          <th scope="col">Số lượng</th>
-          <th scope="col">Thời gian gửi</th>
-          <th class="text-center" scope="col">Tình trạng</th>
+          <th scope="col" style="width:2%">STT</th>
+          <th scope="col" style="width:25%">Địa chỉ</th>
+          <th scope="col" style="width:20%">Khu vực</th>
+          <th scope="col" style="width:14%">Loại bảng</th>
+          <th scope="col" style="width:9%">Kích thước</th>
+          <th scope="col" style="width:7%">Số lượng</th>
+          <th scope="col" style="width:10%">Thời gian gửi</th>
+          <th class="text-center" scope="col" style="width:10%">Tình trạng</th>
         </tr>
       </thead>
       <tbody>
-        <!-- <% for (let i = 0; i<objects.length; i++) { %>
-          <tr class="clickable-row" data-href='cap-phep-qc/chi-tiet-yeu-cau'>
-            <td scope="row"><%=i + 1%></td>
-            <td><%= objects[i].diaChi %></td>
-            <td><%= objects[i].khuVuc %></td>
-            <td><%= objects[i].loaiBang %></td>
-            <td><%= objects[i].kichThuoc %></td>
-            <td><%= objects[i].soLuong %></td>
-            <td><%= objects[i].thoiGianGui %></td>
-            <td><p class="status notAccept">Không duyệt</p></td>
-          </tr>
-        <% } %> -->
-        <% for (let i=0; i<objects.length; i++) { %>
-          <tr class="clickable-row" data-href='cap-phep-qc/chi-tiet-yeu-cau'>
-            <td scope="row">
-              <%=i + 1%>
+        <% let i = 1; %>
+        <% for (let motCapPhepQC of CapPhepQC ) { %>
+          <tr class="clickable-row" data-href='cap-phep-qc/chi-tiet-yeu-cau/<%= motCapPhepQC._id %>'>
+            <th scope="row">
+              <%= i++ %>
+            </td>
+            <td class="md-col-2">
+              <%= motCapPhepQC.adBoard?.adLocation.address %>
             </td>
             <td>
-              <%= objects[i].diaChi %>
+              Phường <%= motCapPhepQC.adBoard?.adLocation.ward.name %>, Quận <%= motCapPhepQC.adBoard?.adLocation.district.name %>
             </td>
             <td>
-              <%= objects[i].khuVuc %>
+              <%= motCapPhepQC.adBoard?.boardType.name %>
             </td>
             <td>
-              <%= objects[i].loaiBang %>
+              <%= motCapPhepQC.adBoard?.size.h %>m x <%= motCapPhepQC.adBoard?.size.w %>m
             </td>
             <td>
-              <%= objects[i].kichThuoc %>
+              <%= motCapPhepQC.adBoard?.quantity %>
             </td>
             <td>
-              <%= objects[i].soLuong %>
+              <%= new Date(motCapPhepQC?.sendDate).toLocaleDateString() %>
             </td>
-            <td>
-              <%= objects[i].thoiGianGui %>
-            </td>
-            <% if (objects[i].tinhTrang==='khongDuyet' ) { %>
+            <% if (motCapPhepQC.status ==='Không duyệt' ) { %>
               <td>
                 <p class="status notAccept">Không duyệt</p>
               </td>
-              <% } else if (objects[i].tinhTrang==='Duyet' ) { %>
+              <% } else if (motCapPhepQC.status ==='Đã duyệt' ) { %>
                 <td>
                   <p class="status Accept">Đã duyệt</p>
                 </td>
@@ -130,20 +119,11 @@
       </tbody>
     </table>
   </section>
-  <section class="d-flex justify-content-center mt-auto">
-    <nav aria-label="...">
-      <ul class="pagination m-0 justify-content-end">
-        <li class="page-item disabled">
-          <a class="page-link">Trang trước</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#">Trang sau</a>
-        </li>
-      </ul>
-    </nav>
-  </section>
+
+<%- include('../../partials/pagination') %>
+<style>
+  /* Add this style to your custom CSS or in a style tag within your HTML */
+  .min-w {
+    min-width: 140px; /* Set the desired minimum width */
+  }
+</style>

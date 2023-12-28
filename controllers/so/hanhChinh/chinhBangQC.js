@@ -1,70 +1,72 @@
-import AdBoardReq from "../../../models/adBoardRequest.js"
+import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js"
+import AdBoard from "../../../models/adBoard.js";
 
 export const dsChinhBangQC = async (req, res) => {
-    const yeuCau = [
-        {
-            diaChi: "157 Nguyễn Đình Chính",
-            khuVuc: "Phường 11, Quận Phú Nhuận",
-            loaiBang: "Trụ màn hình điện tử",
-            kichThuoc: "2.5m x 10m",
-            soLuong: "2 trụ/bảng",
-            thoiGianGui: "13/10/2023",
-            tinhTrang: "Duyet",
-        },
-        {
-            diaChi: "158 Nguyễn Đình Chính",
-            khuVuc: "Phường 12, Quận Phú Nhuận",
-            loaiBang: "Trụ màn hình điện tử",
-            kichThuoc: "1.5m x 8m",
-            soLuong: "1 trụ/bảng",
-            thoiGianGui: "14/10/2023",
-            tinhTrang: "khongDuyet",
-        },
-        {
-            diaChi: "159 Nguyễn Đình Chính",
-            khuVuc: "Phường 13, Quận Phú Nhuận",
-            loaiBang: "Trụ màn hình điện tử",
-            kichThuoc: "3m x 12m",
-            soLuong: "3 trụ/bảng",
-            thoiGianGui: "15/10/2023",
-            tinhTrang: "chuaDuyet",
-        },
-        {
-            diaChi: "158 Nguyễn Đình Chính",
-            khuVuc: "Phường 12, Quận Phú Nhuận",
-            loaiBang: "Trụ màn hình điện tử",
-            kichThuoc: "1.5m x 8m",
-            soLuong: "1 trụ/bảng",
-            thoiGianGui: "14/10/2023",
-            tinhTrang: "Duyet",
-        },
-        {
-            diaChi: "159 Nguyễn Đình Chính",
-            khuVuc: "Phường 13, Quận Phú Nhuận",
-            loaiBang: "Trụ màn hình điện tử",
-            kichThuoc: "3m x 12m",
-            soLuong: "3 trụ/bảng",
-            thoiGianGui: "15/10/2023",
-            tinhTrang: "khongDuyet",
-        },
-    ]
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+    const totalItems = await AdBoardChangeReq.countDocuments();
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+      page,
+      totalPages,
+      itemsPerPage,
+    };
     const breadcrumbs = [];
-    res.render('so/hanhChinh/dsYeuCauChinhBangQC.ejs', {objects: yeuCau, breadcrumbs});
-}
+    try {
+        const ChinhBangQC = await AdBoardChangeReq.find({}).populate({
+            path: 'adBoard',
+            populate: [
+                { path: 'boardType', model: 'BoardType' },
+                { path: 'adLocation', model: 'AdLocation', populate: [
+                    { path: 'ward', model: 'Ward' },
+                    { path: 'district', model: 'District' }
+                ]}
+            ]
+        }).populate('sender').skip((page - 1) * itemsPerPage).limit(itemsPerPage);
+        res.render('so/hanhChinh/dsYeuCauChinhBangQC.ejs',  { 
+            ChinhBangQC,
+            pagination,
+            breadcrumbs,
+        });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Server error' });
+    }
+};
 
 export const chiTietChinhBangQC = async (req, res) => {
-    const chiTiet = [
-        {
-            nguoiGui: "Minh Thông",
-            thoiDiemGui: "01/10/2023 - 17:04",
-            lyDoChinhSua: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. At ad sed hic qui nam sit, reiciendis enim provident quidem similique ipsum? Facere magni expedita fugit repellendus, velit pariatur, accusantium fuga veritatis provident deleniti molestiae in quisquam aspernatur perspiciatis eos. Provident est facere suscipit quisquam voluptates odit, tempora placeat laborum aliquid quo voluptatibus ea quasi aut, tenetur, ex itaque ut atque! Recusandae repellendus incidunt nemo? Laboriosam, cumque!",
-            hinhMinhHoa: "",
-            diemDat: "446 Hoàng Văn Thụ, Phường 4, Tân Bình, Thành phố Hồ Chí Minh",
-            khuVuc: {q: "Tân Bình", p: "Phường 15"},
-            phanLoai : {loaiBang: "Trụ màn hình điện tử LED", soLuong: "01", kichThuoc: "2.5 x 10"},
-            hopDong: {ngayBatDau: "01/10/2023", ngayKetThuc: "31/10/2023"},
-        }
-    ]
+    const { id } = req.params;
     const breadcrumbs = [];
-    res.render('so/hanhChinh/chiTiet/ndChinhBangQC.ejs', {object: chiTiet, breadcrumbs});
+    try {
+        const chiTietChinhBangQC = await AdBoardChangeReq.findById(id).populate({
+            path: 'adBoard',
+            populate: [
+                { path: 'boardType', model: 'BoardType' },
+                { path: 'adLocation', model: 'AdLocation', populate: [
+                    { path: 'ward', model: 'Ward' },
+                    { path: 'district', model: 'District' }
+                ]}
+            ]
+        }).populate('sender')
+        console.log(chiTietChinhBangQC);
+        res.render('so/hanhChinh/chiTiet/ndChinhBangQC.ejs',  { 
+            chiTietChinhBangQC,
+            breadcrumbs,
+        });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Server error' });
+    }
+}
+
+export const capNhatChinhBangQC = async (req, res) => {
+    const id = req.body.adBoardChangeRequestId;
+    try {
+        await AdBoardChangeReq.findByIdAndUpdate(id, {
+            status: req.body.newStatus
+        })
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Server error' });
+    }
 }
