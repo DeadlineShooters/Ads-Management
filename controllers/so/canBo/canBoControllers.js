@@ -15,7 +15,7 @@ export const danhSachCanBo =  async (req, res) => {
     };
     const breadcrumbs = [];
     try {
-        const canBo = await User.find({role:{$ne:"sở"}}).populate([
+        const canBo = await User.find({role:{$ne:"so"}}).populate([
             {path: 'ward', populate: {
                 path: 'district', model: 'District',
             }},
