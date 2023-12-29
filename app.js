@@ -6,6 +6,8 @@ import baoCaoDan from './routes/dan/report.js';
 import bodyParser from 'body-parser';
 import ejsMate from 'ejs-mate';
 import mongoose from 'mongoose';
+import { config } from 'dotenv';
+config();
 
 const mongoURI = 'mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority';
 
@@ -65,38 +67,26 @@ danApp.use("/", express.static(path.join(__dirname, "public")));
 danApp.use(bodyParser.json({ limit: "50mb" }));
 danApp.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
+
+danApp.use((req, res, next) => {
+	res.locals.googleMapKey = process.env.GOOGLE_MAP_KEY;
+	res.locals.mapId = process.env.MAP_ID;
+	next();
+});
+
+
+danApp.use((req, res, next) => {
+	res.locals.googleMapKey = process.env.GOOGLE_MAP_KEY;
+	res.locals.mapId = process.env.MAP_ID;
+	next();
+});
+danApp.use(bodyParser.json({ limit: "50mb" }));
+danApp.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
 danApp.use("/", trangChuDan);
 danApp.use("/report", baoCaoDan);
 
-// canBoApp.get("/", (req, res) => {
-//   // console.log("user:", req.user);
-//   res.locals.currentPage = "trang-chu";
-
-//   if (req.user) {
-//     return res.render("index.ejs", {
-//       user: req.user,
-//       cssfile: "/canbo-home-style.css",
-//     });
-//   } else return res.redirect("/login");
-// });
-
-// canBoApp.get("/edit-profile", (req, res) => {
-//   const breadcrumbs = [];
-//   res.render('editProfile', {breadcrumbs});
-// })
-
-// canBoApp.use("/", authRouter);
-// canBoApp.use("/cac-diem-dat-quang-cao/", diemDatQCPhuong);
-// canBoApp.use("/cac-bang-quang-cao/", bangQCPhuong);
-// canBoApp.use("/cac-bao-cao/", baoCaoPhuong);
-// canBoApp.use("/so/quanly", soQuanLyRoutes);
-// canBoApp.use("/so/hanhchinh", soHanhChinhRoutes);
-// canBoApp.use("/so/canbo", soCanBoRoutes);
-
-danApp.listen(3000, () => {
-	console.log('Serving on port 3000');
+const port = process.env.DAN_PORT || 3000
+danApp.listen(port, () => {
+	console.log(`Serving on port ${port}`);
 });
-// canBoApp.listen(9000, () => {
-//   console.log("Serving on port 9000");
-// });
-// testing revert

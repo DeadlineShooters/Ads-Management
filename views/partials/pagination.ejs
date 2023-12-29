@@ -16,7 +16,7 @@
             
             <% if (pagination.page > 1) { %>
                 <li class="page-item">
-                    <a class="page-link" href="?page=<%= pagination.page - 1 %>">Trang trước</a>
+                    <a class="page-link" href="?page=<%= pagination.page - 1 %>&items=<%= pagination.itemsPerPage %>">Previous</a>
                 </li>
             <% } else { %>
                 <li class="page-item disabled">
@@ -29,13 +29,13 @@
 
             <% for (let i = startPage; i <= endPage; i++) { %>
                 <li class="page-item <% if (i === pagination.page) { %>active<% } %>">
-                    <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                    <a class="page-link" href="?page=<%= i %>&items=<%= pagination.itemsPerPage %>"><%= i %></a>
                 </li>
             <% } %>
 
             <% if (pagination.page < pagination.totalPages) { %>
                 <li class="page-item">
-                    <a class="page-link" href="?page=<%= pagination.page + 1 %>">Trang sau</a>
+                    <a class="page-link" href="?page=<%= pagination.page + 1 %>&items=<%= pagination.itemsPerPage %>">Next</a>
                 </li>
             <% } else { %>
                 <li class="page-item disabled">

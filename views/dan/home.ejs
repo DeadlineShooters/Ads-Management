@@ -21,7 +21,7 @@
     });
     for (let i = 0; i < adLocations.length; i++) { %>
     <div
-        class="ads-point__info<%= i %>"
+        class="ads-point__info<%= i %> troinoi"
         data-id="<%= adLocations[i]._id %>"
         data-lat="<%= adLocations[i].latlng.split(",")[0].trim() %>"
         data-lng="<%= adLocations[i].latlng.split(",")[1].trim() %>"
@@ -73,6 +73,10 @@
 </div>
 
 <script>
+    document.querySelector('#outer-rectangle').classList.remove('m-2', 'p-3', 'rounded');
+</script>
+
+<script>
     ((g) => {
         var h,
             a,
@@ -105,5 +109,10 @@
                     m.head.append(a);
                 }));
         d[l] ? console.warn(p + ' only loads once. Ignoring:', g) : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
-    })({ key: 'AIzaSyA9x6dilQo2-0LuqFtvUgUMNxYWacsuiys', v: 'beta' });
+    })({ key: '<%= googleMapKey %>', v: 'beta' });
+
+    const mapId = '<%= mapId %>';
+
+    const lat = parseFloat('<%= lat%>')
+    const lng = parseFloat('<%= lng%>')
 </script>

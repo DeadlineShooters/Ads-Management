@@ -1,6 +1,8 @@
 import express from "express";
 import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
+import { config } from 'dotenv';
+config();
 // import danRoutes from "./routes/dan.js";
 import trangChuDan from './routes/dan/home.js';
 import baoCaoDan from './routes/dan/report.js';
@@ -26,7 +28,7 @@ import methodOverride from "method-override";
 import ExpressError from "./utils/ExpressError.js";
 import { isLoggedIn } from "./middleware.js";
 
-const mongoURI = "mongodb+srv://nhom09:atlas123@cluster0.hntnfkf.mongodb.net/Cluster0?retryWrites=true&w=majority";
+const mongoURI = process.env.MONGO_URI;
 
 try {
   await mongoose.connect(mongoURI);
@@ -35,22 +37,20 @@ try {
   console.log("Could not connect to the database", error);
 }
 
-// const danApp = express();
 const canBoApp = express();
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 canBoApp.engine("ejs", ejsMate);
 canBoApp.set("view engine", "ejs");
 canBoApp.set("views", path.join(__dirname, "/views"));
-// console.log(__dirname);
+
 
 canBoApp.use(express.json());
 canBoApp.use(express.urlencoded({ extended: true }));
-// canBoApp.use(passport.initialize());
 canBoApp.use(methodOverride("_method"));
 canBoApp.use("/", express.static(path.join(__dirname, "public")));
+
 canBoApp.use(
   session({
     secret: "keyboard cat",
@@ -76,42 +76,23 @@ canBoApp.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.currentPage = req.currentPage;
   res.locals.defaultItemsPerPage = 20;
+  // console.log("user" + JSON.stringify(req.user))
 
-  // res.locals.ayo = asfkdjsdfk;
-  next();
-});
-
-canBoApp.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+
+  res.locals.googleMapKey = process.env.GOOGLE_MAP_KEY;
+  res.locals.mapId = process.env.MAP_ID;
   next();
 });
 
-// canBoApp.get("/", (req, res) => {
-//   // console.log("user:", req.user);
-//   res.locals.currentPage = "trang-chu";
 
-//   if (req.user) {
-//     return res.render("index.ejs", {
-//       user: req.user,
-//       cssfile: "/canbo-home-style.css",
-//     });
-//   } else return res.redirect("/login");
-// });
 
 canBoApp.use("/", authRouter);
 
 // TỪ DÂN QUA NÈ ADKFJA;KDLFJA;SLFJ;SL
 canBoApp.use('/', isLoggedIn, trangChuDan);
 canBoApp.use('/report', isLoggedIn, baoCaoDan);
-
-canBoApp.get("/edit-profile", isLoggedIn, (req, res) => {
-  res.render('editProfile');
-})
-canBoApp.get('/group-info', isLoggedIn, (req, res) => {
-  res.render('info')
-})
-
 
 canBoApp.use("/cac-diem-dat-quang-cao/", isLoggedIn, diemDatQCPhuong);
 canBoApp.use("/cac-bang-quang-cao/", isLoggedIn, bangQCPhuong);
@@ -122,16 +103,13 @@ canBoApp.use("/so/canbo", isLoggedIn, soCanBoRoutes);
 
 canBoApp.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
-  if (!err.message) err.message = "Đã xảy ra lỗi, vui lòng thử lại.";
-  console.log(err.message);
-  res.status(statusCode).render("error", { err });
+  if (!err.message) err.message = 'Đã xảy ra lỗi, vui lòng thử lại.';
+  console.log("Error log from middleware: "+err.message);
+  res.status(statusCode).render('error', {err});
 });
 
-canBoApp.all("*", (req, res, next) => {
-  next(new ExpressError(404, "Page not found"));
-});
 
-canBoApp.listen(9000, () => {
-  console.log("Serving on port 9000");
+const port = process.env.CANBO_PORT || 9000;
+canBoApp.listen(port, () => {
+  console.log(`Serving on port ${port}`);
 });
-// testing revert

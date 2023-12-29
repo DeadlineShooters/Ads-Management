@@ -16,19 +16,19 @@ passport.use(
       try {
         const user = await User.findOne({ email }).populate(["ward", "district"]);
 
-        if (!user) {
-          console.log("No such user with that email found.");
-          return cb(null, false, {
-            message: "No such user with that email found.",
-          });
-        }
+		if (!user) {
+			console.log('No such user with that email found.');
+			return cb(null, false, {
+				message: 'Email hoặc mật khẩu đăng nhập chưa đúng',
+			});
+		}
 
         const passwordMatch = await bcrypt.compare(password, user.hashed_password);
 
-        if (!passwordMatch) {
-          console.log("Incorrect email or password.");
-          return cb(null, false, { message: "Incorrect email or password." });
-        }
+		if (!passwordMatch) {
+			console.log('Incorrect email or password.');
+			return cb(null, false, { message: 'Email hoặc mật khẩu đăng nhập chưa đúng' });
+		}
 
         console.log("Validation passed");
         return cb(null, user);
@@ -81,5 +81,12 @@ router.post("/logout", function (req, res, next) {
     res.redirect("/");
   });
 });
+
+router.get('/forget-password', (req, res) => {
+	res.render('forgetPassword');
+})
+router.get('/input-code', (req, res) => {
+	res.render('inputCode');
+})
 
 export default router;
