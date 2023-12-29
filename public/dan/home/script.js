@@ -6,6 +6,7 @@ let adsPoints = document.querySelectorAll('[class^="ads-point__info"]');
 let violatedPoints = document.querySelectorAll('[class^="violated-point__latlng"]');
 let adsPointMarkers = [];
 let violatedPointMarkers = [];
+const locationButton = document.querySelector('.location-btn');
 const { PlacesService, SearchBox } = await google.maps.importLibrary('places');
 
 async function initMap() {
@@ -82,10 +83,32 @@ async function initMap() {
 		document.querySelector('.search-bar__input').value = '';
 	});
 
+	// locate user position
+	map.controls.push(locationButton);
+	locationButton.addEventListener('click', () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					};
+					addMarker(pos);
+					map.setCenter(pos);
+				},
+				() => {
+					handleLocationError(true, infoWindow, map.getCenter());
+				}
+			);
+		} else {
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
+	});
+
 	// ads point
 	adsPoints.forEach((item, index) => {
-		if (item.dataset.lat == lat && item.dataset.lng == lng)
-			item.classList.add('d-block')
+		if (item.dataset.lat == lat && item.dataset.lng == lng) item.classList.add('d-block');
 		let adsPoint = document.createElement('div');
 		adsPoint.className = 'ads-point';
 		adsPoint.textContent = 'QC';
@@ -609,6 +632,12 @@ function getPlaceName(position) {
 			}
 		);
 	});
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	infoWindow.setPosition(pos);
+	infoWindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.' : "Error: Your browser doesn't support geolocation.");
+	infoWindow.open(map);
 }
 
 initMap();
