@@ -85,6 +85,8 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 }
 
 .location-btn:hover {

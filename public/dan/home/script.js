@@ -1,4 +1,3 @@
-import { MarkerClusterer } from 'https://cdn.skypack.dev/@googlemaps/markerclusterer@2.0.3';
 let map;
 let marker;
 let latLng;
@@ -6,6 +5,7 @@ let adsPoints = document.querySelectorAll('[class^="ads-point__info"]');
 let violatedPoints = document.querySelectorAll('[class^="violated-point__latlng"]');
 let adsPointMarkers = [];
 let violatedPointMarkers = [];
+let markers = [];
 const locationButton = document.querySelector('.location-btn');
 const { PlacesService, SearchBox } = await google.maps.importLibrary('places');
 
@@ -101,7 +101,6 @@ async function initMap() {
 				}
 			);
 		} else {
-			// Browser doesn't support Geolocation
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
 	});
@@ -124,6 +123,7 @@ async function initMap() {
 		});
 
 		adsPointMarkers.push(adsPointMarker);
+		markers.push(adsPointMarker);
 		if (item.dataset.violate == 'true') {
 			adsPoint.classList.add('violate');
 			violatedPointMarkers.push(adsPointMarker);
@@ -308,8 +308,11 @@ async function initMap() {
 			map,
 			position: position,
 			content: violatedPoint,
-			zIndex: -1,
 		});
+
+		violatedPointMarkers.push(violatedPointMarker);
+		markers.push(violatedPointMarker);
+
 		let addr;
 		await getAddress(position).then((res) => (addr = res));
 		let placeName = await getPlaceName(position);
@@ -429,14 +432,11 @@ async function initMap() {
 			}
 		});
 
-		violatedPointMarkers.push(violatedPointMarker);
-
 		let violatedIcon = document.createElement('i');
 		violatedIcon.className = 'fa-solid fa-exclamation violate-icon';
 		violatedPoint.appendChild(violatedIcon);
 	});
 
-	new MarkerClusterer({ adsPointMarkers, map });
 	// reverse geocoding
 	map.addListener('click', (event) => {
 		const hover = document.querySelector('.troinoi.d-block');
@@ -447,7 +447,7 @@ async function initMap() {
 		addMarker(latLng);
 	});
 
-	// new MarkerClusterer(map, adsPointMarkers);
+	const markerCluster = new markerClusterer.MarkerClusterer({ markers, map });
 }
 // reverse geocoding
 async function addMarker(position) {
