@@ -12,6 +12,7 @@ const controller = {};
 
 controller.home = async (req, res) => {
 	try {
+		res.locals.currentPage = "trang-chu";
 		// const lat = parseFloat(req.params.lat) || 10.762860099114166;
 		// const lng = parseFloat(req.params.lng) || 106.68247164106691;
 		const { lat = '10.762860099114166', lng = '106.68247164106691' } = req.query;

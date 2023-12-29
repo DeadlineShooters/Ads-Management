@@ -18,7 +18,39 @@
     }
 </style>
 
-<div class="container p-3 bg-light rounded overflow-hidden">
+<script>
+    $(document).ready(function() {
+        $('#yesModal button[type="submit"]').click(function() {
+                $.ajax({
+                url: '/so/hanhchinh/chinh-diem-qc/chi-tiet-yeu-cau/<%= chiTietChinhDiemQC._id %>/update-status',
+                type: 'PUT',
+                data: {
+                    adLocationChangeRequestId: $('#chinhDiemID').val(),
+                    newStatus: 'Đã duyệt'
+                },
+                success: window.location.href = "/so/hanhchinh/chinh-diem-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
+            });
+        });
+        $('#noModal button[type="submit"]').click(function() {
+                $.ajax({
+                url: '/so/hanhchinh/chinh-diem-qc/chi-tiet-yeu-cau/<%= chiTietChinhDiemQC._id %>/update-status',
+                type: 'PUT',
+                data: {
+                    adLocationChangeRequestId: $('#chinhDiemID').val(),
+                    newStatus: 'Không duyệt'
+                },
+                success: window.location.href = "/so/hanhchinh/chinh-diem-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
+            });
+        });
+    });
+</script>
+
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/so/hanhchinh/chinh-diem-qc">Danh sách yêu cầu chỉnh điểm quảng cáo</a></li>
@@ -29,8 +61,9 @@
         <div class="col">
             <div class="row">
                 <div class="col text-end fw-lighter">
-                    <i class="bi bi-person-fill"></i><b> <%= object[0].nguoiGui %></b>&nbsp&nbsp
-                    <i class="bi bi-clock-fill"></i><b> <%= object[0].thoiDiemGui %></b>
+                    <i class="bi bi-person-fill"></i><b> <%= chiTietChinhDiemQC.sender.name %></b>&nbsp&nbsp
+                    <i class="bi bi-clock-fill"></i><b> <%= new Date(chiTietChinhDiemQC.sendDate).toLocaleDateString() %></b>
+                    <input type="hidden" id="chinhDiemID" value="<%= chiTietChinhDiemQC._id %>" />
                 </div>
             </div>
         </div>
@@ -44,7 +77,7 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Lý do chỉnh sửa</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].lyDoChinhSua %></div>
+                <div class="col" style="max-width: 100%;"><%= chiTietChinhDiemQC.reason %></div>
             </div>
         </li>
         <li class="list-group-item">
@@ -56,37 +89,91 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Điểm đặt</b></div>
-                <div class="col" style="max-width: 100%;"><%= object[0].diemDat %></div>
+                <div class="col" style="max-width: 100%;"><%= chiTietChinhDiemQC.adLocation?.address %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Khu vực</b></div>
-                <div class="col" style="max-width: 25%;"><b>Quận:</b> <%= object[0].khuVuc.q %></div>
-                <div class="col" style="max-width: 25%;"><b>Phường:</b> <%= object[0].khuVuc.p %></div>
+                <div class="col" style="max-width: 25%;"><b>Quận:</b> <%= chiTietChinhDiemQC.adLocation?.district.name %></div>
+                <div class="col" style="max-width: 25%;"><b>Phường:</b> <%= chiTietChinhDiemQC.adLocation?.ward.name %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Loại vị trí</b></div>
-                <div class="col" style="max-width: 25%;"><%= object[0].loaiViTri %></div>
+                <div class="col" style="max-width: 100%;"><%= chiTietChinhDiemQC.adLocation?.type.name %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Hình thức</b></div>
-                <div class="col" style="max-width: 25%;"><%= object[0].hinhThuc %></div>
+                <div class="col" style="max-width: 25%;"><%= chiTietChinhDiemQC.adLocation?.adType.name %></div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Quy hoạch</b></div>
-                <div class="col" style="max-width: 25%;"><b><%= object[0].quyHoach %></b></div>
+                <div class="col" style="max-width: 25%;"><b><%= chiTietChinhDiemQC.adLocation?.status %></b></div>
             </div>
         </li>
     </ul>
-    <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
-        <a class="btn btn-danger mx-1" style="width: 25%;" for="success-outlined">Không phê duyệt</a>
-        <a class="btn btn-success mx-1" style="width: 25%;;" for="success-outlined">Phê duyệt</a>
+    <% if (chiTietChinhDiemQC.status === "Đã duyệt") { %>
+        <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+            <button class="btn btn btn-secondary mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" disabled>Không phê duyệt</button>
+            <button class="btn btn btn-success mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" disabled>Phê duyệt</button>
+        </div>
+    <% } else if (chiTietChinhDiemQC.status === "Không duyệt") { %>
+        <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+            <button class="btn btn btn-danger mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" disabled>Không phê duyệt</button>
+            <button class="btn btn btn-secondary mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" disabled>Phê duyệt</button>
+        </div>
+    <% } else { %>
+        <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
+            <button class="btn btn btn-danger mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" data-bs-toggle="modal" data-bs-target="#noModal">Không phê duyệt</button>
+            <button class="btn btn btn-success mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" data-bs-toggle="modal" data-bs-target="#yesModal">Phê duyệt</button>
+        </div>
+    <% } %>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="yesModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Cán bộ Sở thực hiện <strong>PHÊ DUYỆT</strong> yêu cầu chỉnh sửa điểm quảng cáo.
+              </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary">
+                    Đồng ý
+                </button>
+            </div>
+          </div>
+        </div>
+    </div>    
+    <div class="modal fade" tabindex="-1" role="dialog" id="noModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="modal-title fw-bold">Xác nhận xử lý yêu cầu</div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Cán bộ Sở thực hiện <strong>KHÔNG PHÊ DUYỆT</strong> yêu cầu chỉnh sửa điểm quảng cáo.
+              </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary">
+                    Đồng ý
+                </button>
+            </div>
+          </div>
+        </div>
     </div>
-</div>

@@ -1,63 +1,102 @@
-export const dsCapPhepQC = async (req, res) => {
-    const yeuCau = [
-        {
-            diaChi: "157 Nguyễn Đình Chính",
-            khuVuc: "Phường 11, Quận Phú Nhuận",
-            loaiBang: "Trụ màn hình điện tử",
-            kichThuoc: "2.5m x 10m",
-            soLuong: "2 trụ/bảng",
-            thoiGianGui: "13/10/2023",
-            tinhTrang: "Duyet",
-        },
-        {
-            diaChi: "158 Nguyễn Đình Chính",
-            khuVuc: "Phường 12, Quận Phú Nhuận",
-            loaiBang: "Trụ màn hình điện tử",
-            kichThuoc: "1.5m x 8m",
-            soLuong: "1 trụ/bảng",
-            thoiGianGui: "14/10/2023",
-            tinhTrang: "khongDuyet",
-        },
-        {
-            diaChi: "159 Nguyễn Đình Chính",
-            khuVuc: "Phường 13, Quận Phú Nhuận",
-            loaiBang: "Trụ màn hình điện tử",
-            kichThuoc: "3m x 12m",
-            soLuong: "3 trụ/bảng",
-            thoiGianGui: "15/10/2023",
-            tinhTrang: "chuaDuyet",
-        },
-        {
-            diaChi: "158 Nguyễn Đình Chính",
-            khuVuc: "Phường 12, Quận Phú Nhuận",
-            loaiBang: "Trụ màn hình điện tử",
-            kichThuoc: "1.5m x 8m",
-            soLuong: "1 trụ/bảng",
-            thoiGianGui: "14/10/2023",
-            tinhTrang: "khongDuyet",
-        }
-    ]
-    const breadcrumbs = [];
+import AdBoardRequest from "../../../models/adBoardRequest.js";
+import AdBoard from "../../../models/adBoard.js";
+import mongoose from "mongoose";
 
-    res.render('so/hanhChinh/dsYeuCauCapPhepQC.ejs', {objects: yeuCau, breadcrumbs});
-}
+export const dsCapPhepQC = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+  const totalItems = await AdBoardRequest.countDocuments();
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const pagination = {
+    page,
+    totalPages,
+    itemsPerPage,
+  };
+  const breadcrumbs = [];
+  try {
+    const CapPhepQC = await AdBoardRequest.find({})
+      .populate({
+        path: "adBoard",
+        populate: [
+          { path: "boardType", model: "BoardType" },
+          {
+            path: "adLocation",
+            model: "AdLocation",
+            populate: [
+              { path: "ward", model: "Ward" },
+              { path: "district", model: "District" },
+            ],
+          },
+        ],
+      })
+      .populate("sender")
+      .skip((page - 1) * itemsPerPage)
+      .limit(itemsPerPage);
+    res.render("so/hanhChinh/dsYeuCauCapPhepQC.ejs", {
+      CapPhepQC,
+      pagination,
+      breadcrumbs,
+      inform: req.flash("info"),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
 
 export const chiTietYeuCauCapPhep = async (req, res) => {
-    const chiTiet = [
-        {
-            nguoiGui: "Minh Thông",
-            thoiDiemGui: "01/10/2023 - 17:04",
-            noiDung: "Quảng cáo thức uống Wakeup 247 của công ty VinCafé . Phong cách thiết kế 3D kết hợp Die-cut làm cho các  chi tiết trên bảng Wake Up 247 - Nước tăng lực vị cà phê trở nên nổi bật. Không những vậy, việc sáng tạo bằng cách cho tia sét phát ra từ hạt cà phê, “truyền” vào chai Wakeup 247 đã thể hiện rất sống động thông điệp của nhãn hàng.",
-            hinhMinhHoa: "",
-            diemDat: "446 Hoàng Văn Thụ, Phường 4, Tân Bình, Thành phố Hồ Chí Minh",
-            khuVuc: {q: "Tân Bình", p: "Phường 15"},
-            phanLoai : {loaiBang: "Trụ màn hình điện tử LED", soLuong: "01", kichThuoc: "2.5 x 10"},
-            tenCongTy: "Công ty cổ phần Vincafé Biên Hòa",
-            lienLac: {mail: "ads.argency.vincafecompany@gmail.com", dienThoai: "03672727272"},
-            hopDong: {ngayBatDau: "01/10/2023", ngayKetThuc: "31/10/2023"},
-            tinhTrang: "",
-        }
-    ]
-    const breadcrumbs = [];
-    res.render('so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs', {object: chiTiet, breadcrumbs});
-}
+  const { id } = req.params;
+  const breadcrumbs = [
+    { name: "Danh sách yêu cầu cấp phép quảng cáo", link: "/so/hanhchinh/cap-phep-qc" },
+    { name: "Chi tiết yêu cầu", link: "" },
+  ];
+
+  try {
+    const adBoardReq = await AdBoardRequest.findById(id)
+      .populate({
+        path: "adBoard",
+        populate: [
+          { path: "boardType", model: "BoardType" },
+          {
+            path: "adLocation",
+            model: "AdLocation",
+            populate: [
+              { path: "ward", model: "Ward" },
+              { path: "district", model: "District" },
+            ],
+          },
+        ],
+      })
+      .populate("sender");
+    console.log("@@ cap phep: ", adBoardReq);
+
+    const adBoard = await AdBoard.findOne({ adBoardRequest: new mongoose.Types.ObjectId(id) })
+      .populate({
+        path: "adLocation",
+        populate: [{ path: "district" }, { path: "ward" }, "type", "adType"],
+      })
+      .populate("boardType");
+    console.log("@@  adBoard: ", adBoard);
+
+    res.render("so/hanhChinh/chiTiet/ndYeuCauCapPhep.ejs", {
+      adBoardReq,
+      adBoard,
+      breadcrumbs,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const capNhatYeuCauCapPhep = async (req, res) => {
+  const id = req.body.adBoardRequestId;
+  try {
+    await AdBoardRequest.findByIdAndUpdate(id, {
+      status: req.body.newStatus,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
