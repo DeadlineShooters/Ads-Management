@@ -66,8 +66,9 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
     const { id } = req.params;
     const isInUse = await AdLocation.findOne({ adType: id });
+    console.log(id)
     if (isInUse) {
-        req.flash('error', `Loại hình quảng cáo ${adtype.name} đang được sử dụng!`);
+        req.flash('error', `Loại hình quảng cáo đang được sử dụng!`);
         return res.redirect('/so/quanly/loai-hinh-quang-cao');
     }
     const adtype = await AdType.findByIdAndDelete(id);
