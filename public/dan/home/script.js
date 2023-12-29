@@ -355,6 +355,7 @@ async function initMap() {
 			wrap.css('background-color', 'transparent');
 			wrap.css('-webkit-box-shadow', 'none');
 			wrap.css('border-radius', '0');
+			wrap.children().first().css('overflow', 'hidden');
 
 			let l = $(`#hook${index}`).parent().parent().parent().siblings();
 			for (let i = 0; i < l.length; i++) {
