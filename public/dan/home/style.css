@@ -72,6 +72,25 @@ html {
     outline: none;
 }
 
+.location-btn {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 2px;
+    font-size: 24px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.location-btn:hover {
+    color: #333;
+}
+
 .ads-point {
     width: 21px;
     height: 21px;
