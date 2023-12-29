@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-import AdLocation from "./adLocation.js";
+const Schema = mongoose.Schema;
+import adLocation from "./adLocation.js";
 import User from "./user.js";
 
-const Schema = mongoose.Schema;
-
 const adLocationChangeRequestSchema = new Schema({
-  adLocation: { type: Schema.Types.ObjectId, ref: "AdLocation" },
-  reason: String,
-  sender: { type: Schema.Types.ObjectId, ref: "User" },
-  sendDate: Date,
-});
+    adLocation: {type: Schema.Types.ObjectId, ref: "AdLocation"},
+    reason: String,
+    sender: {type: Schema.Types.ObjectId, ref: "User"},
+    sendDate: {type: Date},
+    status: String,
+})
 
-const AdLocationChangeRequest = mongoose.model("AdLocationChangeRequest", adLocationChangeRequestSchema);
+const AdLocationChangeRequest  = mongoose.model("AdLocationChangeRequest", adLocationChangeRequestSchema);
 export default AdLocationChangeRequest;

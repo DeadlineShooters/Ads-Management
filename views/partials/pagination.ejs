@@ -1,7 +1,7 @@
 <section class="d-flex justify-content-center mt-auto position-relative">
 
     <div class="d-flex justify-content-center position-absolute start-0 align-items-center">
-        <p class="w-auto m-0">Items per page</p>
+        <p class="w-auto m-0">Số lượng mỗi trang</p>
         <!-- <label for="itemsPerPage" class="form-label col">Items per page:</label> -->
         <select id="itemsPerPage" class="form-select mx-2 w-auto" onchange="changeItemsPerPage(this.value)">
             <option value="5" <%= pagination.itemsPerPage == 5 ? 'selected' : '' %>>5</option>
@@ -20,7 +20,7 @@
                 </li>
             <% } else { %>
                 <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
+                    <a class="page-link">Trang trước</a>
                 </li>
             <% } %>
 
@@ -39,7 +39,7 @@
                 </li>
             <% } else { %>
                 <li class="page-item disabled">
-                    <a class="page-link">Next</a>
+                    <a class="page-link">Trang sau</a>
                 </li>
             <% } %>
         </ul>

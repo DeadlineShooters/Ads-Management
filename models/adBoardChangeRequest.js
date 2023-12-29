@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-import User from "./user.js";
-import AdBoard from "./adBoard.js";
-
 const Schema = mongoose.Schema;
+import adBoard from "./adBoard.js";
+import User from "./user.js";
 
 const adBoardChangeRequestSchema = new Schema({
-  adBoard: { type: Schema.Types.ObjectId, ref: "AdBoard" },
-  reason: String,
-  sender: { type: Schema.Types.ObjectId, ref: "User" },
-  sendDate: Date,
-});
+    adBoard: {type: Schema.Types.ObjectId, ref: "AdBoard"},
+    reason: String,
+    sender: {type: Schema.Types.ObjectId, ref: "User"},
+    sendDate: {type: Date},
+    status: String,
+})
 
-const AdBoardChangeRequest = mongoose.model("AdBoardChangeRequest", adBoardChangeRequestSchema);
-export default AdBoardChangeRequest;
+const AdBoardChangeReq = mongoose.model("AdBoardChangeRequest", adBoardChangeRequestSchema);
+export default AdBoardChangeReq;
