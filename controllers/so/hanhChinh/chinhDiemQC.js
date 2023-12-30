@@ -1,5 +1,7 @@
 import AdLocationChangeRequest from "../../../models/adLocationChangeRequest.js"
 import AdBoard from "../../../models/adBoard.js";
+import Ward from "../../../models/ward.js";
+import District from "../../../models/district.js";
 
 export const dsChinhDiemQC = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
@@ -22,11 +24,16 @@ export const dsChinhDiemQC = async (req, res) => {
                 { path: 'adType', model: 'AdType'},
             ]
         }).populate('sender')
-        console.log(ChinhDiemQC);
+        const wardList = await Ward.find({}).populate({
+            path: "district", model: 'District'
+        });
+        const districtList = await District.find({});
         res.render('so/hanhChinh/dsYeuCauChinhDiemQC.ejs',  { 
             ChinhDiemQC,
             pagination,
             breadcrumbs,
+            wardList,
+            districtList
         });
     } catch (err) {
       console.error(err);

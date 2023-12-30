@@ -37,28 +37,23 @@
     });
   </script>
 
+<form action="/so/hanhchinh/cap-phep-qc/tim-kiem-phuong-quan" role="search" method="POST">
   <section class="d-flex justify-content-between">
-    <div>
+    <div class="d-flex flex-row">
       <%- include('../../partials/so/hanhChinhDropdown') %>
     </div>
     <div class="d-flex flex-row align-items-center">
       <div class="md-col-2 me-2">
         <button type="button" class="btn btn-warning btn-sm btn-responsive"><span
-            class="bi bi-arrows-vertical"></span>Sắp xếp</button>
+            class="bi bi-arrows-vertical"></span> Sắp Xếp</button>
       </div>
       <div class="md-col-2 me-2">
         <button type="button" class="btn btn-primary btn-sm btn-responsive"><span
-            class="bi bi-filter"></span>Lọc</button>
+            class="bi bi-filter"></span> Lọc</button>
       </div>
-      <div class="md-col-3">
-        <div class="input-group">
-          <input class="form-control border-right-0" placeholder="Tìm yêu cầu">
-          <span class="input-group-append bg-white border-left-0">
-            <button class="input-group-text bg-transparent">
-              <i class="bi bi-search"></i>
-            </button>
-          </span>
-        </div>
+      <div class="md-col-2 me-2">
+        <button type="button" class="btn btn-success btn-sm btn-responsive"><span
+            class="bi bi-file-earmark-excel-fill"></span> Xuất Excel</button>
       </div>
     </div>
   </section>
@@ -79,7 +74,7 @@
       <tbody>
         <% let i = 1; %>
         <% for (let motCapPhepQC of CapPhepQC ) { %>
-          <tr class="clickable-row" data-href='cap-phep-qc/chi-tiet-yeu-cau/<%= motCapPhepQC._id %>'>
+          <tr class="clickable-row" data-href='/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= motCapPhepQC._id %>'>
             <th scope="row">
               <%= i++ %>
             </td>
@@ -119,8 +114,8 @@
       </tbody>
     </table>
   </section>
-
 <%- include('../../partials/pagination') %>
+</form>
 <style>
   /* Add this style to your custom CSS or in a style tag within your HTML */
   .min-w {
