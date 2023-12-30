@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 import ReportType from "./reportType.js";
-import UploadedImage from "./uploadedImage.js";
 import AdBoard from "./adBoard.js";
 import ViolatedPoint from "./violatedPoint.js";
+import imageSchema from "./image.js";
 
 const reportSchema = Schema({
   reportType: { type: Schema.Types.ObjectId, ref: "ReportType" },
@@ -11,7 +11,7 @@ const reportSchema = Schema({
   email: String,
   phone: String,
   content: String,
-  uploadedImages: [Object],
+  uploadedImages: [imageSchema],
   adBoard: { type: Schema.Types.ObjectId, ref: "AdBoard" },
   randomPoint: { type: Schema.Types.ObjectId, ref: "ViolatedPoint" },
   sendDate: Date,

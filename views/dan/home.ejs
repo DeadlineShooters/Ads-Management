@@ -24,8 +24,8 @@
                 });
                 for (let i = 0; i < adLocations.length; i++) { %>
                     <div class="ads-point__info<%= i %> troinoi" data-id="<%= adLocations[i]._id %>"
-                        data-lat="<%= adLocations[i].latlng.split(" ,")[0].trim() %>"
-                        data-lng="<%= adLocations[i].latlng.split(",")[1].trim() %>"
+                        data-lat="<%= adLocations[i].latlng.split(", ")[0] %>"
+                        data-lng="<%= adLocations[i].latlng.split(", ")[1] %>"
                             data-violate="<%= adLocations[i].isViolated %>"
                                 >
                                 <div class="info__form">

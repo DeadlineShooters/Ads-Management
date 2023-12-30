@@ -14,7 +14,7 @@ async function initMap() {
 	let { Map } = await google.maps.importLibrary('maps');
 	let { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 	map = new Map(document.getElementById('map'), {
-		zoom: 17,
+		zoom: 14,
 		center: { lat: lat, lng: lng },
 		mapId: mapId,
 		mapTypeControl: false,
