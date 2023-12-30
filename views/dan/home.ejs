@@ -1,127 +1,134 @@
-<% if (user) { layout('layouts/canbo') } else { layout('layouts/dan') } %>
+<% if (user) { layout('layouts/canbo') %>
+    <div id="user" hidden></div>
+    <% } else { layout('layouts/dan') } %>
 
-    <div id="home">
-        <div id="map"></div>
+        <div id="home">
+            <div id="map"></div>
 
-        <div class="row">
-            <div class="col-lg-8 col-10 search-bar">
-                <i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
-                <input class="search-bar__input" type="text" placeholder="Tìm kiếm theo địa chỉ" />
-                <i class="fa-regular fa-xmark search-bar__close-icon"></i>
+            <div class="row">
+                <div class="col-lg-8 col-10 search-bar">
+                    <i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
+                    <input class="search-bar__input" type="text" placeholder="Tìm kiếm theo địa chỉ" />
+                    <i class="fa-regular fa-xmark search-bar__close-icon"></i>
+                </div>
             </div>
+
+            <button class="location-btn">
+                <i class="fa-light fa-location-crosshairs"></i>
+            </button>
+
+            <!-- ad location -->
+            <% adLocations=adLocations.filter(item=> {
+                return (!user || (user.role == 'so' || (user.role == 'quan' && item.district == user.district._id) ||
+                (user.role == 'phuong' && item.district == user.district._id && item.ward == user.ward._id)));
+                });
+                for (let i = 0; i < adLocations.length; i++) { %>
+                    <div class="ads-point__info<%= i %> troinoi" data-id="<%= adLocations[i]._id %>"
+                        data-lat="<%= adLocations[i].latlng.split(" ,")[0].trim() %>"
+                        data-lng="<%= adLocations[i].latlng.split(",")[1].trim() %>"
+                            data-violate="<%= adLocations[i].isViolated %>"
+                                >
+                                <div class="info__form">
+                                    <%= adLocations[i].adType.name %>
+                                </div>
+                                <div class="info__type">
+                                    <%= adLocations[i].type.name %>
+                                </div>
+                                <div class="info__address">
+                                    <%= adLocations[i].address %>
+                                </div>
+                                <img class="info__img" src="<%= adLocations[i].image.url %>" alt="" />
+                                <div class="info__planning-stt">
+                                    <%= adLocations[i].status %>
+                                </div>
+                                <div class="info__details">
+                                    <a href="/so/quanly/diem-dat-quang-cao/<%= adLocations[i]._id %>"
+                                        class="details__btn">
+                                        <span>CHI TIẾT ĐIỂM ĐẶT</span>
+                                    </a>
+                                </div>
+                    </div>
+                    <% } %>
+
+                        <!-- violated point latlng -->
+                        <% violatedPoints=violatedPoints.filter(item=> {
+                            return (!user || (user.role == 'so' || (user.role == 'quan' && item.district ==
+                            user.district._id) || (user.role == 'phuong' && item.district == user.district._id &&
+                            item.ward
+                            == user.ward._id)));
+                            })
+                            for (let i = 0; i < violatedPoints.length; i++) { %>
+                                <div class="violated-point__latlng<%= i %>" data-id="<%= violatedPoints[i]._id %>"
+                                    data-lat="<%= violatedPoints[i].latlng.split(" ,")[0].trim() %>"
+                                    data-lng="<%= violatedPoints[i].latlng.split(",")[1].trim() %>"
+                                        hidden
+                                        ></div>
+                                <% } %>
+
+                                    <!-- toggle -->
+                                    <div class="row">
+                                        <div class="col-10 col-lg-11 toggle-section">
+                                            <ul class="toggle-list">
+                                                <li class="toggle-item">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" checked />
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                    <span class="toggle-label">Bảng QC</span>
+                                                </li>
+                                                <li class="toggle-item">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" checked />
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                    <span class="toggle-label">Báo cáo vi phạm</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
         </div>
 
-        <button class="location-btn">
-            <i class="fa-light fa-location-crosshairs"></i>
-        </button>
+        <script>
+            document.querySelector('#outer-rectangle').classList.remove('m-2', 'p-3', 'rounded');
+        </script>
 
-        <!-- ad location -->
-        <% adLocations=adLocations.filter(item=> {
-            return (!user || (user.role == 'so' || (user.role == 'quan' && item.district == user.district._id) ||
-            (user.role == 'phuong' && item.district == user.district._id && item.ward == user.ward._id)));
-            });
-            for (let i = 0; i < adLocations.length; i++) { %>
-                <div class="ads-point__info<%= i %> troinoi" data-id="<%= adLocations[i]._id %>"
-                    data-lat="<%= adLocations[i].latlng.split(" ,")[0].trim() %>"
-                    data-lng="<%= adLocations[i].latlng.split(",")[1].trim() %>"
-                        data-violate="<%= adLocations[i].isViolated %>"
-                            >
-                            <div class="info__form">
-                                <%= adLocations[i].adType.name %>
-                            </div>
-                            <div class="info__type">
-                                <%= adLocations[i].type.name %>
-                            </div>
-                            <div class="info__address">
-                                <%= adLocations[i].address %>
-                            </div>
-                            <img class="info__img" src="<%= adLocations[i].image.url %>" alt="" />
-                            <div class="info__planning-stt">
-                                <%= adLocations[i].status %>
-                            </div>
-                </div>
-                <% } %>
+        <script>
+            ((g) => {
+                var h,
+                    a,
+                    k,
+                    p = 'The Google Maps JavaScript API',
+                    c = 'google',
+                    l = 'importLibrary',
+                    q = '__ib__',
+                    m = document,
+                    b = window;
+                b = b[c] || (b[c] = {});
+                var d = b.maps || (b.maps = {}),
+                    r = new Set(),
+                    e = new URLSearchParams(),
+                    u = () =>
+                        h ||
+                        (h = new Promise(async (f, n) => {
+                            await (a = m.createElement('script'));
+                            e.set('libraries', [...r] + '');
+                            for (k in g)
+                                e.set(
+                                    k.replace(/[A-Z]/g, (t) => '_' + t[0].toLowerCase()),
+                                    g[k]
+                                );
+                            e.set('callback', c + '.maps.' + q);
+                            a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+                            d[q] = f;
+                            a.onerror = () => (h = n(Error(p + ' could not load.')));
+                            a.nonce = m.querySelector('script[nonce]')?.nonce || '';
+                            m.head.append(a);
+                        }));
+                d[l] ? console.warn(p + ' only loads once. Ignoring:', g) : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
+            })({ key: '<%= googleMapKey %>', v: 'beta' });
 
-                    <!-- violated point latlng -->
-                    <% violatedPoints=violatedPoints.filter(item=> {
-                        return (!user || (user.role == 'so' || (user.role == 'quan' && item.district ==
-                        user.district._id) || (user.role == 'phuong' && item.district == user.district._id && item.ward
-                        == user.ward._id)));
-                        })
-                        for (let i = 0; i < violatedPoints.length; i++) { %>
-                            <div class="violated-point__latlng<%= i %>" data-id="<%= violatedPoints[i]._id %>"
-                                data-lat="<%= violatedPoints[i].latlng.split(" ,")[0].trim() %>"
-                                data-lng="<%= violatedPoints[i].latlng.split(",")[1].trim() %>"
-                                    hidden
-                                    ></div>
-                            <% } %>
+            const mapId = '<%= mapId %>';
 
-                                <!-- toggle -->
-                                <div class="row">
-                                    <div class="col-10 col-lg-11 toggle-section">
-                                        <ul class="toggle-list">
-                                            <li class="toggle-item">
-                                                <label class="toggle-switch">
-                                                    <input type="checkbox" checked />
-                                                    <span class="toggle-slider"></span>
-                                                </label>
-                                                <span class="toggle-label">Bảng QC</span>
-                                            </li>
-                                            <li class="toggle-item">
-                                                <label class="toggle-switch">
-                                                    <input type="checkbox" checked />
-                                                    <span class="toggle-slider"></span>
-                                                </label>
-                                                <span class="toggle-label">Báo cáo vi phạm</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-    </div>
-
-    <script>
-        document.querySelector('#outer-rectangle').classList.remove('m-2', 'p-3', 'rounded');
-    </script>
-
-    <script>
-        ((g) => {
-            var h,
-                a,
-                k,
-                p = 'The Google Maps JavaScript API',
-                c = 'google',
-                l = 'importLibrary',
-                q = '__ib__',
-                m = document,
-                b = window;
-            b = b[c] || (b[c] = {});
-            var d = b.maps || (b.maps = {}),
-                r = new Set(),
-                e = new URLSearchParams(),
-                u = () =>
-                    h ||
-                    (h = new Promise(async (f, n) => {
-                        await (a = m.createElement('script'));
-                        e.set('libraries', [...r] + '');
-                        for (k in g)
-                            e.set(
-                                k.replace(/[A-Z]/g, (t) => '_' + t[0].toLowerCase()),
-                                g[k]
-                            );
-                        e.set('callback', c + '.maps.' + q);
-                        a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
-                        d[q] = f;
-                        a.onerror = () => (h = n(Error(p + ' could not load.')));
-                        a.nonce = m.querySelector('script[nonce]')?.nonce || '';
-                        m.head.append(a);
-                    }));
-            d[l] ? console.warn(p + ' only loads once. Ignoring:', g) : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
-        })({ key: '<%= googleMapKey %>', v: 'beta' });
-
-        const mapId = '<%= mapId %>';
-
-        const lat = parseFloat('<%= lat%>')
-        const lng = parseFloat('<%= lng%>')
-    </script>
-
-    
+            const lat = parseFloat('<%= lat%>')
+            const lng = parseFloat('<%= lng%>')
+        </script>
