@@ -86,8 +86,6 @@ controller.showDetail = async (req, res) => {
 };
 
 controller.showCreateRequest = async (req, res) => {
-  res.locals.currentPage = "quang-cao";
-
   const { diemId } = req.params;
   const breadcrumbs = [
     { name: "Các điểm đặt quảng cáo", link: "/cac-diem-dat-quang-cao" },
@@ -95,6 +93,13 @@ controller.showCreateRequest = async (req, res) => {
   ];
 
   const adLocation = await AdLocation.findById(diemId).populate(["district", "ward"]);
+
+  if (adLocation.status === "Chưa quy hoạch") {
+    req.flash("error", "Không tạo yêu cầu được do điểm quảng cáo chưa được quy hoạch");
+
+    res.redirect(`/cac-diem-dat-quang-cao/${diemId}`);
+  }
+  res.locals.currentPage = "quang-cao";
 
   res.render("phuong/taoYeuCauCapPhep", {
     diemId,
@@ -141,7 +146,7 @@ controller.showEdit = async (req, res) => {
 
 controller.processEdit = async (req, res) => {
   const { diemId } = req.params;
-  console.log(req.body, req.file);
+  console.log("@@ process edit", req.body, req.file);
   const editedLocation = await AdLocation.findById(diemId).populate(["district", "ward", "type", "adType"]);
   const newAdLocation = new AdLocation({
     latlng: editedLocation.latlng,

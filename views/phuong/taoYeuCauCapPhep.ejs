@@ -71,6 +71,7 @@
       <div class="col-md-5">
         <label for="formFile" class="form-label">Hình ảnh minh họa</label>
         <input class="form-control" type="file" id="formFile" required name="image" accept="image/png, image/jpeg" />
+        <div id="validationFeedback" class="invalid-feedback">Ảnh chưa chọn</div>
       </div>
       <div class="col-md-5">
         <label for="companyName" class="form-label">Tên công ty</label>
@@ -140,6 +141,8 @@
       // Check if textarea is not empty
       let textareaEmpty = document.getElementById("formTextarea").value === "";
 
+      let imageEmpty = document.getElementById("formFile").files.length === 0;
+
       // Check start and end dates
       let startDate = document.querySelector('input[name="start-date"]').value;
       let endDate = document.querySelector('input[name="end-date"]').value;
@@ -153,6 +156,12 @@
         document.getElementById("end").classList.remove("is-invalid");
       }
 
+      if (imageEmpty) {
+        document.getElementById("formFile").classList.add("is-invalid");
+        allFilled = false;
+      } else {
+        document.getElementById("formFile").classList.remove("is-invalid");
+      }
       return allFilled && !textareaEmpty;
     }
 

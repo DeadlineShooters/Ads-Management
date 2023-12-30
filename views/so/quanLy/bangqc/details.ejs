@@ -23,7 +23,7 @@
             <li class="list-group-item">Tình trạng: <b><%= details.status? "Đã duyệt":"Chưa duyệt" %></b></li>
           </ul>
           <div class="d-flex flex-row mt-auto justify-content-end">
-            <% if (user.role == 'so') { %>
+            <% if (user.role === 'so') { %>
             <a href="/so/quanly/diem-dat-quang-cao/<%= details.adLocation._id %>/bang-quang-cao/<%= details._id %>/edit" class="btn btn-secondary">Chỉnh sửa</a>
             <form
               class="showPopUp"

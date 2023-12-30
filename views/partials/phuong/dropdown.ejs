@@ -5,8 +5,11 @@
   </select>
 </div>
 <script>
-  // no cache when going back so this will work when the user go back to previous page as well
-  window.addEventListener("pageshow", () => {
-    document.querySelector(`option[value="${window.location.pathname}"]`).selected = true;
+  document.addEventListener("DOMContentLoaded", function () {
+    // no cache when going back so this will work when the user goes back to the previous page as well
+    window.addEventListener("pageshow", () => {
+      console.log("@@ path :", window.location.pathname);
+      document.querySelector(`#qldropdown option[value="${window.location.pathname}"]`).selected = true;
+    });
   });
 </script>
