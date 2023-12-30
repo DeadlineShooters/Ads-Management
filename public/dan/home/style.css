@@ -72,6 +72,27 @@ html {
     outline: none;
 }
 
+.location-btn {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 2px;
+    font-size: 24px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.location-btn:hover {
+    color: #333;
+}
+
 .ads-point {
     width: 21px;
     height: 21px;
@@ -93,7 +114,7 @@ html {
     left: 50%;
     transform: translateX(-50%);
     width: 284px;
-    padding: 12px 12px 0;
+    padding: 12px;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -438,6 +459,7 @@ input:checked + .toggle-slider:before {
     color: #0288d1;
 }
 
+[class^="ads-point__info"] .details__btn,
 .list-panel .ads-item .manipulate__report {
     color: #d32e2e;
     text-decoration: none;
