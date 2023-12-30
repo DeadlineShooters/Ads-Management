@@ -67,7 +67,7 @@ export const add = async (req, res) => {
     await adBoard.save();
 
     req.flash('success', 'Bảng quảng cáo mới đã được tạo thành công');
-    return res.redirect(`/so/quanly/diem-dat-quang-cao/${adLocationId}`);
+    return res.redirect(`/so/quanly/diem-dat-quang-cao/${adLocationId}/bang-quang-cao/${adBoard._id}`);
 }
 export const update = async (req, res) => {
     const { adLocationId, adBoardId } = req.params;
@@ -100,13 +100,14 @@ export const remove = async (req, res) => {
     // delete all reports await Ward.deleteMany({_id: {$in: wards} })
     // Delete images from Cloudinary
     const reportsToDelete = await Report.find({ adBoard: adBoardId });
-    for (const report of reportsToDelete) {
-        for (const image of report.uploadedImages) {
-            await cloudinary.uploader.destroy(image.filename);
+    if (reportsToDelete.length) {
+        for (const report of reportsToDelete) {
+            for (const image of report.uploadedImages) {
+                await cloudinary.uploader.destroy(image.filename);
+            }
         }
+        await Report.deleteMany({ adBoard: adBoardId });
     }
-    // Delete reports from the database
-    await Report.deleteMany({ adBoard: adBoardId });
 
     const adBoard = await AdBoard.findById(adBoardId);
     if (adBoard.image.filename !== defaultImageName) {

@@ -131,13 +131,14 @@ export const remove = async (req, res) => {
     // delete all reports await Ward.deleteMany({_id: {$in: wards} })
     // Delete images from Cloudinary
     const reportsToDelete = await Report.find({ adBoard: adBoardId });
-    for (const report of reportsToDelete) {
-        for (const image of report.uploadedImages) {
-            await cloudinary.uploader.destroy(image.filename);
+    if (reportsToDelete.length) {
+        for (const report of reportsToDelete) {
+            for (const image of report.uploadedImages) {
+                await cloudinary.uploader.destroy(image.filename);
+            }
         }
+        await Report.deleteMany({ adBoard: adBoardId });
     }
-    // Delete reports from the database
-    await Report.deleteMany({ adBoard: adBoardId });
 
     const adBoard = await AdBoard.findById(adBoardId);
     if (adBoard.image.filename !== defaultImageName) {
