@@ -3,6 +3,8 @@ import AdLocation from "../../../models/adLocation.js";
 import BoardType from "../../../models/boardType.js";
 import Report from "../../../models/report.js";
 import { cloudinary } from "../../../cloudinary/index.js";
+import AdBoardRequest from "../../../models/adBoardRequest.js";
+import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js";
 
 const defaultImageName = 'bang-quang-cao-3_zr4oyk';
 export const showDetails = async (req, res) => {
@@ -32,13 +34,19 @@ export const renderEditForm = async (req, res) => {
 };
 export const renderAddForm = async (req, res) => {
     const { adLocationId } = req.params;
+    const adLocation = await AdLocation.findById(adLocationId).populate(['district', 'ward', 'type', 'adType']);
+
+    if (adLocation.status == "Chưa quy hoạch") {
+        req.flash('error', 'Điểm đặt chưa được quy hoạch');
+        return res.redirect('/so/quanly/diem-dat-quang-cao/' + adLocationId);
+    }
+    
     const breadcrumbs = [
         { name: 'Các điểm đặt quảng cáo', link: '/so/quanly/diem-dat-quang-cao'},
         { name: "Chi tiết điểm đặt quảng cáo", link: `/so/quanly/diem-dat-quang-cao/${adLocationId}` },
         { name: "Thêm bảng quảng cáo", link: '' },
     ]
     const boardTypes = await BoardType.find({});
-    const adLocation = await AdLocation.findById(adLocationId).populate(['district', 'ward', 'type', 'adType']);
     res.render('so/quanLy/bangqc/add', {adLocation, boardTypes, breadcrumbs})
 };
 export const add = async (req, res) => {
@@ -78,12 +86,28 @@ export const update = async (req, res) => {
 }
 export const remove = async (req, res) => {
     const { adLocationId, adBoardId } = req.params;
-    const isInUse = await Report.findOne({ adBoard: adBoardId })
+    // const isInUse = await Report.findOne({ adBoard: adBoardId })
     // console.log(isInUse);
-    if (isInUse) {
-      req.flash('error', 'Bảng quảng cáo đang được sử dụng! Không thể xoá');
-      return res.redirect(`/so/quanly/diem-dat-quang-cao/${adLocationId}`);
+    // if (isInUse) {
+    //   req.flash('error', 'Bảng quảng cáo đang được sử dụng! Không thể xoá');
+    //   return res.redirect(`/so/quanly/diem-dat-quang-cao/${adLocationId}`);
+    // }
+
+    // delete adboard request
+    await AdBoardRequest.findOneAndDelete({ adBoard: adBoardId });
+    // delete adboard change request
+    await AdBoardChangeReq.findOneAndDelete({ adBoard: adBoardId })
+    // delete all reports await Ward.deleteMany({_id: {$in: wards} })
+    // Delete images from Cloudinary
+    const reportsToDelete = await Report.find({ adBoard: adBoardId });
+    for (const report of reportsToDelete) {
+        for (const image of report.uploadedImages) {
+            await cloudinary.uploader.destroy(image.filename);
+        }
     }
+    // Delete reports from the database
+    await Report.deleteMany({ adBoard: adBoardId });
+
     const adBoard = await AdBoard.findById(adBoardId);
     if (adBoard.image.filename !== defaultImageName) {
         await cloudinary.uploader.destroy(adBoard.image.filename);

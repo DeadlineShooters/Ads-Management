@@ -97,9 +97,6 @@ export const add = async (req, res) => {
 
   req.flash("success", "Điểm đặt mới đã được tạo thành công");
   return res.redirect("/so/quanly/diem-dat-quang-cao");
-
-  req.flash("success", "Điểm đặt mới đã được tạo thành công");
-  return res.redirect("/so/quanly/diem-dat-quang-cao");
 };
 export const update = async (req, res) => {
   const { id } = req.params;
@@ -118,11 +115,40 @@ export const update = async (req, res) => {
 };
 export const remove = async (req, res) => {
   const { id } = req.params;
-  const isInUse = await AdBoard.findOne({ adLocation: id });
-  if (isInUse) {
-    req.flash("error", "Điểm đặt đang được sử dụng! Không thể xoá");
-    return res.redirect("/so/quanly/diem-dat-quang-cao");
+  // const isInUse = await AdBoard.findOne({ adLocation: id });
+  // if (isInUse) {
+  //   req.flash("error", "Điểm đặt đang được sử dụng! Không thể xoá");
+  //   return res.redirect("/so/quanly/diem-dat-quang-cao");
+  // }
+
+  const adBoards = AdBoard.find({ adLocation: id });
+  for (let adBoard of adBoards) {
+    const adBoardId = adBoard._id;
+    // delete adboard request
+    await AdBoardRequest.findOneAndDelete({ adBoard: adBoardId });
+    // delete adboard change request
+    await AdBoardChangeReq.findOneAndDelete({ adBoard: adBoardId })
+    // delete all reports await Ward.deleteMany({_id: {$in: wards} })
+    // Delete images from Cloudinary
+    const reportsToDelete = await Report.find({ adBoard: adBoardId });
+    for (const report of reportsToDelete) {
+        for (const image of report.uploadedImages) {
+            await cloudinary.uploader.destroy(image.filename);
+        }
+    }
+    // Delete reports from the database
+    await Report.deleteMany({ adBoard: adBoardId });
+
+    const adBoard = await AdBoard.findById(adBoardId);
+    if (adBoard.image.filename !== defaultImageName) {
+        await cloudinary.uploader.destroy(adBoard.image.filename);
+    }
+    await AdBoard.findByIdAndDelete(adBoardId);
   }
+
+
+
+
   const adLocation = await AdLocation.findById(id);
   if (adLocation.image.filename !== defaultImageName) {
     await cloudinary.uploader.destroy(adLocation.image.filename);
