@@ -81,7 +81,7 @@ controller.getReport = (req, res) => {
 	if (!captcha) {
 		return res.json({ success: false, msg: 'Captcha token is undefined!' });
 	}
-	const secretKey = '6Lc97TUpAAAAAOVeTP6qbaKyA0Pl0YqwhSoMlift';
+	const secretKey = '6LfS7UApAAAAADjxCzA_Kqa9qNcJz6aM0OyPEuTr';
 	const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captcha}`;
 	request(verifyUrl, async (err, response, body) => {
 		if (err) {
