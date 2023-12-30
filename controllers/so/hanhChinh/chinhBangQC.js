@@ -1,5 +1,7 @@
-import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js"
+import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js";
 import AdBoard from "../../../models/adBoard.js";
+import Ward from "../../../models/ward.js";
+import District from "../../../models/district.js";
 
 export const dsChinhBangQC = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
@@ -23,10 +25,16 @@ export const dsChinhBangQC = async (req, res) => {
                 ]}
             ]
         }).populate('sender').skip((page - 1) * itemsPerPage).limit(itemsPerPage);
+        const wardList = await Ward.find({}).populate({
+            path: "district", model: 'District'
+        });
+        const districtList = await District.find({});
         res.render('so/hanhChinh/dsYeuCauChinhBangQC.ejs',  { 
             ChinhBangQC,
             pagination,
             breadcrumbs,
+            wardList,
+            districtList
         });
     } catch (err) {
       console.error(err);

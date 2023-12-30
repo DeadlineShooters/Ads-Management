@@ -68,7 +68,7 @@ export const remove = async (req, res) => {
     const { id } = req.params;
     const isInUse = await Report.findOne({ reportType: id });
     if (isInUse) {
-        req.flash('error', `${reportType.name} đang được sử dụng!`);
+        req.flash('error', `Hình thức báo cáo này đang được sử dụng!`);
         return res.redirect('/so/quanly/hinh-thuc-bao-cao');
     }
     const reportType = await ReportType.findByIdAndDelete(id);

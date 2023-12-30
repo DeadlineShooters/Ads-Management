@@ -15,11 +15,10 @@ controller.home = async (req, res) => {
 		res.locals.currentPage = "trang-chu";
 		// const lat = parseFloat(req.params.lat) || 10.762860099114166;
 		// const lng = parseFloat(req.params.lng) || 106.68247164106691;
-		const { lat = '10.762860099114166', lng = '106.68247164106691' } = req.query;
-		const fliedIn = lat == '10.762860099114166';
+		const { lat = '10.795788', lng = '106.703497' } = req.query;
 		const adLocations = await AdLocation.find({}).populate('adType').populate('type').populate('image');
 		const violatedPoints = await ViolatedPoint.find({});
-		res.render('dan/home', { adLocations: adLocations, violatedPoints: violatedPoints, user: req.user ? req.user : null, lat, lng, fliedIn });
+		res.render('dan/home', { adLocations: adLocations, violatedPoints: violatedPoints, user: req.user ? req.user : null, lat, lng });
 	} catch (err) {
 		console.log(err);
 		res.status(500).send(err);
@@ -81,8 +80,8 @@ controller.getReport = (req, res) => {
 	if (!captcha) {
 		return res.json({ success: false, msg: 'Captcha token is undefined!' });
 	}
-	const secretKey = '6LfS7UApAAAAADjxCzA_Kqa9qNcJz6aM0OyPEuTr';
-	const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captcha}`;
+	// const secretKey = '6Lc97TUpAAAAAOVeTP6qbaKyA0Pl0YqwhSoMlift';
+	const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${res.locals.captchaSecretKey}&response=${captcha}`;
 	request(verifyUrl, async (err, response, body) => {
 		if (err) {
 			console.log(err);
@@ -104,18 +103,19 @@ controller.getReport = (req, res) => {
 		else {
 			let reportType = await ReportType.find({ description: type });
 
-			let uploadedImages = [];
-			for (let file of req.files) {
-				var img = fs.readFileSync(file.path);
-				var encode_image = img.toString('base64');
+			// let uploadedImages = [];
+			// for (let file of req.files) {
+			// 	var img = fs.readFileSync(file.path);
+			// 	var encode_image = img.toString('base64');
 		
-				var finalImg = {
-					contentType: file.mimetype,
-					image: new Buffer.from(encode_image, 'base64'),
-				};
-				uploadedImages.push(finalImg);
-			}
+			// 	var finalImg = {
+			// 		contentType: file.mimetype,
+			// 		image: new Buffer.from(encode_image, 'base64'),
+			// 	};
+			// 	uploadedImages.push(finalImg);
+			// }
 			try {
+				const uploadedImages = req.files.map(f => ({ url: f.path, filename: f.filename }));
 				const report = new Report({ reportType: reportType[0]._id, fullName: name, email, phone: phoneNumber, content, uploadedImages, sendDate: Date.now() });
 				await report.save();
 				if (location && board) {

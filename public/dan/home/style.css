@@ -560,3 +560,13 @@ input:checked + .toggle-slider:before {
 .list-panel .report-item.yellow .report-item__type {
     color: #DEC403;
 }
+
+.list-panel .report-item  .img__item {
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+}
+
+.list-panel .report-item  .img__item + .img__item{
+    margin-top: 8px;
+}

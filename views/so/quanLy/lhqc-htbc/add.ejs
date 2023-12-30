@@ -4,7 +4,7 @@
     <form action="<%= props.addPath %>" method="post" enctype="application/x-www-form-urlencoded">
         <div class="mb-3">
             <label for="tenQuan" class="form-label">Tên <%= props.type %></label>
-            <input name="item[name]" type="text" class="form-control" id="tenQuan" placeholder="Vd: <%= props.name %>">
+            <input name="item[name]" type="text" class="form-control" id="tenQuan" placeholder="Vd: <%= props.name %>" required>
         </div>
         <div class="mb-3">
             <label for="moTa" class="form-label">Mô tả</label>

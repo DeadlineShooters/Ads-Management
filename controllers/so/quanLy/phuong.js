@@ -1,6 +1,8 @@
 import Ward from "../../../models/ward.js";
 import District from "../../../models/district.js";
 import AdLocation from "../../../models/adLocation.js";
+import User from "../../../models/user.js";
+import ViolatedPoint from "../../../models/violatedPoint.js";
 
 export const index = async (req, res) => {
 
@@ -82,9 +84,10 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
     const { quanId, phuongId } = req.params;
 
+    // adLocation, user, violatedPoint
     let isInUse = await AdLocation.findOne({ ward: phuongId });
-    // phải thêm dòng dưới
-    // isInUse = await ViolatedPoint.findOne({ward: phuongId})
+    isInUse = await User.findOne({ ward: phuongId }) || isInUse;
+    isInUse = await ViolatedPoint.findOne({ ward: phuongId }) || isInUse;
     if (isInUse) {
         req.flash('error', 'Phường đang được sử dụng! Không thể xoá');
         return res.redirect(`/so/quanly/quan/${quanId}/phuong`);
