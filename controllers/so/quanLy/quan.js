@@ -1,6 +1,8 @@
 import District from "../../../models/district.js";
 import AdLocation from "../../../models/adLocation.js";
 import Ward from "../../../models/ward.js";
+import User from "../../../models/user.js";
+import ViolatedPoint from "../../../models/violatedPoint.js";
 
 export const index = async (req, res) => {
 
@@ -66,15 +68,28 @@ export const update = async (req, res) => {
 }
 export const remove = async (req, res) => {
     const { quanId } = req.params;
-    let isInUse = await AdLocation.findOne({ district: quanId });
-    isInUse = await Ward.findOne({ district: quanId });
+
+    const wards = await Ward.find({ district: quanId });
+    let isInUse = null;
+    for (let ward of wards) {
+        isInUse = await AdLocation.findOne({ ward: ward._id }) || isInUse;
+        isInUse = await User.findOne({ ward: ward._id }) || isInUse;
+        isInUse = await ViolatedPoint.findOne({ ward: ward._id }) || isInUse;
+        console.log("ayy"+isInUse)
+        if (isInUse) {
+            break;
+        }
+    }
+    // let isInUse = await AdLocation.findOne({ district: quanId });
+    // isInUse = await Ward.findOne({ district: quanId });
     // phải thêm dòng dưới
     // isInUse = await ViolatedPoint.findOne({district: quanId})
     if (isInUse) {
         req.flash('error', 'Quận đang được sử dụng! Không thể xoá');
         return res.redirect('/so/quanly/quan');
     }
-    // await District.findByIdAndDelete(quanId);
+    await Ward.deleteMany({_id: {$in: wards} })
+    await District.findByIdAndDelete(quanId);
     req.flash('success', 'Quận được xoá thành công');
     res.redirect('/so/quanly/quan');
 }

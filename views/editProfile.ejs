@@ -18,42 +18,141 @@
 
 <div class="container rounded border shadow col-8 my-auto" style="padding: 1rem 7rem;">
     <h1 class="text-center my-4">Chỉnh sửa tài khoản</h1>
-    <form action="#">
+    <form class="showPopUp" action="/edit-profile/<%= user._id %>?_method=patch" method="post" enctype="application/x-www-form-urlencoded">
         <div class="mb-3">
             <label class="fw-bold">Họ tên</label>
-            <input type="text" name="" placeholder="Nhập họ tên cán bộ" value="Nguyễn Văn A" class="form-control">
+            <input type="text" name="name" placeholder="Nhập họ tên cán bộ" value="<%= canbo.username %>" class="form-control" required>
         </div>
         <div class="row">
             <div class="mb-3 col-6">
                 <label class="fw-bold">Ngày sinh</label>
-                <input type="date" name="" placeholder="Chọn ngày, tháng, năm sinh" value="2018-01-01" class="form-control">
+                <input type="date" name="birthday" value="<%= canbo.birthday %>" class="form-control" required>
             </div>
             <div class="mb-3 col-6">
                 <label class="fw-bold">Số điện thoại</label>
-                <input type="text" name="" placeholder="Nhập số điện thoại" value="123456789" class="form-control">
+                <input type="text" name="phone" placeholder="Nhập số điện thoại" value="<%= canbo.phone %>" class="form-control" required>
             </div>
         </div>
         <div class="mb-3">
             <label class="fw-bold">Email</label>
-            <input type="text" name="" placeholder="Nhập địa chỉ email" value="nguyenvana@gmail.com" class="form-control">
+            <input type="text" name="email" placeholder="Nhập địa chỉ email" value="<%= canbo.email %>" class="form-control" required>
         </div>
         
+        <% if (user.role != 'so') { %>
         <div class="row">
+            <% if (user.role == 'quan') {%>
             <div class="mb-3 col-6">
                 <label class="fw-bold">Quận quản lý</label>
-                <input type="text" value="Bình Tân" class="form-control" disabled>
-            </div>  
+                <input type="text" value="<%= user.district.name %>" class="form-control" disabled>
+            </div>
+            <% } else { %>  
             <div class="mb-3 col-6">
                 <label class="fw-bold">Phường quản lý</label>
-                <input type="text" value="Bình Trị Đông" class="form-control" disabled>
+                <input type="text" value="<%= user.ward.name %>" class="form-control" disabled>
             </div>
+            <% } %>
         </div>
-        <div class="mb-3">
+        <% } %>
+        <!-- <div class="mb-3">
             <label class="fw-bold">Mật khẩu đăng nhập</label>
             <input type="password" name="" placeholder="" value="123" class="form-control">
-        </div>
+        </div> -->
+        
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#changPwd">
+            Đổi mật khẩu
+        </button>
+          
+        <!-- Modal -->
+        
+        
+
         <div class="my-4 text-center">
             <button class="btn btn-info">Xác nhận</button>
         </div>
     </form>
+    <div class="modal fade" id="changPwd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Đổi mật khẩu</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/change-password/<%= user._id %>?_method=patch" method="post" enctype="application/x-www-form-urlencoded">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="" required onkeyup="validatePassword(this.value)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Nhập lại mật khẩu</label>
+                            <input type="password" class="form-control"id="confirmPassword" required
+                                placeholder="" onkeyup="samePassword()">
+                        </div>
+                        <div class="form-check form-check-inline mb-3">
+                            <input class="form-check-input" type="checkbox" id="showPassword" value="true" onclick="show(this.checked)">
+                            <label class="form-check-label" for="showPassword">Hiện mật khẩu</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Đổi mật khẩu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    function show(checked) {
+        if (checked) {
+            document.querySelector('#password').type = 'text';
+            document.querySelector('#confirmPassword').type = 'text';
+            
+        } else {
+            document.querySelector('#password').type = 'password';
+            document.querySelector('#confirmPassword').type = 'password';
+
+        }
+    }
+
+    function samePassword() {
+        let password = document.querySelector('#password');
+        let confirm = document.querySelector('#confirmPassword');
+        if (password.value != confirm.value) {
+            confirm.setCustomValidity('Mật khẩu nhập lại không khớp!');
+            confirm.reportValidity();
+        } else {
+            confirm.setCustomValidity('');
+        }
+    }
+
+    // var errors = {
+    //     uppercase: { regex: /[A-Z]/, description: 'At least one uppercase letter' },
+    //     lowercase: { regex: /[a-z]/, description: 'At least one lowercase letter' },
+    //     digit: { regex: /[0-9]/, description: 'At least one digit' },
+    //     special: { regex: /[^A-Za-z0-9]/, description: 'At least one special symbol' },
+    //     length: { test: e => e.length >= 6, description: 'Should be at least 8 characters' }, // Adjusted the length check
+    // };
+
+    // function validatePassword(value) {
+    //     let password = document.querySelector('#password');
+    //     let isValid = true; // Assume the password is valid initially
+
+    //     Object.entries(errors).forEach(([name, { test, regex, description }]) => {
+    //         const doesNotMeetCriteria = test ? !test(value) : !regex.test(value);
+
+    //         if (doesNotMeetCriteria) {
+    //             isValid = false;
+    //             password.setCustomValidity(description);
+    //             password.reportValidity();
+    //         }
+    //     });
+
+    //     // If the password meets all criteria, clear any previous custom validity
+    //     if (isValid) {
+    //         password.setCustomValidity('');
+    //         password.reportValidity();
+    //     }
+    // }
+
+</script>

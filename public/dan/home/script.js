@@ -1,11 +1,13 @@
-import { MarkerClusterer } from 'https://cdn.skypack.dev/@googlemaps/markerclusterer@2.0.3';
 let map;
 let marker;
 let latLng;
+let user = document.getElementById('user');
 let adsPoints = document.querySelectorAll('[class^="ads-point__info"]');
 let violatedPoints = document.querySelectorAll('[class^="violated-point__latlng"]');
 let adsPointMarkers = [];
 let violatedPointMarkers = [];
+let markers = [];
+const locationButton = document.querySelector('.location-btn');
 const { PlacesService, SearchBox } = await google.maps.importLibrary('places');
 
 async function initMap() {
@@ -13,10 +15,14 @@ async function initMap() {
 	let { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 	map = new Map(document.getElementById('map'), {
 		zoom: 17,
-		center: { lat: 10.762860099114166, lng: 106.68247164106691 },
-		mapId: '4fcd553b54a60b5d',
+		center: { lat: lat, lng: lng },
+		mapId: mapId,
 		mapTypeControl: false,
 	});
+
+	// if (fliedIn) {
+	// 	document.querySelector('adpoint')
+	// }
 
 	// searchbar
 	const searchInput = document.querySelector('.search-bar__input');
@@ -78,8 +84,31 @@ async function initMap() {
 		document.querySelector('.search-bar__input').value = '';
 	});
 
+	// locate user position
+	map.controls.push(locationButton);
+	locationButton.addEventListener('click', () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					};
+					addMarker(pos);
+					map.setCenter(pos);
+				},
+				() => {
+					handleLocationError(true, infoWindow, map.getCenter());
+				}
+			);
+		} else {
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
+	});
+
 	// ads point
 	adsPoints.forEach((item, index) => {
+		if (item.dataset.lat == lat && item.dataset.lng == lng) item.classList.add('d-block');
 		let adsPoint = document.createElement('div');
 		adsPoint.className = 'ads-point';
 		adsPoint.textContent = 'QC';
@@ -95,6 +124,7 @@ async function initMap() {
 		});
 
 		adsPointMarkers.push(adsPointMarker);
+		markers.push(adsPointMarker);
 		if (item.dataset.violate == 'true') {
 			adsPoint.classList.add('violate');
 			violatedPointMarkers.push(adsPointMarker);
@@ -106,7 +136,6 @@ async function initMap() {
 				fetch('/adboards/' + item.dataset.id)
 					.then((response) => response.json())
 					.then((adBoards) => {
-						console.log(adBoards);
 						let offcanvas = `
                     <div class="list-panel offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasAP${index}" aria-labelledby="offcanvasLabelAP${index}">
                         <div class="offcanvas-header">
@@ -135,7 +164,18 @@ async function initMap() {
 											<div class="item__manipulate">
 												<div class="manipulate__more-info"><i
 														class="fa-light fa-circle-info more-info__icon"></i>
-												</div>
+												</div>`;
+								console.log(user);
+								if (user) {
+									offcanvas += `
+												<a href="/so/quanly/diem-dat-quang-cao/${item1.adLocation._id}/bang-quang-cao/${item1._id}" class="manipulate__report">
+													<span>CHI TIẾT BẢNG QUẢNG CÁO</span>
+												</a>
+											</div>
+										</div>
+									</div>`;
+								} else {
+									offcanvas += `
 												<a href="/report?location=${item1.adLocation._id}&board=${item1._id}" class="manipulate__report">
 													<i class="fa-solid fa-hexagon-exclamation report__icon"></i>
 													<span>BÁO CÁO VI PHẠM</span>
@@ -143,6 +183,7 @@ async function initMap() {
 											</div>
 										</div>
 									</div>`;
+								}
 							}
 						});
 						if (noAdBoard) {
@@ -231,7 +272,7 @@ async function initMap() {
 									let backward = document.createElement('i');
 									backward.setAttribute('class', 'fa-solid fa-arrow-left backward-icon');
 									item1.appendChild(backward);
-									backward.style.cssText = 'position: absolute; top: 0; left: 0; font-size: 1.8rem; color: #444; padding: 12px;';
+									backward.style.cssText = 'position: absolute; top: 0; left: 0; font-size: calc(1.8rem / 1.6); color: #444; padding: 12px;';
 									backward.addEventListener('click', () => {
 										img.remove();
 										expiry.remove();
@@ -281,6 +322,10 @@ async function initMap() {
 			content: violatedPoint,
 			zIndex: -1,
 		});
+
+		violatedPointMarkers.push(violatedPointMarker);
+		markers.push(violatedPointMarker);
+
 		let addr;
 		await getAddress(position).then((res) => (addr = res));
 		let placeName = await getPlaceName(position);
@@ -303,11 +348,15 @@ async function initMap() {
                     <div class="item__content">
                         <div class="location__name">${placeName}</div>
                         <div class="location__addr">${addr}</div>
-                    </div>
-                    <a href="/report?id=${item.dataset.id}" class="location__report-btn">
+                    </div>`;
+		if (!user) {
+			hoverMarkerInfo += `
+					<a href="/report?id=${item.dataset.id}" class="location__report-btn">
                         <i class="fa-solid fa-hexagon-exclamation item__icon"></i>
                         <span>BÁO CÁO VI PHẠM</span>
-                    </a>
+                    </a>`;
+		}
+		hoverMarkerInfo += `			
                 </div>
             </div>
         </div>`;
@@ -323,6 +372,7 @@ async function initMap() {
 			wrap.css('background-color', 'transparent');
 			wrap.css('-webkit-box-shadow', 'none');
 			wrap.css('border-radius', '0');
+			wrap.children().first().css('overflow', 'hidden');
 
 			let l = $(`#hook${index}`).parent().parent().parent().siblings();
 			for (let i = 0; i < l.length; i++) {
@@ -400,21 +450,22 @@ async function initMap() {
 			}
 		});
 
-		violatedPointMarkers.push(violatedPointMarker);
-
 		let violatedIcon = document.createElement('i');
 		violatedIcon.className = 'fa-solid fa-exclamation violate-icon';
 		violatedPoint.appendChild(violatedIcon);
 	});
 
-	new MarkerClusterer({ adsPointMarkers, map });
 	// reverse geocoding
 	map.addListener('click', (event) => {
+		const hover = document.querySelector('.troinoi.d-block');
+		if (hover) {
+			hover.classList.remove('d-block');
+		}
 		latLng = event.latLng;
 		addMarker(latLng);
 	});
 
-	// new MarkerClusterer(map, adsPointMarkers);
+	const markerCluster = new markerClusterer.MarkerClusterer({ markers, map });
 }
 // reverse geocoding
 async function addMarker(position) {
@@ -453,24 +504,26 @@ async function addMarker(position) {
                     <div class="location__name">${placeName}</div>
                     <div class="location__addr">${addr}</div>
                 </div>`;
-	let outRange = true;
-	await fetch('/ward')
-		.then((response) => response.json())
-		.then((wards) => {
-			wards.forEach((item) => {
-				if (item.name == ward.replace('Phường', '').trim() && item.district.name == district.replace('Quận', '').trim()) {
-					clickMarkerInfo += `
+	if (!user) {
+		let outRange = true;
+		await fetch('/ward')
+			.then((response) => response.json())
+			.then((wards) => {
+				wards.forEach((item) => {
+					if (item.name == ward.replace('Phường', '').trim() && item.district.name == district.replace('Quận', '').trim()) {
+						clickMarkerInfo += `
 				<a href="/report?lat=${position.lat()}&lng=${position.lng()}&district=${item.district._id}&ward=${item._id}" class="location__report-btn">
 					<i class="fa-solid fa-hexagon-exclamation item__icon"></i>
 					<span>BÁO CÁO VI PHẠM</span>
 				</a>`;
-					outRange = false;
-				}
+						outRange = false;
+					}
+				});
 			});
-		});
-	if (outRange) {
-		clickMarkerInfo += `
+		if (outRange) {
+			clickMarkerInfo += `
 				<div class="location__out-range">Địa điểm không nằm trong khu vực quản lí</div>`;
+		}
 	}
 	clickMarkerInfo += `
             </div>
@@ -599,6 +652,12 @@ function getPlaceName(position) {
 			}
 		);
 	});
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	infoWindow.setPosition(pos);
+	infoWindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.' : "Error: Your browser doesn't support geolocation.");
+	infoWindow.open(map);
 }
 
 initMap();

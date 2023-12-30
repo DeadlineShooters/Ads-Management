@@ -12,9 +12,14 @@ const controller = {};
 
 controller.home = async (req, res) => {
 	try {
+		res.locals.currentPage = "trang-chu";
+		// const lat = parseFloat(req.params.lat) || 10.762860099114166;
+		// const lng = parseFloat(req.params.lng) || 106.68247164106691;
+		const { lat = '10.762860099114166', lng = '106.68247164106691' } = req.query;
+		const fliedIn = lat == '10.762860099114166';
 		const adLocations = await AdLocation.find({}).populate('adType').populate('type').populate('image');
 		const violatedPoints = await ViolatedPoint.find({});
-		res.render('dan/home', { adLocations: adLocations, violatedPoints: violatedPoints, user: req.user ? req.user : null });
+		res.render('dan/home', { adLocations: adLocations, violatedPoints: violatedPoints, user: req.user ? req.user : null, lat, lng, fliedIn });
 	} catch (err) {
 		console.log(err);
 		res.status(500).send(err);
