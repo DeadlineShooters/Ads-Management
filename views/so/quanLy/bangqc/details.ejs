@@ -1,26 +1,26 @@
 <% layout('layouts/canbo') %>
 
 <div class="container p-2">
-  <div class="card shadow">
-    <div class="card-header">
-      <h4 class="card-title">Chi tiết bảng quảng cáo</h4>
-    </div>
-    <div class="card-body p-2">
-      <div class="row">
-        <div class="col align-self-center">
-          <img src="<%= details.image.url %>" class="img-thumbnail mx-auto d-block" alt="" />
-        </div>
-        <div class="col d-flex flex-column p-2">
+	<div class="card shadow-lg border border-0">
+		<div class="card-header border border-0" style="background-color: lightsteelblue;">
+			<h4 class="card-title">Chi tiết bảng quảng cáo</h4>
+		</div>
+		<div class="card-body m-0 row">
+			<div class="col align-self-center">
+				<img src="<%= details.image.url %>" class="img-thumbnail mx-auto d-block" alt="" />
+			</div>
+			<div class="col d-flex flex-column p-2">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Địa chỉ: <b><%= details.adLocation.address %></b></li>
             <li class="list-group-item">Khu vực: <b>Quận <%= details.adLocation.district.name %></b>, <b>Phường <%= details.adLocation.ward.name %></b></li>
             <li class="list-group-item">Loại bảng: <b><%=details.boardType.name%></b></li>
             <li class="list-group-item">Hình thức: <b><%= details.adLocation.adType.name %></b></li>
             <li class="list-group-item">Phân loại: <b><%= details.adLocation.type.name %></b></li>
-            <li class="list-group-item">Kích thước: <b><%=details.size.w%>m x <%=details.size.h%>m</b></li>
+            <li class="list-group-item">Kích thước: <b><%=details.size.h%>m x <%=details.size.w%>m</b></li>
             <li class="list-group-item">Số lượng: <b><%=details.quantity%> trụ/bảng</b></li>
             <li class="list-group-item">Ngày bắt đầu hợp đồng: <b><%=details.startDate%></b></li>
             <li class="list-group-item">Ngày kết thúc hợp đồng: <b><%=details.expireDate%></b></li>
+            <li class="list-group-item">Tình trạng: <b><%= details.status? "Đã duyệt":"Chưa duyệt" %></b></li>
           </ul>
           <div class="d-flex flex-row mt-auto justify-content-end">
             <% if (user.role == 'so') { %>

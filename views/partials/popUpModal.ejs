@@ -21,10 +21,20 @@
         button.setAttribute('type', 'button');
         button.setAttribute('data-bs-toggle', 'modal');
         button.setAttribute('data-bs-target', '#confirmPopUp');
+        button.setAttribute('data-is-clicked', 'false');
+        button.onclick = () => button.setAttribute('data-is-clicked', 'true');
     });
 
     document.getElementById('saveChangesBtn').addEventListener('click', function () {
         // Trigger the form submission when "Save changes" is clicked
-        document.querySelectorAll('.showPopUp').forEach(form => form.submit());
+        const button = document.querySelector('button[data-is-clicked="true"]')
+        button.setAttribute('data-is-clicked', 'false');
+        const form = button.closest('form');
+    
+        // Check if a form is found
+        if (form) {
+            // Trigger the form submission
+            form.submit();
+        }
     });
 </script>

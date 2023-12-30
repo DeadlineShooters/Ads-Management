@@ -53,6 +53,19 @@
                 <input name="item[expireDate]" class="form-control" type="date" id="start" name="trip-start" value="<%= adBoard.expireDate %>" min="2018-01-01" max="2030-12-31" />
             </div>
         </div>
+        <% if (user.role == 'so') { %>
+            <div class="mb-3">
+                <p>Tình trạng</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio1" value="false" <%= !adBoard.status? 'checked':''%>>
+                    <label class="form-check-label" for="inlineRadio1">Chưa duyệt</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio2" value="true" <%= adBoard.status? 'checked':''%>>
+                    <label class="form-check-label" for="inlineRadio2">Đã duyệt</label>
+                </div>
+            </div>
+            <% } %>
         <div class="mb-3">
             <label for="formFile" class="form-label">Chọn ảnh mới</label>
             <input name="image" class="form-control" type="file" id="formFile">
