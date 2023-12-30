@@ -6,7 +6,7 @@ import { cloudinary } from "../../../cloudinary/index.js";
 import AdBoardRequest from "../../../models/adBoardRequest.js";
 import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js";
 
-const defaultImageName = 'bang-quang-cao-3_zr4oyk';
+const defaultAdBoardImg = 'bang-quang-cao-3_zr4oyk';
 export const showDetails = async (req, res) => {
     const { adLocationId,adBoardId } = req.params;
     const breadcrumbs = [
@@ -60,8 +60,8 @@ export const add = async (req, res) => {
         adBoard.image = { url: req.file.path, filename: req.file.filename };
     } else {
         adBoard.image = {
-            url: `https://res.cloudinary.com/dk6q93ryt/image/upload/v1702823976/AdsManagement/${defaultImageName}.png`,
-            filename: defaultImageName
+            url: `https://res.cloudinary.com/dk6q93ryt/image/upload/v1702823976/AdsManagement/${defaultAdBoardImg}.png`,
+            filename: defaultAdBoardImg
         };
     }
     await adBoard.save();
@@ -110,7 +110,7 @@ export const remove = async (req, res) => {
     }
 
     const adBoard = await AdBoard.findById(adBoardId);
-    if (adBoard.image.filename !== defaultImageName) {
+    if (adBoard.image.filename !== defaultAdBoardImg) {
         await cloudinary.uploader.destroy(adBoard.image.filename);
     }
     await AdBoard.findByIdAndDelete(adBoardId);

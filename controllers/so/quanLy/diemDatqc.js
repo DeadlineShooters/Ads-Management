@@ -6,8 +6,12 @@ import Ward from "../../../models/ward.js";
 import ExpressError from "../../../utils/ExpressError.js";
 import { cloudinary } from "../../../cloudinary/index.js";
 import AdBoard from "../../../models/adBoard.js";
+import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js";
+import AdBoardRequest from "../../../models/adBoardRequest.js";
+import Report from "../../../models/report.js";
 
-const defaultImageName = "logo_jur19a";
+const defaultAdLocationImg = "delnafx999tunfa8nsmw";
+const defaultAdBoardImg = 'bang-quang-cao-3_zr4oyk';
 
 export const index = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -88,8 +92,8 @@ export const add = async (req, res) => {
     adLocation.image = { url: req.file.path, filename: req.file.filename };
   } else {
     adLocation.image = {
-      url: `https://res.cloudinary.com/dk6q93ryt/image/upload/v1702823976/AdsManagement/${defaultImageName}.png`,
-      filename: defaultImageName,
+      url: `https://res.cloudinary.com/dk6q93ryt/image/upload/v1702823976/AdsManagement/${defaultAdLocationImg}.png`,
+      filename: defaultAdLocationImg,
     };
   }
 
@@ -111,7 +115,7 @@ export const update = async (req, res) => {
   await AdLocation.findByIdAndUpdate(id, { $set: { ...item } });
 
   req.flash("success", "Điểm đặt đã được cập thành công");
-  return res.redirect("/so/quanly/diem-dat-quang-cao");
+  return res.redirect("/so/quanly/diem-dat-quang-cao/"+id);
 };
 export const remove = async (req, res) => {
   const { id } = req.params;
@@ -121,7 +125,7 @@ export const remove = async (req, res) => {
   //   return res.redirect("/so/quanly/diem-dat-quang-cao");
   // }
 
-  const adBoards = AdBoard.find({ adLocation: id });
+  const adBoards = await AdBoard.find({ adLocation: id });
   for (let adBoard of adBoards) {
     const adBoardId = adBoard._id;
     // delete adboard request
@@ -139,9 +143,7 @@ export const remove = async (req, res) => {
         }
         await Report.deleteMany({ adBoard: adBoardId });
     }
-
-    const adBoard = await AdBoard.findById(adBoardId);
-    if (adBoard.image.filename !== defaultImageName) {
+    if (adBoard.image.filename !== defaultAdBoardImg) {
         await cloudinary.uploader.destroy(adBoard.image.filename);
     }
     await AdBoard.findByIdAndDelete(adBoardId);
@@ -151,7 +153,7 @@ export const remove = async (req, res) => {
 
 
   const adLocation = await AdLocation.findById(id);
-  if (adLocation.image.filename !== defaultImageName) {
+  if (adLocation.image.filename !== defaultAdLocationImg) {
     await cloudinary.uploader.destroy(adLocation.image.filename);
   }
   await AdLocation.findByIdAndDelete(id);
