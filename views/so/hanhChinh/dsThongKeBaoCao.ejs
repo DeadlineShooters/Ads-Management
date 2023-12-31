@@ -1,159 +1,208 @@
 <% layout('layouts/canbo') %>
 
-  <style>
-    .status {
-      border-radius: 1rem;
-    }
-
-    .status.low {
-      background-color: #F6808e;
-    }
-
-    .status.high {
-      background-color: #80f6b0;
-    }
-
-    .status.average {
-      background-color: #f6db80;
-    }
-
-    p {
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      font-weight: bold;
-    }
-  </style>
-
   <section class="d-flex justify-content-between">
-    <div>
-      <%- include('../../partials/so/hanhChinhDropdown') %>
+    <div class="d-flex flex-row">
+      <div>
+        <select class="form-select" aria-label="Default select example" id="qldropdown" onchange="window.location = this.value">
+            <option value="/so/hanhchinh/cap-phep-qc">Danh sách yêu cầu cấp phép quảng cáo</option>
+            <option value="/so/hanhchinh/chinh-diem-qc">Danh sách yêu cầu chỉnh điểm quảng cáo</option>
+            <option value="/so/hanhchinh/chinh-bang-qc">Danh sách yêu cầu chỉnh bảng quảng cáo</option>
+            <option value="/so/hanhchinh/thong-ke-qc">Thống kê báo cáo & cách thức xử lý</option>
+        </select>
+      </div>
     </div>
-    <div class="d-flex flex-row align-items-center">
-      <div class="md-col-2 me-2">
-        <button type="button" class="btn btn-warning btn-sm btn-responsive"><span
-            class="bi bi-arrows-vertical"></span>Sắp xếp</button>
+  </section>
+  <div class="container p-3">
+    <div class="card shadow-lg border border-0">
+      <div class="card-header d-flex justify-content-between border border-0" style="background-color: lightsteelblue;">
+        <h4 class="card-title">Thống kê báo cáo vi phạm</h4>
       </div>
-      <div class="md-col-2 me-2">
-        <button type="button" class="btn btn-primary btn-sm btn-responsive"><span
-            class="bi bi-filter"></span>Lọc</button>
+      <div class="col p-3">
+        <ul class="list-group list-group-flush d-flex flex-row">
+          <li class="list-group-item">
+            <div class="row" style="border: solid; border-radius: 20px; border-width: 1px; padding: 6px;">
+                <div class="col"><b>Số báo cáo vi phạm: </b> <%= sumReports %></div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row" style="border: solid; border-radius: 20px; border-width: 1px; padding: 6px;">
+                <div class="col"><b>Số báo cáo đang xử lý: </b> <%= handleReports %></div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row" style="border: solid; border-radius: 20px; border-width: 1px; padding: 6px;">
+                <div class="col"><b>Số báo cáo xử lý xong: </b> <%= doneReports %></div>
+            </div>
+          </li>
+        </ul>
       </div>
-      <div class="md-col-3">
-        <div class="input-group">
-          <input class="form-control border-right-0">
-          <span class="input-group-append bg-white border-left-0">
-            <button class="input-group-text bg-transparent">
-              <i class="bi bi-search"></i>
-            </button>
-          </span>
+      <div class="d-flex flex-row">
+        <div class="card-body m-0 row">
+          <div class="col align-self-center">
+            <canvas id="myChart" style="width:100%;max-width:550px"></canvas>
+          </div>
+        </div>
+        <div class="card-body m-0 row">
+          <div class="col align-self-center">
+            <canvas id="myChart2" style="width:100%;max-width:550px"></canvas>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-  <section class="border rounded mt-2">
-    <table class="table table-light table-striped table-hover">
-      <thead>
-        <tr>
-          <th scope="col">STT</th>
-          <th scope="col">Quận</th>
-          <th scope="col">Phường</th>
-          <th class="text-center" scope="col">Số lượng báo cáo</th>
-          <th class="text-center" scope="col">Đang xử lý</th>
-          <th class="text-center" scope="col">Đã xử lý xong</th>
-          <th class="text-center" scope="col">Đánh giá</th>
-          <th class="text-center" scope="col">Cách thức xử lý</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Tân Bình</td>
-          <td>Phường 13</td>
-          <td class="text-center">07</td>
-          <td class="text-center">04</td>
-          <td class="text-center">03</td>
-          <td class="text-center">
-            <p class="status average">43%</p>
-          </td>
-          <td class="text-center">Xem chi tiết</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Tân Bình</td>
-          <td>Phường 14</td>
-          <td class="text-center">09</td>
-          <td class="text-center">08</td>
-          <td class="text-center">01</td>
-          <td class="text-center">
-            <p class="status low">11%</p>
-          </td>
-          <td class="text-center">Xem chi tiết</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Tân Bình</td>
-          <td>Phường 15</td>
-          <td class="text-center">05</td>
-          <td class="text-center">01</td>
-          <td class="text-center">04</td>
-          <td class="text-center">
-            <p class="status high">80%</p>
-          </td>
-          <td class="text-center">Xem chi tiết</td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td>Quận 6</td>
-          <td>Phường 13</td>
-          <td class="text-center">11</td>
-          <td class="text-center">05</td>
-          <td class="text-center">06</td>
-          <td class="text-center">
-            <p class="status average">55%</p>
-          </td>
-          <td class="text-center">Xem chi tiết</td>
-        </tr>
-        <tr>
-          <th scope="row">5</th>
-          <td>Quận 6</td>
-          <td>Phường 14</td>
-          <td class="text-center">19</td>
-          <td class="text-center">02</td>
-          <td class="text-center">17</td>
-          <td class="text-center">
-            <p class="status high">89%</p>
-          </td>
-          <td class="text-center">Xem chi tiết</td>
-        </tr>
-        <tr>
-          <th scope="row">6</th>
-          <td>Quận 6</td>
-          <td>Phường 15</td>
-          <td class="text-center">12</td>
-          <td class="text-center">09</td>
-          <td class="text-center">03</td>
-          <td class="text-center">
-            <p class="status low">25%</p>
-          </td>
-          <td class="text-center">Xem chi tiết</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-  <section class="d-flex justify-content-center mt-auto">
-    <nav aria-label="...">
-      <ul class="pagination m-0 justify-content-end">
-        <li class="page-item disabled">
-          <a class="page-link">Trang trước</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#">Trang sau</a>
-        </li>
-      </ul>
-    </nav>
-  </section>
+  </div>
+
+  <div class="d-flex flex-row justify-content-between p-3">
+    <div class="d-flex flex-row">
+      <h4 style="font-weight: bold;">Danh sách báo cáo</h4>
+    </div>
+    <div class="d-flex flex-row align-self-center justify-content-end">
+      <div>
+        <select name="item[districtId]" class="form-select" aria-label="Default select example">
+          <option value="" selected disabled>Chọn Quận</option>
+          <% for (let district of districtList) { %>
+            <option value="<%= district.id %>"><%= district.name %></option>
+          <% } %>
+        </select>
+      </div>
+      <div>
+        <select name="item[phuongId]" class="form-select" aria-label="Default select example"></select>
+      </div>
+      <div>
+        <button class="input-group-text" name="item[button]" >
+          <b class="bi bi-search"> Tìm </b>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="p-3">
+    <section class="overflow-auto mb-3 border rounded ">
+      <div class="">
+        <table class="table table-light table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">STT</th>
+              <th scope="col">Loại bảng</th>
+              <th scope="col">Kích thước</th>
+              <th scope="col">Số lượng</th>
+              </tr>
+          </thead>
+          <tbody>
+            <% let i = 1; %>
+            <tr class='clickable' onclick= "">
+              <th scope="row"><%= i++ %></th>
+                <td></td>
+                <td class="min-w">m</td>
+                <td class="min-w"> trụ/bảng</td>
+                <td class="min-w"><div class="rounded-pill text-center text-light"></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <style>
+  /* Add this style to your custom CSS or in a style tag within your HTML */
+  .min-w {
+    min-width: 100px; /* Set the desired minimum width */
+  }
+  </style>
+
+<script>
+  var xValuesTypeReport = ["Tố giác sai phạm", "Đăng ký nội dung", "Đóng góp ý kiến", "Giải đáp thắc mắc"];
+  var tongSaiPhamReport = `<%= TongToGiacReport %>`;
+  var tongDangKyReport = `<%= TongDangKyReport %>`;
+  var tongDongGopReport = `<%= TongDongGopReport %>`;
+  var tongGiaiDapReport = `<%= TongGiaiDapReport %>`;
+
+  var yValuesTypeReport = [tongSaiPhamReport, tongDangKyReport, tongDongGopReport, tongGiaiDapReport];
+  var barColorsTypeReport = [
+    "#b91d47",
+    "#00aba9",
+    "#2b5797",
+    "#e8c3b9",
+  ];
+  new Chart("myChart", {
+    type: "pie",
+    data: {
+      labels: xValuesTypeReport,
+      datasets: [{
+        backgroundColor: barColorsTypeReport,
+        data: yValuesTypeReport
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Bảng thống kê loại báo cáo"
+        }
+      },
+    }
+  );
+
+  var sumBaoCaoViPhamDiemQC = `<%= TongBaoCaoViPhamDiemQC %>`;
+  var sumBaoCaoViPhamBangQC = `<%= TongBaoCaoViPhamBangQC %>`;
+  var xValuesTargetReport = ["Điểm báo cáo", "Bảng báo cáo"];
+  var yValuesTargetReport = [sumBaoCaoViPhamDiemQC, sumBaoCaoViPhamBangQC];
+  var barColorsTargetReport = [
+    "#b91d47",
+    "#00aba9",
+  ];
+  new Chart("myChart2", {
+    type: "pie",
+    data: {
+      labels: xValuesTargetReport,
+      datasets: [{
+        backgroundColor: barColorsTargetReport,
+        data: yValuesTargetReport
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Bảng thống kê đối tượng báo cáo"
+        }
+      }
+    }
+  );
+</script>
+
+<script>
+  document.querySelector(`option[value="${window.location.pathname}"]`).selected = true;
+</script>
+
+<script>
+  var district = undefined
+  var ward = undefined
+  var districtSelect = document.querySelector('select[name="item[districtId]"]');
+  var wardSelect = document.querySelector('select[name="item[phuongId]"]');
+  var submitButton = document.querySelector('button[name="item[button]"]');
+  // Disable the second select initially
+  wardSelect.disabled = true;
+  submitButton.disabled = true;
+  // Add an event listener to the first select to enable/disable the second select
+  districtSelect.addEventListener('change', async function () {
+      var selectedDistrictId = districtSelect.value;
+      var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
+      // Enable the second select if a district is selected, otherwise disable it
+      wardSelect.disabled = selectedDistrictId === '';
+      // Fetch and populate wards for the selected district
+      fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
+          .then(response => response.json())
+              .then(data => {
+                  // Clear existing options
+                  wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
+                  // Iterate over the array and append options to 'wardSelect'
+                  data.forEach(ward => {
+                      var option = document.createElement('option');
+                      option.value = ward._id;
+                      option.textContent = ward.name;
+                      wardSelect.appendChild(option);
+                  });
+              })
+          .catch(error => console.error('Error fetching wards:', error));
+      wardSelect.addEventListener('change', async function () {
+          var selectedWardId = wardSelect.value;
+          submitButton.disabled = selectedDistrictId === '' && selectedWardId  === '';
+      });
+  });
+</script>
