@@ -61,7 +61,7 @@
                         <% if (adType.name === adLocation.adType.name) { %>
                         <option value="<%= adType._id %>" selected><%= adType.name %></option>
                         <% } else { %>
-                        <option value="<%= adType.name %>"><%= adType.name %></option>
+                        <option value="<%= adType._id %>"><%= adType.name %></option>
                         <% } %>
                     <% } %>
                   </select>
