@@ -15,6 +15,7 @@ router.put('/chinh-diem-qc/chi-tiet-yeu-cau/:id/update-status', chinhDiemQC.capN
 router.get('/chinh-bang-qc', chinhBangQC.dsChinhBangQC);
 router.get('/chinh-bang-qc/chi-tiet-yeu-cau/:id', chinhBangQC.chiTietChinhBangQC);
 router.put('/chinh-bang-qc/chi-tiet-yeu-cau/:id/update-status', chinhBangQC.capNhatChinhBangQC);
-router.get('/thong-ke-qc', thongKeBaoCao.tkBaoCaoXuLy);
+router.get('/thong-ke-bc', thongKeBaoCao.tkBaoCaoXuLy);
+router.get('/thong-ke-bc/chi-tiet-bao-cao/:id', thongKeBaoCao.chiTietBaoCao);
 
 export default router;

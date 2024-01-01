@@ -1,4 +1,11 @@
 <% layout('layouts/canbo') %>
+  <script>
+    jQuery(document).ready(function ($) {
+      $(".clickable-row").click(function () {
+        window.location = $(this).data("href");
+      });
+    });
+  </script>
 
   <section class="d-flex justify-content-between">
     <div class="d-flex flex-row">
@@ -7,7 +14,7 @@
             <option value="/so/hanhchinh/cap-phep-qc">Danh sách yêu cầu cấp phép quảng cáo</option>
             <option value="/so/hanhchinh/chinh-diem-qc">Danh sách yêu cầu chỉnh điểm quảng cáo</option>
             <option value="/so/hanhchinh/chinh-bang-qc">Danh sách yêu cầu chỉnh bảng quảng cáo</option>
-            <option value="/so/hanhchinh/thong-ke-qc">Thống kê báo cáo & cách thức xử lý</option>
+            <option value="/so/hanhchinh/thong-ke-bc">Thống kê báo cáo & cách thức xử lý</option>
         </select>
       </div>
     </div>
@@ -15,7 +22,7 @@
   <div class="container p-3">
     <div class="card shadow-lg border border-0">
       <div class="card-header d-flex justify-content-between border border-0" style="background-color: lightsteelblue;">
-        <h4 class="card-title">Thống kê báo cáo vi phạm</h4>
+        <h4 class="card-title" style="font-weight: bold;">Thống kê báo cáo vi phạm</h4>
       </div>
       <div class="col p-3">
         <ul class="list-group list-group-flush d-flex flex-row">
@@ -81,20 +88,25 @@
           <thead>
             <tr>
               <th scope="col">STT</th>
-              <th scope="col">Loại bảng</th>
-              <th scope="col">Kích thước</th>
-              <th scope="col">Số lượng</th>
+              <th scope="col">Đối tượng báo cáo</th>
+              <th scope="col">Loại báo cáo</th>
+              <th scope="col">Người gửi</th>
+              <th scope="col">Thời gian gửi</th>
+              <th scope="col">Tình trạng</th>
               </tr>
           </thead>
           <tbody>
             <% let i = 1; %>
-            <tr class='clickable' onclick= "">
+            <% for (motBaoCao of reports) { %>
+            <tr class='clickable-row' data-href='/so/hanhchinh/thong-ke-bc/chi-tiet-bao-cao/<%= motBaoCao._id %>'>
               <th scope="row"><%= i++ %></th>
-                <td></td>
-                <td class="min-w">m</td>
-                <td class="min-w"> trụ/bảng</td>
-                <td class="min-w"><div class="rounded-pill text-center text-light"></div></td>
+                <td><%= motBaoCao.randomPoint != null ? "Điểm vi phạm" : "Bảng vi phạm" %></td>
+                <td class="min-w"><%= motBaoCao.reportType.name %></td>
+                <td class="min-w"><%= motBaoCao.fullName %></td>
+                <td class="min-w"><%= new Date(motBaoCao.sendDate).toLocaleDateString() %></td>
+                <td class="min-w"><div class="rounded-pill text-center text-light <%= (motBaoCao.status == 'Đã xử lý xong')? 'bg-success' : 'bg-danger'  %>""><%= motBaoCao.status %></div></td>
             </tr>
+            <% } %>
           </tbody>
         </table>
       </div>

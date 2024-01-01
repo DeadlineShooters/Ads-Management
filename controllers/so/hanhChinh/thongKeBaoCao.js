@@ -26,6 +26,12 @@ export const tkBaoCaoXuLy = async (req, res) => {
         const TongBaoCaoViPhamDiemQC = await Report.find({randomPoint: {$exists: true}}).countDocuments();
         const TongBaoCaoViPhamBangQC = await Report.find({adBoard: {$exists: true}}).countDocuments();
 
+        const reports = await Report.find({}).populate([
+            {path: "reportType", modal: "ReportType"},
+            {path: "adBoard", modal: "AdBoard"},
+            {path: "randomPoint", modal: "ViolatedPoint"}
+        ]);
+        console.log(reports);
         const wardList = await Ward.find({}).populate({
             path: "district", model: 'District'
         });
@@ -43,12 +49,37 @@ export const tkBaoCaoXuLy = async (req, res) => {
             TongGiaiDapReport,
             TongBaoCaoViPhamDiemQC,
             TongBaoCaoViPhamBangQC,
+            reports,
             breadcrumbs,
             wardList,
             districtList
         });
     } catch (error) {
         console.error(error);
+        res.status(500).json({ error: "Server error" });
+    }
+}
+
+export const chiTietBaoCao = async (req, res) => {
+    const { id } = req.params;
+    const breadcrumbs = [
+        { name: "Thống kê báo cáo & cách thức xử lý", link: "/so/hanhchinh/thong-ke-bc" },
+        { name: "Chi tiết báo cáo", link: "" },
+    ];
+    try {
+        const chiTietBaoCao = await Report.findById(id).populate([
+            {path: "reportType", modal: "ReportType"},
+            {path: "adBoard", modal: "AdBoard"},
+            {path: "randomPoint", modal: "ViolatedPoint"}
+        ]);
+        console.log("@@ chi tiet bao cao: ", chiTietBaoCao);
+    
+        res.render("so/hanhChinh/chiTiet/ndChiTietBaoCao.ejs", {
+            chiTietBaoCao,
+            breadcrumbs,
+        });
+      } catch (err) {
+        console.error(err);
         res.status(500).json({ error: "Server error" });
     }
 }
