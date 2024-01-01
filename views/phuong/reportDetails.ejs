@@ -62,14 +62,26 @@
       <div class="col">
         <div class="input-group">
           <span class="input-group-text bg-body-secondary fw-semibold">Hình minh họa</span>
-          <span class="form-control" aria-label="Hình minh họa">
-            <% if(JSON.parse(decodeURIComponent(report)).uploadedImages && JSON.parse(decodeURIComponent(report)).uploadedImages.length > 0) { %> <%
-            JSON.parse(decodeURIComponent(report)).uploadedImages.forEach(function(image) { %>
-            <img src="<%=image.url%>" class="img-thumbnail" alt="hinh-minh-hoa" style="width: 50%; height: auto" />
-            <% }); %> <% } else { %>
-            <p>No images to display</p>
-            <% } %>
-          </span>
+          <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% if(JSON.parse(decodeURIComponent(report)).uploadedImages && JSON.parse(decodeURIComponent(report)).uploadedImages.length > 0) { %> <%
+              JSON.parse(decodeURIComponent(report)).uploadedImages.forEach(function(image, index) { %>
+              <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                <img src="<%=image.url%>" class="d-block w-50" alt="hinh-minh-hoa" />
+              </div>
+              <% }); %> <% } else { %>
+              <p>No images to display</p>
+              <% } %>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
