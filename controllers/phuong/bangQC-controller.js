@@ -25,6 +25,8 @@ controller.show = async (req, res) => {
         populate: [{ path: "district" }, { path: "ward" }],
       })
       .populate(["boardType", "adBoardRequest"]);
+
+    console.log("@@ adboards", adBoards);
     if (req.user.role === "quan") {
       // console.log("District: " + foundDistrict._id);
       adBoards = adBoards.filter((adBoard) => {
@@ -128,35 +130,32 @@ controller.showEdit = async (req, res) => {
     .populate({ path: "adLocation", populate: ["district", "ward", "type", "adType"] });
 
   console.log("ad board", adBoard);
-  res.render("so/quanLy/bangqc/edit", { adBoard, breadcrumbs, boardTypes, adLocation: adBoard.adLocation });
+  const edit_href = `/cac-bang-quang-cao/${bangId}/chinh-sua`;
+
+  res.render("so/quanLy/bangqc/edit", { adBoard, breadcrumbs, boardTypes, adLocation: adBoard.adLocation, edit_href });
 };
 
 controller.processEdit = async (req, res) => {
   const { bangId } = req.params;
-  const data = req.body;
+  const data = req.body.item;
 
-  console.log(req.body, req.file);
+  console.log("Board edit request", data, req.file);
 
-  const startDate = new Date(data.startDate);
-  const endDate = new Date(data.endDate);
   const editedBoard = await AdBoard.findById(bangId)
     .populate("boardType")
     .populate({ path: "adLocation", populate: ["district", "ward", "type", "adType"] });
+
+  console.log("Dates", data.startDate, data.expireDate, data.size.h, data.size.w, data.boardType);
   const newAdBoard = new AdBoard({
     boardType: new Types.ObjectId(data.boardType),
-    size: { h: data.height, w: data.width },
-    quantity: data.amount,
-    startDate: {
-      d: startDate.getUTCDate(),
-      m: startDate.getUTCMonth() + 1,
-      y: startDate.getUTCFullYear(),
-    },
-    expireDate: {
-      d: endDate.getUTCDate(),
-      m: endDate.getUTCMonth() + 1,
-      y: endDate.getUTCFullYear(),
-    },
+    size: { h: data.size.h, w: data.size.w },
+    quantity: data.quantity,
+    startDate: data.startDate,
+    expireDate: data.expireDate,
     adLocation: editedBoard.adLocation._id,
+    adBoardRequest: editedBoard.adBoardRequest,
+    reports: editedBoard.reports,
+    status: editedBoard.status,
   });
 
   if (req.file) {
@@ -189,25 +188,27 @@ controller.cancelRequest = async (req, res) => {
   try {
     // Check if the board exists
     const boardToDelete = await AdBoard.findById(bangId);
+    console.log("Board to delete", boardToDelete);
     if (!boardToDelete) {
       return res.status(404).json({ error: "Board not found" });
     }
 
     // Check if adBoardRequest exists
     const adBoardRequestId = boardToDelete.adBoardRequest;
+    console.log("Ad board request", adBoardRequestId);
     if (!adBoardRequestId) {
       return res.status(400).json({ error: "Invalid adBoardRequest ID" });
     }
 
     // Delete the adBoardRequest document
-    await AdBoardChangeRequest.findByIdAndDelete(adBoardRequestId);
+    await AdBoardReq.findByIdAndDelete(adBoardRequestId);
 
     // Delete the AdBoard document
     await AdBoard.findByIdAndDelete(bangId);
 
     // delete all reports which has adBoard field (ObjectId) equal to this adBoard
 
-    res.redirect("/cac-bang-quang-cao/");
+    res.redirect("/cac-bang-quang-cao");
   } catch (error) {
     console.error("Error cancelling request:", error);
     res.status(500).json({ error: "Internal Server Error" });
