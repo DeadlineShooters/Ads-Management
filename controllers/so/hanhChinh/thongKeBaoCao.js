@@ -17,10 +17,10 @@ export const tkBaoCaoXuLy = async (req, res) => {
         const DangKyReport = await ReportType.find({name: "Đăng ký nội dung"});
         const TongDangKyReport = await Report.find({reportType: new Types.ObjectId(DangKyReport[0]._id)}).countDocuments();
 
-        const DongGopReport = await ReportType.find({name: "Đăng ký nội dung"});
+        const DongGopReport = await ReportType.find({name: "Đóng góp ý kiến"});
         const TongDongGopReport = await Report.find({reportType: new Types.ObjectId(DongGopReport[0]._id)}).countDocuments();
 
-        const GiaiDapReport = await ReportType.find({name: "Đăng ký nội dung"});
+        const GiaiDapReport = await ReportType.find({name: "Giải đáp thắc mắc"});
         const TongGiaiDapReport = await Report.find({reportType: new Types.ObjectId(GiaiDapReport[0]._id)}).countDocuments();
 
         const TongBaoCaoViPhamDiemQC = await Report.find({randomPoint: {$exists: true}}).countDocuments();
