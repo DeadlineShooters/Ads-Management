@@ -110,7 +110,8 @@ export const dsCapPhepQC = async (req, res) => {
       pagination,
       breadcrumbs,
       wardList,
-      districtList
+      districtList,
+      districtId
     });
   }
 };

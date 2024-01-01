@@ -84,7 +84,21 @@
                     <li class="list-group-item"><b>Nội dung báo cáo:</b> <%- chiTietBaoCao.content %> </li>
                     <li class="list-group-item"><b>Người gửi:</b> <%= chiTietBaoCao.fullName %> </li>
                     <li class="list-group-item"><b>Số điện thoại:</b> <%= chiTietBaoCao.phone %> </li>
+                    <li class="list-group-item"><b>Thời điểm báo cáo:</b> <%= new Date(chiTietBaoCao.sendDate).toLocaleDateString() %> </li>
+                    <li class="list-group-item"><b>Tình trạng xử lý:</b> <%= chiTietBaoCao.status %> </li>
+                    <% if (chiTietBaoCao.procedureHandling != null) { %> 
+                        <li class="list-group-item"><b>Cách thức xử lý:</b>
+                            <%= chiTietBaoCao.procedureHandling %> 
+                        </li>
+                    <% } else { %>
+                        <li class="list-group-item"><b>Cách thức xử lý:</b>
+                            Chưa làm gì cả. 
+                        </li>  
+                    <% } %>
                 </ul>
+                <div class="d-flex flex-end justify-content-end" style="margin-top: auto;">
+                    <button class="btn btn btn-warning" style="width: auto;" type="button" onclick="redirectToPage()"> <%= chiTietBaoCao.randomPoint != null ? "Xem chi tiết điểm quảng cáo" : "Xem chi tiết bảng quảng cáo" %></button>
+                </div>
             </div>
         </div>
     </div>
@@ -120,5 +134,12 @@
         }
         slides[slideIndex-1].style.display = "block";  
         dots[slideIndex-1].className += " button-active";
+    }
+</script>
+
+<script>
+    function redirectToPage(type) {
+        // Assuming you want to redirect to a page named "newPage.html"
+        window.location.href = '/so/quanly/diem-dat-quang-cao/<%= chiTietBaoCao.adBoard.adLocation._id %>/bang-quang-cao/<%= chiTietBaoCao.adBoard._id%>';
     }
 </script>
