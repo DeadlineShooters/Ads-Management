@@ -6,7 +6,6 @@ import * as chinhBangQC from '../../controllers/so/hanhChinh/chinhBangQC.js';
 import * as thongKeBaoCao from '../../controllers/so/hanhChinh/thongKeBaoCao.js';
 
 router.get('/cap-phep-qc', capPhepQC.dsCapPhepQC);
-router.post('/cap-phep-qc/tim-kiem-phuong-quan', capPhepQC.timKiemPhuongQuan);
 router.get('/cap-phep-qc/chi-tiet-yeu-cau/:id', capPhepQC.chiTietYeuCauCapPhep);
 router.put('/cap-phep-qc/chi-tiet-yeu-cau/:id/update-status', capPhepQC.capNhatYeuCauCapPhep);
 router.get('/chinh-diem-qc', chinhDiemQC.dsChinhDiemQC);
