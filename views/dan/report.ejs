@@ -103,7 +103,7 @@
 
 				<div class="form__submit">
 					<button type="submit" class="form__submit-btn">Gửi</button>
-					<span>Xóa hết câu trả lời</span>
+					<span onclick="clearForm()">Xóa hết câu trả lời</span>
 				</div>
 			</div>
 		</form>
@@ -171,8 +171,8 @@
 			for (const [key, value] of urlParams.entries()) {
 				formData.append(key, value);
 			}
-			formData.set('content', tinymce.get('form__textarea').getContent())
-			console.log(Object.fromEntries(formData.entries()))
+			formData.set('content', tinymce.get('form__textarea').getContent());
+			console.log(Object.fromEntries(formData.entries()));
 			fetch('/report', {
 				method: 'POST',
 				body: formData,
@@ -194,6 +194,10 @@
 				.catch((error) => {
 					console.error('Error:', error);
 				});
+		}
+
+		function clearForm() {
+			document.getElementById('reportForm').reset();
 		}
 
 		document.getElementById('form__file').addEventListener('change', function () {
