@@ -8,20 +8,20 @@
 </div>
 <div class="d-flex flex-row">
     <div>
-      <select name="item[districtId]" class="form-select" aria-label="Default select example">
+      <select name="item[districtId]" class="form-select ms-2" aria-label="Default select example">
           <option value="" selected disabled>Chọn Quận</option>
           <% for (let district of districtList) { %>
-            <option value="<%= district.id %>"><%= district.name %></option>
+            <option value="<%= district.id %>" <%= districtId == district._id? "selected":"" %>><%= district.name %></option>
           <% } %>
       </select>
     </div>
     <div>
-        <select name="item[phuongId]" class="form-select" aria-label="Default select example">
+        <select name="item[phuongId]" class="form-select ms-3" aria-label="Default select example">
         </select>
     </div>
-        <button class="input-group-text" name="item[button]" >
+        <!-- <button class="input-group-text" name="item[button]" >
             <b class="bi bi-search"> Tìm </b>
-        </button>
+        </button> -->
     </form>
 </div>
 <script>
@@ -33,12 +33,18 @@
     var ward = undefined
     var districtSelect = document.querySelector('select[name="item[districtId]"]');
     var wardSelect = document.querySelector('select[name="item[phuongId]"]');
-    var submitButton = document.querySelector('button[name="item[button]"]');
+    // var submitButton = document.querySelector('button[name="item[button]"]');
     // Disable the second select initially
     wardSelect.disabled = true;
-    submitButton.disabled = true;
+    // submitButton.disabled = true;
     // Add an event listener to the first select to enable/disable the second select
+    wardSelect.addEventListener('change', async function () {
+        window.location.href ='&wardId='+wardSelect.value;
+    });
     districtSelect.addEventListener('change', async function () {
+        window.location.href ='?districtId='+districtSelect.value;
+    });
+    if (districtSelect.value) {
         var selectedDistrictId = districtSelect.value;
         var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
         // Enable the second select if a district is selected, otherwise disable it
@@ -60,7 +66,7 @@
             .catch(error => console.error('Error fetching wards:', error));
         wardSelect.addEventListener('change', async function () {
             var selectedWardId = wardSelect.value;
-            submitButton.disabled = selectedDistrictId === '' && selectedWardId  === '';
+            // submitButton.disabled = selectedDistrictId === '' && selectedWardId  === '';
         });
-    });
+    }
 </script>

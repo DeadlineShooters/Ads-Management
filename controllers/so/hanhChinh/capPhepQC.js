@@ -6,6 +6,9 @@ import mongoose from "mongoose";
 import AdLocation from "../../../models/adLocation.js";
 
 export const dsCapPhepQC = async (req, res) => {
+  const { districtId = null, wardId = null } = req.query;
+  console.log(districtId+"   "+wardId)
+
   const page = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
   const totalItems = await AdBoardRequest.countDocuments();
@@ -17,27 +20,75 @@ export const dsCapPhepQC = async (req, res) => {
   };
   const breadcrumbs = [];
   try {
-    const CapPhepQC = await AdBoardRequest.find({})
-      .populate({
-        path: "adBoard",
-        populate: [
-          { path: "boardType", model: "BoardType" },
-          {
-            path: "adLocation",
-            model: "AdLocation",
+    let CapPhepQC = null;
+    if (districtId) {
+      if (wardId) {
+
+        CapPhepQC = await AdBoardRequest.find({})
+          .populate({
+            path: "adBoard",
             populate: [
-              { path: "ward", model: "Ward" },
-              { path: "district", model: "District" },
+              { path: "boardType", model: "BoardType" },
+              {
+                path: "adLocation",
+                model: "AdLocation",
+                match: { district: districtId, ward: wardId },
+                populate: [
+                  { path: "ward", model: "Ward" },
+                  { path: "district", model: "District" },
+                ],
+              },
             ],
-          },
-        ],
-      })
-      .populate("sender")
-      .skip((page - 1) * itemsPerPage)
-      .limit(itemsPerPage);
+          })
+          .populate("sender")
+          .skip((page - 1) * itemsPerPage)
+          .limit(itemsPerPage);
+      } else {
+        CapPhepQC = await AdBoardRequest.find({})
+          .populate({
+            path: "adBoard",
+            populate: [
+              { path: "boardType", model: "BoardType" },
+              {
+                path: "adLocation",
+                model: "AdLocation",
+                match: { district: districtId },
+                populate: [
+                  { path: "ward", model: "Ward" },
+                  { path: "district", model: "District" },
+                ],
+              },
+            ],
+          })
+          .populate("sender")
+          .skip((page - 1) * itemsPerPage)
+          .limit(itemsPerPage);
+      }
+    } else {
+      CapPhepQC = await AdBoardRequest.find({})
+        .populate({
+          path: "adBoard",
+          populate: [
+            { path: "boardType", model: "BoardType" },
+            {
+              path: "adLocation",
+              model: "AdLocation",
+              populate: [
+                { path: "ward", model: "Ward" },
+                { path: "district", model: "District" },
+              ],
+            },
+          ],
+        })
+        .populate("sender")
+        .skip((page - 1) * itemsPerPage)
+        .limit(itemsPerPage);
+    }
     const wardList = await Ward.find({}).populate({
         path: "district", model: 'District'
     });
+    console.log('aaa')
+    console.log(CapPhepQC)
     const districtList = await District.find({});
     res.render("so/hanhChinh/dsYeuCauCapPhepQC.ejs", {
       CapPhepQC,
@@ -46,6 +97,7 @@ export const dsCapPhepQC = async (req, res) => {
       wardList,
       districtList,
       inform: req.flash("info"),
+      districtId
     });
   } catch (err) {
     console.error(err);
