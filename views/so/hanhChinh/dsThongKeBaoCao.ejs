@@ -63,16 +63,20 @@
       <h4 style="font-weight: bold;">Danh sách tất cả báo cáo</h4>
     </div>
     <div class="d-flex flex-row align-self-center justify-content-end">
-      <div>
+      <div class="ms-2">
         <select name="item[districtId]" class="form-select" aria-label="Default select example">
-          <option value="" selected disabled>Chọn Quận</option>
+          <option value="" selected disabled>Tất cả quận</option>
           <% for (let district of districtList) { %>
-            <option value="<%= district.id %>" <%= districtId == district._id? "selected":"" %>><%= district.name %></option>
+            <option value="<%= district.id %>" <%= districtId == district._id? "selected":"" %>>Quận <%= district.name %></option>
           <% } %>
         </select>
       </div>
-      <div>
+      <div class="ms-2">
         <select name="item[phuongId]" class="form-select" aria-label="Default select example"></select>
+      </div>
+      <div class="d-flex flex-row ms-2 align-items-center">
+        <a class="btn btn-primary btn-sm btn-responsive" href="/so/hanhchinh/thong-ke-bc" role="button">
+          <span class="bi bi-trash3" </span> Xóa lọc</a>
       </div>
     </div>
   </div>
@@ -206,7 +210,7 @@
                   data.forEach(ward => {
                       var option = document.createElement('option');
                       option.value = ward._id;
-                      option.textContent = ward.name;
+                      option.textContent = "Phường " + ward.name;
                       wardSelect.appendChild(option);
                   });
                   function setSelectedOption(select, value) {

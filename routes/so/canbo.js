@@ -8,5 +8,4 @@ router.post('/dang-ky-tai-khoan-cb', canBo.guiInfoTaiKhoanCanBo);
 router.get('/chinh-sua-tai-khoan-cb/:id', canBo.suaTaiKhoanCanBo);
 router.put('/chinh-sua-tai-khoan-cb/:id', canBo.capNhatTaiKhoanCanBo);
 router.delete('/chinh-sua-tai-khoan-cb/:id', canBo.xoaTaiKhoanCanBo);
-router.post('/tim-kiem-can-bo', canBo.timTaiKhoanCanBo);
 export default router;

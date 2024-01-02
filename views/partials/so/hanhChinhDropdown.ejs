@@ -11,7 +11,7 @@
       <select name="item[districtId]" class="form-select ms-2" aria-label="Default select example">
           <option value="" selected disabled>Tất cả quận</option>
           <% for (let district of districtList) { %>
-            <option value="<%= district.id %>" <%= districtId == district._id? "selected":"" %>><%= district.name %></option>
+            <option value="<%= district.id %>" <%= districtId == district._id? "selected":"" %>>Quận <%= district.name %></option>
           <% } %>
       </select>
     </div>
@@ -19,7 +19,6 @@
         <select name="item[phuongId]" class="form-select ms-3" aria-label="Default select example">
         </select>
     </div>
-    </form>
 </div>
 <script>
     document.querySelector(`option[value="${window.location.pathname}"]`).selected = true;
@@ -54,7 +53,7 @@
                     data.forEach(ward => {
                         var option = document.createElement('option');
                         option.value = ward._id;
-                        option.textContent = ward.name;
+                        option.textContent = "Phường " + ward.name;
                         wardSelect.appendChild(option);
                     });
                     function setSelectedOption(select, value) {

@@ -117,6 +117,8 @@ export const dsCapPhepQC = async (req, res) => {
 };
 
 export const chiTietYeuCauCapPhep = async (req, res) => {
+  const { districtId = null, wardId = null } = req.query;
+  console.log(districtId+"   "+wardId);
   const { id } = req.params;
   const breadcrumbs = [
     { name: "Danh sách yêu cầu cấp phép quảng cáo", link: "/so/hanhchinh/cap-phep-qc" },
