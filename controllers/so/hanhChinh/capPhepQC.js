@@ -134,20 +134,20 @@ async function findAdBoardRequest(districtId, wardId) {
 }
 
 // Example usage
-const districtId = '657654fc897c69de7cc49224'; // Replace with the actual district ID
-const wardId = '657654fd897c69de7cc4922a'; // Replace with the actual ward ID
+// const districtId = '657654fc897c69de7cc49224'; // Replace with the actual district ID
+// const wardId = '657654fd897c69de7cc4922a'; // Replace with the actual ward ID
 
-findAdBoardRequest(districtId, wardId)
-  .then(adBoardRequest => {
-    if (adBoardRequest) {
-      console.log('Found adBoardRequest:', adBoardRequest);
-    } else {
-      console.log('AdBoardRequest not found.');
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-});
+// findAdBoardRequest(districtId, wardId)
+//   .then(adBoardRequest => {
+//     if (adBoardRequest) {
+//       console.log('Found adBoardRequest:', adBoardRequest);
+//     } else {
+//       console.log('AdBoardRequest not found.');
+//     }
+//   })
+//   .catch(error => {
+//     console.error('Error:', error);
+// });
 
 export const timKiemPhuongQuan = async (req, res) => {
   console.log(req.body);

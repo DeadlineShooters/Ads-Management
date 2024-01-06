@@ -14,7 +14,7 @@ async function initMap() {
 	let { Map } = await google.maps.importLibrary('maps');
 	let { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 	map = new Map(document.getElementById('map'), {
-		zoom: 17,
+		zoom: 14,
 		center: { lat: lat, lng: lng },
 		mapId: mapId,
 		mapTypeControl: false,
@@ -150,7 +150,7 @@ async function initMap() {
                             <div class="ads-list">`;
 						let noAdBoard = true;
 						adBoards.forEach((item1) => {
-							if (item1.status) {
+							if (item1.status && new Date(item1.expireDate) >= new Date()) {
 								noAdBoard = false;
 								offcanvas += `
 									<div class="ads-item">
@@ -219,6 +219,13 @@ async function initMap() {
                                             <div class="content__report-item ${item2.reportType.note}">
                                                 <div class="report-item__type">${item2.reportType.name}</div>
                                                 <div class="report-item__body">${item2.content}</div>
+												<div class="report-item__img">`;
+									item2.uploadedImages.forEach((item3) => {
+										offcanvas += `
+													<img class="img__item" src="${item3.url}">`;
+									});
+									offcanvas += `
+												</div>
                                             </div>`;
 								});
 								offcanvas += `
@@ -546,6 +553,7 @@ async function addMarker(position) {
 		wrap.css('background-color', 'transparent');
 		wrap.css('-webkit-box-shadow', 'none');
 		wrap.css('border-radius', '0');
+		wrap.children().first().css('overflow', 'hidden');
 
 		let l = $('#hook').parent().parent().parent().siblings();
 		for (let i = 0; i < l.length; i++) {
