@@ -44,28 +44,23 @@
 
   <section class="d-flex justify-content-between">
     <div class="fs-6">
-      <input type="text" readonly class="form-control-plaintext fw-bold mx-3" id="" value="Danh sách tài khoản cán bộ">
+      <input type="text" readonly class="form-control-plaintext fw-bold mx-3" style="font-weight: bold;" id="" value="Danh sách tài khoản cán bộ">
     </div>
     <div class="d-flex flex-row align-items-center">
       <div class="md-col-2 me-2">
+        <select name="item[loaiCanBo]" class="form-select" aria-label="Default select example">
+          <option value="" selected disabled>Tất cả cán bộ</option>
+          <option value="phuong" <%= loaiCanBo == "phuong" ? "selected" : "" %> >Cán bộ phường</option>
+          <option value="quan" <%= loaiCanBo == "quan" ? "selected" : "" %> >Cán bộ quận</option>
+        </select>
+      </div>
+      <div class="md-col-2 ms-2">
+        <a class="btn btn-primary btn-sm btn-responsive" href="/so/canbo/tai-khoan-cb" role="button"><span
+            class="bi bi-trash3" </span> Xóa lọc</a>
+      </div>
+      <div class="md-col-2 ms-2">
         <a class="btn btn-warning btn-sm btn-responsive" href="dang-ky-tai-khoan-cb" role="button"><span
             class="bi bi-person-plus-fill" </span>Thêm cán bộ</a>
-      </div>
-      <div class="md-col-2 me-2">
-        <button type="button" class="btn btn-primary btn-sm btn-responsive"><span
-            class="bi bi-filter"></span>Lọc</button>
-      </div>
-      <div class="md-col-3">
-        <form action="tim-kiem-can-bo" role="search" method="POST">
-          <div class="input-group">
-            <input type="search" name="searchItem" class="form-control border-right-0" placeholder="Tìm cán bộ">
-            <span class="input-group-append bg-white border-left-0">
-              <button class="input-group-text bg-transparent">
-                <i class="bi bi-search"></i>
-              </button>
-            </span>
-          </div>
-        </form>
       </div>
     </div>
   </section>
@@ -78,9 +73,10 @@
           <th scope="col">Ngày sinh</th>
           <th scope="col">Email</th>
           <th scope="col">Điện thoại</th>
-          <th scope="col">Phường quản lý</th>
-          <th scope="col">Quận quản lý</th>
-          <th scope="col">Quản lý</th>
+          <th scope="col">Loại cán bộ</th>
+          <th scope="col">Quận</th>
+          <th scope="col">Phường</th>
+          <th scope="col">Thao tác</th>
         </tr>
       </thead>
       <tbody>
@@ -102,20 +98,21 @@
                 <%= canBo[i].phone %>
               </td>
               <td>
-                <%= canBo[i].ward?.name %>
+                <%= canBo[i].role == "phuong" ? "Cán bộ phường" : "Cán bộ quận" %>
               </td>
               <td>
                 <%= canBo[i].district?.name %>
+              </td>
+              <td>
+                <%= canBo[i].ward?.name %>
               </td>
               <td class="text-center">
                 <div class="d-flex flex-row align-items-center">
                   <a name="edituser" id="edit" class="btn nopadding mx-1"
                     href="chinh-sua-tai-khoan-cb/<%=canBo[i]._id%>" role="button"><i
                       class="bi bi-pencil-fill"></i></a>
-                  <form action="chinh-sua-tai-khoan-cb/<%=canBo[i]._id%>?_method=DELETE" method="POST">
-                    <button class="btn nopadding mx-1 del" id="deleteButton" type="button" data-bs-toggle="modal" 
-                    data-bs-target="#deleteModal"><i class="bi bi-trash-fill"></i></button>
-                  </form>
+                      <button class="btn nopadding mx-1 del" id="deleteButton" type="button" data-bs-toggle="modal" 
+                      data-id="<%= canBo[i]._id %>" data-bs-target="#deleteModal"><i class="bi bi-trash-fill"></i></button>
                 </div>
               </td>
             </tr>
@@ -151,6 +148,15 @@
       </div>
     </section>
   <% }) %>
+  <% messageErr.forEach(element=> { %>
+    <section class="d-flex justify-content-center mt-auto">
+      <div class="alert alert-danger alert-dismissible fade show">
+        <strong>Thông báo:</strong>
+        <%= messageErr %>.
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    </section>
+  <% }) %>
   <%- include('../../partials/pagination') %>
     <style>
     /* Add this style to your custom CSS or in a style tag within your HTML */
@@ -167,18 +173,35 @@
         </div>
         <div class="modal-body">
           <p>
-            Hiện tại chưa thể xóa tài khoản cán bộ ngay tại danh sách. 
-            <br> Hãy thử nó trong chế độ chỉnh sửa tài khoản!
+            Hành động này sẽ xóa <strong>vĩnh viễn</strong> tài khoản cán bộ.<br> Bạn có chắc không?
           </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <form action="chinh-sua-tai-khoan-cb/$(this).attr('data-id')?_method=DELETE" method="POST" class="position-relative">
-            <button type="submit" class="btn btn-primary">
-                Đồng ý
-            </button>
-          </form>
+            <form id="deleteForm" method="POST" class="position-relative">
+                <button type="submit" class="btn btn-primary">
+                    Đồng ý
+                </button>
+            </form>
         </div>
       </div>
     </div>
   </div>
+
+<script>
+  var vaiTro = undefined;
+  var listVaiTro = document.querySelector('select[name="item[loaiCanBo]"]');
+
+  listVaiTro.addEventListener('change', async function () {
+      window.location.href ='?loaiCanBo=' + listVaiTro.value;
+  });
+
+</script>
+
+<script>
+  $('#deleteModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var userId = button.data('id');
+      $('#deleteForm').attr('action', 'chinh-sua-tai-khoan-cb/' + userId + '?_method=DELETE');
+  });
+</script>

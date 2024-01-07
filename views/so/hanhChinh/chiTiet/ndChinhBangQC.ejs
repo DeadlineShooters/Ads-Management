@@ -83,7 +83,7 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Hình minh họa</b></div>
-                <div class="col" style="max-width: 100%;"></div>
+                <div class="col" style="max-width: 100%;"><a href="<%=chiTietChinhBangQC.adBoard.image.url%>" download><%= chiTietChinhBangQC.adBoard.image.filename %></a></div>
             </div>
         </li>
         <li class="list-group-item">
@@ -110,8 +110,8 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Hợp đồng</b></div>
-                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu:</b> <%= chiTietChinhBangQC.adBoard.startDate.d %>/<%= chiTietChinhBangQC.adBoard.startDate.m %>/<%= chiTietChinhBangQC.adBoard.startDate.y %></div>
-                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc:</b> <%= chiTietChinhBangQC.adBoard.expireDate.d %>/<%= chiTietChinhBangQC.adBoard.expireDate.m %>/<%= chiTietChinhBangQC.adBoard.expireDate.y %></div>
+                <div class="col" style="max-width: 30%;"><b>Ngày bắt đầu: </b><%= chiTietChinhBangQC.adBoard?.startDate %></div>
+                <div class="col" style="max-width: 25%;"><b>Ngày kết thúc: </b><%= chiTietChinhBangQC.adBoard?.expireDate %></div>
             </div>
         </li>
     </ul>

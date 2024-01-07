@@ -6,7 +6,6 @@ import * as chinhBangQC from '../../controllers/so/hanhChinh/chinhBangQC.js';
 import * as thongKeBaoCao from '../../controllers/so/hanhChinh/thongKeBaoCao.js';
 
 router.get('/cap-phep-qc', capPhepQC.dsCapPhepQC);
-router.post('/cap-phep-qc/tim-kiem-phuong-quan', capPhepQC.timKiemPhuongQuan);
 router.get('/cap-phep-qc/chi-tiet-yeu-cau/:id', capPhepQC.chiTietYeuCauCapPhep);
 router.put('/cap-phep-qc/chi-tiet-yeu-cau/:id/update-status', capPhepQC.capNhatYeuCauCapPhep);
 router.get('/chinh-diem-qc', chinhDiemQC.dsChinhDiemQC);
@@ -15,6 +14,7 @@ router.put('/chinh-diem-qc/chi-tiet-yeu-cau/:id/update-status', chinhDiemQC.capN
 router.get('/chinh-bang-qc', chinhBangQC.dsChinhBangQC);
 router.get('/chinh-bang-qc/chi-tiet-yeu-cau/:id', chinhBangQC.chiTietChinhBangQC);
 router.put('/chinh-bang-qc/chi-tiet-yeu-cau/:id/update-status', chinhBangQC.capNhatChinhBangQC);
-router.get('/thong-ke-qc', thongKeBaoCao.tkBaoCaoXuLy);
+router.get('/thong-ke-bc', thongKeBaoCao.tkBaoCaoXuLy);
+router.get('/thong-ke-bc/chi-tiet-bao-cao/:id', thongKeBaoCao.chiTietBaoCao);
 
 export default router;

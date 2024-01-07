@@ -4,7 +4,6 @@ import passport from 'passport';
 import User from '../models/user.js';
 import LocalStrategy from 'passport-local';
 import controller from '../controllers/auth.js';
-
 import bcrypt from 'bcrypt';
 
 passport.use(

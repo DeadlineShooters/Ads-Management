@@ -2,8 +2,10 @@ import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js";
 import AdBoard from "../../../models/adBoard.js";
 import Ward from "../../../models/ward.js";
 import District from "../../../models/district.js";
+import AdLocation from "../../../models/adLocation.js";
 
 export const dsChinhBangQC = async (req, res) => {
+    const { districtId = null, wardId = null } = req.query;
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
     const totalItems = await AdBoardChangeReq.countDocuments();
@@ -15,30 +17,80 @@ export const dsChinhBangQC = async (req, res) => {
     };
     const breadcrumbs = [];
     try {
-        const ChinhBangQC = await AdBoardChangeReq.find({}).populate({
-            path: 'adBoard',
-            populate: [
-                { path: 'boardType', model: 'BoardType' },
-                { path: 'adLocation', model: 'AdLocation', populate: [
-                    { path: 'ward', model: 'Ward' },
-                    { path: 'district', model: 'District' }
-                ]}
-            ]
-        }).populate('sender').skip((page - 1) * itemsPerPage).limit(itemsPerPage);
+        let ChinhBangQC = null;
+        if (districtId) {
+            if (wardId) {
+                const ward = await Ward.findById(wardId);
+                const district = await District.findById(districtId);
+                const adLocation = await AdLocation.find({ district: district._id , ward: ward._id });
+                const adBoard = await AdBoard.find({ adLocation: { $in: adLocation }});
+                ChinhBangQC = await AdBoardChangeReq.find({adBoard: { $in: adBoard }}).populate({
+                    path: 'adBoard',
+                    populate: [
+                        { path: 'boardType', model: 'BoardType' },
+                        { path: 'adLocation', model: 'AdLocation', populate: [
+                            { path: 'ward', model: 'Ward' },
+                            { path: 'district', model: 'District' }
+                        ]}
+                    ]
+                }).populate('sender')
+                .skip((page - 1) * itemsPerPage)
+                .limit(itemsPerPage);
+            } else {
+                const adLocation = await AdLocation.find({district: districtId});
+                const adBoard = await AdBoard.find({ adLocation: { $in: adLocation } });
+                ChinhBangQC = await AdBoardChangeReq.find({adBoard:  { $in: adBoard }}).populate({
+                    path: 'adBoard',
+                    populate: [
+                        { path: 'boardType', model: 'BoardType' },
+                        { path: 'adLocation', model: 'AdLocation', populate: [
+                            { path: 'ward', model: 'Ward' },
+                            { path: 'district', model: 'District' }
+                        ]}
+                    ]
+                    }).populate('sender')
+                    .skip((page - 1) * itemsPerPage)
+                .limit(itemsPerPage);
+            }
+        } else {
+            ChinhBangQC = await AdBoardChangeReq.find({}).populate({
+                path: 'adBoard',
+                populate: [
+                    { path: 'boardType', model: 'BoardType' },
+                    { path: 'adLocation', model: 'AdLocation', populate: [
+                        { path: 'ward', model: 'Ward' },
+                        { path: 'district', model: 'District' }
+                    ]}
+                ]
+            }).populate('sender')
+            .skip((page - 1) * itemsPerPage)
+            .limit(itemsPerPage);
+        }
         const wardList = await Ward.find({}).populate({
             path: "district", model: 'District'
         });
         const districtList = await District.find({});
-        res.render('so/hanhChinh/dsYeuCauChinhBangQC.ejs',  { 
+        
+        console.log("@@: ", ChinhBangQC);
+        res.render("so/hanhChinh/dsYeuCauChinhBangQC.ejs", {
             ChinhBangQC,
+            pagination,
+            breadcrumbs,
+            wardList,
+            districtList,
+            districtId
+        });
+    } catch (err) {
+        const wardList = await Ward.find({}).populate({
+            path: "district", model: 'District'
+            });
+        const districtList = await District.find({});
+        res.render("so/hanhChinh/trangBaoLoiCapPhepQC.ejs", {
             pagination,
             breadcrumbs,
             wardList,
             districtList
         });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Server error' });
     }
 };
 
