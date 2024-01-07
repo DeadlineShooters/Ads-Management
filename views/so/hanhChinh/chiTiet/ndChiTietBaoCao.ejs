@@ -138,8 +138,10 @@
 </script>
 
 <script>
+    var diemBaoCaoId = `<%= chiTietBaoCao.adBoard.adLocation._id %>`
+    var bangBaoCaoId = `<%= chiTietBaoCao.adBoard._id %>`
     function redirectToPage(type) {
         // Assuming you want to redirect to a page named "newPage.html"
-        window.location.href = '/so/quanly/diem-dat-quang-cao/<%= chiTietBaoCao.adBoard.adLocation._id %>/bang-quang-cao/<%= chiTietBaoCao.adBoard._id%>';
+        window.location.href = `/so/quanly/diem-dat-quang-cao/${diemBaoCaoId}/bang-quang-cao/${bangBaoCaoId}`;
     }
 </script>

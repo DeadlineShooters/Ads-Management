@@ -39,6 +39,7 @@ export const danhSachCanBo =  async (req, res) => {
             messageAdd: req.flash('info'),
             messageEdit: req.flash('edit'),
             messageDel: req.flash('del'),
+            messageErr: req.flash('error'),
             canBo,
             loaiCanBo,
             pagination,
@@ -67,14 +68,21 @@ export const dkTaiKhoanCanBo = async (req, res) => {
     }
 }
 
-//POST can bo
+// Dk tai khoan can bo
 export const guiInfoTaiKhoanCanBo = async (req, res) => {
     console.log(req.body);
+    // Check if the email already exists
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+        // User with the provided email already exists
+        await req.flash('error', 'Email đã được sử dụng. Vui lòng chọn một địa chỉ email khác.');
+        return res.redirect('/so/canbo/tai-khoan-cb');
+    }
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
     const newCanBo = new User({
-        username : req.body.username,
+        username: req.body.username,
         email: req.body.email,
         role: req.body.role,
         phone: req.body.phone,
@@ -86,12 +94,14 @@ export const guiInfoTaiKhoanCanBo = async (req, res) => {
     });
     try {
         await User.create(newCanBo);
-        await req.flash('info', 'Tạo tài khoản cán bộ thành công')
+        await req.flash('info', 'Tạo tài khoản cán bộ thành công');
         res.redirect('/so/canbo/tai-khoan-cb');
-    } catch(error) {
+    } catch (error) {
         console.log(error);
+        // Handle other errors if needed
     }
-}
+};
+
 /* EDIT tai khoan can bo*/
 export const suaTaiKhoanCanBo = async (req, res) => {
     try {

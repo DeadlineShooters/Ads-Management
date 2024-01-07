@@ -148,6 +148,15 @@
       </div>
     </section>
   <% }) %>
+  <% messageErr.forEach(element=> { %>
+    <section class="d-flex justify-content-center mt-auto">
+      <div class="alert alert-danger alert-dismissible fade show">
+        <strong>Thông báo:</strong>
+        <%= messageErr %>.
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    </section>
+  <% }) %>
   <%- include('../../partials/pagination') %>
     <style>
     /* Add this style to your custom CSS or in a style tag within your HTML */
