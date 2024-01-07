@@ -18,35 +18,35 @@
             </button>
 
             <!-- ad location -->
-            <% adLocations=adLocations.filter(item=> {
+            <% adLocations = adLocations.filter(item=> {
                 return (!user || (user.role == 'so' || (user.role == 'quan' && item.district == user.district._id) ||
                 (user.role == 'phuong' && item.district == user.district._id && item.ward == user.ward._id)));
                 });
                 for (let i = 0; i < adLocations.length; i++) { %>
                     <div class="ads-point__info<%= i %> troinoi" data-id="<%= adLocations[i]._id %>"
-                        data-lat="<%= adLocations[i].latlng.split(" ,")[0].trim() %>"
-                        data-lng="<%= adLocations[i].latlng.split(",")[1].trim() %>"
-                            data-violate="<%= adLocations[i].isViolated %>"
-                                >
-                                <div class="info__form">
-                                    <%= adLocations[i].adType.name %>
-                                </div>
-                                <div class="info__type">
-                                    <%= adLocations[i].type.name %>
-                                </div>
-                                <div class="info__address">
-                                    <%= adLocations[i].address %>
-                                </div>
-                                <img class="info__img" src="<%= adLocations[i].image.url %>" alt="" />
-                                <div class="info__planning-stt">
-                                    <%= adLocations[i].status %>
-                                </div>
-                                <div class="info__details">
-                                    <a href="/so/quanly/diem-dat-quang-cao/<%= adLocations[i]._id %>"
-                                        class="details__btn">
-                                        <span>CHI TIẾT ĐIỂM ĐẶT</span>
-                                    </a>
-                                </div>
+                        data-lat="<%= adLocations[i].latlng.split(", ")[0] %>"
+                        data-lng="<%= adLocations[i].latlng.split(", ")[1] %>"
+                        data-violate="<%= adLocations[i].isViolated %>">
+                        <div class="info__form">
+                            <%= adLocations[i].adType.name %>
+                        </div>
+                        <div class="info__type">
+                            <%= adLocations[i].type.name %>
+                        </div>
+                        <div class="info__address">
+                            <%= adLocations[i].address %>
+                        </div>
+                        <img class="info__img" src="<%= adLocations[i].image.url %>" alt="" />
+                        <div class="info__planning-stt">
+                            <%= adLocations[i].status %>
+                        </div>
+                        <% if (user) { %>
+                            <div class="info__details">
+                                <a href="/so/quanly/diem-dat-quang-cao/<%= adLocations[i]._id %>" class="details__btn">
+                                    <span>CHI TIẾT ĐIỂM ĐẶT</span>
+                                </a>
+                            </div>
+                            <% } %>
                     </div>
                     <% } %>
 
@@ -59,7 +59,7 @@
                             })
                             for (let i = 0; i < violatedPoints.length; i++) { %>
                                 <div class="violated-point__latlng<%= i %>" data-id="<%= violatedPoints[i]._id %>"
-                                    data-lat="<%= violatedPoints[i].latlng.split(" ,")[0].trim() %>"
+                                    data-lat="<%= violatedPoints[i].latlng.split(",")[0].trim() %>"
                                     data-lng="<%= violatedPoints[i].latlng.split(",")[1].trim() %>"
                                         hidden
                                         ></div>
