@@ -20,7 +20,7 @@
             <li class="list-group-item">Số lượng: <b><%=details.quantity%> trụ/bảng</b></li>
             <li class="list-group-item">Ngày bắt đầu hợp đồng: <b><%=details.startDate%></b></li>
             <li class="list-group-item">Ngày kết thúc hợp đồng: <b><%=details.expireDate%></b></li>
-            <li class="list-group-item">Tình trạng: <b><%= details.status? "Đã duyệt":"Chưa duyệt" %></b></li>
+            <li class="list-group-item">Tình trạng: <b><%= details.adBoardRequest.status %></b></li>
           </ul>
           <div class="d-flex flex-row mt-auto justify-content-end">
             <% if (user.role === 'so') { %>

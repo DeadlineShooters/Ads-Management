@@ -80,7 +80,7 @@ controller.showDetail = async (req, res) => {
         path: "adLocation",
         populate: [{ path: "district" }, { path: "ward" }, "type", "adType"],
       })
-      .populate("boardType");
+      .populate(["boardType", "adBoardRequest"]);
 
     res.render("so/quanLy/bangqc/details", {
       details: adBoardDetails,
