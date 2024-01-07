@@ -71,7 +71,7 @@ export const remove = async (req, res) => {
         req.flash('error', `Loại bảng đang được sử dụng!`);
         return res.redirect('/so/quanly/loai-bang-quang-cao');
     }
-    // const boardType = await BoardType.findByIdAndDelete(id);
-    // req.flash('success', `${boardType.name} được xoá thành công`);
+    const boardType = await BoardType.findByIdAndDelete(id);
+    req.flash('success', `${boardType.name} được xoá thành công`);
     res.redirect('/so/quanly/loai-bang-quang-cao');
 }

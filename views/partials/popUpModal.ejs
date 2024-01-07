@@ -22,12 +22,16 @@
         button.setAttribute('data-bs-toggle', 'modal');
         button.setAttribute('data-bs-target', '#confirmPopUp');
         button.setAttribute('data-is-clicked', 'false');
-        button.onclick = () => button.setAttribute('data-is-clicked', 'true');
+        button.onclick = function (e) {
+          event.stopPropagation();
+          button.setAttribute('data-is-clicked', 'true');
+      };
     });
 
     document.getElementById('saveChangesBtn').addEventListener('click', function () {
         // Trigger the form submission when "Save changes" is clicked
         const button = document.querySelector('button[data-is-clicked="true"]')
+        // console.dir(button)
         button.setAttribute('data-is-clicked', 'false');
         const form = button.closest('form');
     
