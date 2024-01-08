@@ -88,9 +88,9 @@
         <td>${adBoard.quantity}</td>
         <td>
           ${
-            adBoard.adBoardRequest.status === "Chưa duyệt"
+            adBoard.status === "Chưa duyệt"
               ? '<span class="badge text-bg-secondary">Chưa duyệt</span>'
-              : adBoard.adBoardRequest.status === "Không duyệt"
+              : adBoard.status === "Không duyệt"
               ? '<span class="badge text-bg-danger">Không duyệt</span>'
               : '<span class="badge text-bg-success">Đã duyệt</span>'
           }

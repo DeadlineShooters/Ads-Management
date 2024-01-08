@@ -76,7 +76,7 @@
                         <td><%= adBoard.boardType.name %></td>
                         <td class="min-w"><%= adBoard.size.h %>m x <%= adBoard.size.w %>m</td>
                         <td class="min-w"><%= adBoard.quantity %> trụ/bảng</td>
-                        <td class="min-w"><div class="rounded-pill text-center text-light <%= (adBoard.status)? 'bg-success' : 'bg-danger'  %>"><%= adBoard.status? "Đã duyệt":"Chưa duyệt" %></div></td>
+                        <td class="min-w"><div class="rounded-pill text-center text-light <%= (adBoard.status == 'Đã duyệt')? 'bg-success' : 'bg-danger'  %>"><%= adBoard.status %></div></td>
                     </tr>
                     <% } %>
                 </tbody>

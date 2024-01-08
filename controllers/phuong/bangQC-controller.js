@@ -157,6 +157,7 @@ controller.processEdit = async (req, res) => {
     reports: editedBoard.reports,
     status: editedBoard.status,
   });
+  newAdBoard._id = bangId;
 
   if (req.file) {
     newAdBoard.image = {
@@ -171,13 +172,13 @@ controller.processEdit = async (req, res) => {
   }
 
   const newAdBoardEditReq = new AdBoardChangeRequest({
-    adBoard: newAdBoard._id,
+    adBoard: newAdBoard,
     reason: data.reason,
     sender: req.user._id,
     sendDate: new Date(),
+    status: "Chưa duyệt",
   });
 
-  console.log("New Ad Board created!", await newAdBoard.save());
   console.log("New Ad Board Edit Request created!", await newAdBoardEditReq.save());
   res.redirect(`/cac-bang-quang-cao/${bangId}`);
 };
