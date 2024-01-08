@@ -106,10 +106,21 @@ export const chiTietChinhDiemQC = async (req, res) => {
 
 export const capNhatChinhDiemQC = async (req, res) => {
     const id = req.body.adLocationChangeRequestId;
+    const updateStatus = req.body.newStatus;
+    const diemId = req.body.adLocationId;
     try {
-        await AdLocationChangeRequest.findByIdAndUpdate(id, {
-            status: req.body.newStatus
-        })
+        if (updateStatus === "Đã duyệt") {
+            const adLocationChangeReqDetails = await AdLocationChangeRequest.findById(id);
+            const updateAdLocation = adLocationChangeReqDetails.adLocation;
+            await AdLocationChangeRequest.findByIdAndUpdate(id, {
+                status: updateStatus
+            })
+            await AdLocation.findByIdAndUpdate(diemId, updateAdLocation);
+        } else {
+            await AdLocationChangeRequest.findByIdAndUpdate(id, {
+                status: updateStatus
+            })
+        }
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Server error' });
