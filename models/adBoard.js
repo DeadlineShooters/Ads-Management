@@ -16,10 +16,7 @@ const adBoardSchema = new Schema({
   adLocation: { type: Schema.Types.ObjectId, ref: "AdLocation" },
   adBoardRequest: { type: Schema.Types.ObjectId, ref: "AdBoardRequest" },
   reports: [{ type: Schema.Types.ObjectId, ref: "Report" }],
-  status: {
-    type: Boolean,
-    default: false,
-  },
+  status: String,
 });
 
 const AdBoard = mongoose.model("AdBoard", adBoardSchema);

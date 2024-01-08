@@ -15,7 +15,6 @@ const adBoardRequestSchema = new Schema({
     },
     sender: {type: Schema.Types.ObjectId, ref: "User"},
     sendDate: {type: Date},
-    status: String,
 })
 
 const AdBoardRequest = mongoose.model("AdBoardRequest", adBoardRequestSchema);
