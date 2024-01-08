@@ -155,7 +155,7 @@ controller.processEdit = async (req, res) => {
     adLocation: editedBoard.adLocation._id,
     adBoardRequest: editedBoard.adBoardRequest,
     reports: editedBoard.reports,
-    status: "Chưa duyệt",
+    status: editedBoard.status,
   });
   newAdBoard._id = bangId;
 
