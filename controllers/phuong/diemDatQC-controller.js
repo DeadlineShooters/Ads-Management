@@ -176,7 +176,6 @@ controller.processEdit = async (req, res) => {
     sendDate: new Date(),
   });
 
-  console.log("New Ad Location saved to database:", await newAdLocation.save());
   console.log("New Ad Location Edit Request saved to database:", await newAdLocationEditReq.save());
   req.flash("success", "Yêu cầu chỉnh sửa điểm đặt đã được gửi thành công");
 
