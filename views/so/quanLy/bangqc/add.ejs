@@ -26,16 +26,16 @@
         </div>
         <div class="d-flex">
             <div class="mb-3">
-                <label for="moTa" class="form-label d-block">Số lượng</label>
-                <input name="item[quantity]" type="text" class="form-control d-inline" id="ward" 
+                <label for="quantity" class="form-label d-block">Số lượng</label>
+                <input name="item[quantity]" type="text" class="form-control d-inline" id="quantity" 
                 required
                     oninput="resizeInput(this)" style="width: 1ch; box-sizing: content-box;"> trụ/bảng
             </div>
             <fieldset class="mb-3 ms-4">
                 <label for="moTa" class="form-label d-block">Kích thước</label>
-                <input name="item[size][h]" type="text" class="form-control d-inline" id="ward" required
+                <input name="item[size][h]" type="text" class="form-control d-inline" id="height" required
                     oninput="resizeInput(this)" style="width: 1ch; box-sizing: content-box;"> m x 
-                <input name="item[size][w]" type="text" class="form-control d-inline" id="ward" required
+                <input name="item[size][w]" type="text" class="form-control d-inline" id="width" required
                     oninput="resizeInput(this)" style="width: 1ch; box-sizing: content-box;"> m
             </fieldset>
 
@@ -54,11 +54,11 @@
         <div class="mb-3">
             <p>Tình trạng</p>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio1" value="Chưa duyệt"checked>
+                <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio1" value="Chưa duyệt"checked>
                 <label class="form-check-label" for="inlineRadio1">Chưa duyệt</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio2" value="Đã duyệt">
+                <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio2" value="Đã duyệt">
                 <label class="form-check-label" for="inlineRadio2">Đã duyệt</label>
             </div>
             <div class="form-check form-check-inline">
@@ -93,4 +93,30 @@
     function resizeInput(input) {
         input.style.width = input.value.length + 'ch';
     }
+    
+    function isNumber(value) {
+        return !isNaN(value) && !isNaN(parseFloat(value));
+    }
+
+    function validateInput(input) {
+        if (!isNumber(input.value) && input.value.length > 0) {
+            input.setCustomValidity('Phải nhập số');
+            input.reportValidity();
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
+    // Attach the validateInput function to the onkeyup event of your input fields
+    document.getElementById('quantity').addEventListener('keyup', function() {
+        validateInput(this);
+    });
+
+    document.getElementById('height').addEventListener('keyup', function() {
+        validateInput(this);
+    });
+
+    document.getElementById('width').addEventListener('keyup', function() {
+        validateInput(this);
+    });
 </script>

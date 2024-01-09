@@ -59,25 +59,28 @@ controller.showDetail = async (req, res) => {
     { name: "Chi tiết điểm đặt", link: "" },
   ];
 
-  // const props = {
-  //   title: "điểm đặt",
-  //   b1text: "Tạo yêu cầu cấp phép",
-  //   b2text: "Chỉnh sửa",
-  //   b1url: `/cac-diem-dat-quang-cao/${diemId}/tao-yeu-cau`,
-  //   b2url: `/cac-diem-dat-quang-cao/${diemId}/chinh-sua`,
-
-  //   b1color: "secondary",
-  //   b2color: "success",
-  // };
+  const page = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+  const totalItems = await AdBoard.countDocuments();
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const pagination = {
+    page,
+    totalPages,
+    itemsPerPage,
+  };
 
   try {
     // Fetch adLocation details based on the diemId
     const adLocationDetails = await AdLocation.findById(diemId).populate(["ward", "district", "type", "adType"]);
-
+    const adBoards = await AdBoard.find({ adLocation: diemId })
+    .populate("boardType")
+    .skip((page - 1) * itemsPerPage)
+    .limit(itemsPerPage);
     res.render("so/quanLy/diemDatqc/details", {
       details: adLocationDetails,
-
+      adBoards,
       breadcrumbs,
+      pagination
     });
   } catch (error) {
     console.error(error);
