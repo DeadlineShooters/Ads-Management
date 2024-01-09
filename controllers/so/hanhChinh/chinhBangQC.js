@@ -121,10 +121,21 @@ export const chiTietChinhBangQC = async (req, res) => {
 
 export const capNhatChinhBangQC = async (req, res) => {
     const id = req.body.adBoardChangeRequestId;
+    const updateStatus = req.body.newStatus;
+    const bangId = req.body.adBoardId;
     try {
-        await AdBoardChangeReq.findByIdAndUpdate(id, {
-            status: req.body.newStatus
-        })
+        if (updateStatus === "Đã duyệt") {
+            const adBoardChangeReqDetails = await AdBoardChangeReq.findById(id);
+            const updateAdBoard = adBoardChangeReqDetails.adBoard;
+            await AdBoardChangeReq.findByIdAndUpdate(id, {
+                status: updateStatus
+            })
+            await AdBoard.findByIdAndUpdate(bangId, updateAdBoard);
+        } else {
+            await AdBoardChangeReq.findByIdAndUpdate(id, {
+                status: updateStatus
+            })
+        }
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Server error' });
