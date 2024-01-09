@@ -49,6 +49,7 @@
           <input type="number" class="form-control" id="amount" style="max-width: 20%" required name="amount" />
           <span class="input-group-text">trụ/bảng</span>
         </div>
+        <div id="validationFeedback" class="invalid-feedback">Số lượng chưa chọn</div>
       </div>
       <div class="col-md-4">
         <label for="size" class="form-label fw-semibold">Kích thước</label>
@@ -133,39 +134,49 @@
       for (var i = 0; i < inputFields.length; i++) {
         if (inputFields[i].value === "") {
           allFilled = false;
-          break; // Exit the loop early if any field is empty
+          // Display validation feedback for empty fields
+          inputFields[i].classList.add("is-invalid");
+        } else {
+          inputFields[i].classList.remove("is-invalid");
         }
       }
 
-      if (!allFilled) {
-        alert("You must fill in all fields");
-        return false;
-      }
-
-      // Check if textarea is not empty
-      let textareaEmpty = document.getElementById("formTextarea").value === "";
-
-      let imageEmpty = document.getElementById("formFile").files.length === 0;
-
-      // Check start and end dates
       let startDate = document.querySelector('input[name="start-date"]').value;
       let endDate = document.querySelector('input[name="end-date"]').value;
+      console.log("start date:" + startDate + ", end date: " + endDate);
+      if (!startDate) {
+        document.getElementById("start").classList.add("is-invalid");
+        allFilled = false;
+      } else {
+        document.getElementById("start").classList.remove("is-invalid");
+      }
+
+      if (!endDate) {
+        document.getElementById("end").classList.add("is-invalid");
+        allFilled = false;
+      } else {
+        document.getElementById("end").classList.remove("is-invalid");
+      }
+      let textareaEmpty = document.getElementById("formTextarea").value === "";
+
+      if (textareaEmpty) {
+        allFilled = false;
+
+        document.getElementById("formTextarea").classList.add("is-invalid");
+      } else {
+        document.getElementById("formTextarea").classList.remove("is-invalid");
+      }
+      // Check if textarea is not empty
 
       if (startDate > endDate) {
         document.getElementById("start").classList.add("is-invalid");
         document.getElementById("end").classList.add("is-invalid");
         allFilled = false;
-      } else {
+      } else if (startDate && endDate) {
         document.getElementById("start").classList.remove("is-invalid");
         document.getElementById("end").classList.remove("is-invalid");
       }
 
-      if (imageEmpty) {
-        document.getElementById("formFile").classList.add("is-invalid");
-        allFilled = false;
-      } else {
-        document.getElementById("formFile").classList.remove("is-invalid");
-      }
       return allFilled && !textareaEmpty;
     }
 
