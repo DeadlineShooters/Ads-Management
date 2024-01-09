@@ -6,7 +6,7 @@ import Ward from "./ward.js";
 import LocationType from "./locationType.js";
 import imageSchema from "./image.js";
 
-const adLocationSchema = new Schema({
+export const adLocationSchema = new Schema({
   image: imageSchema,
   latlng: String,
   address: String,
