@@ -59,16 +59,22 @@ controller.showDetail = async (req, res) => {
     { name: "Chi tiết điểm đặt", link: "" },
   ];
 
-  // const props = {
-  //   title: "điểm đặt",
-  //   b1text: "Tạo yêu cầu cấp phép",
-  //   b2text: "Chỉnh sửa",
-  //   b1url: `/cac-diem-dat-quang-cao/${diemId}/tao-yeu-cau`,
-  //   b2url: `/cac-diem-dat-quang-cao/${diemId}/chinh-sua`,
+  const page = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+  const totalItems = await AdBoard.countDocuments();
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const pagination = {
+    page,
+    totalPages,
+    itemsPerPage,
+  };
 
-  //   b1color: "secondary",
-  //   b2color: "success",
-  // };
+  const adBoards = await AdBoard.find({ adLocation: diemId })
+    .populate("boardType")
+    .skip((page - 1) * itemsPerPage)
+    .limit(itemsPerPage);
+
+  const wards = await getWardsForUser(req.user);
 
   try {
     // Fetch adLocation details based on the diemId
@@ -76,8 +82,10 @@ controller.showDetail = async (req, res) => {
 
     res.render("so/quanLy/diemDatqc/details", {
       details: adLocationDetails,
-
+      adBoards,
       breadcrumbs,
+      pagination,
+      wards,
     });
   } catch (error) {
     console.error(error);
@@ -215,6 +223,7 @@ controller.postCreateRequest = async (req, res) => {
       startDate: startDate, // Convert to string using toISOString()
       expireDate: endDate,
       adLocation: new Types.ObjectId(adPointID),
+      status: "Chưa duyệt",
     });
 
     // Create a new instance of the AdBoardReq model
@@ -229,7 +238,6 @@ controller.postCreateRequest = async (req, res) => {
       },
       sender: req.user._id,
       sendDate: new Date(),
-      status: "Chưa duyệt",
     });
 
     newAdBoard.adBoardRequest = newAdBoardReq._id;
@@ -240,7 +248,7 @@ controller.postCreateRequest = async (req, res) => {
     console.log("AdBoard saved to database: ", await newAdBoard.save());
 
     // Redirect to the desired page after successful submission
-    res.redirect("/cac-bang-quang-cao");
+    res.redirect("/cac-yeu-cau-cap-phep");
   } catch (error) {
     console.error("Error saving AdBoardReq to database:", error);
     // Handle the error appropriately (e.g., send an error response to the client)

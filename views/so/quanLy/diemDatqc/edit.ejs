@@ -89,10 +89,14 @@
                     Hãy cung cấp lý do chỉnh sửa
                 </div>
             </div>
-            <% } %>
             <div class="mb-3 text-center">
+                <button class="btn btn-info" id="editButton">Gửi yêu cầu chỉnh sửa</button>
+              </div>
+              <% } else {%>
+              <div class="mb-3 text-center">
                 <button class="btn btn-info" id="editButton">Chỉnh sửa</button>
-            </div>
+              </div>
+              <%}%>
         </form>
     </div>
     <% if (user.role === 'so') { %>

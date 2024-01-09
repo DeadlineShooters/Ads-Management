@@ -128,15 +128,19 @@
 
     function validateFields() {
       let allFilled = true;
-      let requiredFields = "";
+      var inputFields = document.querySelectorAll("#create-request-form input");
 
-      // Check if all input fields are filled
-      $("#create-request-form input").each(function () {
-        if ($(this).val() === "") {
+      for (var i = 0; i < inputFields.length; i++) {
+        if (inputFields[i].value === "") {
           allFilled = false;
-          return false; // Exit the loop early if any field is empty
+          break; // Exit the loop early if any field is empty
         }
-      });
+      }
+
+      if (!allFilled) {
+        alert("You must fill in all fields");
+        return false;
+      }
 
       // Check if textarea is not empty
       let textareaEmpty = document.getElementById("formTextarea").value === "";

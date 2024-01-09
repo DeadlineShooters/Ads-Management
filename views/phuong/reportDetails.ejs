@@ -10,22 +10,21 @@
           <span class="form-control" aria-label="Thời điểm gửi"><%=new Date(JSON.parse(decodeURIComponent(report)).sendDate).toLocaleString()%></span>
         </div>
       </div>
+    </div>
 
-      <div class="col-md-7">
-        <div class="input-group">
-          <span class="input-group-text bg-body-secondary fw-semibold">Địa điểm bị báo cáo</span>
-          <span class="form-control custom-width" aria-label="Địa điểm bị báo cáo"
-            ><% if (JSON.parse(decodeURIComponent(report)).adBoard ) { %>
-            <a href="/cac-bang-quang-cao/<%=JSON.parse(decodeURIComponent(report)).adBoard._id%>">
-              <%=JSON.parse(decodeURIComponent(report)).adBoard.adLocation.address%>, Phường
-              <%=JSON.parse(decodeURIComponent(report)).adBoard.adLocation.ward.name%>, Quận
-              <%=JSON.parse(decodeURIComponent(report)).adBoard.adLocation.district.name%>
-            </a>
-            <% } else { %> <%=JSON.parse(decodeURIComponent(report)).randomPoint.address%>, Phường
-            <%=JSON.parse(decodeURIComponent(report)).randomPoint.ward.name%>, Quận <%=JSON.parse(decodeURIComponent(report)).randomPoint.district.name%> <% }
-            %>
-          </span>
-        </div>
+    <div class="row mb-3">
+      <div class="input-group">
+        <span class="input-group-text bg-body-secondary fw-semibold">Địa điểm bị báo cáo</span>
+        <span class="form-control custom-width" aria-label="Địa điểm bị báo cáo"
+          ><% if (JSON.parse(decodeURIComponent(report)).adBoard ) { %>
+          <a href="/cac-bang-quang-cao/<%=JSON.parse(decodeURIComponent(report)).adBoard._id%>">
+            <%=JSON.parse(decodeURIComponent(report)).adBoard.adLocation.address%>, Phường
+            <%=JSON.parse(decodeURIComponent(report)).adBoard.adLocation.ward.name%>, Quận
+            <%=JSON.parse(decodeURIComponent(report)).adBoard.adLocation.district.name%>
+          </a>
+          <% } else { %> <%=JSON.parse(decodeURIComponent(report)).randomPoint.address%>, Phường
+          <%=JSON.parse(decodeURIComponent(report)).randomPoint.ward.name%>, Quận <%=JSON.parse(decodeURIComponent(report)).randomPoint.district.name%> <% } %>
+        </span>
       </div>
     </div>
     <div class="row mb-3">

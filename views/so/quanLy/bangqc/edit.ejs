@@ -116,10 +116,14 @@
       <textarea class="form-control" id="moTa" rows="3" name="item[reason]"></textarea>
       <div id="validationFeedback" class="invalid-feedback">Không được để trống lý do chỉnh sửa</div>
     </div>
-    <% } %>
+    <div class="mb-3 text-center">
+      <button class="btn btn-info" id="editButton">Gửi yêu cầu chỉnh sửa</button>
+    </div>
+    <% } else {%>
     <div class="mb-3 text-center">
       <button class="btn btn-info" id="editButton">Chỉnh sửa</button>
     </div>
+    <%}%>
   </form>
 </div>
 
@@ -144,17 +148,12 @@
       const startDate = new Date(document.getElementsByName("item[startDate]")[0].value);
       const endDate = new Date(document.getElementsByName("item[expireDate]")[0].value);
 
-      if (editReasonEmpty || startDate > endDate) {
-        event.preventDefault();
-        event.stopPropagation();
-        document.getElementById("moTa").classList.add("is-invalid");
-        document.getElementsByName("item[startDate]")[0].classList.add("is-invalid");
-        document.getElementsByName("item[expireDate]")[0].classList.add("is-invalid");
-      } else {
-        document.getElementById("moTa").classList.remove("is-invalid");
-        document.getElementsByName("item[startDate]")[0].classList.remove("is-invalid");
-        document.getElementsByName("item[expireDate]")[0].classList.remove("is-invalid");
-      }
+      let invalid = editReasonEmpty || startDate > endDate;
+      event.preventDefault(invalid);
+      event.stopPropagation(invalid);
+      document.getElementById("moTa").classList.toggle("is-invalid", editReasonEmpty);
+      document.getElementsByName("item[startDate]")[0].classList.toggle("is-invalid", startDate > endDate);
+      document.getElementsByName("item[expireDate]")[0].classList.toggle("is-invalid", startDate > endDate);
     };
   }
 

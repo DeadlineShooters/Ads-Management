@@ -26,7 +26,7 @@
 
 <script>
   let district = "<%= user.district._id %>";
-  let allAdBoards = JSON.parse(decodeURIComponent("<%= adBoards %>"));
+  let allAdBoardReqs = JSON.parse(decodeURIComponent("<%= adBoardReqs %>"));
 
   document.addEventListener("DOMContentLoaded", function () {
     // Get the select element
@@ -40,10 +40,10 @@
       });
 
       // Initially fetch all adboards
-      updateTableWithData(allAdBoards);
+      updateTableWithData(allAdBoardReqs);
     } else {
       // can bo phuong so there is no select dropdown
-      updateTableWithData(allAdBoards);
+      updateTableWithData(allAdBoardReqs);
     }
   });
 
@@ -60,12 +60,12 @@
 
   function fetchAdBoards(ward) {
     // Filter ad boards based on the selected ward
-    const filteredAdBoards = allAdBoards.filter((adBoard) => {
-      return adBoard.adLocation.ward._id == ward && adBoard.adLocation.district._id == district;
+    const filteredAdBoardReqs = allAdBoardReqs.filter((adBoardReq) => {
+      return adBoardReq.adBoard.adLocation.ward._id == ward && adBoardReq.adBoard.adLocation.district._id == district;
     });
 
     // Update the table with the filtered data
-    updateTableWithData(filteredAdBoards);
+    updateTableWithData(filteredAdBoardReqs);
   }
 
   function updateTableWithData(data) {
@@ -75,22 +75,22 @@
     tableBody.innerHTML = "";
 
     // Populate the table with the new data
-    data.forEach((adBoard) => {
+    data.forEach((adBoardReq) => {
       const newRow = document.createElement("tr");
       newRow.classList.add("clickable-row");
-      newRow.setAttribute("data-href", `/cac-bang-quang-cao/${adBoard._id}`);
+      newRow.setAttribute("data-href", `/cac-yeu-cau-cap-phep/${adBoardReq._id}`);
 
       newRow.innerHTML = `
-        <td>${adBoard.adLocation.address}</td>
-        <td class="khuVucField">Phường ${adBoard.adLocation.ward.name}, Quận ${adBoard.adLocation.district.name}</td>
-        <td>${adBoard.boardType.name}</td>
-        <td>${adBoard.size.w}m x ${adBoard.size.h}m</td>
-        <td>${adBoard.quantity}</td>
+        <td>${adBoardReq.adBoard.adLocation.address}</td>
+        <td class="khuVucField">Phường ${adBoardReq.adBoard.adLocation.ward.name}, Quận ${adBoardReq.adBoard.adLocation.district.name}</td>
+        <td>${adBoardReq.adBoard.boardType.name}</td>
+        <td>${adBoardReq.adBoard.size.w}m x ${adBoardReq.adBoard.size.h}m</td>
+        <td>${adBoardReq.adBoard.quantity}</td>
         <td>
           ${
-            adBoard.status === "Chưa duyệt"
+            adBoardReq.adBoard.status === "Chưa duyệt"
               ? '<span class="badge text-bg-secondary">Chưa duyệt</span>'
-              : adBoard.status === "Không duyệt"
+              : adBoardReq.adBoard.status === "Không duyệt"
               ? '<span class="badge text-bg-danger">Không duyệt</span>'
               : '<span class="badge text-bg-success">Đã duyệt</span>'
           }
