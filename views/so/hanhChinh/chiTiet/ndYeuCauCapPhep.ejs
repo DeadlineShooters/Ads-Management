@@ -71,6 +71,14 @@
                 <div class="col" style="max-width: 25%;"><b>Kích thước:</b> <%= adBoard.size.h %>m x  <%= adBoard.size.w %>m</div>
             </div>
         </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col header"><b>Trạng thái</b></div>
+                <div class="col" style="max-width: 100%;"><b><%= adBoard.status %></b></div>
+
+        
+            </div>
+        </li>
     </ul>
     <ul class="list-group mt-3">
         <li class="list-group-item" style="background-color: #7981d0">
@@ -99,6 +107,7 @@
             </div>
         </li>
     </ul>
+    
     <%if (user.role === "so") {%>
 
     <% if (adBoardReq.adBoard.status === "Đã duyệt") { %>
@@ -156,9 +165,9 @@
 <%}%>
 <!-- phuong, quan  -->
 <% if (user.role !== "so") { %> 
-    <% if (adBoardReq.status === "Chưa duyệt") { %>
+    <% if (adBoard.status === "Chưa duyệt") { %>
         <div class="d-flex flex-row justify-content-center mt-3">
-        <form class="showPopUp" action="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau?_method=delete" method="post">
+        <form class="showPopUp" action="/cac-yeu-cau-cap-phep/<%=adBoardReq._id%>/huy-yeu-cau?_method=delete" method="post">
             <button class="btn btn-danger mx-3">Hủy bỏ yêu cầu</button>
         </form>
         <!-- <a href="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau" class="btn btn-secondary me-3">Hủy bỏ yêu cầu</a> -->
