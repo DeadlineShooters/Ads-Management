@@ -9,6 +9,8 @@
     <table class="table table-hover table-light table-striped">
       <thead>
         <tr>
+          <th scope="col">No.</th>
+
           <th scope="col">Địa chỉ</th>
           <th scope="col">Khu vực</th>
           <th scope="col">Loại bảng</th>
@@ -75,12 +77,13 @@
     tableBody.innerHTML = "";
 
     // Populate the table with the new data
-    data.forEach((adBoardReq) => {
+    data.forEach((adBoardReq, index) => {
       const newRow = document.createElement("tr");
       newRow.classList.add("clickable-row");
       newRow.setAttribute("data-href", `/cac-yeu-cau-cap-phep/${adBoardReq._id}`);
 
       newRow.innerHTML = `
+        <td>${index + 1}</td>
         <td>${adBoardReq.adBoard.adLocation.address}</td>
         <td class="khuVucField">Phường ${adBoardReq.adBoard.adLocation.ward.name}, Quận ${adBoardReq.adBoard.adLocation.district.name}</td>
         <td>${adBoardReq.adBoard.boardType.name}</td>
