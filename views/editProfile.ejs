@@ -81,7 +81,8 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="password" class="form-label">Mật khẩu</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="" required onkeyup="validatePassword(this.value)">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="" required onkeyup="validatePassword(this.value)" onchange="validatePassword(this.value)">
+                            <div id="passwordError" style="font-size: 10px; color: red; margin: 4px 0;"></div>
                         </div>
                         <div class="mb-3">
                             <label for="confirmPassword" class="form-label">Nhập lại mật khẩu</label>
@@ -125,6 +126,26 @@
             confirm.setCustomValidity('');
         }
     }
+
+    function validatePassword(password) {
+		var errorDiv = document.getElementById('passwordError');
+		errorDiv.innerHTML = ''; // Clear any previous error message
+
+		// Define the password strength criteria
+		var hasUpperCase = /[A-Z]/.test(password);
+		var hasLowerCase = /[a-z]/.test(password);
+		var hasNumbers = /\d/.test(password);
+		var hasNonalphas = /\W/.test(password);
+		var isLongEnough = password.length >= 8;
+
+		// Check if all criteria are met
+		if (hasUpperCase + hasLowerCase + hasNumbers + hasNonalphas + isLongEnough >= 4) {
+			return true;
+		} else {
+			errorDiv.innerHTML = "(*) Your password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character!";
+			return false;
+		}
+	}
 
     // var errors = {
     //     uppercase: { regex: /[A-Z]/, description: 'At least one uppercase letter' },
