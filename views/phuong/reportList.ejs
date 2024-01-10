@@ -6,6 +6,8 @@
     <table class="table table-hover table-light table-striped">
       <thead>
         <tr>
+          <th scope="col">No.</th>
+
           <th scope="col">Thời điểm gửi</th>
           <th scope="col">Người gửi</th>
           <th scope="col">Địa chỉ</th>
@@ -78,12 +80,14 @@
     tableBody.innerHTML = "";
 
     // Populate the table with the new data
-    data.forEach((report) => {
+    data.forEach((report, index) => {
       const newRow = document.createElement("tr");
       newRow.classList.add("clickable-row");
       newRow.setAttribute("data-href", `/cac-bao-cao/${report._id}`);
 
       newRow.innerHTML = `
+      <td>${index + 1}</td>
+
       <td>${new Date(report.sendDate).toLocaleString()}</td>
       <td>${report.fullName}</td>
       ${

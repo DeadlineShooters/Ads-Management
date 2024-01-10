@@ -58,6 +58,7 @@ export const add = async (req, res) => {
   const item = req.body.item;
 
   const adBoard = new AdBoard(item);
+  adBoard.status = 'Đã duyệt';
 
   adBoard.adLocation = adLocationId;
   if (req.file) {
