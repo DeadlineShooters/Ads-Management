@@ -9,6 +9,7 @@ import AdBoard from "../../../models/adBoard.js";
 import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js";
 import AdBoardRequest from "../../../models/adBoardRequest.js";
 import Report from "../../../models/report.js";
+import AdLocationChangeRequest from "../../../models/adLocationChangeRequest.js";
 
 const defaultAdLocationImg = "delnafx999tunfa8nsmw";
 const defaultAdBoardImg = "bang-quang-cao-3_zr4oyk";
@@ -133,7 +134,7 @@ export const remove = async (req, res) => {
     // delete adboard request
     await AdBoardRequest.findOneAndDelete({ adBoard: adBoardId });
     // delete adboard change request
-    await AdBoardChangeReq.findOneAndDelete({ adBoard: adBoardId });
+    await AdBoardChangeReq.findOneAndDelete({ "adBoard._id": adBoardId });
     // delete all reports await Ward.deleteMany({_id: {$in: wards} })
     // Delete images from Cloudinary
     const reportsToDelete = await Report.find({ adBoard: adBoardId });
@@ -150,6 +151,8 @@ export const remove = async (req, res) => {
     }
     await AdBoard.findByIdAndDelete(adBoardId);
   }
+
+  await AdLocationChangeRequest.findOneAndDelete({ "adLocation._id": id });
 
   const adLocation = await AdLocation.findById(id);
   if (adLocation.image.filename !== defaultAdLocationImg) {
