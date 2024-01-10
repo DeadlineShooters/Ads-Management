@@ -119,6 +119,11 @@ export const suaTaiKhoanCanBo = async (req, res) => {
 /* UPDATE tai khoan can bo*/
 export const capNhatTaiKhoanCanBo = async (req, res) => {
     console.log("@@ info update: ", req.body);
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+        await req.flash('error', 'Email đã được sử dụng. Vui lòng chọn một địa chỉ email khác.');
+        return res.redirect('/so/canbo/tai-khoan-cb');
+    }
     try {
         await User.findByIdAndUpdate(req.params.id, {
             username : req.body.username,
