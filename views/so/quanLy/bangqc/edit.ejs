@@ -37,7 +37,7 @@
           placeholder=""
           value="<%= adBoard.quantity %>"
           oninput="resizeInput(this)"
-          style="width: 1ch; box-sizing: content-box"
+          style="width: 3ch; box-sizing: content-box"
         />
         trụ/bảng
       </div>
@@ -88,8 +88,8 @@
         <div id="validationFeedback" class="invalid-feedback">Ngày bắt đầu không được sau ngày kết thúc</div>
       </div>
     </div>
-    <% if (user.role == 'so') { %>
-    <div class="mb-3">
+    <%# if (user.role == 'so') { %>
+    <!-- <div class="mb-3">
       <p><b>Tình trạng</b></p>
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio1" value="Chưa duyệt" <%= adBoard.status=='Chưa duyệt'? 'checked':''%>>
@@ -104,8 +104,8 @@
         <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio3" value="Không duyệt" <%= adBoard.status=='Không duyệt'?
         'checked':''%>>
       </div>
-    </div>
-    <% } %>
+    </div> -->
+    <%# } %>
     <div class="mb-3">
       <label for="formFile" class="form-label">Chọn ảnh mới</label>
       <input name="image" class="form-control" type="file" id="formFile" />
