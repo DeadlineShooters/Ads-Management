@@ -130,8 +130,13 @@ async function initMap() {
 		markers.push(adsPointMarker);
 
 		if (item.dataset.adboard == 'true') {
-			adsBoardMarkers.push(adsPointMarker);
 			adsPoint.textContent = 'QC';
+			adsPoint.setAttribute('data-bs-toggle', 'offcanvas');
+			adsPoint.setAttribute('data-bs-target', '#offcanvasAP' + index);
+			adsPoint.setAttribute('aria-controls', 'offcanvasAP' + index);
+
+			adsPoint.appendChild(item);
+			adsBoardMarkers.push(adsPointMarker);
 		}
 		if (item.dataset.violate == 'true') {
 			adsPoint.style.border = '2px solid #d32e2e';
