@@ -36,8 +36,10 @@ export const showDetails = async (req, res) => {
 
   const page = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-  const totalItems = await AdBoard.countDocuments();
+  const items = await AdBoard.find({ status: "Đã duyệt" });
+  const totalItems = items.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+  console.log("aaa "+ totalItems+" "+itemsPerPage+" "+totalPages)
   const pagination = {
     page,
     totalPages,
