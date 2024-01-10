@@ -19,5 +19,5 @@ export const adBoardSchema = new Schema({
   status: String,
 });
 
-const AdBoard = mongoose.model("AdBoard", adBoardSchema);
+const AdBoard = mongoose.model('AdBoard', adBoardSchema);
 export default AdBoard;

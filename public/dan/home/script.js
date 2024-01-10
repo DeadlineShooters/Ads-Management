@@ -1,10 +1,12 @@
 let map;
 let marker;
 let latLng;
+let markerCluster;
 let user = document.getElementById('user');
 let adsPoints = document.querySelectorAll('[class^="ads-point__info"]');
 let violatedPoints = document.querySelectorAll('[class^="violated-point__latlng"]');
 let adsPointMarkers = [];
+let adsBoardMarkers = [];
 let violatedPointMarkers = [];
 let markers = [];
 const locationButton = document.querySelector('.location-btn');
@@ -125,6 +127,10 @@ async function initMap() {
 
 		adsPointMarkers.push(adsPointMarker);
 		markers.push(adsPointMarker);
+
+		if (item.dataset.adboard == 'true') {
+			adsBoardMarkers.push(adsPointMarker);
+		}
 		if (item.dataset.violate == 'true') {
 			adsPoint.classList.add('violate');
 			violatedPointMarkers.push(adsPointMarker);
@@ -133,6 +139,7 @@ async function initMap() {
 		adsPointMarker.addListener('click', () => {
 			// create offcanvas
 			if (!document.getElementById(`offcanvasAP${index}`)) {
+				console.log(item.dataset.id);
 				fetch('/adboards/' + item.dataset.id)
 					.then((response) => response.json())
 					.then((adBoards) => {
@@ -150,7 +157,7 @@ async function initMap() {
                             <div class="ads-list">`;
 						let noAdBoard = true;
 						adBoards.forEach((item1) => {
-							if (item1.status && new Date(item1.expireDate) >= new Date()) {
+							if (item1.status == 'Đã duyệt' && new Date(item1.expireDate) >= new Date()) {
 								noAdBoard = false;
 								offcanvas += `
 									<div class="ads-item">
@@ -418,7 +425,15 @@ async function initMap() {
                                     <div class="report-item ${item1.reportType.note}">
                                         <div class="report-item__type">${item1.reportType.name}</div>
                                         <div class="report-item__body">${item1.content}</div>
-                                    </div>`;
+										<div class="report-item__img">`;
+							item1.uploadedImages.forEach((item2) => {
+								offcanvas += `
+											<img class="img__item" src="${item2.url}">`;
+							});
+							offcanvas += `
+										</div>
+										<div class="report-item__status">Trạng thái: <span>${item1.status}</span></div>
+									</div>`;
 						});
 						offcanvas += `
                                     <div style="padding-top: 8px"></div>
@@ -483,7 +498,7 @@ async function initMap() {
 		addMarker(latLng);
 	});
 
-	const markerCluster = new markerClusterer.MarkerClusterer({ markers, map });
+	markerCluster = new markerClusterer.MarkerClusterer({ markers, map });
 }
 // reverse geocoding
 async function addMarker(position) {
@@ -578,11 +593,16 @@ async function addMarker(position) {
 let tmpArr;
 document.querySelectorAll('.toggle-list input').forEach((item, ind) => {
 	item.addEventListener('click', function () {
+		let tmpArr;
 		if (ind == 0) {
-			tmpArr = adsPointMarkers;
+			tmpArr = adsBoardMarkers;
 		} else if (ind == 1) {
-			tmpArr = violatedPointMarkers;
+			tmpArr = adsPointMarkers.filter((item, ind) => {
+				return !adsBoardMarkers.includes(item);
+			});
 		} else if (ind == 2) {
+			tmpArr = violatedPointMarkers;
+		} else if (ind == 3) {
 			tmpArr = adsPointMarkers.filter((item, ind) => {
 				return adsPoints[ind].dataset.status == 'Đã quy hoạch';
 			});
@@ -593,13 +613,20 @@ document.querySelectorAll('.toggle-list input').forEach((item, ind) => {
 		}
 		if (this.checked) {
 			for (let x of tmpArr) {
+				markers.push(x);
 				x.setMap(map);
 			}
 		} else {
 			for (let x of tmpArr) {
+				let index = markers.indexOf(x);
+				if (index > -1) {
+					markers.splice(index, 1);
+				}
 				x.setMap(null);
 			}
 		}
+		markerCluster.setMap(null);
+		markerCluster = new markerClusterer.MarkerClusterer({ markers, map });
 	});
 });
 

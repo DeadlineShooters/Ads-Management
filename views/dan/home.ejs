@@ -27,7 +27,8 @@
                         data-lat="<%= adLocations[i].latlng.split(", ")[0] %>"
                         data-lng="<%= adLocations[i].latlng.split(", ")[1] %>"
                         data-violate="<%= adLocations[i].isViolated %>"
-                        data-status="<%= adLocations[i].status %>">
+                        data-status="<%= adLocations[i].status %>"
+                        data-adboard="<%= adLocations[i].adBoard %>">
                         <div class="info__form">
                             <%= adLocations[i].adType.name %>
                         </div>
@@ -75,7 +76,14 @@
                                                         <input type="checkbox" checked />
                                                         <span class="toggle-slider"></span>
                                                     </label>
-                                                    <span class="toggle-label">Bảng QC</span>
+                                                    <span class="toggle-label">Có bảng QC</span>
+                                                </li>
+                                                <li class="toggle-item">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" checked />
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                    <span class="toggle-label">Chưa có bảng QC</span>
                                                 </li>
                                                 <li class="toggle-item">
                                                     <label class="toggle-switch">
