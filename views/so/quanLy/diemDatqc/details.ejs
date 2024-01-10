@@ -47,10 +47,12 @@
             <th scope="col">Số lượng</th>
             <th scope="col">Ngày bắt đầu</th>
             <th scope="col">Ngày kết thúc</th>
+            <th scope="col">Trạng thái</th>
           </tr>
         </thead>
         <tbody>
-          <% let i = 1; %> <% for (let adBoard of adBoards) { %> <%if (adBoard.status == "Đã duyệt") {%>
+          <% let i = 1; %> <% for (let adBoard of adBoards) { %> 
+            <%#if (adBoard.status == "Đã duyệt") {%>
           <!-- <tr class="clickable" onclick="window.location='/so/quanly/diem-dat-quang-cao/<%= details._id %>/bang-quang-cao/<%= adBoard.id %>'"> -->
           <tr
             class="clickable"
@@ -62,7 +64,7 @@
             <td class="min-w"><%= adBoard.quantity %> trụ/bảng</td>
             <td class="min-w"><%= adBoard.startDate %></td>
             <td class="min-w"><%= adBoard.expireDate %></td>
-            <!-- <td class="min-w">
+            <td class="min-w">
               <% if (adBoard.status === "Chưa duyệt") { %>
               <span class="badge bg-secondary text-light">Chưa duyệt</span>
               <% } else if (adBoard.status === "Không duyệt") { %>
@@ -70,9 +72,10 @@
               <% } else { %>
               <span class="badge bg-success text-light">Đã duyệt</span>
               <% } %>
-            </td> -->
+            </td>
           </tr>
-          <%}%> <% } %>
+          <%}%>
+           <%# } %>
         </tbody>
       </table>
     </div>
