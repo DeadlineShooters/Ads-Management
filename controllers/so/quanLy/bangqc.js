@@ -8,6 +8,7 @@ import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js";
 
 const defaultAdBoardImg = "bang-quang-cao-3_zr4oyk";
 export const showDetails = async (req, res) => {
+  res.locals.currentPage = "quang-cao";
   const { adLocationId, adBoardId } = req.params;
   const breadcrumbs = [
     { name: "Các điểm đặt quảng cáo", link: "/so/quanly/diem-dat-quang-cao" },
