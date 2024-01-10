@@ -99,13 +99,14 @@ html {
     font-size: calc(1.4rem / 1.6);
     line-height: 21px;
     text-align: center;
-    background-color: #4285f4;
+    background-color: #ccc;
     padding: 4px;
     border-radius: 50%;
     color: #333;
 }
 
 [class^="ads-point__info"] {
+    color: #333;
     font-size: calc(1.5rem / 1.6);
     font-family: Nunito;
     text-align: left;
@@ -177,10 +178,6 @@ html {
     width: 50%;
     height: 24px;
     background-color: transparent;
-}
-
-.ads-point.violate {
-    border: 2px solid #d32e2e;
 }
 
 .violated-point {

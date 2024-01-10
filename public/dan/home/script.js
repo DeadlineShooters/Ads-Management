@@ -113,7 +113,8 @@ async function initMap() {
 		if (item.dataset.lat == lat && item.dataset.lng == lng) item.classList.add('d-block');
 		let adsPoint = document.createElement('div');
 		adsPoint.className = 'ads-point';
-		adsPoint.textContent = 'QC';
+		adsPoint.style.fontSize = '12px';
+		adsPoint.style.border = '2px solid #fff';
 		adsPoint.setAttribute('data-bs-toggle', 'offcanvas');
 		adsPoint.setAttribute('data-bs-target', '#offcanvasAP' + index);
 		adsPoint.setAttribute('aria-controls', 'offcanvasAP' + index);
@@ -130,10 +131,14 @@ async function initMap() {
 
 		if (item.dataset.adboard == 'true') {
 			adsBoardMarkers.push(adsPointMarker);
+			adsPoint.textContent = 'QC';
 		}
 		if (item.dataset.violate == 'true') {
-			adsPoint.classList.add('violate');
+			adsPoint.style.border = '2px solid #d32e2e';
 			violatedPointMarkers.push(adsPointMarker);
+		}
+		if (item.dataset.status == 'Đã quy hoạch') {
+			adsPoint.style.backgroundColor = '#4285f4';
 		}
 
 		adsPointMarker.addListener('click', () => {
@@ -157,7 +162,7 @@ async function initMap() {
                             <div class="ads-list">`;
 						let noAdBoard = true;
 						adBoards.forEach((item1) => {
-							if (item1.status == 'Đã duyệt' && new Date(item1.expireDate) >= new Date()) {
+							if (item1.status == 'Đã duyệt' && new Date(item1.expireDate) >= new Date()) {
 								noAdBoard = false;
 								offcanvas += `
 									<div class="ads-item">
