@@ -32,30 +32,29 @@ export const index = async (req, res) => {
   res.render("so/quanLy/diemDatqc/index", { adLocations, pagination });
 };
 export const showDetails = async (req, res) => {
+  const { id } = req.params;
   res.locals.currentPage = "quang-cao";
 
   const page = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-  const items = await AdBoard.find({ status: "Đã duyệt" });
-  const totalItems = items.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  console.log("aaa "+ totalItems+" "+itemsPerPage+" "+totalPages)
-  const pagination = {
-    page,
-    totalPages,
-    itemsPerPage,
-  };
-
-  const { id } = req.params;
+  
   const breadcrumbs = [
     { name: "Các điểm đặt quảng cáo", link: "/so/quanly/diem-dat-quang-cao" },
     { name: "Chi tiết điểm đặt quảng cáo", link: "" },
   ];
   const adLocation = await AdLocation.findById(id).populate(["district", "ward", "type", "adType"]);
-  const adBoards = await AdBoard.find({ adLocation: id })
+  const adBoards = await AdBoard.find({ status: "Đã duyệt",adLocation: id })
     .populate("boardType")
     .skip((page - 1) * itemsPerPage)
     .limit(itemsPerPage);
+  
+  const totalItems = adBoards.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const pagination = {
+    page,
+    totalPages,
+    itemsPerPage,
+  };
   if (!adLocation) {
     throw new ExpressError(501, "Không tìm thấy điểm đặt quảng cáo");
   }
