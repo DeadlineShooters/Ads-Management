@@ -99,19 +99,19 @@
             <td>
               <%= new Date(motCapPhepQC?.sendDate).toLocaleDateString() %>
             </td>
-            <% if (motCapPhepQC.status ==='Không duyệt' ) { %>
+            <% if (motCapPhepQC.adBoard.status == 'Không duyệt') { %>
               <td>
                 <p class="status notAccept">Không duyệt</p>
               </td>
-              <% } else if (motCapPhepQC.status ==='Đã duyệt' ) { %>
-                <td>
-                  <p class="status Accept">Đã duyệt</p>
-                </td>
-                <% } else { %>
-                  <td>
-                    <p class="status notHandle">Chưa duyệt</p>
-                  </td>
-                  <% } %>
+            <% } else if (motCapPhepQC.adBoard.status == 'Đã duyệt') { %>
+              <td>
+                <p class="status Accept">Đã duyệt</p>
+              </td>
+            <% } else { %>
+              <td>
+                <p class="status notHandle">Chưa duyệt</p>
+              </td>
+            <% } %>
           </tr>
           <% } %>
       </tbody>

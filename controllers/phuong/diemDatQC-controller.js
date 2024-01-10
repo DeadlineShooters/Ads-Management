@@ -59,25 +59,36 @@ controller.showDetail = async (req, res) => {
     { name: "Chi tiết điểm đặt", link: "" },
   ];
 
-  // const props = {
-  //   title: "điểm đặt",
-  //   b1text: "Tạo yêu cầu cấp phép",
-  //   b2text: "Chỉnh sửa",
-  //   b1url: `/cac-diem-dat-quang-cao/${diemId}/tao-yeu-cau`,
-  //   b2url: `/cac-diem-dat-quang-cao/${diemId}/chinh-sua`,
+  const page = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+  const totalItems = await AdBoard.countDocuments();
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const pagination = {
+    page,
+    totalPages,
+    itemsPerPage,
+  };
 
-  //   b1color: "secondary",
-  //   b2color: "success",
-  // };
+  const adBoards = await AdBoard.find({ adLocation: diemId })
+    .populate("boardType")
+    .skip((page - 1) * itemsPerPage)
+    .limit(itemsPerPage);
+
+  const wards = await getWardsForUser(req.user);
 
   try {
     // Fetch adLocation details based on the diemId
     const adLocationDetails = await AdLocation.findById(diemId).populate(["ward", "district", "type", "adType"]);
-
+    const adBoards = await AdBoard.find({ adLocation: diemId })
+    .populate("boardType")
+    .skip((page - 1) * itemsPerPage)
+    .limit(itemsPerPage);
     res.render("so/quanLy/diemDatqc/details", {
       details: adLocationDetails,
-
+      adBoards,
       breadcrumbs,
+      pagination,
+      wards,
     });
   } catch (error) {
     console.error(error);
@@ -158,6 +169,8 @@ controller.processEdit = async (req, res) => {
     status: req.body.item.status,
   });
 
+  newAdLocation._id = diemId;
+
   if (req.file) {
     newAdLocation.image = {
       url: req.file.path,
@@ -168,13 +181,12 @@ controller.processEdit = async (req, res) => {
   }
 
   const newAdLocationEditReq = new AdLocationChangeRequest({
-    adLocation: newAdLocation._id,
+    adLocation: newAdLocation,
     reason: req.body.reason,
     sender: req.user._id,
     sendDate: new Date(),
   });
 
-  console.log("New Ad Location saved to database:", await newAdLocation.save());
   console.log("New Ad Location Edit Request saved to database:", await newAdLocationEditReq.save());
   req.flash("success", "Yêu cầu chỉnh sửa điểm đặt đã được gửi thành công");
 
@@ -214,6 +226,7 @@ controller.postCreateRequest = async (req, res) => {
       startDate: startDate, // Convert to string using toISOString()
       expireDate: endDate,
       adLocation: new Types.ObjectId(adPointID),
+      status: "Chưa duyệt",
     });
 
     // Create a new instance of the AdBoardReq model
@@ -228,7 +241,6 @@ controller.postCreateRequest = async (req, res) => {
       },
       sender: req.user._id,
       sendDate: new Date(),
-      status: "Chưa duyệt",
     });
 
     newAdBoard.adBoardRequest = newAdBoardReq._id;
@@ -239,7 +251,7 @@ controller.postCreateRequest = async (req, res) => {
     console.log("AdBoard saved to database: ", await newAdBoard.save());
 
     // Redirect to the desired page after successful submission
-    res.redirect("/cac-bang-quang-cao");
+    res.redirect("/cac-yeu-cau-cap-phep");
   } catch (error) {
     console.error("Error saving AdBoardReq to database:", error);
     // Handle the error appropriately (e.g., send an error response to the client)
