@@ -86,9 +86,9 @@
                     <li class="list-group-item"><b>Số điện thoại:</b> <%= chiTietBaoCao.phone %> </li>
                     <li class="list-group-item"><b>Thời điểm báo cáo:</b> <%= new Date(chiTietBaoCao.sendDate).toLocaleDateString() %> </li>
                     <li class="list-group-item"><b>Tình trạng xử lý:</b> <%= chiTietBaoCao.status %> </li>
-                    <% if (chiTietBaoCao.procedureHandling != null) { %> 
+                    <% if (chiTietBaoCao.handlingProcedure != null) { %> 
                         <li class="list-group-item"><b>Cách thức xử lý:</b>
-                            <%= chiTietBaoCao.procedureHandling %> 
+                            <%= chiTietBaoCao.handlingProcedure %> 
                         </li>
                     <% } else { %>
                         <li class="list-group-item"><b>Cách thức xử lý:</b>
@@ -97,7 +97,12 @@
                     <% } %>
                 </ul>
                 <div class="d-flex flex-end justify-content-end" style="margin-top: auto;">
-                    <button class="btn btn btn-warning" style="width: auto;" type="button" onclick="redirectToPage()"> <%= chiTietBaoCao.randomPoint != null ? "Xem chi tiết điểm quảng cáo" : "Xem chi tiết bảng quảng cáo" %></button>
+                    <% if (chiTietBaoCao.adBoard != null) { %>
+                        <button class="btn btn btn-secondary mx-1" style="width: auto;" type="button" onclick="redirectToAboardPage()">Xem chi tiết bảng vi phạm</button>
+                        <button class="btn btn btn-warning mx-1" style="width: auto;" type="button" onclick="redirectToPointAboardPage()">Xem vị trí bảng vi phạm</button>
+                    <% } else { %>
+                        <button class="btn btn btn-warning" style="width: auto;" type="button" onclick="redirectToPointPage()">Xem điểm vi phạm trên bản đồ</button>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -138,10 +143,23 @@
 </script>
 
 <script>
-    var diemBaoCaoId = `<%= chiTietBaoCao.adBoard.adLocation._id %>`
-    var bangBaoCaoId = `<%= chiTietBaoCao.adBoard._id %>`
-    function redirectToPage(type) {
-        // Assuming you want to redirect to a page named "newPage.html"
+    var diemBaoCaoId = `<%= chiTietBaoCao.adBoard?.adLocation._id %>`;
+    var bangBaoCaoId = `<%= chiTietBaoCao.adBoard?._id %>`;
+    function redirectToAboardPage(type) {
         window.location.href = `/so/quanly/diem-dat-quang-cao/${diemBaoCaoId}/bang-quang-cao/${bangBaoCaoId}`;
+    }
+    function redirectToPointAboardPage(type) {
+        var latlng = `<%= chiTietBaoCao.adBoard?.adLocation.latlng %>`;
+        var latlngArray = latlng.split(', ');
+        var latitude = latlngArray[0];
+        var longitude = latlngArray[1];
+        window.location.href = `/?lat=${latitude}&&lng=${longitude}`;
+    }
+    function redirectToPointPage(type) {
+        var latlng = `<%= chiTietBaoCao.randomPoint?.latlng %>`;
+        var latlngArray = latlng.split(', ');
+        var latitude = latlngArray[0];
+        var longitude = latlngArray[1];
+        window.location.href = `/?lat=${latitude}&&lng=${longitude}`;
     }
 </script>

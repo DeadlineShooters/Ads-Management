@@ -37,8 +37,8 @@ export const tkBaoCaoXuLy = async (req, res) => {
                 const district = await District.findById(districtId);
                 const adLocation = await AdLocation.find({ district: district._id , ward: ward._id });
                 const violatedPoint = await ViolatedPoint.find({ district: district._id , ward: ward._id });
-                const adBoard = await AdBoard.find({ $or: [ {adLocation: { $in: adLocation }}, {randomPoint:{ $in: violatedPoint }} ]});
-                BaoCaoQC = await Report.find({adBoard: { $in: adBoard }}).populate([
+                const adBoard = await AdBoard.find({ adLocation: { $in: adLocation }});
+                BaoCaoQC = await Report.find({$or: [{adBoard: { $in: adBoard } }, {randomPoint: { $in: violatedPoint }}]}).populate([
                     {path: "reportType", modal: "ReportType"},
                     {path: "adBoard", modal: "AdBoard"},
                     {path: "randomPoint", modal: "ViolatedPoint"}
@@ -46,8 +46,8 @@ export const tkBaoCaoXuLy = async (req, res) => {
             } else {
                 const adLocation = await AdLocation.find({district: districtId});
                 const violatedPoint = await ViolatedPoint.find({ district: districtId});
-                const adBoard = await AdBoard.find({ $or: [ {adLocation: { $in: adLocation }}, {randomPoint:{ $in: violatedPoint }} ]});
-                BaoCaoQC = await Report.find({adBoard: { $in: adBoard }}).populate([
+                const adBoard = await AdBoard.find({ adLocation: { $in: adLocation }});
+                BaoCaoQC = await Report.find({$or: [{adBoard: { $in: adBoard } }, {randomPoint: { $in: violatedPoint }}]}).populate([
                     {path: "reportType", modal: "ReportType"},
                     {path: "adBoard", modal: "AdBoard"},
                     {path: "randomPoint", modal: "ViolatedPoint"}
@@ -99,7 +99,9 @@ export const chiTietBaoCao = async (req, res) => {
     try {
         const chiTietBaoCao = await Report.findById(id).populate([
             {path: "reportType", modal: "ReportType"},
-            {path: "adBoard", modal: "AdBoard"},
+            {path: "adBoard", modal: "AdBoard", populate : {
+                path: "adLocation", modal: "AdLocation"
+            }},
             {path: "randomPoint", modal: "ViolatedPoint"}
         ]);
         console.log("@@ chi tiet bao cao: ", chiTietBaoCao);
