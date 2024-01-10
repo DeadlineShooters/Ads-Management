@@ -77,6 +77,10 @@ controller.cancelRequest = async (req, res) => {
   try {
     // Check if the board exists
     const boardToDelete = await AdBoard.findOne({ adBoardRequest: yeuCauID });
+    if (boardToDelete.status !== "Chưa duyệt") {
+      req.flash('error', 'Bạn không thể huỷ yêu cầu vì yêu cầu đã được xử lý')
+      return res.redirect('/cac-yeu-cau-cap-phep/'+yeuCauID);
+    }
     console.log("Board to delete", boardToDelete);
     if (!boardToDelete) {
       return res.status(404).json({ error: "Board not found" });
