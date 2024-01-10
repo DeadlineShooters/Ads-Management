@@ -7,17 +7,28 @@ import ReportType from '../models/reportType.js';
 import Report from '../models/report.js';
 import fs from 'fs';
 import Ward from '../models/ward.js';
+import { escape } from 'querystring';
 
 const controller = {};
 
 controller.home = async (req, res) => {
 	try {
-		res.locals.currentPage = "trang-chu";
-		// const lat = parseFloat(req.params.lat) || 10.762860099114166;
-		// const lng = parseFloat(req.params.lng) || 106.68247164106691;
+		res.locals.currentPage = 'trang-chu';
 		const { lat = '10.795788', lng = '106.703497' } = req.query;
-		const adLocations = await AdLocation.find({}).populate('adType').populate('type').populate('image');
+		let adLocations = await AdLocation.find({}).populate('adType').populate('type').populate('image');
 		const violatedPoints = await ViolatedPoint.find({});
+
+		// Fetch all adBoards
+		const adBoards = await AdBoard.find({});
+
+		// Attach flag to adLocations
+		adLocations = adLocations.map((adLocation) => {
+			const hasAdBoard = adBoards.some(
+				(adBoard) => adBoard.adLocation.toString() === adLocation._id.toString() && !adBoard.status.localeCompare('Đã duyệt') && new Date(adBoard.expireDate) >= new Date()
+			);
+			return { ...adLocation._doc, adBoard: hasAdBoard };
+		});
+
 		res.render('dan/home', { adLocations: adLocations, violatedPoints: violatedPoints, user: req.user ? req.user : null, lat, lng });
 	} catch (err) {
 		console.log(err);
@@ -75,7 +86,7 @@ controller.reportForm = (req, res) => {
 
 controller.getReport = (req, res) => {
 	let { type, name, email, phoneNumber, content, location, board, id, lat, lng, district, ward } = req.body;
-	console.log(content)
+	console.log(content);
 	const captcha = req.body['g-recaptcha-response'];
 	if (!captcha) {
 		return res.json({ success: false, msg: 'Captcha token is undefined!' });
@@ -92,22 +103,21 @@ controller.getReport = (req, res) => {
 		}
 
 		body = JSON.parse(body);
-		console.log(body)
+		console.log(body);
 
 		if (!body.success) {
 			return res.json({
 				success: false,
 				msg: 'Failed captcha verification!',
 			});
-		}
-		else {
+		} else {
 			let reportType = await ReportType.find({ description: type });
 
 			// let uploadedImages = [];
 			// for (let file of req.files) {
 			// 	var img = fs.readFileSync(file.path);
 			// 	var encode_image = img.toString('base64');
-		
+
 			// 	var finalImg = {
 			// 		contentType: file.mimetype,
 			// 		image: new Buffer.from(encode_image, 'base64'),
@@ -115,7 +125,7 @@ controller.getReport = (req, res) => {
 			// 	uploadedImages.push(finalImg);
 			// }
 			try {
-				const uploadedImages = req.files.map(f => ({ url: f.path, filename: f.filename }));
+				const uploadedImages = req.files.map((f) => ({ url: f.path, filename: f.filename }));
 				const report = new Report({ reportType: reportType[0]._id, fullName: name, email, phone: phoneNumber, content, uploadedImages, sendDate: Date.now() });
 				await report.save();
 				if (location && board) {
@@ -128,7 +138,7 @@ controller.getReport = (req, res) => {
 					report.randomPoint = new mongoose.Types.ObjectId(id);
 					await report.save();
 				} else {
-					const violatedPoint = new ViolatedPoint({ latlng: lat + ', ' + lng, reports: [report._id], district, ward})
+					const violatedPoint = new ViolatedPoint({ latlng: lat + ', ' + lng, reports: [report._id], district, ward });
 					await violatedPoint.save();
 					report.randomPoint = violatedPoint._id;
 					await report.save();
@@ -140,7 +150,6 @@ controller.getReport = (req, res) => {
 			}
 		}
 	});
-	
 };
 
 export default controller;
