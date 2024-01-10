@@ -80,19 +80,12 @@
           min="2018-01-01"
           max="2030-12-31"
         />
+        <div id="validationFeedback" class="invalid-feedback">Ngày bắt đầu không được sau ngày kết thúc</div>
       </div>
       <div class="mb-3 col-4">
         <label for="start" class="form-label">Ngày kết thúc hợp đồng</label>
-        <input
-          name="item[expireDate]"
-          class="form-control"
-          type="date"
-          id="start"
-          name="trip-start"
-          value="<%= adBoard.expireDate %>"
-          min="2018-01-01"
-          max="2030-12-31"
-        />
+        <input name="item[expireDate]" class="form-control" type="date" id="start" name="trip-start" value="<%= adBoard.expireDate %>" />
+        <div id="validationFeedback" class="invalid-feedback">Ngày bắt đầu không được sau ngày kết thúc</div>
       </div>
     </div>
     <% if (user.role == 'so') { %>
@@ -108,7 +101,8 @@
       </div>
       <div class="form-check form-check-inline">
         <label class="form-check-label" for="inlineRadio3">Không duyệt</label>
-        <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio3" value="Không duyệt" <%= adBoard.status=='Không duyệt'? 'checked':''%>>
+        <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio3" value="Không duyệt" <%= adBoard.status=='Không duyệt'?
+        'checked':''%>>
       </div>
     </div>
     <% } %>
@@ -123,7 +117,7 @@
       <div id="validationFeedback" class="invalid-feedback">Không được để trống lý do chỉnh sửa</div>
     </div>
     <div class="mb-3 text-center">
-      <button class="btn btn-info" id="editButton">Gửi yêu cầu</button>
+      <button class="btn btn-info" id="editButton">Gửi yêu cầu chỉnh sửa</button>
     </div>
     <% } else {%>
     <div class="mb-3 text-center">
@@ -151,14 +145,15 @@
 
     submitTrigger.onclick = function (event) {
       let editReasonEmpty = document.getElementById("moTa").value === "";
+      const startDate = new Date(document.getElementsByName("item[startDate]")[0].value);
+      const endDate = new Date(document.getElementsByName("item[expireDate]")[0].value);
 
-      if (editReasonEmpty) {
-        event.preventDefault();
-        event.stopPropagation();
-        document.getElementById("moTa").classList.add("is-invalid");
-      } else {
-        document.getElementById("moTa").classList.remove("is-invalid");
-      }
+      let invalid = editReasonEmpty || startDate > endDate;
+      event.preventDefault(invalid);
+      event.stopPropagation(invalid);
+      document.getElementById("moTa").classList.toggle("is-invalid", editReasonEmpty);
+      document.getElementsByName("item[startDate]")[0].classList.toggle("is-invalid", startDate > endDate);
+      document.getElementsByName("item[expireDate]")[0].classList.toggle("is-invalid", startDate > endDate);
     };
   }
   function isNumber(value) {
@@ -186,4 +181,11 @@
     document.getElementById('width').addEventListener('keyup', function() {
         validateInput(this);
     });
+
+  function isStartDateAfterEndDate() {
+    const startDate = new Date(document.getElementsByName("item[startDate]")[0].value);
+    const endDate = new Date(document.getElementsByName("item[expireDate]")[0].value);
+
+    return startDate > endDate;
+  }
 </script>

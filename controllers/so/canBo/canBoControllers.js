@@ -4,6 +4,8 @@ import District from "../../../models/district.js";
 import bcrypt from "bcrypt";
 
 export const danhSachCanBo =  async (req, res) => {
+    const {loaiCanBo = null} = req.query;
+    console.log("@@ role: ", loaiCanBo);
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
     const totalItems = await User.countDocuments();
@@ -15,20 +17,31 @@ export const danhSachCanBo =  async (req, res) => {
     };
     const breadcrumbs = [];
     try {
-        const canBo = await User.find({role:{$ne:"so"}}).populate([
-            {path: 'ward', populate: {
-                path: 'district', model: 'District',
-            }},
-            {path: 'district', model: 'District'}])
-            .skip((page - 1) * itemsPerPage)
-            .limit(itemsPerPage)
-            .exec();
-        console.log(canBo);
+        let canBo = null;
+        if (loaiCanBo) {
+            canBo = await User.find({role: loaiCanBo}).populate(
+                [{path: 'ward', populate: { path: 'district', model: 'District',}},
+                 {path: 'district', model: 'District'}])
+                .skip((page - 1) * itemsPerPage)
+                .limit(itemsPerPage)
+                .exec();
+        } else {
+            canBo = await User.find({role:{$ne:"so"}}).populate([
+                {path: 'ward', populate: {
+                    path: 'district', model: 'District',
+                }},
+                {path: 'district', model: 'District'}])
+                .skip((page - 1) * itemsPerPage)
+                .limit(itemsPerPage)
+                .exec();
+        }
         res.render('so/canBo/dsTaiKhoanCanBo.ejs',  { 
             messageAdd: req.flash('info'),
             messageEdit: req.flash('edit'),
             messageDel: req.flash('del'),
+            messageErr: req.flash('error'),
             canBo,
+            loaiCanBo,
             pagination,
             breadcrumbs,
         });
@@ -55,14 +68,21 @@ export const dkTaiKhoanCanBo = async (req, res) => {
     }
 }
 
-//POST can bo
+// Dk tai khoan can bo
 export const guiInfoTaiKhoanCanBo = async (req, res) => {
     console.log(req.body);
+    // Check if the email already exists
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+        // User with the provided email already exists
+        await req.flash('error', 'Email đã được sử dụng. Vui lòng chọn một địa chỉ email khác.');
+        return res.redirect('/so/canbo/tai-khoan-cb');
+    }
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
     const newCanBo = new User({
-        username : req.body.username,
+        username: req.body.username,
         email: req.body.email,
         role: req.body.role,
         phone: req.body.phone,
@@ -74,12 +94,14 @@ export const guiInfoTaiKhoanCanBo = async (req, res) => {
     });
     try {
         await User.create(newCanBo);
-        await req.flash('info', 'Tạo tài khoản cán bộ thành công')
+        await req.flash('info', 'Tạo tài khoản cán bộ thành công');
         res.redirect('/so/canbo/tai-khoan-cb');
-    } catch(error) {
+    } catch (error) {
         console.log(error);
+        // Handle other errors if needed
     }
-}
+};
+
 /* EDIT tai khoan can bo*/
 export const suaTaiKhoanCanBo = async (req, res) => {
     try {
@@ -96,20 +118,16 @@ export const suaTaiKhoanCanBo = async (req, res) => {
 }
 /* UPDATE tai khoan can bo*/
 export const capNhatTaiKhoanCanBo = async (req, res) => {
-    const saltRounds = 10;
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+    console.log("@@ info update: ", req.body);
     try {
         await User.findByIdAndUpdate(req.params.id, {
             username : req.body.username,
             email: req.body.email,
             role: req.body.role,
             phone: req.body.phone,
-            ward: req.body.ward,
-            district: req.body.district,
+            ward: req.body.item.phuongId,
+            district: req.body.item.districtId,
             birthday: req.body.birthday,
-            salt: salt,
-            hashed_password: hashedPassword,
         });
         await req.flash('edit', 'Cập nhật tài khoản cán bộ thành công')
         res.redirect('/so/canbo/tai-khoan-cb');
@@ -123,25 +141,6 @@ export const xoaTaiKhoanCanBo = async (req, res) => {
         await User.deleteOne({_id: req.params.id});
         await req.flash('del', 'Xóa tài khoản cán bộ thành công')
         res.redirect('/so/canbo/tai-khoan-cb');
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-/* GET tìm tài khoản cán bộ*/
-export const timTaiKhoanCanBo = async (req, res) => {
-    try {
-        let searchItem = req.body.searchItem;
-        const searchNoSpecialChar = searchItem.replace(/[~`!@#$%^&*()+={}\[\];:\'\"<>.,\/\\\?-_]/g, '');
-        const canBo = await User.find({
-            $or: [
-                { username: {$regex: new RegExp(searchNoSpecialChar, "i")} },
-                { phone: {$regex: new RegExp(searchNoSpecialChar, "i")} },
-                { email: {$regex: new RegExp(searchNoSpecialChar, "i")} },
-            ]
-        })
-        const breadcrumbs = [];
-        res.render('so/canBo/timTaiKhoanCanBo.ejs', {canBo, breadcrumbs});
     } catch (error) {
         console.log(error);
     }

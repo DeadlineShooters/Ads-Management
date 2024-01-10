@@ -26,7 +26,8 @@
                     <div class="ads-point__info<%= i %> troinoi" data-id="<%= adLocations[i]._id %>"
                         data-lat="<%= adLocations[i].latlng.split(", ")[0] %>"
                         data-lng="<%= adLocations[i].latlng.split(", ")[1] %>"
-                        data-violate="<%= adLocations[i].isViolated %>">
+                        data-violate="<%= adLocations[i].isViolated %>"
+                        data-status="<%= adLocations[i].status %>">
                         <div class="info__form">
                             <%= adLocations[i].adType.name %>
                         </div>
@@ -82,6 +83,20 @@
                                                         <span class="toggle-slider"></span>
                                                     </label>
                                                     <span class="toggle-label">Báo cáo vi phạm</span>
+                                                </li>
+                                                <li class="toggle-item">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" checked />
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                    <span class="toggle-label">Đã quy hoạch</span>
+                                                </li>
+                                                <li class="toggle-item">
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" checked />
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                    <span class="toggle-label">Chưa quy hoạch</span>
                                                 </li>
                                             </ul>
                                         </div>

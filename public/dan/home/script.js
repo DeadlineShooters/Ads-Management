@@ -226,6 +226,7 @@ async function initMap() {
 									});
 									offcanvas += `
 												</div>
+												<div class="report-item__status">Trạng thái: <span>${item2.status}</span></div>
                                             </div>`;
 								});
 								offcanvas += `
@@ -462,6 +463,16 @@ async function initMap() {
 		violatedPoint.appendChild(violatedIcon);
 	});
 
+	markers.forEach((item) => {
+		item.content.addEventListener('mouseenter', function () {
+			this.parentNode.parentNode.style.zIndex = '10000000';
+		});
+
+		item.content.addEventListener('mouseleave', function () {
+			this.parentNode.parentNode.style.zIndex = '-1';
+		});
+	});
+
 	// reverse geocoding
 	map.addListener('click', (event) => {
 		const hover = document.querySelector('.troinoi.d-block');
@@ -569,8 +580,16 @@ document.querySelectorAll('.toggle-list input').forEach((item, ind) => {
 	item.addEventListener('click', function () {
 		if (ind == 0) {
 			tmpArr = adsPointMarkers;
-		} else {
+		} else if (ind == 1) {
 			tmpArr = violatedPointMarkers;
+		} else if (ind == 2) {
+			tmpArr = adsPointMarkers.filter((item, ind) => {
+				return adsPoints[ind].dataset.status == 'Đã quy hoạch';
+			});
+		} else {
+			tmpArr = adsPointMarkers.filter((item, ind) => {
+				return adsPoints[ind].dataset.status != 'Đã quy hoạch';
+			});
 		}
 		if (this.checked) {
 			for (let x of tmpArr) {

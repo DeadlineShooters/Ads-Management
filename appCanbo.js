@@ -1,16 +1,17 @@
 import express from "express";
 import path, { delimiter } from "path";
 import { fileURLToPath } from "url";
-import { config } from 'dotenv';
+import { config } from "dotenv";
 config();
 // import danRoutes from "./routes/dan.js";
-import trangChuDan from './routes/dan/home.js';
-import baoCaoDan from './routes/dan/report.js';
+import trangChuDan from "./routes/dan/home.js";
+import baoCaoDan from "./routes/dan/report.js";
 
 // phuong
 import diemDatQCPhuong from "./routes/phuong/diemDatQC-route.js";
 import bangQCPhuong from "./routes/phuong/bangQC-route.js";
 import baoCaoPhuong from "./routes/phuong/baoCao-route.js";
+import yeuCauCapPhep from "./routes/phuong/yeuCauCapPhep-route.js";
 
 // import phuongQuanRoutes from "./routes/phuong.js";
 import soQuanLyRoutes from "./routes/so/quanLy.js";
@@ -45,7 +46,6 @@ canBoApp.engine("ejs", ejsMate);
 canBoApp.set("view engine", "ejs");
 canBoApp.set("views", path.join(__dirname, "/views"));
 
-
 canBoApp.use(express.json());
 canBoApp.use(express.urlencoded({ extended: true }));
 canBoApp.use(methodOverride("_method"));
@@ -67,7 +67,7 @@ canBoApp.use(
   cookieParser("keyboard cat"),
   flash(),
   passport.initialize(),
-  passport.session(),
+  passport.session()
 );
 
 // canBoApp.use(passport.authenticate("session"));
@@ -86,16 +86,15 @@ canBoApp.use((req, res, next) => {
   next();
 });
 
-
-
 canBoApp.use("/", authRouter);
 
 // TỪ DÂN QUA NÈ ADKFJA;KDLFJA;SLFJ;SL
-canBoApp.use('/', isLoggedIn, trangChuDan);
-canBoApp.use('/report', isLoggedIn, baoCaoDan);
+canBoApp.use("/", isLoggedIn, trangChuDan);
+canBoApp.use("/report", isLoggedIn, baoCaoDan);
 
 canBoApp.use("/cac-diem-dat-quang-cao/", isLoggedIn, diemDatQCPhuong);
 canBoApp.use("/cac-bang-quang-cao/", isLoggedIn, bangQCPhuong);
+canBoApp.use("/cac-yeu-cau-cap-phep/", isLoggedIn, yeuCauCapPhep);
 canBoApp.use("/cac-bao-cao/", isLoggedIn, baoCaoPhuong);
 canBoApp.use("/so/quanly", isLoggedIn, soQuanLyRoutes);
 canBoApp.use("/so/hanhchinh", isLoggedIn, soHanhChinhRoutes);
@@ -103,11 +102,10 @@ canBoApp.use("/so/canbo", isLoggedIn, soCanBoRoutes);
 
 canBoApp.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
-  if (!err.message) err.message = 'Đã xảy ra lỗi, vui lòng thử lại.';
-  console.log("Error log from middleware: "+err.message);
-  res.status(statusCode).render('error', {err});
+  if (!err.message) err.message = "Đã xảy ra lỗi, vui lòng thử lại.";
+  console.log("Error log from middleware: " + err.message);
+  res.status(statusCode).render("error", { err });
 });
-
 
 const port = process.env.CANBO_PORT || 9000;
 canBoApp.listen(port, () => {

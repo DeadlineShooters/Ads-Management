@@ -128,6 +128,10 @@ html {
     z-index: 1;
 }
 
+.yNHHyP-marker-view {
+    z-index: -1;
+}
+
 .ads-point .info__form {
     font-size: calc(1.6rem / 1.6);
     font-weight: 700;
@@ -438,8 +442,13 @@ input:checked + .toggle-slider:before {
 }
 
 .list-panel .ads-list .item__content > * > span,
-.list-panel .report-item__info > * > span {
+.list-panel .report-item__info > * > span,
+.list-panel .report-item__status span {
     font-weight: 600;
+}
+
+.list-panel .report-item__status {
+    margin-top: 16px;
 }
 
 .list-panel .ads-list .item__content > *,
@@ -563,7 +572,7 @@ input:checked + .toggle-slider:before {
 
 .list-panel .report-item  .img__item {
     width: 100%;
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 4px;
 }
 

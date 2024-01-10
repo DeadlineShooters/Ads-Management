@@ -20,7 +20,7 @@
             <li class="list-group-item">Số lượng: <b><%=details.quantity%> trụ/bảng</b></li>
             <li class="list-group-item">Ngày bắt đầu hợp đồng: <b><%=details.startDate%></b></li>
             <li class="list-group-item">Ngày kết thúc hợp đồng: <b><%=details.expireDate%></b></li>
-            <li class="list-group-item">Tình trạng: <b><%= details.status %></b></li>
+            <!-- <li class="list-group-item">Tình trạng: <b><%= details.status %></b></li> -->
           </ul>
           <div class="d-flex flex-row mt-auto justify-content-end">
             <% if (user.role === 'so') { %>
@@ -32,10 +32,9 @@
             >
               <button class="btn btn-danger mx-3">Xoá</button>
             </form>
-            <% } else { %> <% if (details.status === true) { %>
+            <% } else { %> <% if (details.status == "Đã duyệt") { %>
             <a href="/cac-bang-quang-cao/<%=details._id%>/chinh-sua" class="btn btn-secondary me-3">Chỉnh sửa</a>
             <%}%>
-            <a href="/cac-bang-quang-cao/<%=details._id%>/xem-yeu-cau" class="btn btn-warning me-3">Xem yêu cầu cấp phép</a>
             <% } %>
           </div>
         </div>

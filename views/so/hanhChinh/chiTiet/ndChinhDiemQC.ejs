@@ -26,7 +26,8 @@
                 type: 'PUT',
                 data: {
                     adLocationChangeRequestId: $('#chinhDiemID').val(),
-                    newStatus: 'Đã duyệt'
+                    newStatus: 'Đã duyệt',
+                    adLocationId: $('#diemID').val()
                 },
                 success: window.location.href = "/so/hanhchinh/chinh-diem-qc",
                 error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -64,6 +65,7 @@
                     <i class="bi bi-person-fill"></i><b> <%= chiTietChinhDiemQC.sender.name %></b>&nbsp&nbsp
                     <i class="bi bi-clock-fill"></i><b> <%= new Date(chiTietChinhDiemQC.sendDate).toLocaleDateString() %></b>
                     <input type="hidden" id="chinhDiemID" value="<%= chiTietChinhDiemQC._id %>" />
+                    <input type="hidden" id="diemID" value="<%= chiTietChinhDiemQC.adLocation._id %>" />
                 </div>
             </div>
         </div>
@@ -83,7 +85,7 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col header"><b>Hình minh họa</b></div>
-                <div class="col" style="max-width: 100%;"></div>
+                <div class="col" style="max-width: 100%;"><a href="<%=chiTietChinhDiemQC.adLocation.image.url%>" download><%= chiTietChinhDiemQC.adLocation.image.filename %></a></div>
             </div>
         </li>
         <li class="list-group-item">

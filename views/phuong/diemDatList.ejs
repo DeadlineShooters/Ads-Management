@@ -9,11 +9,13 @@
     <table class="table table-hover table-light table-striped">
       <thead>
         <tr>
+          <th scope="col">No.</th>
+
           <th scope="col">Địa chỉ</th>
           <th scope="col">Khu vực</th>
-          <th scope="col">Phân loại</th>
           <th scope="col">Hình thức</th>
-          <th scope="col"></th>
+          <th scope="col">Phân loại</th>
+          <th scope="col">Tình trạng</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -72,20 +74,33 @@
     tableBody.innerHTML = "";
 
     // Populate the table with the new data
-    data.forEach((adLocation) => {
+    data.forEach((adLocation, index) => {
       const newRow = document.createElement("tr");
       newRow.classList.add("clickable-row");
       newRow.setAttribute("data-href", `/cac-diem-dat-quang-cao/${adLocation._id}`);
 
       newRow.innerHTML = `
+        <td>${index + 1}</td>
         <td>${adLocation.address}</td>
         <td class="khuVucField">Phường ${adLocation.ward.name}, Quận ${adLocation.district.name}</td>
         <td>${adLocation.adType.name}</td>
         <td>${adLocation.type.name}</td>
-        <td><div class="d-flex"></div></td>
+        <td  class="min-w">
+            <!-- Add content or conditions based on adLocation.status -->
+            ${
+              adLocation.status === "Đã quy hoạch"
+                ? `<div class="rounded-pill text-center text-light bg-success">${adLocation.status}</div>`
+                : `<div class="rounded-pill text-center text-light bg-danger">${adLocation.status}</div>`
+            }
+        </td>
       `;
 
       tableBody.appendChild(newRow);
     });
   }
 </script>
+<style>
+  .min-w {
+    min-width: 140px; /* Set the desired minimum width */
+  }
+</style>

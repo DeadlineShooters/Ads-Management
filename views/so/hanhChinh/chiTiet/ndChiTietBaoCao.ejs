@@ -1,0 +1,147 @@
+<% layout('layouts/canbo') %>
+
+<style>
+    .min-w {
+        min-width: 100px; /* Set the desired minimum width */
+    }
+    * {box-sizing: border-box}
+    body {font-family: Verdana, sans-serif; margin:0}
+    .slideshow-container {
+        max-width: 70%;
+        position: relative;
+        margin: auto;
+    }
+    .mySlides {display: none}
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+    .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+    .dot {
+        cursor: pointer;
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+    .button-active, .dot:hover {
+        background-color: #717171;
+    }
+</style>
+
+<div class="container p-3">
+    <div class="card border border-2">
+        <div class="card-header d-flex justify-content-between border border-0" style="background-color: lightsteelblue;">
+            <h5 class="card-title" style="font-weight: bold;">Chi tiết báo cáo</h4>
+        </div>
+        <div class="card-body m-0 row">
+            <div class="col align-self-center">
+                <% if (chiTietBaoCao.uploadedImages[0] != undefined) { %>
+                    <div class="slideshow-container">
+                        <% let i = 0 %>
+                        <% for (motHinhAnh of chiTietBaoCao.uploadedImages) { %>
+                            <div class="mySlides">
+                                <img src="<%= chiTietBaoCao?.uploadedImages[i++]?.url %>" style="width:100%">
+                            </div>
+                        <% } %>
+                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                        <a class="next" onclick="plusSlides(1)">❯</a>
+                    </div>
+                    <br>
+                    <div style="text-align:center">
+                        <% let numberImage = chiTietBaoCao.uploadedImages.length %>
+                        <% for (i = 0; i < numberImage; i++) { %>
+                            <span class="dot" onclick="currentSlide(i+1)"></span> 
+                        <%  } %>
+                    </div>
+                <% } else { %>
+                    <h5>Không có hình ảnh!</h5>
+                <% } %>
+            </div>
+            <div class="col d-flex flex-column">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Đối tượng báo cáo:</b> <%= chiTietBaoCao.randomPoint != null ? "Điểm vi phạm" : "Bảng vi phạm" %></li>
+                    <li class="list-group-item"><b>Loại báo cáo:</b> <%= chiTietBaoCao.reportType.name %></li>
+                    <li class="list-group-item"><b>Nội dung báo cáo:</b> <%- chiTietBaoCao.content %> </li>
+                    <li class="list-group-item"><b>Người gửi:</b> <%= chiTietBaoCao.fullName %> </li>
+                    <li class="list-group-item"><b>Số điện thoại:</b> <%= chiTietBaoCao.phone %> </li>
+                    <li class="list-group-item"><b>Thời điểm báo cáo:</b> <%= new Date(chiTietBaoCao.sendDate).toLocaleDateString() %> </li>
+                    <li class="list-group-item"><b>Tình trạng xử lý:</b> <%= chiTietBaoCao.status %> </li>
+                    <% if (chiTietBaoCao.procedureHandling != null) { %> 
+                        <li class="list-group-item"><b>Cách thức xử lý:</b>
+                            <%= chiTietBaoCao.procedureHandling %> 
+                        </li>
+                    <% } else { %>
+                        <li class="list-group-item"><b>Cách thức xử lý:</b>
+                            Chưa làm gì cả. 
+                        </li>  
+                    <% } %>
+                </ul>
+                <div class="d-flex flex-end justify-content-end" style="margin-top: auto;">
+                    <button class="btn btn btn-warning" style="width: auto;" type="button" onclick="redirectToPage()"> <%= chiTietBaoCao.randomPoint != null ? "Xem chi tiết điểm quảng cáo" : "Xem chi tiết bảng quảng cáo" %></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {
+            slideIndex = 1
+        }    
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" button-active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " button-active";
+    }
+</script>
+
+<script>
+    var diemBaoCaoId = `<%= chiTietBaoCao.adBoard.adLocation._id %>`
+    var bangBaoCaoId = `<%= chiTietBaoCao.adBoard._id %>`
+    function redirectToPage(type) {
+        // Assuming you want to redirect to a page named "newPage.html"
+        window.location.href = `/so/quanly/diem-dat-quang-cao/${diemBaoCaoId}/bang-quang-cao/${bangBaoCaoId}`;
+    }
+</script>
