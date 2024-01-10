@@ -147,7 +147,14 @@ html {
 }
 
 .info__img {
-    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.info__img img {
+    width: auto;
+    max-width: 100%;
+    max-height: 200px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
