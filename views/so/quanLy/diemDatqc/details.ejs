@@ -1,95 +1,90 @@
-<% layout('layouts/canbo') %> <% if (user.role !== 'so') { %>
-<div class="card m-auto" style="width: 30rem">
-  <!-- refer to routes/phuong.js to see data example -->
-  <img src="<%= details.image.url %>" class="card-img-top" alt="" />
-
-  <div class="card-body py-1">
-    <h4 class="card-title">Chi tiết điểm đặt quảng cáo</h4>
-    <!-- <p class="card-text"><%= details.address %></p> -->
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Địa chỉ: <b><%= details.address %></b></li>
-    <li class="list-group-item">Khu vực: <b>Quận <%= details.district.name %></b>, <b>Phường <%= details.ward.name %></b></li>
-    <li class="list-group-item">Hình thức: <b><%= details.adType.name %></b></li>
-    <li class="list-group-item">Phân loại: <b><%= details.type.name %></b></li>
-    <li class="list-group-item">Tình trạng: <b><%= details.status %></b></li>
-  </ul>
-  <div class="card-body d-flex flex-row" id="buttons">
-    <a href="/cac-diem-dat-quang-cao/<%= details._id %>/tao-yeu-cau" class="btn btn-primary me-3">Tạo yêu cầu cấp phép</a>
-
-    <a href="/cac-diem-dat-quang-cao/<%= details._id %>/chinh-sua" class="btn btn-info me-3">Chỉnh sửa</a>
-  </div>
-</div>
-<%} else {%>
-  <div class="container p-3">
-    <div class="card shadow-lg border border-0">
-        <div class="card-header d-flex justify-content-between border border-0" style="background-color: lightsteelblue;">
-            <h4 class="card-title">Chi tiết điểm đặt quảng cáo</h4>
-            <a href="/?lat=<%= details.latlng.split(', ')[0] %>&lng=<%= details.latlng.split(', ')[1] %>" class="btn btn-warning">Đến bản đồ <i class="bi bi-arrow-up-right-square"></i></a>
-        </div>
-        <div class="card-body m-0 row">
-            <div class="col align-self-center">
-                <img src="<%= details.image.url %>" class="img-thumbnail mx-auto d-block" />
-            </div>
-            <div class="col d-flex flex-column">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Địa chỉ: <b><%= details.address %></b></li>
-                    <li class="list-group-item">Khu vực: <b>Quận <%= details.district.name %></b>, <b>Phường <%= details.ward.name %></b></li>
-                    <li class="list-group-item">Hình thức: <b><%= details.adType.name %></b></li>
-                    <li class="list-group-item">Phân loại: <b><%= details.type.name %></b></li>
-                    <li class="list-group-item">Tình trạng: <b><%= details.status %></b></li>
-                </ul>
-                <div class="d-flex flex-row mt-auto justify-content-end">
-                    <% if (user.role == 'so') { %>
-                        <a href="/so/quanly/diem-dat-quang-cao/<%= details._id %>/bang-quang-cao/add" class="btn btn-primary mx-3">Thêm bảng quảng cáo</a>
-                        <a href="/so/quanly/diem-dat-quang-cao/<%= details._id %>/edit" class="btn btn-secondary">Chỉnh sửa</a>
-                        <form class="showPopUp" action="/so/quanly/diem-dat-quang-cao/<%= details._id %>?_method=delete" method="post">
-                            <button class="btn btn-danger ms-3">Xoá</button>
-                        </form>
-                    <% } else { %>
-                        <a href="" class="btn btn-secondary me-3">Chỉnh sửa</a>
-                        <a href="" class="btn btn-warning me-3">Tạo yêu cầu cấp phép</a>
-                    <% } %>
-                </div>
-            </div>
-        </div>
+<% layout('layouts/canbo') %>
+<div class="container p-3">
+  <div class="card shadow border border-0">
+    <div class="card-header d-flex justify-content-between border border-0" style="background-color: lightsteelblue">
+      <h4 class="card-title">Chi tiết điểm đặt quảng cáo</h4>
+      <a href="/?lat=<%= details.latlng.split(', ')[0] %>&lng=<%= details.latlng.split(', ')[1] %>" class="btn btn-warning"
+        >Đến bản đồ <i class="bi bi-arrow-up-right-square"></i
+      ></a>
     </div>
-
-    <h4 class="mt-4">Danh sách các bảng quảng cáo</h4>
-    <section class="overflow-auto mb-3 border rounded">
-        <div class=" ">
-            <table class="table table-light table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">No.</th>
-                        <th scope="col">Loại bảng</th>
-                        <th scope="col">Kích thước</th>
-                        <th scope="col">Số lượng</th>
-                        <th scope="col">Tình trạng</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% let i = 1; %>
-                    <% for (let adBoard of adBoards) { %>
-                    <tr class='clickable' onclick= "window.location='/so/quanly/diem-dat-quang-cao/<%= details._id %>/bang-quang-cao/<%= adBoard.id %>'">
-                        <th scope="row"><%= i++ %></th>
-                        <td><%= adBoard.boardType.name %></td>
-                        <td class="min-w"><%= adBoard.size.h %>m x <%= adBoard.size.w %>m</td>
-                        <td class="min-w"><%= adBoard.quantity %> trụ/bảng</td>
-                        <td class="min-w"><div class="rounded-pill text-center text-light <%= (adBoard.status)? 'bg-success' : 'bg-danger'  %>"><%= adBoard.status? "Đã duyệt":"Chưa duyệt" %></div></td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
+    <div class="card-body m-0 row">
+      <div class="col align-self-center">
+        <img src="<%= details.image.url %>" class="img-thumbnail mx-auto d-block" />
+      </div>
+      <div class="col d-flex flex-column">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Địa chỉ: <b><%= details.address %></b></li>
+          <li class="list-group-item">Khu vực: <b>Quận <%= details.district.name %></b>, <b>Phường <%= details.ward.name %></b></li>
+          <li class="list-group-item">Hình thức: <b><%= details.adType.name %></b></li>
+          <li class="list-group-item">Phân loại: <b><%= details.type.name %></b></li>
+          <li class="list-group-item">Tình trạng: <b><%= details.status %></b></li>
+        </ul>
+        <div class="d-flex flex-row mt-auto justify-content-end">
+          <% if (user.role == 'so') { %>
+          <a href="/so/quanly/diem-dat-quang-cao/<%= details._id %>/bang-quang-cao/add" class="btn btn-primary mx-3">Thêm bảng quảng cáo</a>
+          <a href="/so/quanly/diem-dat-quang-cao/<%= details._id %>/edit" class="btn btn-secondary">Chỉnh sửa</a>
+          <form class="showPopUp" action="/so/quanly/diem-dat-quang-cao/<%= details._id %>?_method=delete" method="post">
+            <button class="btn btn-danger ms-3">Xoá</button>
+          </form>
+          <% } else { %>
+          <a href="/cac-diem-dat-quang-cao/<%= details._id %>/tao-yeu-cau" class="btn btn-primary me-3">Tạo yêu cầu cấp phép</a>
+          <a href="/cac-diem-dat-quang-cao/<%= details._id %>/chinh-sua" class="btn btn-info me-3">Chỉnh sửa</a>
+          <% } %>
         </div>
-    </section>
-    <%- include('../../../partials/pagination') %>
+      </div>
+    </div>
+  </div>
+
+  <h4 class="mt-4">Danh sách các bảng quảng cáo</h4>
+  <section class="overflow-auto mb-3 border rounded" style="">
+    <div class=" ">
+      <table class="table table-light table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Loại bảng</th>
+            <th scope="col">Kích thước</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Ngày bắt đầu</th>
+            <th scope="col">Ngày kết thúc</th>
+            <!-- <th scope="col">Trạng thái</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <% let i = 1; %> <% for (let adBoard of adBoards) { %> <%if (adBoard.status == "Đã duyệt") {%>
+          <!-- <tr class="clickable" onclick="window.location='/so/quanly/diem-dat-quang-cao/<%= details._id %>/bang-quang-cao/<%= adBoard.id %>'"> -->
+          <tr
+            class="clickable"
+            onclick="window.location='<%= (user.role === 'so') ? '/so/quanly/diem-dat-quang-cao/' + details._id + '/bang-quang-cao/' + adBoard._id : '/cac-bang-quang-cao/' + adBoard._id %>'"
+          >
+            <th scope="row"><%= i++ %></th>
+            <td><%= adBoard.boardType.name %></td>
+            <td class="min-w"><%= adBoard.size.h %>m x <%= adBoard.size.w %>m</td>
+            <td class="min-w"><%= adBoard.quantity %> trụ/bảng</td>
+            <td class="min-w"><%= adBoard.startDate %></td>
+            <td class="min-w"><%= adBoard.expireDate %></td>
+            <!-- <td class="min-w">
+              <% if (adBoard.status === "Chưa duyệt") { %>
+              <span class="badge bg-secondary text-light">Chưa duyệt</span>
+              <% } else if (adBoard.status === "Không duyệt") { %>
+              <span class="badge bg-danger text-light">Không duyệt</span>
+              <% } else { %>
+              <span class="badge bg-success text-light">Đã duyệt</span>
+              <% } %>
+            </td> -->
+          </tr>
+          <%}%>
+           <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <%- include('../../../partials/pagination') %>
 </div>
-    
+
 <style>
-    /* Add this style to your custom CSS or in a style tag within your HTML */
-    .min-w {
-      min-width: 100px; /* Set the desired minimum width */
-    }
-  </style>
-<%}%>
+  /* Add this style to your custom CSS or in a style tag within your HTML */
+  .min-w {
+    min-width: 100px; /* Set the desired minimum width */
+  }
+</style>

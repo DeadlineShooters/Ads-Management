@@ -26,7 +26,8 @@
                 type: 'PUT',
                 data: {
                     adBoardChangeRequestId: $('#chinhBangID').val(),
-                    newStatus: 'Đã duyệt'
+                    newStatus: 'Đã duyệt',
+                    adBoardId: $('#bangID').val()
                 },
                 success: window.location.href = "/so/hanhchinh/chinh-bang-qc",
                 error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -64,6 +65,7 @@
                     <i class="bi bi-person-fill"></i><b><%= chiTietChinhBangQC.sender.username %></b>&nbsp&nbsp
                     <i class="bi bi-clock-fill"></i><b> <%= new Date(chiTietChinhBangQC.sendDate).toLocaleDateString() %></b>
                     <input type="hidden" id="chinhBangID" value="<%= chiTietChinhBangQC._id %>" />
+                    <input type="hidden" id="bangID" value="<%= chiTietChinhBangQC.adBoard._id %>" />
                 </div>
             </div>
         </div>

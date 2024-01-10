@@ -28,16 +28,16 @@
     </div>
     <div class="d-flex">
       <div class="mb-3">
-        <label for="moTa" class="form-label d-block">Số lượng</label>
+        <label for="quantity" class="form-label d-block">Số lượng</label>
         <input
           name="item[quantity]"
           type="text"
           class="form-control d-inline"
-          id="ward"
+          id="quantity"
           placeholder=""
           value="<%= adBoard.quantity %>"
           oninput="resizeInput(this)"
-          style="width: 1ch; box-sizing: content-box"
+          style="width: 3ch; box-sizing: content-box"
         />
         trụ/bảng
       </div>
@@ -47,7 +47,7 @@
           name="item[size][h]"
           type="text"
           class="form-control d-inline"
-          id="ward"
+          id="height"
           placeholder=""
           value="<%= adBoard.size.h %>"
           oninput="resizeInput(this)"
@@ -58,7 +58,7 @@
           name="item[size][w]"
           type="text"
           class="form-control d-inline"
-          id="ward"
+          id="width"
           placeholder=""
           value="<%= adBoard.size.w %>"
           oninput="resizeInput(this)"
@@ -80,34 +80,32 @@
           min="2018-01-01"
           max="2030-12-31"
         />
+        <div id="validationFeedback" class="invalid-feedback">Ngày bắt đầu không được sau ngày kết thúc</div>
       </div>
       <div class="mb-3 col-4">
         <label for="start" class="form-label">Ngày kết thúc hợp đồng</label>
-        <input
-          name="item[expireDate]"
-          class="form-control"
-          type="date"
-          id="start"
-          name="trip-start"
-          value="<%= adBoard.expireDate %>"
-          min="2018-01-01"
-          max="2030-12-31"
-        />
+        <input name="item[expireDate]" class="form-control" type="date" id="start" name="trip-start" value="<%= adBoard.expireDate %>" />
+        <div id="validationFeedback" class="invalid-feedback">Ngày bắt đầu không được sau ngày kết thúc</div>
       </div>
     </div>
-    <% if (user.role == 'so') { %>
-    <div class="mb-3">
-      <p>Tình trạng</p>
+    <%# if (user.role == 'so') { %>
+    <!-- <div class="mb-3">
+      <p><b>Tình trạng</b></p>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio1" value="false" <%= !adBoard.status? 'checked':''%>>
+        <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio1" value="Chưa duyệt" <%= adBoard.status=='Chưa duyệt'? 'checked':''%>>
         <label class="form-check-label" for="inlineRadio1">Chưa duyệt</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio2" value="true" <%= adBoard.status? 'checked':''%>>
+        <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio2" value="Đã duyệt" <%= adBoard.status=='Đã duyệt'? 'checked':''%>>
         <label class="form-check-label" for="inlineRadio2">Đã duyệt</label>
       </div>
-    </div>
-    <% } %>
+      <div class="form-check form-check-inline">
+        <label class="form-check-label" for="inlineRadio3">Không duyệt</label>
+        <input class="form-check-input" type="radio" name="item[status]" id="inlineRadio3" value="Không duyệt" <%= adBoard.status=='Không duyệt'?
+        'checked':''%>>
+      </div>
+    </div> -->
+    <%# } %>
     <div class="mb-3">
       <label for="formFile" class="form-label">Chọn ảnh mới</label>
       <input name="image" class="form-control" type="file" id="formFile" />
@@ -118,10 +116,14 @@
       <textarea class="form-control" id="moTa" rows="3" name="item[reason]"></textarea>
       <div id="validationFeedback" class="invalid-feedback">Không được để trống lý do chỉnh sửa</div>
     </div>
-    <% } %>
+    <div class="mb-3 text-center">
+      <button class="btn btn-info" id="editButton">Gửi yêu cầu chỉnh sửa</button>
+    </div>
+    <% } else {%>
     <div class="mb-3 text-center">
       <button class="btn btn-info" id="editButton">Chỉnh sửa</button>
     </div>
+    <% } %>
   </form>
 </div>
 
@@ -143,14 +145,47 @@
 
     submitTrigger.onclick = function (event) {
       let editReasonEmpty = document.getElementById("moTa").value === "";
+      const startDate = new Date(document.getElementsByName("item[startDate]")[0].value);
+      const endDate = new Date(document.getElementsByName("item[expireDate]")[0].value);
 
-      if (editReasonEmpty) {
-        event.preventDefault();
-        event.stopPropagation();
-        document.getElementById("moTa").classList.add("is-invalid");
-      } else {
-        document.getElementById("moTa").classList.remove("is-invalid");
-      }
+      let invalid = editReasonEmpty || startDate > endDate;
+      event.preventDefault(invalid);
+      event.stopPropagation(invalid);
+      document.getElementById("moTa").classList.toggle("is-invalid", editReasonEmpty);
+      document.getElementsByName("item[startDate]")[0].classList.toggle("is-invalid", startDate > endDate);
+      document.getElementsByName("item[expireDate]")[0].classList.toggle("is-invalid", startDate > endDate);
     };
+  }
+  function isNumber(value) {
+        return !isNaN(value) && !isNaN(parseFloat(value));
+    }
+
+    function validateInput(input) {
+        if (!isNumber(input.value) && input.value.length > 0) {
+            input.setCustomValidity('Phải nhập số');
+            input.reportValidity();
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
+    // Attach the validateInput function to the onkeyup event of your input fields
+    document.getElementById('quantity').addEventListener('keyup', function() {
+        validateInput(this);
+    });
+
+    document.getElementById('height').addEventListener('keyup', function() {
+        validateInput(this);
+    });
+
+    document.getElementById('width').addEventListener('keyup', function() {
+        validateInput(this);
+    });
+
+  function isStartDateAfterEndDate() {
+    const startDate = new Date(document.getElementsByName("item[startDate]")[0].value);
+    const endDate = new Date(document.getElementsByName("item[expireDate]")[0].value);
+
+    return startDate > endDate;
   }
 </script>

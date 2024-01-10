@@ -164,10 +164,13 @@ export const chiTietYeuCauCapPhep = async (req, res) => {
 };
 
 export const capNhatYeuCauCapPhep = async (req, res) => {
-  const id = req.body.adBoardRequestId;
   try {
-    await AdBoardRequest.findByIdAndUpdate(id, {
-      status: req.body.newStatus,
+    const id = req.body.adBoardId;
+    const updateStatus = req.body.newStatus;
+    console.log("status update:", updateStatus);
+    console.log("id bang qc:", id);
+    await AdBoard.findByIdAndUpdate(id, {
+      status: updateStatus,
     });
   } catch (err) {
     console.error(err);
