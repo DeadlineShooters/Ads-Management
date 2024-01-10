@@ -35,7 +35,8 @@ export const showDetails = async (req, res) => {
 
   const page = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-  const totalItems = await AdBoard.countDocuments();
+  const items = await AdBoard.find({ status: "Đã duyệt", adLocation: id });
+  const totalItems = items.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const pagination = {
     page,
@@ -49,7 +50,7 @@ export const showDetails = async (req, res) => {
     { name: "Chi tiết điểm đặt quảng cáo", link: "" },
   ];
   const adLocation = await AdLocation.findById(id).populate(["district", "ward", "type", "adType"]);
-  const adBoards = await AdBoard.find({ adLocation: id })
+  const adBoards = await AdBoard.find({ status: "Đã duyệt", adLocation: id })
     .populate("boardType")
     .skip((page - 1) * itemsPerPage)
     .limit(itemsPerPage);
