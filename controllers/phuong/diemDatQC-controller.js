@@ -79,7 +79,10 @@ controller.showDetail = async (req, res) => {
   try {
     // Fetch adLocation details based on the diemId
     const adLocationDetails = await AdLocation.findById(diemId).populate(["ward", "district", "type", "adType"]);
-
+    const adBoards = await AdBoard.find({ adLocation: diemId })
+    .populate("boardType")
+    .skip((page - 1) * itemsPerPage)
+    .limit(itemsPerPage);
     res.render("so/quanLy/diemDatqc/details", {
       details: adLocationDetails,
       adBoards,
