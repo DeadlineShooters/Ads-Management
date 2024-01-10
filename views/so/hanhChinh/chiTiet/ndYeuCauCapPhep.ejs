@@ -18,9 +18,42 @@
   }
 </style>
 
+<script>
+    $(document).ready(function() {
+        $('#yesModal button[type="submit"]').click(function() {
+            $.ajax({
+                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= adBoardReq._id %>/update-status',
+                type: 'PUT',
+                data: {
+                    adBoardRequestId: $('#baoCaoID').val(),
+                    adBoardId: $('#bangBaoCaoID').val(),
+                    newStatus: 'Đã duyệt'
+                },
+                success: window.location.href = "/so/hanhchinh/cap-phep-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
+            });
+        });
+        $('#noModal button[type="submit"]').click(function() {
+            $.ajax({
+                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= adBoardReq._id %>/update-status',
+                type: 'PUT',
+                data: {
+                    adBoardRequestId: $('#baoCaoID').val(),
+                    adBoardId: $('#bangBaoCaoID').val(),
+                    newStatus: 'Không duyệt'
+                },
+                success: window.location.href = "/so/hanhchinh/cap-phep-qc",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Thông báo lỗi: " + textStatus);
+                }
+            });
+        });
+    });
+</script>
 
 <!-- <div class="container p-3 bg-light rounded overflow-hidden"> -->
-    
     <div class="d-flex justify-content-between flex-wrap nowrap align-items-center pb-2 mb-3 border-bottom flex-end">
         <div class="col">
             <div class="row">
@@ -28,6 +61,7 @@
                     <i class="bi bi-person-fill"></i><b> <%= adBoardReq.sender.username %></b>&nbsp&nbsp
                     <i class="bi bi-clock-fill"></i><b> <%= new Date(adBoardReq.sendDate).toLocaleDateString() %></b>
                     <input type="hidden" id="baoCaoID" value="<%= adBoardReq._id %>" />
+                    <input type="hidden" id="bangBaoCaoID" value="<%= adBoardReq.adBoard._id %>" />
                 </div>
             </div>
         </div>
@@ -110,12 +144,12 @@
     
     <%if (user.role === "so") {%>
 
-    <% if (adBoardReq.adBoard.status === "Đã duyệt") { %>
+    <% if (adBoardReq.adBoard.status === 'Đã duyệt') { %>
         <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
             <button class="btn btn btn-secondary mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" disabled>Không phê duyệt</button>
             <button class="btn btn btn-success mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" disabled>Phê duyệt</button>
         </div>
-    <% } else if (adBoardReq.adBoard.status === "Không duyệt") { %>
+    <% } else if (adBoardReq.adBoard.status === 'Không duyệt') { %>
         <div class="border-bottom border-top mt-5 mb-5" style="display: flex; justify-content: center; padding-top: 1rem; padding-bottom: 1rem;">
             <button class="btn btn btn-danger mx-1" style="width: 25%;" for="success-outlined" id="noButton" type="button" disabled>Không phê duyệt</button>
             <button class="btn btn btn-secondary mx-1" style="width: 25%;;" for="success-outlined" id="yesButton" type="button" disabled>Phê duyệt</button>
@@ -173,37 +207,3 @@
         <!-- <a href="/cac-bang-quang-cao/<%=adBoard._id%>/huy-yeu-cau" class="btn btn-secondary me-3">Hủy bỏ yêu cầu</a> -->
         </div>
 <%} %> <%}%>
-
-
-<script>
-    $(document).ready(function() {
-        $('#yesModal button[type="submit"]').click(function() {
-            $.ajax({
-                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= adBoardReq._id %>/update-status',
-                type: 'PUT',
-                data: {
-                    adBoardRequestId: $('#baoCaoID').val(),
-                    newStatus: 'Đã duyệt'
-                },
-                success: window.location.href = "/so/hanhchinh/cap-phep-qc",
-                error: function(XMLHttpRequest, textStatus, errorThrown){
-                    alert("Thông báo lỗi: " + textStatus);
-                }
-            });
-        });
-        $('#noModal button[type="submit"]').click(function() {
-            $.ajax({
-                url: '/so/hanhchinh/cap-phep-qc/chi-tiet-yeu-cau/<%= adBoardReq._id %>/update-status',
-                type: 'PUT',
-                data: {
-                    adBoardRequestId: $('#baoCaoID').val(),
-                    newStatus: 'Không duyệt'
-                },
-                success: window.location.href = "/so/hanhchinh/cap-phep-qc",
-                error: function(XMLHttpRequest, textStatus, errorThrown){
-                    alert("Thông báo lỗi: " + textStatus);
-                }
-            });
-        });
-    });
-</script>
