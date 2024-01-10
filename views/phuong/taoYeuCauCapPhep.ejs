@@ -104,7 +104,7 @@
           <input type="date" id="start" aria-label="Start date" class="form-control" required name="start-date" />
           <label for="end" class="input-group-text">Ngày kết thúc</label>
           <input type="date" id="end" aria-label="End date" class="form-control" required name="end-date" />
-          <div id="validationFeedback" class="invalid-feedback">Ngày bắt đầu không được sau ngày kết thúc</div>
+          <div id="validationFeedback" class="invalid-feedback" name="dateFeedback"></div>
         </div>
       </div>
       <button type="submit" class="btn btn-primary w-auto m-auto mt-3" id="gui-yeu-cau">Gửi yêu cầu</button>
@@ -126,6 +126,7 @@
 <script type="module">
   document.addEventListener("DOMContentLoaded", function () {
     const toastTrigger = document.getElementById("gui-yeu-cau");
+    let validationFeedback = document.getElementsByName("dateFeedback");
 
     function validateFields() {
       let allFilled = true;
@@ -145,6 +146,7 @@
       let endDate = document.querySelector('input[name="end-date"]').value;
       console.log("start date:" + startDate + ", end date: " + endDate);
       if (!startDate) {
+        validationFeedback[0].textContent = "Ngày bắt đầu và ngày kết thúc không được để trống";
         document.getElementById("start").classList.add("is-invalid");
         allFilled = false;
       } else {
@@ -152,6 +154,8 @@
       }
 
       if (!endDate) {
+        validationFeedback[0].textContent = "Ngày bắt đầu và ngày kết thúc không được để trống";
+
         document.getElementById("end").classList.add("is-invalid");
         allFilled = false;
       } else {
@@ -169,6 +173,8 @@
       // Check if textarea is not empty
 
       if (startDate > endDate) {
+        validationFeedback[0].textContent = "Ngày bắt đầu không được sau ngày kết thúc";
+
         document.getElementById("start").classList.add("is-invalid");
         document.getElementById("end").classList.add("is-invalid");
         allFilled = false;
