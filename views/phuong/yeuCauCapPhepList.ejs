@@ -29,13 +29,13 @@
           <td><%= adBoardReq.adBoard.boardType.name %></td>
           <td><%= adBoardReq.adBoard.size.w %>m x <%= adBoardReq.adBoard.size.h %>m</td>
           <td><%= adBoardReq.adBoard.quantity %></td>
-          <td>
+          <td class="min-w">
             <% if (adBoardReq.adBoard.status === "Chưa duyệt") { %>
-            <span class="badge text-bg-secondary">Chưa duyệt</span>
+            <div class="rounded-pill text-center text-light bg-secondary">Chưa duyệt</div>
             <% } else if (adBoardReq.adBoard.status === "Không duyệt") { %>
-            <span class="badge text-bg-danger">Không duyệt</span>
+            <div class="rounded-pill text-center text-light bg-danger">Không duyệt</div>
             <% } else { %>
-            <span class="badge text-bg-success">Đã duyệt</span>
+            <div class="rounded-pill text-center text-light bg-success">Đã duyệt</div>
             <% } %>
           </td>
           <td>
@@ -48,3 +48,8 @@
   </div>
 </section>
 <%- include('../partials/pagination') %>
+<style>
+  .min-w {
+    min-width: 140px; /* Set the desired minimum width */
+  }
+</style>
