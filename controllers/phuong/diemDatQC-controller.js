@@ -21,6 +21,7 @@ controller.show = async (req, res) => {
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
 
   let adLocations = [];
+  console.log("user : " + req.user._id);
   if (req.user.role === "quan") {
     adLocations = await AdLocation.find({ district: req.user.district._id }); // Fetch all ad locations from the database'
 
