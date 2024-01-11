@@ -126,17 +126,22 @@ export const capNhatTaiKhoanCanBo = async (req, res) => {
         await req.flash('error', 'Email đã được sử dụng. Vui lòng chọn một địa chỉ email khác.');
         return res.redirect('/so/canbo/tai-khoan-cb');
     }
+    let wardId = null;
+    if (req.body.role == "phuong") {
+        wardId = req.body.item.phuongId;
+    }
     try {
         await User.findByIdAndUpdate(req.params.id, {
-            username : req.body.username,
+            username: req.body.username,
             email: req.body.email,
             role: req.body.role,
             phone: req.body.phone,
-            ward: req.body.item.phuongId,
+            ward: wardId,
             district: req.body.item.districtId,
             birthday: req.body.birthday,
         });
-        await req.flash('edit', 'Cập nhật tài khoản cán bộ thành công')
+
+        await req.flash('edit', 'Cập nhật tài khoản cán bộ thành công');
         res.redirect('/so/canbo/tai-khoan-cb');
     } catch (error) {
         console.log(error);
