@@ -89,7 +89,7 @@
                 address = data.place_name;
                 district = data.context[2].text.replace('Quận ', '');
                 ward = data.context[0].text.replace('Phường ', '');
-                coord = data.geometry.coordinates.join(', ');
+                coord = data.geometry.coordinates.reverse().join(', ');
     
                 // Display the address in a popup
                 new mapboxgl.Popup()

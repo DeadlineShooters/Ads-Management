@@ -18,6 +18,9 @@ const transporter = nodemailer.createTransport({
 
 controller.show = async (req, res) => {
   const breadcrumbs = [];
+  const page = parseInt(req.query.page) || 1;
+  const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
+
   const wards = await getWardsForUser(req.user);
   let reports = await Report.find({})
     .populate(["reportType"])
@@ -44,7 +47,7 @@ controller.show = async (req, res) => {
     // phuong
     console.log("reports", reports);
     reports = reports.filter((report) => {
-      console.log("Report", report._id);
+      console.log("@@ Report", report);
       if (report.randomPoint) {
         return report.randomPoint.district._id == req.user.district._id && report.randomPoint.ward._id == req.user.ward._id;
       } else {
@@ -55,7 +58,18 @@ controller.show = async (req, res) => {
     });
   }
 
-  res.render("phuong/reportList", { reports: encodeURIComponent(JSON.stringify(reports)), breadcrumbs, wards });
+  let totalItems = reports.length;
+
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const pagination = {
+    page,
+    totalPages,
+    itemsPerPage,
+  };
+
+  reports = reports.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
+  res.render("phuong/reportList", { reports: encodeURIComponent(JSON.stringify(reports)), breadcrumbs, wards, pagination });
 };
 
 controller.showDetail = async (req, res) => {

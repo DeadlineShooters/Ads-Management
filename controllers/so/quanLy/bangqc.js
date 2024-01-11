@@ -100,7 +100,7 @@ export const remove = async (req, res) => {
   // delete adboard request
   await AdBoardRequest.findOneAndDelete({ adBoard: adBoardId });
   // delete adboard change request
-  await AdBoardChangeReq.findOneAndDelete({ adBoard: adBoardId });
+  await AdBoardChangeReq.findOneAndDelete({ "adBoard._id": adBoardId });
   // delete all reports await Ward.deleteMany({_id: {$in: wards} })
   // Delete images from Cloudinary
   const reportsToDelete = await Report.find({ adBoard: adBoardId });
@@ -113,11 +113,29 @@ export const remove = async (req, res) => {
     await Report.deleteMany({ adBoard: adBoardId });
   }
 
+  // delete adboard image
   const adBoard = await AdBoard.findById(adBoardId);
   if (adBoard.image.filename !== defaultAdBoardImg) {
     await cloudinary.uploader.destroy(adBoard.image.filename);
   }
   await AdBoard.findByIdAndDelete(adBoardId);
+
+  // check if this adlocation is violatted
+  let isViolated = false;
+  const adBoards = await AdBoard.find({ adLocation: adLocationId });
+  for (let adBoard of adBoards) {
+    const currAdBoardId = adBoard._id;
+
+    const reports = await Report.find({ adBoard: currAdBoardId });
+    if (reports.length > 0) {
+      isViolated = true;
+      break;
+    }
+  }
+  if (!isViolated) {
+    await AdLocation.findByIdAndUpdate(adLocationId, { $set: { isViolated: false } });
+  }
+
   req.flash("success", "Bảng quảng cáo đã được xoá thành công");
   return res.redirect(`/so/quanly/diem-dat-quang-cao/${adLocationId}`);
 };

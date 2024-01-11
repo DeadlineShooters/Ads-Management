@@ -61,28 +61,25 @@ controller.showDetail = async (req, res) => {
 
   const page = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-  const totalItems = await AdBoard.countDocuments();
+
+  const adBoards = await AdBoard.find({ status: "Đã duyệt", adLocation: diemId })
+    .populate("boardType")
+    .skip((page - 1) * itemsPerPage)
+    .limit(itemsPerPage);
+
+  const totalItems = adBoards.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const pagination = {
     page,
     totalPages,
     itemsPerPage,
   };
-
-  const adBoards = await AdBoard.find({ adLocation: diemId })
-    .populate("boardType")
-    .skip((page - 1) * itemsPerPage)
-    .limit(itemsPerPage);
-
   const wards = await getWardsForUser(req.user);
 
   try {
     // Fetch adLocation details based on the diemId
     const adLocationDetails = await AdLocation.findById(diemId).populate(["ward", "district", "type", "adType"]);
-    const adBoards = await AdBoard.find({ adLocation: diemId })
-    .populate("boardType")
-    .skip((page - 1) * itemsPerPage)
-    .limit(itemsPerPage);
+
     res.render("so/quanLy/diemDatqc/details", {
       details: adLocationDetails,
       adBoards,
