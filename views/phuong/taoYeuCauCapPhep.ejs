@@ -45,9 +45,9 @@
       <div class="col-md-4">
         <label for="size" class="form-label">Kích thước</label>
         <div class="input-group">
-          <input type="number" class="form-control" id="size" style="max-width: 20%" required name="width" />
+          <input type="number" class="form-control" id="width" style="max-width: 20%" required name="width" />
           <span class="input-group-text">m x</span>
-          <input type="number" class="form-control" id="size" style="max-width: 20%" required name="height" />
+          <input type="number" class="form-control" id="height" style="max-width: 20%" required name="height" />
           <span class="input-group-text">m (w x h)</span>
         </div>
       </div>
@@ -208,6 +208,41 @@
         }, 3000);
       }
     };
+  });
+
+  function resizeInput(input) {
+    input.style.width = input.value.length + "ch";
+  }
+
+  function isNumber(value) {
+    return !isNaN(value) && !isNaN(parseFloat(value));
+  }
+
+  function validateInput(input) {
+    if (!isNumber(input.value) && input.value.length > 0) {
+      input.setCustomValidity("Phải nhập số");
+      input.reportValidity();
+    } else {
+      if (input.value <= 0) {
+        input.setCustomValidity("Số phải lớn hơn 0");
+        input.reportValidity();
+        return;
+      }
+      input.setCustomValidity("");
+    }
+  }
+
+  // Attach the validateInput function to the onkeyup event of your input fields
+  document.getElementById("amount").addEventListener("keyup", function () {
+    validateInput(this);
+  });
+
+  document.getElementById("height").addEventListener("keyup", function () {
+    validateInput(this);
+  });
+
+  document.getElementById("width").addEventListener("keyup", function () {
+    validateInput(this);
   });
 </script>
 <style>
