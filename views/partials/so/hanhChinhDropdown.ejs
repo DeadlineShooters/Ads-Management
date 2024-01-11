@@ -9,7 +9,7 @@
 <div class="d-flex flex-row">
     <div>
       <select name="item[districtId]" class="form-select ms-2" aria-label="Default select example">
-          <option value="" selected disabled>Tất cả quận</option>
+          <option value="" selected >Tất cả quận</option>
           <% for (let district of districtList) { %>
             <option value="<%= district.id %>" <%= districtId == district._id? "selected":"" %>>Quận <%= district.name %></option>
           <% } %>
@@ -44,7 +44,13 @@
         const params = new URLSearchParams(currentUrl.search);
 
         // Add or update the query parameters
-        params.set('districtId', districtSelect.value);
+        if (districtSelect.value) {
+            params.set('districtId', districtSelect.value);
+        } else {
+            params.delete('districtId');
+            params.delete('wardId');
+        }
+        params.set('page', 1);
 
         // Update the URL with the modified query parameters
         currentUrl.search = params.toString();
@@ -62,23 +68,26 @@
             .then(response => response.json())
                 .then(data => {
                     // Clear existing options
-                    wardSelect.innerHTML = '<option value="" selected disabled>Tất cả phường</option>';
+                    wardSelect.innerHTML = '<option value="" selected >Tất cả phường</option>';
                     // Iterate over the array and append options to 'wardSelect'
                     data.forEach(ward => {
                         var option = document.createElement('option');
                         option.value = ward._id;
                         option.textContent = "Phường " + ward.name;
                         wardSelect.appendChild(option);
-                    });
-                    function setSelectedOption(select, value) {
-                        for (var i = 0; i < select.options.length; i++) {
-                            if (select.options[i].value === value) {
-                                select.options[i].selected = true;
-                                break;
-                            }
+                        if (ward._id === wardId) {
+                            option.selected = true;
                         }
-                    }
-                    setSelectedOption(wardSelect, wardId);
+                    });
+                    // function setSelectedOption(select, value) {
+                    //     for (var i = 0; i < select.options.length; i++) {
+                    //         if (select.options[i].value === value) {
+                    //             select.options[i].selected = true;
+                    //             break;
+                    //         }
+                    //     }
+                    // }
+                    // setSelectedOption(wardSelect, wardId);
                 })
             .catch(error => console.error('Error fetching wards:', error));
         wardSelect.addEventListener('change', async function () {
@@ -97,7 +106,12 @@
 
         // Add or update the query parameters
         params.set('districtId', districtSelect.value);
-        params.set('wardId', wardSelect.value);
+        if (wardSelect.value) {
+            params.set('wardId', wardSelect.value);
+        } else {
+            params.delete('wardId');
+        }
+        params.set('page', 1);
 
         // Update the URL with the modified query parameters
         currentUrl.search = params.toString();
