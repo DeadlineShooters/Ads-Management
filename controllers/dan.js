@@ -24,7 +24,8 @@ controller.home = async (req, res) => {
 		// Attach flag to adLocations
 		adLocations = adLocations.map((adLocation) => {
 			const hasAdBoard = adBoards.some(
-				(adBoard) => adBoard.adLocation.toString() === adLocation._id.toString() && !adBoard.status.localeCompare('Đã duyệt') && new Date(adBoard.expireDate) >= new Date()
+				(adBoard) =>
+					adBoard.adLocation.toString() === adLocation._id.toString() && !adBoard.status.localeCompare('Đã duyệt') && new Date(adBoard.expireDate) >= new Date()
 			);
 			return { ...adLocation._doc, adBoard: hasAdBoard };
 		});
@@ -85,7 +86,7 @@ controller.reportForm = (req, res) => {
 };
 
 controller.getReport = (req, res) => {
-	let { type, name, email, phoneNumber, content, location, board, id, lat, lng, district, ward } = req.body;
+	let { type, name, email, phoneNumber, content, location, board, id, lat, lng, district, ward, address } = req.body;
 	console.log(content);
 	const captcha = req.body['g-recaptcha-response'];
 	if (!captcha) {
@@ -113,17 +114,6 @@ controller.getReport = (req, res) => {
 		} else {
 			let reportType = await ReportType.find({ description: type });
 
-			// let uploadedImages = [];
-			// for (let file of req.files) {
-			// 	var img = fs.readFileSync(file.path);
-			// 	var encode_image = img.toString('base64');
-
-			// 	var finalImg = {
-			// 		contentType: file.mimetype,
-			// 		image: new Buffer.from(encode_image, 'base64'),
-			// 	};
-			// 	uploadedImages.push(finalImg);
-			// }
 			try {
 				const uploadedImages = req.files.map((f) => ({ url: f.path, filename: f.filename }));
 				const report = new Report({ reportType: reportType[0]._id, fullName: name, email, phone: phoneNumber, content, uploadedImages, sendDate: Date.now() });
@@ -138,7 +128,8 @@ controller.getReport = (req, res) => {
 					report.randomPoint = new mongoose.Types.ObjectId(id);
 					await report.save();
 				} else {
-					const violatedPoint = new ViolatedPoint({ latlng: lat + ', ' + lng, reports: [report._id], district, ward });
+					
+					const violatedPoint = new ViolatedPoint({ latlng: lat + ', ' + lng, reports: [report._id], district, ward, address });
 					await violatedPoint.save();
 					report.randomPoint = violatedPoint._id;
 					await report.save();

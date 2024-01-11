@@ -307,7 +307,8 @@ async function initMap() {
 									let backward = document.createElement('i');
 									backward.setAttribute('class', 'fa-solid fa-arrow-left backward-icon');
 									item1.appendChild(backward);
-									backward.style.cssText = 'position: absolute; top: 0; left: 0; font-size: calc(1.8rem / 1.6); color: #444; padding: 12px;';
+									backward.style.cssText =
+										'position: absolute; top: 0; left: 0; font-size: calc(1.8rem / 1.6); color: #444; padding: 8px; margin: 4px; background-color: rgba(255, 255, 255, 0.7); border-radius: 4px; cursor: pointer;';
 									backward.addEventListener('click', () => {
 										img.remove();
 										expiry.remove();
@@ -576,10 +577,10 @@ async function addMarker(position) {
 		await fetch('/ward')
 			.then((response) => response.json())
 			.then((wards) => {
-				wards.forEach((item) => {
+				wards.forEach(async (item) => {
 					if (item.name == ward.replace('Phường', '').trim() && item.district.name == district.replace('Quận', '').trim()) {
 						clickMarkerInfo += `
-				<a href="/report?lat=${position.lat()}&lng=${position.lng()}&district=${item.district._id}&ward=${item._id}" class="location__report-btn">
+				<a href="/report?lat=${position.lat()}&lng=${position.lng()}&district=${item.district._id}&ward=${item._id}&address=${addr}" class="location__report-btn">
 					<i class="fa-solid fa-hexagon-exclamation item__icon"></i>
 					<span>BÁO CÁO VI PHẠM</span>
 				</a>`;

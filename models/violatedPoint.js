@@ -5,7 +5,7 @@ import District from "./district.js";
 const Schema = mongoose.Schema;
 
 const violatedPointSchema = new Schema({
-  latlng: Object,
+  latlng: String,
   reports: [{ type: Schema.Types.ObjectId, ref: "Report" }],
   address: String,
   ward: { type: Schema.Types.ObjectId, ref: "Ward" },
