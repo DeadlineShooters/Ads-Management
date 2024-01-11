@@ -69,11 +69,11 @@
       <thead>
         <tr>
           <th scope="col" style="width:2%">STT</th>
-          <th scope="col" style="width:20%">Địa chỉ</th>
+          <th scope="col" style="width:25%">Địa chỉ</th>
           <th scope="col" style="width:18%">Khu vực</th>
-          <th scope="col" style="width:12%">Phân loại</th>
+          <th scope="col" style="width:17%">Phân loại</th>
           <th scope="col" style="width:18%">Hình thức</th>
-          <th scope="col" style="width:10%">Quy hoạch</th>
+          <!-- <th scope="col" style="width:10%">Quy hoạch</th> -->
           <th scope="col" style="width:10%">Thời gian gửi</th>
           <th class="text-center" scope="col" style="width:18%">Tình trạng</th>
         </tr>
@@ -97,9 +97,9 @@
             <td>
               <%= motChinhDiemQC.adLocation?.type.name %>
             </td>
-            <td>
+            <!-- <td>
               <%= motChinhDiemQC.adLocation?.status %>
-            </td>
+            </td> -->
             <td>
               <%= new Date(motChinhDiemQC?.sendDate).toLocaleDateString() %>
             </td>
