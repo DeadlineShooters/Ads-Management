@@ -10,6 +10,8 @@ const { Types } = mongoose;
 
 export const tkBaoCaoXuLy = async (req, res) => {
     const { districtId = null, wardId = null } = req.query;
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
     try {
         const sumReports = await Report.countDocuments();
         const handleReports = await Report.find({ status: "Đang xử lý" }).countDocuments();
@@ -67,6 +69,15 @@ export const tkBaoCaoXuLy = async (req, res) => {
         const districtList = await District.find({});
         const breadcrumbs = [];
 
+        const totalItems = BaoCaoQC.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const pagination = {
+            page,
+            totalPages,
+            itemsPerPage,
+        };
+        BaoCaoQC = BaoCaoQC.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
         res.render('so/hanhChinh/dsThongKeBaoCao.ejs', 
         {
             sumReports,
@@ -82,7 +93,8 @@ export const tkBaoCaoXuLy = async (req, res) => {
             breadcrumbs,
             wardList,
             districtList,
-            districtId
+            districtId,
+            pagination
         });
     } catch (error) {
         console.error(error);
