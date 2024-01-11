@@ -55,7 +55,7 @@ export const showDetails = async (req, res) => {
     totalPages,
     itemsPerPage,
   };
-  console.log("@@@@: "+adBoards)
+  // console.log("@@@@: "+adBoards)
   if (!adLocation) {
     throw new ExpressError(501, "Không tìm thấy điểm đặt quảng cáo");
   }
@@ -110,7 +110,16 @@ export const add = async (req, res) => {
 export const update = async (req, res) => {
   const { id } = req.params;
   const item = req.body.item;
-  console.log(item);
+  console.log(item.status+"adfadfasdfasdfasdfadfas");
+
+  if (item.status === 'Chưa quy hoạch') {
+    const adBoards = await AdBoard.find({ adLocation: id });
+    if (adBoards.length > 0) {
+      req.flash('error', 'Điểm đặt hiện đang có bảng quảng cáo, không thể sửa hình thức thành "Chưa quy hoạch"')
+      // refresh current page
+      return res.redirect("/so/quanly/diem-dat-quang-cao/" + id+'/edit');
+    }
+  }
 
   if (req.file) {
     const adLocation = await AdLocation.findById(id);
