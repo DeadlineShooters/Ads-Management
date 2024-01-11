@@ -49,15 +49,15 @@
     <div class="d-flex flex-row align-items-center">
       <div class="md-col-2 me-2">
         <select name="item[loaiCanBo]" class="form-select" aria-label="Default select example">
-          <option value="" selected disabled>Tất cả cán bộ</option>
+          <option value="" selected >Tất cả cán bộ</option>
           <option value="phuong" <%= loaiCanBo == "phuong" ? "selected" : "" %> >Cán bộ phường</option>
           <option value="quan" <%= loaiCanBo == "quan" ? "selected" : "" %> >Cán bộ quận</option>
         </select>
       </div>
-      <div class="md-col-2 ms-2">
+      <!-- <div class="md-col-2 ms-2">
         <a class="btn btn-primary btn-sm btn-responsive" href="/so/canbo/tai-khoan-cb" role="button"><span
             class="bi bi-trash3" </span> Xóa lọc</a>
-      </div>
+      </div> -->
       <div class="md-col-2 ms-2">
         <a class="btn btn-warning btn-sm btn-responsive" href="dang-ky-tai-khoan-cb" role="button"><span
             class="bi bi-person-plus-fill" </span>Thêm cán bộ</a>
@@ -193,7 +193,25 @@
   var listVaiTro = document.querySelector('select[name="item[loaiCanBo]"]');
 
   listVaiTro.addEventListener('change', async function () {
-      window.location.href ='?loaiCanBo=' + listVaiTro.value;
+      // window.location.href ='?loaiCanBo=' + listVaiTro.value;
+      const currentUrl = new URL(window.location.href);
+
+      // Get the existing query parameters
+      const params = new URLSearchParams(currentUrl.search);
+
+      // Add or update the query parameters
+      if (listVaiTro.value) {
+          params.set('loaiCanBo', listVaiTro.value);
+      } else {
+          params.delete('loaiCanBo');
+      }
+      params.set('page', 1);
+
+      // Update the URL with the modified query parameters
+      currentUrl.search = params.toString();
+
+      // Redirect to the updated URL
+      window.location.href = currentUrl.href;
   });
 
 </script>
