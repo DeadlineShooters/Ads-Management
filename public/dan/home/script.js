@@ -166,9 +166,10 @@ async function initMap() {
                             </div>
                             <div class="ads-list">`;
 						let noAdBoard = true;
+						let validAdBoard = [];
 						adBoards.forEach((item1) => {
 							if (!item1.status.localeCompare('Đã duyệt') && new Date(item1.expireDate) >= new Date()) {
-								validAdBoards.push(item1)
+								validAdBoard.push(item1);
 								noAdBoard = false;
 								offcanvas += `
 									<div class="ads-item">
@@ -204,6 +205,7 @@ async function initMap() {
 								}
 							}
 						});
+						validAdBoards[index] = validAdBoard;
 						if (noAdBoard) {
 							offcanvas += `
                                 <div class="report-list__no-report-message">Hiện chưa có bảng quảng cáo nào được đặt tại địa điểm này.</div>`;
@@ -284,6 +286,7 @@ async function initMap() {
 						bsOffcanvas.show();
 
 						document.querySelectorAll(`#offcanvasAP${index} .ads-item`).forEach((item1, index1) => {
+							console.log(validAdBoards[index])
 							item1.querySelector('.item__manipulate .more-info__icon').addEventListener('click', () => {
 								let content = item1.firstElementChild;
 								if (content.tagName != 'IMG') {
@@ -291,7 +294,7 @@ async function initMap() {
 									content.style.borderTopRightRadius = '0';
 									let img = document.createElement('img');
 									img.className = 'item__img';
-									img.src = `${validAdBoards[index1].image.url}`;
+									img.src = `${validAdBoards[index][index1].image.url}`;
 									img.alt = '';
 									img.setAttribute('width', '100%');
 									item1.insertBefore(img, item1.firstChild);
