@@ -140,42 +140,49 @@
 
   let user = "<%= user.role %>";
 
-  if (user !== "so") {
-    const submitTrigger = document.getElementById("editButton");
+  const submitTrigger = document.getElementById("editButton");
 
-    submitTrigger.onclick = function (event) {
-      let editReasonEmpty = document.getElementById("moTa").value === "";
-      const startDate = new Date(document.getElementsByName("item[startDate]")[0].value);
-      const endDate = new Date(document.getElementsByName("item[expireDate]")[0].value);
+  submitTrigger.onclick = function (event) {
+    let invalid;
+    let editReasonEmpty;
+    const startDate = new Date(document.getElementsByName("item[startDate]")[0].value);
+    const endDate = new Date(document.getElementsByName("item[expireDate]")[0].value);
 
-      let invalid = editReasonEmpty || startDate > endDate;
-      console.log("Invalid: " + invalid);
-      if (invalid) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+    if (user !== "so") {
+      editReasonEmpty = document.getElementById("moTa").value === "";
+      invalid = editReasonEmpty || startDate > endDate;
+    } else {
+      invalid = startDate > endDate;
+    }
+    console.log("Invalid: " + invalid);
+    if (invalid) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    if (user !== "so") {
       document.getElementById("moTa").classList.toggle("is-invalid", editReasonEmpty);
-      document.getElementsByName("item[startDate]")[0].classList.toggle("is-invalid", startDate > endDate);
-      document.getElementsByName("item[expireDate]")[0].classList.toggle("is-invalid", startDate > endDate);
-    };
-  }
+    }
+    document.getElementsByName("item[startDate]")[0].classList.toggle("is-invalid", startDate > endDate);
+    document.getElementsByName("item[expireDate]")[0].classList.toggle("is-invalid", startDate > endDate);
+  };
+
   function isNumber(value) {
     return !isNaN(value) && !isNaN(parseFloat(value));
   }
 
-    function validateInput(input) {
-        if (!isNumber(input.value) && input.value.length > 0) {
-            input.setCustomValidity('Phải nhập số');
-            input.reportValidity();
-        } else {
-          if (input.value <= 0) {
-            input.setCustomValidity('Số phải lớn hơn 0');
-            input.reportValidity();
-            return;
-          }
-          input.setCustomValidity('');
-        }
+  function validateInput(input) {
+    if (!isNumber(input.value) && input.value.length > 0) {
+      input.setCustomValidity("Phải nhập số");
+      input.reportValidity();
+    } else {
+      if (input.value <= 0) {
+        input.setCustomValidity("Số phải lớn hơn 0");
+        input.reportValidity();
+        return;
+      }
+      input.setCustomValidity("");
     }
+  }
 
   // Attach the validateInput function to the onkeyup event of your input fields
   document.getElementById("quantity").addEventListener("keyup", function () {
