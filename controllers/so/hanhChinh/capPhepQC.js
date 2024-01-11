@@ -11,13 +11,7 @@ export const dsCapPhepQC = async (req, res) => {
 
   const page = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-  const totalItems = await AdBoardRequest.countDocuments();
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const pagination = {
-    page,
-    totalPages,
-    itemsPerPage,
-  };
+  
   const breadcrumbs = [];
   try {
     let CapPhepQC = null;
@@ -43,8 +37,8 @@ export const dsCapPhepQC = async (req, res) => {
             ],
           })
           .populate("sender")
-          .skip((page - 1) * itemsPerPage)
-          .limit(itemsPerPage);
+          // .skip((page - 1) * itemsPerPage)
+          // .limit(itemsPerPage);
       } else {
         const adLocation = await AdLocation.find({district: districtId});
         const adBoard = await AdBoard.find({ adLocation: { $in: adLocation } });
@@ -64,8 +58,8 @@ export const dsCapPhepQC = async (req, res) => {
             ],
           })
           .populate("sender")
-          .skip((page - 1) * itemsPerPage)
-          .limit(itemsPerPage);
+          // .skip((page - 1) * itemsPerPage)
+          // .limit(itemsPerPage);
       }
     } else {
       CapPhepQC = await AdBoardRequest.find({})
@@ -84,15 +78,24 @@ export const dsCapPhepQC = async (req, res) => {
           ],
         })
         .populate("sender")
-        .skip((page - 1) * itemsPerPage)
-        .limit(itemsPerPage);
+        // .skip((page - 1) * itemsPerPage)
+        // .limit(itemsPerPage);
     }
     const wardList = await Ward.find({}).populate({
         path: "district", model: 'District'
     });
     const districtList = await District.find({});
+
+    const totalItems = CapPhepQC.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = {
+      page,
+      totalPages,
+      itemsPerPage,
+    };
+    CapPhepQC = CapPhepQC.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     
-    console.log("@@: ", CapPhepQC);
+    // console.log("@@: ", CapPhepQC);
     res.render("so/hanhChinh/dsYeuCauCapPhepQC.ejs", {
       CapPhepQC,
       pagination,
@@ -102,17 +105,17 @@ export const dsCapPhepQC = async (req, res) => {
       districtId
     });
   } catch (err) {
-    const wardList = await Ward.find({}).populate({
-      path: "district", model: 'District'
-    });
-    const districtList = await District.find({});
-    res.render("so/hanhChinh/trangBaoLoiCapPhepQC.ejs", {
-      pagination,
-      breadcrumbs,
-      wardList,
-      districtList,
-      districtId
-    });
+    // const wardList = await Ward.find({}).populate({
+    //   path: "district", model: 'District'
+    // });
+    // const districtList = await District.find({});
+    // res.render("so/hanhChinh/trangBaoLoiCapPhepQC.ejs", {
+    //   pagination,
+    //   breadcrumbs,
+    //   wardList,
+    //   districtList,
+    //   districtId
+    // });
   }
 };
 

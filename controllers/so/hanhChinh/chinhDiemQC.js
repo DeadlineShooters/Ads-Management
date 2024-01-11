@@ -7,13 +7,7 @@ export const dsChinhDiemQC = async (req, res) => {
     const { districtId = null, wardId = null } = req.query;
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-    const totalItems = await AdLocationChangeRequest.countDocuments();
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const pagination = {
-      page,
-      totalPages,
-      itemsPerPage,
-    };
+    
     const breadcrumbs = [];
     try {
         let ChinhDiemQC = null;
@@ -22,7 +16,7 @@ export const dsChinhDiemQC = async (req, res) => {
                 const ward = await Ward.findById(wardId);
                 const district = await District.findById(districtId);
                 const adLocation = await AdLocation.find({ district: district._id , ward: ward._id });
-                ChinhDiemQC = await AdLocationChangeRequest.find({adLocation: { $in: adLocation }}).populate({
+                ChinhDiemQC = await AdLocationChangeRequest.find({"adLocation._id": { $in: adLocation }}).populate({
                     path: 'adLocation',
                     populate: [
                         { path: 'ward', model: 'Ward'  },
@@ -31,11 +25,11 @@ export const dsChinhDiemQC = async (req, res) => {
                         { path: 'adType', model: 'AdType'},
                     ]
                 }).populate('sender')
-                .skip((page - 1) * itemsPerPage)
-                .limit(itemsPerPage);
+                // .skip((page - 1) * itemsPerPage)
+                // .limit(itemsPerPage);
             } else {
                 const adLocation = await AdLocation.find({district: districtId});
-                ChinhDiemQC = await AdLocationChangeRequest.find({adLocation:  { $in: adLocation }}).populate({
+                ChinhDiemQC = await AdLocationChangeRequest.find({"adLocation._id":  { $in: adLocation }}).populate({
                     path: 'adLocation',
                     populate: [
                         { path: 'ward', model: 'Ward'  },
@@ -44,8 +38,8 @@ export const dsChinhDiemQC = async (req, res) => {
                         { path: 'adType', model: 'AdType'},
                     ]
                 }).populate('sender')
-                .skip((page - 1) * itemsPerPage)
-                .limit(itemsPerPage);
+                // .skip((page - 1) * itemsPerPage)
+                // .limit(itemsPerPage);
             }
         } else {
             ChinhDiemQC = await AdLocationChangeRequest.find({}).populate({
@@ -57,15 +51,24 @@ export const dsChinhDiemQC = async (req, res) => {
                     { path: 'adType', model: 'AdType'},
                 ]
             }).populate('sender')
-            .skip((page - 1) * itemsPerPage)
-            .limit(itemsPerPage);
+            // .skip((page - 1) * itemsPerPage)
+            // .limit(itemsPerPage);
         }
         const wardList = await Ward.find({}).populate({
             path: "district", model: 'District'
         });
         const districtList = await District.find({});
+
+        const totalItems = ChinhDiemQC.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const pagination = {
+            page,
+            totalPages,
+            itemsPerPage,
+        };
+        ChinhDiemQC = ChinhDiemQC.slice((page - 1) * itemsPerPage, page * itemsPerPage);
         
-        console.log("@@: ", ChinhDiemQC);
+        // console.log("@@: ", ChinhDiemQC);
         res.render("so/hanhChinh/dsYeuCauChinhDiemQC.ejs", {
             ChinhDiemQC,
             pagination,
