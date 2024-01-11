@@ -163,14 +163,19 @@
     return !isNaN(value) && !isNaN(parseFloat(value));
   }
 
-  function validateInput(input) {
-    if (!isNumber(input.value) && input.value.length > 0) {
-      input.setCustomValidity("Phải nhập số");
-      input.reportValidity();
-    } else {
-      input.setCustomValidity("");
+    function validateInput(input) {
+        if (!isNumber(input.value) && input.value.length > 0) {
+            input.setCustomValidity('Phải nhập số');
+            input.reportValidity();
+        } else {
+          if (input.value <= 0) {
+            input.setCustomValidity('Số phải lớn hơn 0');
+            input.reportValidity();
+            return;
+          }
+          input.setCustomValidity('');
+        }
     }
-  }
 
   // Attach the validateInput function to the onkeyup event of your input fields
   document.getElementById("quantity").addEventListener("keyup", function () {
