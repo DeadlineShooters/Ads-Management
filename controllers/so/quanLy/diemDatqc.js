@@ -43,7 +43,7 @@ export const showDetails = async (req, res) => {
     { name: "Chi tiết điểm đặt quảng cáo", link: "" },
   ];
   const adLocation = await AdLocation.findById(id).populate(["district", "ward", "type", "adType"]);
-  const adBoards = await AdBoard.find({ status: "Đã duyệt", adLocation: id })
+  const adBoards = await AdBoard.find({ status: "Đã duyệt", adLocation: id })
     .populate("boardType")
     .skip((page - 1) * itemsPerPage)
     .limit(itemsPerPage);
