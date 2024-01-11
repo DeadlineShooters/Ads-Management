@@ -5,6 +5,7 @@ let markerCluster;
 let user = document.getElementById('user');
 let adsPoints = document.querySelectorAll('[class^="ads-point__info"]');
 let violatedPoints = document.querySelectorAll('[class^="violated-point__latlng"]');
+let validAdBoards = [];
 let adsPointMarkers = [];
 let adsBoardMarkers = [];
 let violatedPointMarkers = [];
@@ -149,7 +150,6 @@ async function initMap() {
 		adsPointMarker.addListener('click', () => {
 			// create offcanvas
 			if (!document.getElementById(`offcanvasAP${index}`)) {
-				console.log(item.dataset.id);
 				fetch('/adboards/' + item.dataset.id)
 					.then((response) => response.json())
 					.then((adBoards) => {
@@ -166,8 +166,10 @@ async function initMap() {
                             </div>
                             <div class="ads-list">`;
 						let noAdBoard = true;
+						let validAdBoard = [];
 						adBoards.forEach((item1) => {
 							if (!item1.status.localeCompare('Đã duyệt') && new Date(item1.expireDate) >= new Date()) {
+								validAdBoard.push(item1);
 								noAdBoard = false;
 								offcanvas += `
 									<div class="ads-item">
@@ -203,6 +205,7 @@ async function initMap() {
 								}
 							}
 						});
+						validAdBoards[index] = validAdBoard;
 						if (noAdBoard) {
 							offcanvas += `
                                 <div class="report-list__no-report-message">Hiện chưa có bảng quảng cáo nào được đặt tại địa điểm này.</div>`;
@@ -283,6 +286,7 @@ async function initMap() {
 						bsOffcanvas.show();
 
 						document.querySelectorAll(`#offcanvasAP${index} .ads-item`).forEach((item1, index1) => {
+							console.log(validAdBoards[index])
 							item1.querySelector('.item__manipulate .more-info__icon').addEventListener('click', () => {
 								let content = item1.firstElementChild;
 								if (content.tagName != 'IMG') {
@@ -290,7 +294,7 @@ async function initMap() {
 									content.style.borderTopRightRadius = '0';
 									let img = document.createElement('img');
 									img.className = 'item__img';
-									img.src = `${adBoards[index1].image.url}`;
+									img.src = `${validAdBoards[index][index1].image.url}`;
 									img.alt = '';
 									img.setAttribute('width', '100%');
 									item1.insertBefore(img, item1.firstChild);
@@ -307,7 +311,8 @@ async function initMap() {
 									let backward = document.createElement('i');
 									backward.setAttribute('class', 'fa-solid fa-arrow-left backward-icon');
 									item1.appendChild(backward);
-									backward.style.cssText = 'position: absolute; top: 0; left: 0; font-size: calc(1.8rem / 1.6); color: #444; padding: 12px;';
+									backward.style.cssText =
+										'position: absolute; top: 0; left: 0; font-size: calc(1.8rem / 1.6); color: #444; padding: 8px; margin: 4px; background-color: rgba(255, 255, 255, 0.7); border-radius: 4px; cursor: pointer;';
 									backward.addEventListener('click', () => {
 										img.remove();
 										expiry.remove();
@@ -576,10 +581,10 @@ async function addMarker(position) {
 		await fetch('/ward')
 			.then((response) => response.json())
 			.then((wards) => {
-				wards.forEach((item) => {
+				wards.forEach(async (item) => {
 					if (item.name == ward.replace('Phường', '').trim() && item.district.name == district.replace('Quận', '').trim()) {
 						clickMarkerInfo += `
-				<a href="/report?lat=${position.lat()}&lng=${position.lng()}&district=${item.district._id}&ward=${item._id}" class="location__report-btn">
+				<a href="/report?lat=${position.lat()}&lng=${position.lng()}&district=${item.district._id}&ward=${item._id}&address=${addr}" class="location__report-btn">
 					<i class="fa-solid fa-hexagon-exclamation item__icon"></i>
 					<span>BÁO CÁO VI PHẠM</span>
 				</a>`;
