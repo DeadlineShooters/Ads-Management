@@ -180,6 +180,7 @@
 				.then((response) => response.json())
 				.then((data) => {
 					if (data.success) {
+						localStorage.phone = document.getElementById("form__phone-number").value;
 						var myModal = new bootstrap.Modal(document.getElementById('successModal'), {
 							keyboard: false,
 						});
