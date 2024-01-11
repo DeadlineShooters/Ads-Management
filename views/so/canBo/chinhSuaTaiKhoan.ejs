@@ -65,14 +65,14 @@
                     <div class="col-md-5 mt-3 ps-3">
                         <label class="fw-bold">Vai trò</label>
                         <select class="form-select" name="role" id="" required>
-                            <option selected><%= canBo.role == "phuong" ? "Cán bộ phường" : "Cán bộ quận" %></option>
+                            <option value= <%= canBo.role == "phuong" ? "phuong" : "quan" %> selected><%= canBo.role == "phuong" ? "Cán bộ phường" : "Cán bộ quận" %></option>
                             <% if (canBo.role == "quan") { %>
                                 <option value="phuong">Cán bộ phường</option>
                             <% } else { %>
                                 <option value="quan">Cán bộ quận</option>
                             <% } %>
                         </select>
-                    </div>   
+                    </div> 
                     <div class="col-md-5 mt-3 ps-3">
                         <label class="fw-bold">Quận quản lý</label>
                         <select name="item[districtId]" class="form-select" aria-label="Default select example">
@@ -124,61 +124,97 @@
 </div>
 
 <script>
-    var district = undefined
-    var ward = undefined
-    var selectedRole = undefined
-    var roleSelect = document.querySelector('select[name="role"]');
-    var districtSelect = document.querySelector('select[name="item[districtId]"]');
-    var wardSelect = document.querySelector('select[name="item[phuongId]"]');
-    var wardId = `<%= canBo.ward %>`;
-
-    // Disable the second select initially
-    wardSelect.disabled = true;
-
-    roleSelect.addEventListener('change', async function() {
+    document.addEventListener("DOMContentLoaded", async function() {
+        var district = undefined
+        var ward = undefined
+        var selectedRole = undefined
+        var roleSelect = document.querySelector('select[name="role"]');
         selectedRole = roleSelect.value;
-    })
-    
-    districtSelect.addEventListener('change', async function () {
-        var selectedDistrictId = districtSelect.value;
-    })
-    if (districtSelect.value) {
-        var selectedDistrictId = districtSelect.value;
-        var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
-        if (selectedRole == "phuong") {
-            wardSelect.disabled = selectedDistrictId === '';
-            // Fetch and populate wards for the selected district
-            fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
-                .then(response => response.json())
-                    .then(data => {
-                        // Clear existing options
-                        wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
-                        // Iterate over the array and append options to 'wardSelect'
-                        data.forEach(ward => {
-                            var option = document.createElement('option');
-                            option.value = ward._id;
-                            option.textContent = ward.name;
-                            wardSelect.appendChild(option);
-                        });
-                    })
-                .catch(error => console.error('Error fetching wards:', error));
-            wardSelect.addEventListener('change', async function () {
-                var selectedWardId = wardSelect.value;
-            });
-        } else {
-            wardSelect.innerHTML = '<option value="" selected disabled>Tất cả phường</option>';
+        var districtSelect = document.querySelector('select[name="item[districtId]"]');
+        var wardSelect = document.querySelector('select[name="item[phuongId]"]');
+        var wardId = `<%= canBo.ward %>`;
+
+        // Disable the second select initially
+        wardSelect.disabled = true;
+
+        roleSelect.addEventListener('change', async function() {
+            selectedRole = roleSelect.value;
+        })
+        districtSelect.addEventListener('change', async function () {
+            var selectedDistrictId = districtSelect.value;
+        })
+        
+        if (districtSelect.value) {
+            var selectedDistrictId = districtSelect.value;
+            var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
+            if (selectedRole == "phuong") {
+                wardSelect.disabled = selectedDistrictId === '';
+                // Fetch and populate wards for the selected district
+                fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
+                    .then(response => response.json())
+                        .then(data => {
+                            // Clear existing options
+                            wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
+                            // Iterate over the array and append options to 'wardSelect'
+                            data.forEach(ward => {
+                                var option = document.createElement('option');
+                                option.value = ward._id;
+                                option.textContent = ward.name;
+                                wardSelect.appendChild(option);
+                                if (ward._id === wardId) {
+                                    option.selected = true;
+                                }
+                            });
+                        })
+                    .catch(error => console.error('Error fetching wards:', error));
+                wardSelect.addEventListener('change', async function () {
+                    var selectedWardId = wardSelect.value;
+                });
+            } else {
+                wardSelect.innerHTML = '<option value="" selected disabled>Tất cả phường</option>';
+            }
         }
-    }
-    // Add an event listener to the first select to enable/disable the second select
-    districtSelect.addEventListener('change', async function () {
-        var selectedDistrictId = districtSelect.value;
-        var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
-        if (selectedRole == "phuong") {
-            wardSelect.disabled = selectedDistrictId === '';
-            // Fetch and populate wards for the selected district
-            fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
-                .then(response => response.json())
-                    .then(data => {
+        // Add an event listener to the first select to enable/disable the second select
+        districtSelect.addEventListener('change', async function () {
+            var selectedDistrictId = districtSelect.value;
+            var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
+            if (selectedRole == "phuong") {
+                wardSelect.disabled = selectedDistrictId === '';
+                // Fetch and populate wards for the selected district
+                fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
+                    .then(response => response.json())
+                        .then(data => {
+                            // Clear existing options
+                            wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
+                            // Iterate over the array and append options to 'wardSelect'
+                            data.forEach(ward => {
+                                var option = document.createElement('option');
+                                option.value = ward._id;
+                                option.textContent = ward.name;
+                                wardSelect.appendChild(option);
+                                if (ward._id === wardId) {
+                                    option.selected = true;
+                                }
+                            });
+                        })
+                    .catch(error => console.error('Error fetching wards:', error));
+                wardSelect.addEventListener('change', async function () {
+                    var selectedWardId = wardSelect.value;
+                });
+            } else {
+                wardSelect.innerHTML = '<option value="" selected disabled>Tất cả phường</option>';
+            }
+        });
+        roleSelect.addEventListener('change', async function () {
+            var selectedDistrictId = districtSelect.value;
+            var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
+            // Enable the second select if a district is selected, otherwise disable it
+            if (selectedRole == "phuong") {
+                wardSelect.disabled = selectedDistrictId === '';
+                // Fetch and populate wards for the selected district
+                fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
+                    .then(response => response.json())
+                        .then(data => {
                         // Clear existing options
                         wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
                         // Iterate over the array and append options to 'wardSelect'
@@ -187,9 +223,13 @@
                             option.value = ward._id;
                             option.textContent = ward.name;
                             wardSelect.appendChild(option);
+                            if (ward._id === wardId) {
+                            option.selected = true;
+                            }
                         });
                     })
                 .catch(error => console.error('Error fetching wards:', error));
+                
             wardSelect.addEventListener('change', async function () {
                 var selectedWardId = wardSelect.value;
             });
@@ -197,35 +237,7 @@
             wardSelect.innerHTML = '<option value="" selected disabled>Tất cả phường</option>';
         }
     });
-    roleSelect.addEventListener('change', async function () {
-        var selectedDistrictId = districtSelect.value;
-        var selectedDistrictName = 'Quận '+ districtSelect.options[districtSelect.selectedIndex].text;
-        // Enable the second select if a district is selected, otherwise disable it
-        if (selectedRole == "phuong") {
-            wardSelect.disabled = selectedDistrictId === '';
-            // Fetch and populate wards for the selected district
-            fetch(`/so/quanly/quan/${selectedDistrictId}/phuong?json=true`)
-                .then(response => response.json())
-                    .then(data => {
-                        // Clear existing options
-                        wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
-                        // Iterate over the array and append options to 'wardSelect'
-                        data.forEach(ward => {
-                            var option = document.createElement('option');
-                            option.value = ward._id;
-                            option.textContent = ward.name;
-                            wardSelect.appendChild(option);
-                        });
-                    })
-                .catch(error => console.error('Error fetching wards:', error));
-            
-            wardSelect.addEventListener('change', async function () {
-                var selectedWardId = wardSelect.value;
-            });
-        } else {
-            wardSelect.innerHTML = '<option value="" selected disabled>Tất cả phường</option>';
-        }
-    });
+});
 </script>
 
 <script>
