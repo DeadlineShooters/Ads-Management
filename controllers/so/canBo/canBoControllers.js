@@ -8,13 +8,7 @@ export const danhSachCanBo =  async (req, res) => {
     console.log("@@ role: ", loaiCanBo);
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-    const totalItems = await User.countDocuments();
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const pagination = {
-      page,
-      totalPages,
-      itemsPerPage,
-    };
+    
     const breadcrumbs = [];
     try {
         let canBo = null;
@@ -22,8 +16,8 @@ export const danhSachCanBo =  async (req, res) => {
             canBo = await User.find({role: loaiCanBo}).populate(
                 [{path: 'ward', populate: { path: 'district', model: 'District',}},
                  {path: 'district', model: 'District'}])
-                .skip((page - 1) * itemsPerPage)
-                .limit(itemsPerPage)
+                // .skip((page - 1) * itemsPerPage)
+                // .limit(itemsPerPage)
                 .exec();
         } else {
             canBo = await User.find({role:{$ne:"so"}}).populate([
@@ -31,10 +25,18 @@ export const danhSachCanBo =  async (req, res) => {
                     path: 'district', model: 'District',
                 }},
                 {path: 'district', model: 'District'}])
-                .skip((page - 1) * itemsPerPage)
-                .limit(itemsPerPage)
+                // .skip((page - 1) * itemsPerPage)
+                // .limit(itemsPerPage)
                 .exec();
         }
+        const totalItems = canBo.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const pagination = {
+            page,
+            totalPages,
+            itemsPerPage,
+        };
+        canBo = canBo.slice((page - 1) * itemsPerPage, page * itemsPerPage);
         res.render('so/canBo/dsTaiKhoanCanBo.ejs',  { 
             messageAdd: req.flash('info'),
             messageEdit: req.flash('edit'),
