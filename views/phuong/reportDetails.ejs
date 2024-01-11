@@ -63,23 +63,30 @@
           <span class="input-group-text bg-body-secondary fw-semibold">Hình minh họa</span>
           <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-              <% if(JSON.parse(decodeURIComponent(report)).uploadedImages && JSON.parse(decodeURIComponent(report)).uploadedImages.length > 0) { %> <%
-              JSON.parse(decodeURIComponent(report)).uploadedImages.forEach(function(image, index) { %>
-              <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                <img src="<%=image.url%>" class="d-block w-50" alt="hinh-minh-hoa" />
+              <% if (JSON.parse(decodeURIComponent(report)).uploadedImages && JSON.parse(decodeURIComponent(report)).uploadedImages.length > 0) { %> <% if
+              (JSON.parse(decodeURIComponent(report)).uploadedImages.length > 1) { %>
+              <div class="slideshow-container">
+                <% let i = 0 %> <% JSON.parse(decodeURIComponent(report)).uploadedImages.forEach(function (image, index) { %>
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                  <img src="<%= image.url %>" class="d-block w-100" style="max-width: 500px; max-height: 500px" alt="hinh-minh-hoa" />
+                </div>
+                <% }); %>
+                <a class="carousel-control-prev" onclick="plusSlides(-1)">&laquo; </a>
+                <a class="carousel-control-next" onclick="plusSlides(1)">&raquo;</a>
               </div>
-              <% }); %> <% } else { %>
-              <p>No images to display</p>
+              <% } else { %>
+              <div class="single-image-container">
+                <img
+                  src="<%= JSON.parse(decodeURIComponent(report)).uploadedImages[0].url %>"
+                  class="d-block w-100"
+                  style="max-width: 500px; max-height: 500px"
+                  alt="hinh-minh-hoa"
+                />
+              </div>
+              <% } %> <% } else { %>
+              <p class="ms-5">No images to display</p>
               <% } %>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
           </div>
         </div>
       </div>
@@ -164,4 +171,43 @@
       methodTextarea.value = lastReportMethod;
     }
   });
+
+  let slideIndex = 1;
+
+  function plusSlides(n) {
+    showSlides((slideIndex += n));
+  }
+
+  function currentSlide(n) {
+    showSlides((slideIndex = n));
+  }
+
+  function showSlides(n) {
+    let i;
+    const slides = document.getElementsByClassName("carousel-item");
+    if (n > slides.length) {
+      slideIndex = 1;
+    }
+    if (n < 1) {
+      slideIndex = slides.length;
+    }
+    for (i = 0; i < slides.length; i++) {
+      slides[i].classList.remove("active");
+    }
+    slides[slideIndex - 1].classList.add("active");
+  }
 </script>
+<style>
+  .carousel-control-prev,
+  .carousel-control-next {
+    font-size: 2rem; /* Adjust the font size as needed */
+    color: #007bff; /* Set the color to your desired value */
+    padding: 10px; /* Add padding for better spacing */
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+  }
+
+  .carousel-control-prev:hover,
+  .carousel-control-next:hover {
+    color: #fff; /* Change text color on hover */
+  }
+</style>
