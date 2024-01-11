@@ -38,6 +38,7 @@
                 <div class="col-md-5 mt-3 ps-3">
                     <label class="fw-bold">Số điện thoại</label>
                     <input type="text" name="phone" placeholder="Nhập số điện thoại" class="form-control" required>
+                    <div id="validationFeedback" class="invalid-feedback">Số điện thoại không được khác 10</div>
                 </div>
                 <div class="col-md-5 mt-3 ps-3">
                     <label class="fw-bold">Email</label>
@@ -50,6 +51,7 @@
                         <option value="phuong">Cán bộ phường</option>
                         <option value="quan">Cán bộ quận</option>
                     </select>
+                    <div id="validationFeedback" class="invalid-feedback">Phải chọn vai trò của cán bộ</div>
                 </div>   
                 <div class="col-md-5 mt-3 ps-3">
                     <label class="fw-bold">Quận quản lý</label>
@@ -77,7 +79,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 mt-5 mb-5 mx-1 mx-md-4 ps-3">
-                    <button class="form-control fs-6 fw-bold" type="submit" style="background-color: #468b4a;"><p class="text-white">Tạo tài khoản</p></button>
+                    <button class="form-control fs-6 fw-bold" type="submit" style="background-color: #468b4a;" id="createButton"><p class="text-white">Tạo tài khoản</p></button>
                 </div>
             </div>
         </div>
@@ -88,7 +90,6 @@
     $(document).ready(function() {
         $("#btnSubmit").click(function(){
             var passInput=$("#password");
-            var passClass=$("#btnSubmit");
             if(passInput.attr('type')==='password')
             {
                 passInput.attr('type','text');
@@ -127,7 +128,7 @@
                 .then(response => response.json())
                     .then(data => {
                         // Clear existing options
-                        wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option>';
+                        wardSelect.innerHTML = '<option value="" selected disabled>Chọn Phường</option> required';
                         // Iterate over the array and append options to 'wardSelect'
                         data.forEach(ward => {
                             var option = document.createElement('option');
@@ -174,4 +175,20 @@
             wardSelect.innerHTML = '<option value="" selected disabled>Tất cả phường</option>';
         }
     });
+</script>
+
+<script>
+    const submitTrigger = document.getElementById("createButton");
+    submitTrigger.onclick = function (event) {
+        let invalidPhoneNumber = document.getElementsByName("phone")[0].value.length !== 10;
+        let invalidRole = document.getElementsByName("role")[0].value === "" || document.getElementsByName("role")[0].value === null;
+        let invalid = invalidPhoneNumber || invalidRole;
+        console.log("Invalid: " + invalid);
+        if (invalid) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        document.getElementsByName("phone")[0].classList.toggle("is-invalid", invalidPhoneNumber);
+        document.getElementsByName("role")[0].classList.toggle("is-invalid", invalidRole);
+    }
 </script>

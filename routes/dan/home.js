@@ -20,7 +20,13 @@ router.get('/group-info', (req, res) => {
 });
 router.patch('/edit-profile/:canBoId', catchAsync(async (req, res) => {
     const { canBoId } = req.params;
-    // console.log(canBoId)
+    // console.log(canBoId);
+
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+        await req.flash('error', 'Email đã được sử dụng. Vui lòng chọn một địa chỉ email khác.');
+        return res.redirect(`/edit-profile/${canBoId}`);
+    }
 
     await User.findByIdAndUpdate(canBoId, { $set: { ...req.body } });
 

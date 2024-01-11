@@ -56,6 +56,7 @@
                     <div class="col-md-5 mt-3 ps-3">
                         <label class="fw-bold">Số điện thoại</label>
                         <input type="text" name="phone" placeholder="Nhập số điện thoại" value="<%= canBo.phone %>" class="form-control" required>
+                        <div id="validationFeedback" class="invalid-feedback">Số điện thoại không được khác 10</div>
                     </div>
                     <div class="col-md-5 mt-3 ps-3">
                         <label class="fw-bold">Email</label>
@@ -87,7 +88,7 @@
                         </select>
                     </div>
                     <div class="col-md-4 mt-5 mb-5 mx-1 mx-md-4 ps-3">
-                        <button class="form-control fs-6 fw-bold" style="background-color: #468b4a;" type="submit"><p class="text-white">Chỉnh sửa tài khoản</p></button>
+                        <button class="form-control fs-6 fw-bold" style="background-color: #468b4a;" type="submit" id="editButton"><p class="text-white">Chỉnh sửa tài khoản</p></button>
                     </div>
                     <div class="col-md-4 mt-5 mb-5 mx-1 mx-md-4 ps-3">
                         <button class="form-control fs-6 fw-bold" style="background-color: #dc4b23;" id="deleteButton" type="button" data-bs-toggle="modal" 
@@ -225,4 +226,18 @@
             wardSelect.innerHTML = '<option value="" selected disabled>Tất cả phường</option>';
         }
     });
+</script>
+
+<script>
+    const submitTrigger = document.getElementById("editButton");
+    submitTrigger.onclick = function (event) {
+        let invalidPhoneNumber = document.getElementsByName("phone")[0].value.length !== 10;
+        let invalid = invalidPhoneNumber;
+        console.log("Invalid: " + invalid);
+        if (invalid) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        document.getElementsByName("phone")[0].classList.toggle("is-invalid", invalidPhoneNumber);
+    }
 </script>

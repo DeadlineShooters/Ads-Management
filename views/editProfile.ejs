@@ -31,6 +31,7 @@
             <div class="mb-3 col-6">
                 <label class="fw-bold">Số điện thoại</label>
                 <input type="text" name="phone" placeholder="Nhập số điện thoại" value="<%= canbo.phone %>" class="form-control" required>
+                <div id="validationFeedback" class="invalid-feedback">Số điện thoại không được khác 10</div>
             </div>
         </div>
         <div class="mb-3">
@@ -63,11 +64,8 @@
         </button>
           
         <!-- Modal -->
-        
-        
-
         <div class="my-4 text-center">
-            <button class="btn btn-info">Xác nhận</button>
+            <button class="btn btn-info" id="editButton" type="submit">Xác nhận</button>
         </div>
     </form>
     <div class="modal fade" id="changPwd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -175,5 +173,18 @@
     //         password.reportValidity();
     //     }
     // }
+</script>
 
+<script>
+    const submitTrigger = document.getElementById("editButton");
+    submitTrigger.onclick = function (event) {
+        let invalidPhoneNumber = document.getElementsByName("phone")[0].value.length !== 10;
+        let invalid = invalidPhoneNumber;
+        console.log("Invalid: " + invalid);
+        if (invalid) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        document.getElementsByName("phone")[0].classList.toggle("is-invalid", invalidPhoneNumber);
+    }
 </script>
