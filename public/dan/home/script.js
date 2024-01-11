@@ -5,6 +5,7 @@ let markerCluster;
 let user = document.getElementById('user');
 let adsPoints = document.querySelectorAll('[class^="ads-point__info"]');
 let violatedPoints = document.querySelectorAll('[class^="violated-point__latlng"]');
+let validAdBoards = [];
 let adsPointMarkers = [];
 let adsBoardMarkers = [];
 let violatedPointMarkers = [];
@@ -149,7 +150,6 @@ async function initMap() {
 		adsPointMarker.addListener('click', () => {
 			// create offcanvas
 			if (!document.getElementById(`offcanvasAP${index}`)) {
-				console.log(item.dataset.id);
 				fetch('/adboards/' + item.dataset.id)
 					.then((response) => response.json())
 					.then((adBoards) => {
@@ -168,6 +168,7 @@ async function initMap() {
 						let noAdBoard = true;
 						adBoards.forEach((item1) => {
 							if (!item1.status.localeCompare('Đã duyệt') && new Date(item1.expireDate) >= new Date()) {
+								validAdBoards.push(item1)
 								noAdBoard = false;
 								offcanvas += `
 									<div class="ads-item">
@@ -290,7 +291,7 @@ async function initMap() {
 									content.style.borderTopRightRadius = '0';
 									let img = document.createElement('img');
 									img.className = 'item__img';
-									img.src = `${adBoards[index1].image.url}`;
+									img.src = `${validAdBoards[index1].image.url}`;
 									img.alt = '';
 									img.setAttribute('width', '100%');
 									item1.insertBefore(img, item1.firstChild);
