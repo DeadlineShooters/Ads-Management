@@ -113,7 +113,8 @@ async function initMap() {
 		if (item.dataset.lat == lat && item.dataset.lng == lng) item.classList.add('d-block');
 		let adsPoint = document.createElement('div');
 		adsPoint.className = 'ads-point';
-		adsPoint.textContent = 'QC';
+		adsPoint.style.fontSize = '12px';
+		adsPoint.style.border = '2px solid #fff';
 		adsPoint.setAttribute('data-bs-toggle', 'offcanvas');
 		adsPoint.setAttribute('data-bs-target', '#offcanvasAP' + index);
 		adsPoint.setAttribute('aria-controls', 'offcanvasAP' + index);
@@ -129,11 +130,20 @@ async function initMap() {
 		markers.push(adsPointMarker);
 
 		if (item.dataset.adboard == 'true') {
+			adsPoint.textContent = 'QC';
+			adsPoint.setAttribute('data-bs-toggle', 'offcanvas');
+			adsPoint.setAttribute('data-bs-target', '#offcanvasAP' + index);
+			adsPoint.setAttribute('aria-controls', 'offcanvasAP' + index);
+
+			adsPoint.appendChild(item);
 			adsBoardMarkers.push(adsPointMarker);
 		}
 		if (item.dataset.violate == 'true') {
-			adsPoint.classList.add('violate');
+			adsPoint.style.border = '2px solid #d32e2e';
 			violatedPointMarkers.push(adsPointMarker);
+		}
+		if (item.dataset.status == 'Đã quy hoạch') {
+			adsPoint.style.backgroundColor = '#4285f4';
 		}
 
 		adsPointMarker.addListener('click', () => {
@@ -157,7 +167,7 @@ async function initMap() {
                             <div class="ads-list">`;
 						let noAdBoard = true;
 						adBoards.forEach((item1) => {
-							if (item1.status == 'Đã duyệt' && new Date(item1.expireDate) >= new Date()) {
+							if (!item1.status.localeCompare('Đã duyệt') && new Date(item1.expireDate) >= new Date()) {
 								noAdBoard = false;
 								offcanvas += `
 									<div class="ads-item">
@@ -201,10 +211,10 @@ async function initMap() {
                                 <div style="padding-top: 8px;"></div>
                             </div>
                             <div class="report-list d-none">`;
-						let noReport = true;
+						let noReport = [true, true];
 						adBoards.forEach((item1) => {
 							if (item1.reports != undefined && item1.reports.length != 0) {
-								noReport = false;
+								noReport[0] = false;
 								offcanvas += `
                                 <div class="report-item">
                                     <div class="report-item__info">
@@ -222,30 +232,40 @@ async function initMap() {
                                         </div>
                                         <div class="content__report-list">`;
 								item1.reports.forEach((item2) => {
-									offcanvas += `
+									if (user || (!user && localStorage.phone == item2.phone)) {
+										noReport[1] = false;
+										offcanvas += `
                                             <div class="content__report-item ${item2.reportType.note}">
                                                 <div class="report-item__type">${item2.reportType.name}</div>
                                                 <div class="report-item__body">${item2.content}</div>
 												<div class="report-item__img">`;
-									item2.uploadedImages.forEach((item3) => {
-										offcanvas += `
+										item2.uploadedImages.forEach((item3) => {
+											offcanvas += `
 													<img class="img__item" src="${item3.url}">`;
-									});
-									offcanvas += `
+										});
+										offcanvas += `
 												</div>
 												<div class="report-item__status">Trạng thái: <span>${item2.status}</span></div>
                                             </div>`;
+									}
 								});
+								if (noReport[1]) {
+									if (!user) {
+										offcanvas += `
+											<span>Bạn chưa thực hiện báo cáo vi phạm nào về địa điểm này.</span>`;
+									}
+								}
+								noReport[1] = true;
 								offcanvas += `
                                         </div>
                                     </div>
                                 </div>`;
 							}
 						});
-						if (noReport) {
+						if (noReport[0]) {
 							offcanvas += `
-                                <div class="report-list__no-report-message">Hiện chưa có báo cáo vi phạm nào về địa điểm này hoặc các vấn đề
-                                            liên quan đã được giải quyết.</div>`;
+								<div class="report-list__no-report-message">Hiện chưa có báo cáo vi phạm nào về địa điểm này hoặc các vấn đề
+											liên quan đã được giải quyết.</div>`;
 						}
 						offcanvas += `
                                 <div style="padding-top: 8px;"></div>
@@ -420,21 +440,35 @@ async function initMap() {
                             </div>
                             <div class="offcanvas-body">
                                 <div class="report-list">`;
+						let noReport = true;
 						violatedPoint[0].reports.forEach((item1) => {
-							offcanvas += `
+							if (user || (!user && localStorage.phone == item1.phone)) {
+								noReport = false;
+								offcanvas += `
                                     <div class="report-item ${item1.reportType.note}">
                                         <div class="report-item__type">${item1.reportType.name}</div>
                                         <div class="report-item__body">${item1.content}</div>
 										<div class="report-item__img">`;
-							item1.uploadedImages.forEach((item2) => {
-								offcanvas += `
+								item1.uploadedImages.forEach((item2) => {
+									offcanvas += `
 											<img class="img__item" src="${item2.url}">`;
-							});
-							offcanvas += `
+								});
+								offcanvas += `
 										</div>
 										<div class="report-item__status">Trạng thái: <span>${item1.status}</span></div>
 									</div>`;
+							}
 						});
+						if (noReport) {
+							if (user) {
+								offcanvas += `
+									<div class="report-list__no-report-message">Hiện chưa có báo cáo vi phạm nào về địa điểm này hoặc các vấn đề
+												liên quan đã được giải quyết.</div>`;
+							} else {
+								offcanvas += `
+									<div class="report-list__no-report-message">Bạn chưa thực hiện báo cáo vi phạm nào về địa điểm này.</div>`;
+							}
+						}
 						offcanvas += `
                                     <div style="padding-top: 8px"></div>
                                 </div>

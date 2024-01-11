@@ -175,6 +175,16 @@
         }
       }
 
+      var numberInputs = document.querySelectorAll("#create-request-form input[type='number']");
+      numberInputs.forEach(function (input) {
+        if (input.value < 0) {
+          input.classList.add("is-invalid");
+          allFilled = false;
+        } else {
+          input.classList.remove("is-invalid");
+        }
+      });
+
       return allFilled && !textareaEmpty;
     }
 
