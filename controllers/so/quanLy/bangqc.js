@@ -139,3 +139,4 @@ export const remove = async (req, res) => {
   req.flash("success", "Bảng quảng cáo đã được xoá thành công");
   return res.redirect(`/so/quanly/diem-dat-quang-cao/${adLocationId}`);
 };
+// edit để dc push để fix unexplained bug
