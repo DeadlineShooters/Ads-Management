@@ -165,7 +165,12 @@
             input.setCustomValidity('Phải nhập số');
             input.reportValidity();
         } else {
-            input.setCustomValidity('');
+          if (input.value <= 0) {
+            input.setCustomValidity('Số phải lớn hơn 0');
+            input.reportValidity();
+            return;
+          }
+          input.setCustomValidity('');
         }
     }
 

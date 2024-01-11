@@ -157,7 +157,7 @@ async function initMap() {
                             <div class="ads-list">`;
 						let noAdBoard = true;
 						adBoards.forEach((item1) => {
-							if (item1.status == 'Đã duyệt' && new Date(item1.expireDate) >= new Date()) {
+							if (item1.status == 'Đã duyệt' && new Date(item1.expireDate) >= new Date()) {
 								noAdBoard = false;
 								offcanvas += `
 									<div class="ads-item">

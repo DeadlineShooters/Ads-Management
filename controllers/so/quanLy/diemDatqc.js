@@ -9,6 +9,7 @@ import AdBoard from "../../../models/adBoard.js";
 import AdBoardChangeReq from "../../../models/adBoardChangeRequest.js";
 import AdBoardRequest from "../../../models/adBoardRequest.js";
 import Report from "../../../models/report.js";
+import AdLocationChangeRequest from "../../../models/adLocationChangeRequest.js";
 
 const defaultAdLocationImg = "delnafx999tunfa8nsmw";
 const defaultAdBoardImg = "bang-quang-cao-3_zr4oyk";
@@ -31,28 +32,29 @@ export const index = async (req, res) => {
   res.render("so/quanLy/diemDatqc/index", { adLocations, pagination });
 };
 export const showDetails = async (req, res) => {
+  const { id } = req.params;
   res.locals.currentPage = "quang-cao";
 
   const page = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
-  const totalItems = await AdBoard.countDocuments();
+  
+  const breadcrumbs = [
+    { name: "Các điểm đặt quảng cáo", link: "/so/quanly/diem-dat-quang-cao" },
+    { name: "Chi tiết điểm đặt quảng cáo", link: "" },
+  ];
+  const adLocation = await AdLocation.findById(id).populate(["district", "ward", "type", "adType"]);
+  const adBoards = await AdBoard.find({ status: "Đã duyệt",adLocation: id })
+    .populate("boardType")
+    .skip((page - 1) * itemsPerPage)
+    .limit(itemsPerPage);
+  
+  const totalItems = adBoards.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const pagination = {
     page,
     totalPages,
     itemsPerPage,
   };
-
-  const { id } = req.params;
-  const breadcrumbs = [
-    { name: "Các điểm đặt quảng cáo", link: "/so/quanly/diem-dat-quang-cao" },
-    { name: "Chi tiết điểm đặt quảng cáo", link: "" },
-  ];
-  const adLocation = await AdLocation.findById(id).populate(["district", "ward", "type", "adType"]);
-  const adBoards = await AdBoard.find({ adLocation: id })
-    .populate("boardType")
-    .skip((page - 1) * itemsPerPage)
-    .limit(itemsPerPage);
   if (!adLocation) {
     throw new ExpressError(501, "Không tìm thấy điểm đặt quảng cáo");
   }
@@ -133,7 +135,7 @@ export const remove = async (req, res) => {
     // delete adboard request
     await AdBoardRequest.findOneAndDelete({ adBoard: adBoardId });
     // delete adboard change request
-    await AdBoardChangeReq.findOneAndDelete({ adBoard: adBoardId });
+    await AdBoardChangeReq.findOneAndDelete({ "adBoard._id": adBoardId });
     // delete all reports await Ward.deleteMany({_id: {$in: wards} })
     // Delete images from Cloudinary
     const reportsToDelete = await Report.find({ adBoard: adBoardId });
@@ -150,6 +152,8 @@ export const remove = async (req, res) => {
     }
     await AdBoard.findByIdAndDelete(adBoardId);
   }
+
+  await AdLocationChangeRequest.findOneAndDelete({ "adLocation._id": id });
 
   const adLocation = await AdLocation.findById(id);
   if (adLocation.image.filename !== defaultAdLocationImg) {

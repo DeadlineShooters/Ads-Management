@@ -67,9 +67,9 @@ export const update = async (req, res) => {
 }
 export const remove = async (req, res) => {
     const { id } = req.params;
-    const isInUse = await AdLocation.findOne({ locationType: id });
+    const isInUse = await AdLocation.findOne({ type: id });
     if (isInUse) {
-        req.flash('error', `${locationType.name} đang được sử dụng!`);
+        req.flash('error', `Loại vị trí đang được sử dụng!`);
         return res.redirect('/so/quanly/loai-vi-tri');
     }
     const locationType = await LocationType.findByIdAndDelete(id);
