@@ -122,7 +122,7 @@ export const suaTaiKhoanCanBo = async (req, res) => {
 export const capNhatTaiKhoanCanBo = async (req, res) => {
     console.log("@@ info update: ", req.body);
     const existingUser = await User.findOne({ email: req.body.email });
-    if (existingUser) {
+    if (existingUser && existingUser._id != req.params.id) {
         await req.flash('error', 'Email đã được sử dụng. Vui lòng chọn một địa chỉ email khác.');
         return res.redirect('/so/canbo/tai-khoan-cb');
     }
