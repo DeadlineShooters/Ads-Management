@@ -66,6 +66,7 @@
                     <% } %>
                   </select>
             </div>
+            <% if (user.role === 'so') { %>
             <div class="mb-3">
                 <p>Quy hoạch</p>
                 <div class="form-check form-check-inline">
@@ -77,6 +78,7 @@
                     <label class="form-check-label" for="inlineRadio2">Chưa quy hoạch</label>
                 </div>
             </div>
+            <%}%>
             <div class="mb-3">
                 <label for="formFile" class="form-label">Chọn ảnh mới</label>
                 <input name="image" class="form-control" type="file" id="formFile" accept="image/png, image/jpeg">

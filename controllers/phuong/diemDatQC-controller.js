@@ -113,7 +113,7 @@ controller.showCreateRequest = async (req, res) => {
   if (adLocation.status === "Chưa quy hoạch") {
     req.flash("error", "Không tạo yêu cầu được do điểm quảng cáo chưa được quy hoạch");
 
-    res.redirect(`/cac-diem-dat-quang-cao/${diemId}`);
+    return res.redirect(`/cac-diem-dat-quang-cao/${diemId}`);
   }
   res.locals.currentPage = "quang-cao";
 
