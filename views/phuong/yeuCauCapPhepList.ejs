@@ -20,90 +20,31 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <% adBoardReqs.forEach((adBoardReq, index) => { %>
+        <tr class="clickable-row" onclick="window.location='/cac-yeu-cau-cap-phep/<%= adBoardReq._id %>'">
+          <td><%= index + 1 %></td>
+          <td><%= adBoardReq.adBoard.adLocation.address %></td>
+          <td class="khuVucField">Phường <%= adBoardReq.adBoard.adLocation.ward.name %>, Quận <%= adBoardReq.adBoard.adLocation.district.name %></td>
+          <td><%= adBoardReq.adBoard.boardType.name %></td>
+          <td><%= adBoardReq.adBoard.size.w %>m x <%= adBoardReq.adBoard.size.h %>m</td>
+          <td><%= adBoardReq.adBoard.quantity %></td>
+          <td>
+            <% if (adBoardReq.adBoard.status === "Chưa duyệt") { %>
+            <span class="badge text-bg-secondary">Chưa duyệt</span>
+            <% } else if (adBoardReq.adBoard.status === "Không duyệt") { %>
+            <span class="badge text-bg-danger">Không duyệt</span>
+            <% } else { %>
+            <span class="badge text-bg-success">Đã duyệt</span>
+            <% } %>
+          </td>
+          <td>
+            <div class="d-flex"></div>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
     </table>
   </div>
 </section>
 <%- include('../partials/pagination') %>
-
-<script>
-  let district = "<%= user.district._id %>";
-  let allAdBoardReqs = JSON.parse(decodeURIComponent("<%= adBoardReqs %>"));
-
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get the select element
-    const selectPhuong = document.querySelector("#phuong-dropdown");
-    if (selectPhuong) {
-      // Add an event listener for the change event
-      selectPhuong.addEventListener("change", function () {
-        // Get the selected value
-        const selectedValue = selectPhuong.value;
-        fetchAdBoards(selectedValue);
-      });
-
-      // Initially fetch all adboards
-      updateTableWithData(allAdBoardReqs);
-    } else {
-      // can bo phuong so there is no select dropdown
-      updateTableWithData(allAdBoardReqs);
-    }
-  });
-
-  // handle on click for each item on the list
-  document.addEventListener("DOMContentLoaded", function () {
-    // Use event delegation for click events on the table: use the parent
-    document.querySelector("table").addEventListener("click", function (event) {
-      const clickedRow = event.target.closest(".clickable-row");
-      if (clickedRow) {
-        window.location = clickedRow.getAttribute("data-href");
-      }
-    });
-  });
-
-  function fetchAdBoards(ward) {
-    // Filter ad boards based on the selected ward
-    const filteredAdBoardReqs = allAdBoardReqs.filter((adBoardReq) => {
-      return adBoardReq.adBoard.adLocation.ward._id == ward && adBoardReq.adBoard.adLocation.district._id == district;
-    });
-
-    // Update the table with the filtered data
-    updateTableWithData(filteredAdBoardReqs);
-  }
-
-  function updateTableWithData(data) {
-    // Clear existing table rows
-    const tableBody = document.querySelector("tbody");
-
-    tableBody.innerHTML = "";
-
-    // Populate the table with the new data
-    data.forEach((adBoardReq, index) => {
-      const newRow = document.createElement("tr");
-      newRow.classList.add("clickable-row");
-      newRow.setAttribute("data-href", `/cac-yeu-cau-cap-phep/${adBoardReq._id}`);
-
-      newRow.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${adBoardReq.adBoard.adLocation.address}</td>
-        <td class="khuVucField">Phường ${adBoardReq.adBoard.adLocation.ward.name}, Quận ${adBoardReq.adBoard.adLocation.district.name}</td>
-        <td>${adBoardReq.adBoard.boardType.name}</td>
-        <td>${adBoardReq.adBoard.size.w}m x ${adBoardReq.adBoard.size.h}m</td>
-        <td>${adBoardReq.adBoard.quantity}</td>
-        <td>
-          ${
-            adBoardReq.adBoard.status === "Chưa duyệt"
-              ? '<span class="badge text-bg-secondary">Chưa duyệt</span>'
-              : adBoardReq.adBoard.status === "Không duyệt"
-              ? '<span class="badge text-bg-danger">Không duyệt</span>'
-              : '<span class="badge text-bg-success">Đã duyệt</span>'
-          }
-        </td>
-        <td>
-          <div class="d-flex"></div>
-        </td>
-      `;
-
-      tableBody.appendChild(newRow);
-    });
-  }
-</script>

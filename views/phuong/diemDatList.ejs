@@ -18,87 +18,30 @@
           <th scope="col">Tình trạng</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <% adLocations.forEach((adLocation, index) => { %>
+        <tr class="clickable-row" onclick="window.location='/cac-diem-dat-quang-cao/<%= adLocation._id %>'">
+          <td><%= index + 1 %></td>
+          <td><%= adLocation.address %></td>
+          <td class="khuVucField">Phường <%= adLocation.ward.name %>, Quận <%= adLocation.district.name %></td>
+          <td><%= adLocation.adType.name %></td>
+          <td><%= adLocation.type.name %></td>
+          <td class="min-w">
+            <!-- Add content or conditions based on adLocation.status -->
+            <% if (adLocation.status === "Đã quy hoạch") { %>
+            <div class="rounded-pill text-center text-light bg-success"><%= adLocation.status %></div>
+            <% } else { %>
+            <div class="rounded-pill text-center text-light bg-danger"><%= adLocation.status %></div>
+            <% } %>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
     </table>
   </div>
 </section>
 <%- include('../partials/pagination') %>
 
-<script>
-  let district = "<%= user.district._id %>";
-  const allAdLocations = JSON.parse(decodeURIComponent("<%= adLocations %>"));
-
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get the select element
-    const selectPhuong = document.querySelector("#phuong-dropdown");
-    if (selectPhuong) {
-      // Add an event listener for the change event
-      selectPhuong.addEventListener("change", function () {
-        // Get the selected value
-        const selectedValue = selectPhuong.value;
-        fetchAdLocations(selectedValue);
-      });
-
-      // Initial fetch based on the first ward in the dropdown
-      updateTableWithData(allAdLocations);
-    } else {
-      // init table
-      updateTableWithData(JSON.parse(decodeURIComponent("<%= adLocations %>")));
-    }
-  });
-
-  // handle on click for each item on the list
-  document.addEventListener("DOMContentLoaded", function () {
-    // Use event delegation for click events on the table: use the parent
-    document.querySelector("table").addEventListener("click", function (event) {
-      const clickedRow = event.target.closest(".clickable-row");
-      if (clickedRow) {
-        window.location = clickedRow.getAttribute("data-href");
-      }
-    });
-  });
-
-  async function fetchAdLocations(ward) {
-    // Filter ad locations based on the selected ward
-    const filteredAdLocations = allAdLocations.filter((adLocation) => {
-      return adLocation.ward._id == ward && adLocation.district._id == district;
-    });
-
-    // Update the table with the filtered data
-    updateTableWithData(filteredAdLocations);
-  }
-
-  function updateTableWithData(data) {
-    // Clear existing table rows
-    const tableBody = document.querySelector("tbody");
-    tableBody.innerHTML = "";
-
-    // Populate the table with the new data
-    data.forEach((adLocation, index) => {
-      const newRow = document.createElement("tr");
-      newRow.classList.add("clickable-row");
-      newRow.setAttribute("data-href", `/cac-diem-dat-quang-cao/${adLocation._id}`);
-
-      newRow.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${adLocation.address}</td>
-        <td class="khuVucField">Phường ${adLocation.ward.name}, Quận ${adLocation.district.name}</td>
-        <td>${adLocation.adType.name}</td>
-        <td>${adLocation.type.name}</td>
-        <td  class="min-w">
-            <!-- Add content or conditions based on adLocation.status -->
-            ${
-              adLocation.status === "Đã quy hoạch"
-                ? `<div class="rounded-pill text-center text-light bg-success">${adLocation.status}</div>`
-                : `<div class="rounded-pill text-center text-light bg-danger">${adLocation.status}</div>`
-            }
-        </td>
-      `;
-
-      tableBody.appendChild(newRow);
-    });
-  }
-</script>
 <style>
   .min-w {
     min-width: 140px; /* Set the desired minimum width */

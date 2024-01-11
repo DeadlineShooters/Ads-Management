@@ -17,6 +17,8 @@ const transporter = nodemailer.createTransport({
 });
 
 controller.show = async (req, res) => {
+  const { wardId = null } = req.query;
+
   const breadcrumbs = [];
   const page = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
@@ -43,6 +45,17 @@ controller.show = async (req, res) => {
         return report.adBoard.adLocation.district._id == req.user.district._id;
       }
     });
+
+    if (wardId) {
+      reports = reports.filter((report) => {
+        if (report.randomPoint) {
+          return report.randomPoint.ward._id == wardId;
+        } else {
+          // adBoard reported
+          return report.adBoard.adLocation.ward._id == wardId;
+        }
+      });
+    }
   } else {
     // phuong
     console.log("reports", reports);
@@ -69,7 +82,7 @@ controller.show = async (req, res) => {
 
   reports = reports.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
-  res.render("phuong/reportList", { reports: encodeURIComponent(JSON.stringify(reports)), breadcrumbs, wards, pagination });
+  res.render("phuong/reportList", { reports, breadcrumbs, wards, pagination, wardId });
 };
 
 controller.showDetail = async (req, res) => {

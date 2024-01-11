@@ -16,95 +16,27 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <% reports.forEach((report, index) => { %>
+        <tr class="clickable-row" onclick="window.location='/cac-bao-cao/<%= report._id %>'">
+          <td><%= index + 1 %></td>
+          <td><%= new Date(report.sendDate).toLocaleString() %></td>
+          <td><%= report.fullName %></td>
+          <% if (report.randomPoint) { %>
+          <td><%= report.randomPoint.address %></td>
+          <td class="khuVucField">Phường <%= report.randomPoint.ward.name %>, Quận <%= report.randomPoint.district.name %></td>
+          <td><%= report.reportType.name %></td>
+          <td><div class="d-flex"></div></td>
+          <% } else { %>
+          <td><%= report.adBoard.adLocation.address %></td>
+          <td class="khuVucField">Phường <%= report.adBoard.adLocation.ward.name %>, Quận <%= report.adBoard.adLocation.district.name %></td>
+          <td><%= report.reportType.name %></td>
+          <td><div class="d-flex"></div></td>
+          <% } %>
+        </tr>
+        <% }); %>
+      </tbody>
     </table>
   </div>
 </section>
 <%- include('../partials/pagination') %>
-
-<script>
-  let district = "<%= user.district._id %>";
-  let allReports = JSON.parse(decodeURIComponent("<%= reports %>"));
-
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get the select element
-    const selectPhuong = document.querySelector("#phuong-dropdown");
-
-    if (selectPhuong) {
-      // Add an event listener for the change event
-      selectPhuong.addEventListener("change", function () {
-        // Get the selected value
-        const selectedValue = selectPhuong.value;
-        fetchReports(selectedValue);
-      });
-
-      // initial data
-      updateTableWithData(allReports);
-    } else {
-      // can bo phuong
-      updateTableWithData(allReports);
-    }
-  });
-
-  function fetchReports(ward) {
-    const filteredReports = allReports.filter((report) => {
-      if (report.randomPoint) {
-        return report.randomPoint.ward._id == ward && report.randomPoint.district._id == district;
-      } else {
-        return report.adBoard.adLocation.ward._id == ward && report.adBoard.adLocation.district._id == district;
-      }
-    });
-
-    // Update the table with the filtered data
-    updateTableWithData(filteredReports);
-  }
-
-  function updateTableWithData(data) {
-    // Clear existing table rows
-    const tableBody = document.querySelector("tbody");
-    tableBody.innerHTML = "";
-
-    // Populate the table with the new data
-    data.forEach((report, index) => {
-      const newRow = document.createElement("tr");
-      newRow.classList.add("clickable-row");
-      newRow.setAttribute("data-href", `/cac-bao-cao/${report._id}`);
-
-      newRow.innerHTML = `
-      <td>${index + 1}</td>
-
-      <td>${new Date(report.sendDate).toLocaleString()}</td>
-      <td>${report.fullName}</td>
-      ${
-        report.randomPoint
-          ? `
-        <td>${report.randomPoint.address}</td>
-        <td class="khuVucField">Phường ${report.randomPoint.ward.name}, Quận ${report.randomPoint.district.name}</td>
-        <td>${report.reportType.name}</td>
-        <td>
-          <div class="d-flex"></div>
-        </td>
-      `
-          : `
-          <td>${report.adBoard.adLocation.address}</td>
-        <td class="khuVucField">Phường ${report.adBoard.adLocation.ward.name}, Quận ${report.adBoard.adLocation.district.name}</td>
-        <td>${report.reportType.name}</td>
-        <td>
-          <div class="d-flex"></div>
-        </td>`
-      }
-    `;
-
-      tableBody.appendChild(newRow);
-    });
-  }
-
-  // handle on click for each item on the list
-  jQuery(document).ready(function ($) {
-    $(".clickable-row").click(function () {
-      console.log("hey");
-
-      window.location = $(this).data("href");
-    });
-  });
-</script>

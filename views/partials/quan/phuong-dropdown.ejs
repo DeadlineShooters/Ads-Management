@@ -1,8 +1,37 @@
 <div>
   <select class="form-select" aria-label="Default select example" id="phuong-dropdown">
-    <option hidden disabled selected value>-- Chọn phường --</option>
+    <option  selected  value>Tất cả phường</option>
     <% wards.forEach(ward => { %>
-    <option value="<%= ward._id %>">Phường <%= ward.name %></option>
+      <option value="<%= ward._id %>" <%= ward._id == wardId ? 'selected' : '' %>>Phường <%= ward.name %></option>
     <% }); %>
   </select>
 </div>
+<script>
+  
+  const selectPhuong = document.querySelector("#phuong-dropdown");
+
+  selectPhuong.addEventListener("change", async function () {
+    // window.location.href = '?districtId=' + districtSelect.value + "&wardId=" + wardSelect.value;
+    // Get the current URL
+    const currentUrl = new URL(window.location.href);
+
+    // Get the existing query parameters
+    const params = new URLSearchParams(currentUrl.search);
+
+    params.set("page", 1); 
+    if (selectPhuong.value) {
+    params.set("wardId", selectPhuong.value);
+  } else {
+    // If selectPhuong.value is null, remove the "wardId" parameter
+    params.delete("wardId");
+  }
+
+    // Update the URL with the modified query parameters
+    currentUrl.search = params.toString();
+
+    // Redirect to the updated URL
+    window.location.href = currentUrl.href;
+  });
+
+
+</script>
