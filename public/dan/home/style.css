@@ -40,8 +40,8 @@ html {
 .search-bar {
     font-size: calc(1.6rem / 1.6);
     position: absolute;
-    left: 2.4rem;
-    top: 1.6rem;
+    left: 1rem;
+    top: 1rem;
     padding: 0;
     display: flex;
     background-color: #fff;
@@ -206,7 +206,7 @@ html {
     background-color: rgba(255, 255, 255, 0.7);
     position: absolute;
     left: 2.4rem;
-    bottom: 1.6rem;
+    bottom: 1rem;
     border-radius: 4px;
     padding: 8px 0;
 }
