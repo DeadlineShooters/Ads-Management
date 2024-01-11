@@ -16,7 +16,7 @@
             
             <% if (pagination.page > 1) { %>
                 <li class="page-item">
-                    <a class="page-link" href="?page=<%= pagination.page - 1 %>&items=<%= pagination.itemsPerPage %>">Previous</a>
+                    <a class="page-link" onclick="changePage(<%= pagination.page - 1 %>)" >Previous</a>
                 </li>
             <% } else { %>
                 <li class="page-item disabled">
@@ -29,13 +29,13 @@
 
             <% for (let i = startPage; i <= endPage; i++) { %>
                 <li class="page-item <% if (i === pagination.page) { %>active<% } %>">
-                    <a class="page-link" href="?page=<%= i %>&items=<%= pagination.itemsPerPage %>"><%= i %></a>
+                    <a class="page-link " onclick="changePage(<%= i %>)"><%= i %></a>
                 </li>
             <% } %>
 
             <% if (pagination.page < pagination.totalPages) { %>
                 <li class="page-item">
-                    <a class="page-link" href="?page=<%= pagination.page + 1 %>&items=<%= pagination.itemsPerPage %>">Trang sau</a>
+                    <a class="page-link" onclick="changePage(<%= pagination.page + 1 %>)">Trang sau</a>
                 </li>
             <% } else { %>
                 <li class="page-item disabled">
@@ -46,12 +46,50 @@
     </nav>
 
 </section>
-<% var page = pagination.page %>
+<%# var page = pagination.page %>
 
 <script>
-    var page = <%= pagination.page %>;
+    // var page = <%= pagination.page %>;
     function changeItemsPerPage(value) {
 
-        window.location.href ='?page=1&items=' + value;
+        // window.location.href ='?page=1&items=' + value;
+        // Get the current URL
+        const currentUrl = new URL(window.location.href);
+
+        // Get the existing query parameters
+        const params = new URLSearchParams(currentUrl.search);
+
+        // Add or update the query parameters
+        params.set('page', 1);
+        params.set('items', value);
+
+        // Update the URL with the modified query parameters
+        currentUrl.search = params.toString();
+
+        // Redirect to the updated URL
+        window.location.href = currentUrl.href;
+    }
+    function changePage(page) {
+        // Get the current URL
+        const currentUrl = new URL(window.location.href);
+
+        // Get the existing query parameters
+        const params = new URLSearchParams(currentUrl.search);
+
+        // Add or update the query parameters
+        params.set('page', page);
+        params.set('items', <%= pagination.itemsPerPage %>);
+
+        // Update the URL with the modified query parameters
+        currentUrl.search = params.toString();
+
+        // Redirect to the updated URL
+        window.location.href = currentUrl.href;
     }
 </script>
+
+<style>
+    .page-link {
+      cursor: pointer;
+    }
+  </style>
