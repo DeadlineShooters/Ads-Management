@@ -13,6 +13,7 @@ const controller = {};
 
 controller.show = async (req, res) => {
   res.locals.currentPage = "quang-cao";
+  const { wardId = null } = req.query;
 
   const breadcrumbs = [];
 
@@ -21,6 +22,7 @@ controller.show = async (req, res) => {
 
   try {
     let adBoardReqs = [];
+
     adBoardReqs = await AdBoardReq.find({}).populate({
       path: "adBoard",
       populate: [
@@ -37,6 +39,12 @@ controller.show = async (req, res) => {
       adBoardReqs = adBoardReqs.filter((adBoardReq) => {
         return adBoardReq.adBoard.adLocation.district._id == req.user.district._id;
       });
+
+      if (wardId) {
+        adBoardReqs = adBoardReqs.filter((adBoardReq) => {
+          return adBoardReq.adBoard.adLocation.ward._id == wardId;
+        });
+      }
     } else {
       // phuong
       // console.log("District: " + req.user.district.name + "\nward: " + req.user.ward.name);
@@ -62,8 +70,9 @@ controller.show = async (req, res) => {
     res.render("phuong/yeuCauCapPhepList", {
       breadcrumbs,
       wards,
-      adBoardReqs: encodeURIComponent(JSON.stringify(adBoardReqs)),
+      adBoardReqs,
       pagination,
+      wardId,
     });
   } catch (err) {
     console.error(err);

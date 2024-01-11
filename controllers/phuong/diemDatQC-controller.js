@@ -15,12 +15,18 @@ const controller = {};
 
 controller.show = async (req, res) => {
   const breadcrumbs = [];
+  const { wardId = null } = req.query;
+
   const page = parseInt(req.query.page) || 1;
   const itemsPerPage = parseInt(req.query.items) || res.locals.defaultItemsPerPage;
 
   let adLocations = [];
   if (req.user.role === "quan") {
     adLocations = await AdLocation.find({ district: req.user.district._id }); // Fetch all ad locations from the database'
+
+    if (wardId) {
+      adLocations = adLocations.filter((adLocation) => adLocation.ward._id == wardId);
+    }
   } else {
     // phuong
 
@@ -45,10 +51,11 @@ controller.show = async (req, res) => {
   const wards = await getWardsForUser(req.user);
 
   res.render("phuong/diemDatList", {
-    adLocations: encodeURIComponent(JSON.stringify(adLocations)),
+    adLocations,
     breadcrumbs,
     pagination,
     wards,
+    wardId,
   });
 };
 
