@@ -11,7 +11,7 @@ import AdBoardRequest from "../../../models/adBoardRequest.js";
 import Report from "../../../models/report.js";
 import AdLocationChangeRequest from "../../../models/adLocationChangeRequest.js";
 
-const defaultAdLocationImg = "delnafx999tunfa8nsmw";
+const defaultAdLocationImg = "diemdat1_oz2ypf";
 const defaultAdBoardImg = "bang-quang-cao-3_zr4oyk";
 
 export const index = async (req, res) => {
