@@ -519,11 +519,11 @@ async function initMap() {
 
 	markers.forEach((item) => {
 		item.content.addEventListener('mouseenter', function () {
-			this.parentNode.parentNode.style.zIndex = '10000000';
+			this.parentNode.style.zIndex = '10000000';
 		});
 
 		item.content.addEventListener('mouseleave', function () {
-			this.parentNode.parentNode.style.zIndex = '-1';
+			this.parentNode.style.zIndex = '-1';
 		});
 	});
 
