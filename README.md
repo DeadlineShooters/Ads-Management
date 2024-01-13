@@ -22,7 +22,8 @@ npm install
 
 Paste those to .env file:
 
-```DAN_PORT=3000
+```
+DAN_PORT=3000
 CANBO_PORT=9000
 MONGO_URI=your_mongo_uri_placeholder
 GOOGLE_MAP_KEY=your_google_map_key_placeholder
