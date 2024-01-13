@@ -4,7 +4,11 @@
 
 Follow these steps to get the app running locally.
 
-### 1. Extract src.zip and open the extracted folder
+### 1. Clone the repo
+
+```
+git clone https://github.com/DeadlineShooters/Ads-Management.git
+```
 
 ### 2. Install dependencies
 
