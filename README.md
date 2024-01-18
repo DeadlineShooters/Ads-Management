@@ -1,6 +1,8 @@
 # Ads Management
 This project aims to create a web application for managing billboard placements in a city. The system includes interfaces for citizens, district officials, and city officials, enabling features such as interactive map displays, detailed information on advertising boards, citizen reporting, and approval processes. The project employs technologies like Ajax, JavaScript, and jQuery for front-end development, while utilizing frameworks like ExpressJS for server-side rendering and various map APIs for geospatial functionalities
 
+> Full description of our project: https://hackmd.io/@nndkhoa9/Syoc9boea?fbclid=IwAR3N3ZnvG8wzhjTYjXhDtli_w-vjfg1CPKT2tDrKaME-dfkB3g2O1NHJ_hY#2-Ph%C3%A2n-h%E1%BB%87-c%C3%A1n-b%E1%BB%99-Ph%C6%B0%E1%BB%9Dng
+
 ## Local Quickstart
 
 Follow these steps to get the app running locally.
